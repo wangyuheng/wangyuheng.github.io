@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="1. 关于阅读源码工作中使用到的框架容易成为最熟悉的陌生代码，可以熟练使用，但是并不知道其中原理。阅读源码可以帮助我们知其然，亦知其所以然，既可以在工作中更好的使用框架特性，也可以借鉴其中优秀的设计思想。 但是面对框架庞大的代码量，往往不知如何下手。总结了一些方法，可以帮助coder战胜恐惧，顺利的开始阅读源码。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MyBatis 源码浅入浅出（草稿）">
+<meta property="og:url" content="https://blog.yuheng.wang/2018/03/23/soucecode-mybatis/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="1. 关于阅读源码工作中使用到的框架容易成为最熟悉的陌生代码，可以熟练使用，但是并不知道其中原理。阅读源码可以帮助我们知其然，亦知其所以然，既可以在工作中更好的使用框架特性，也可以借鉴其中优秀的设计思想。 但是面对框架庞大的代码量，往往不知如何下手。总结了一些方法，可以帮助coder战胜恐惧，顺利的开始阅读源码。">
+<meta property="og:locale">
+<meta property="og:image" content="http://image.crick.wang/sourcecode-mybatis-0.jpg">
+<meta property="og:image" content="http://image.crick.wang/sourcecode-mybatis-1-1.png">
+<meta property="og:image" content="http://image.crick.wang/sourcecode-mybatis-2-1.png">
+<meta property="og:image" content="http://image.crick.wang/sourcecode-mybatis-3.png">
+<meta property="og:image" content="http://image.crick.wang/sourcecode-mybatis-4.png">
+<meta property="article:published_time" content="2018-03-23T15:46:45.000Z">
+<meta property="article:modified_time" content="2020-07-21T12:30:53.103Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="mybatis">
+<meta property="article:tag" content="soucecode">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://image.crick.wang/sourcecode-mybatis-0.jpg">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2018/03/23/soucecode-mybatis/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>MyBatis 源码浅入浅出（草稿） | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-%E5%85%B3%E4%BA%8E%E9%98%85%E8%AF%BB%E6%BA%90%E7%A0%81"><span class="nav-number">1.</span> <span class="nav-text">1. 关于阅读源码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E5%B1%8F%E8%94%BD%E5%B9%B2%E6%89%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1.1. 屏蔽干扰</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%89%BE%E5%88%B0%E5%85%A5%E5%8F%A3"><span class="nav-number">1.2.</span> <span class="nav-text">1.2. 找到入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E4%B8%8D%E7%BA%A0%E7%BB%93%E7%BB%86%E8%8A%82%EF%BC%8C%E4%B8%8D%E6%89%A9%E6%95%A3%E6%80%9D%E7%BB%B4"><span class="nav-number">1.3.</span> <span class="nav-text">1.3. 不纠结细节，不扩散思维</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%82%B9"><span class="nav-number">2.</span> <span class="nav-text">2. 基础知识点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-%E4%BB%A3%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">2.1. 代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-1-%E9%9D%99%E6%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">2.2.</span> <span class="nav-text">2.1.1. 静态代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-2-%E5%8A%A8%E6%80%81%E4%BB%A3%E7%90%86"><span class="nav-number">2.3.</span> <span class="nav-text">2.1.2. 动态代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-JDBC"><span class="nav-number">2.4.</span> <span class="nav-text">2.2. JDBC</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-1-JDBC%E5%81%9A%E4%BA%86%E5%93%AA%E4%BA%9B%E4%BA%8B"><span class="nav-number">2.4.1.</span> <span class="nav-text">2.2.1 JDBC做了哪些事</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-2-Class-forName%E5%81%9A%E4%BA%86%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="nav-number">2.4.2.</span> <span class="nav-text">2.2.2 Class.forName做了什么？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-2-3-%E5%8F%AF%E4%BB%A5%E4%B8%8D%E5%86%99Class-forName%E5%90%97%EF%BC%9F"><span class="nav-number">2.4.3.</span> <span class="nav-text">2.2.3 可以不写Class.forName吗？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E5%8F%8D%E5%B0%84"><span class="nav-number">2.5.</span> <span class="nav-text">2.3. 反射</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-3-1-%E7%B1%BB"><span class="nav-number">2.5.1.</span> <span class="nav-text">2.3.1 类</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-MyBatis"><span class="nav-number">3.</span> <span class="nav-text">3. MyBatis</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-%E5%85%A5%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. 入口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-driver-connection"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. driver + connection</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-statement-query"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. statement + query</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-4-ResultSet"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. ResultSet</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/03/23/soucecode-mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MyBatis 源码浅入浅出（草稿）
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-23 23:46:45" itemprop="dateCreated datePublished" datetime="2018-03-23T23:46:45+08:00">2018-03-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/soucecode/" itemprop="url" rel="index"><span itemprop="name">soucecode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="1-关于阅读源码"><a href="#1-关于阅读源码" class="headerlink" title="1. 关于阅读源码"></a>1. 关于阅读源码</h2><p>工作中使用到的框架容易成为最熟悉的陌生代码，可以熟练使用，但是并不知道其中原理。阅读源码可以帮助我们知其然，亦知其所以然，既可以在工作中更好的使用框架特性，也可以借鉴其中优秀的设计思想。</p>
+<p>但是面对框架庞大的代码量，往往不知如何下手。总结了一些方法，可以帮助coder战胜恐惧，顺利的开始阅读源码。</p>
+<span id="more"></span>
+
+<h3 id="1-1-屏蔽干扰"><a href="#1-1-屏蔽干扰" class="headerlink" title="1.1. 屏蔽干扰"></a>1.1. 屏蔽干扰</h3><p>简单粗暴的减法，根据包名猜测作用，排除主流程外代码<br>如MyBatis的包结构如下</p>
+<ul>
+<li><del>annotations</del> 注解类，流程实现无关</li>
+<li>binding 代理 *</li>
+<li>builder 构造 *</li>
+<li><del>cache</del> 缓存相关，后续独立阅读</li>
+<li>datasource 数据源</li>
+<li><del>exceptions</del> 异常封装</li>
+<li>executor 具体的执行 **</li>
+<li><del>io</del> 文件流</li>
+<li><del>jdbc</del> </li>
+<li><del>logging</del> 日志，后续独立阅读</li>
+<li>mapping 映射，sql映射，参数映射，结果映射</li>
+<li>parsing sql解析</li>
+<li><del>plugin</del> 插件</li>
+<li><del>reflection</del> 反射</li>
+<li>scripting 脚本</li>
+<li>session 会话请求 *</li>
+<li><del>transaction</del> 事务管理，后续独立阅读</li>
+<li><del>type</del> 类型转换，后续独立阅读</li>
+</ul>
+<p>需要阅读的包列表如下</p>
+<ul>
+<li>binding 代理 *</li>
+<li>builder 构造 *</li>
+<li>datasource 数据源</li>
+<li>executor 具体的执行 **</li>
+<li>mapping 映射，sql映射，参数映射，结果映射</li>
+<li>parsing sql解析</li>
+<li>scripting 脚本</li>
+<li>session 会话请求 *</li>
+</ul>
+<h3 id="1-2-找到入口"><a href="#1-2-找到入口" class="headerlink" title="1.2. 找到入口"></a>1.2. 找到入口</h3><p>代码是逻辑的实现，找到入口，根据功能逻辑逐步阅读。入口一般为</p>
+<ol>
+<li>启动类</li>
+<li>根据具体的使用方法debug跟踪</li>
+</ol>
+<h3 id="1-3-不纠结细节，不扩散思维"><a href="#1-3-不纠结细节，不扩散思维" class="headerlink" title="1.3. 不纠结细节，不扩散思维"></a>1.3. 不纠结细节，不扩散思维</h3><p>根据方法名明确其作用，熟悉整体流程时，不过分纠结具体实现细节（如：锁），明确作用主线，不要扩散到其他实现中</p>
+<h2 id="2-基础知识点"><a href="#2-基础知识点" class="headerlink" title="2. 基础知识点"></a>2. 基础知识点</h2><p>阅读源码前先补充两个知识点</p>
+<h3 id="2-1-代理"><a href="#2-1-代理" class="headerlink" title="2.1. 代理"></a>2.1. 代理</h3><p>代理(Proxy)是一种设计模式,提供了对目标对象另外的访问方式;即通过代理对象访问目标对象.这样做的好处是:可以在目标对象实现的基础上,增强额外的功能操作,即扩展目标对象的功能. 不破坏开闭原则的前提下，实现了功能的修改。AOP也是采用了这种设计模式。</p>
+<p><img src="http://image.crick.wang/sourcecode-mybatis-0.jpg" alt="sourcecode-mybatis-0"></p>
+<h3 id="2-1-1-静态代理"><a href="#2-1-1-静态代理" class="headerlink" title="2.1.1. 静态代理"></a>2.1.1. 静态代理</h3><p>需求(issue)需要编码(coding)实现，程序员(Coder)负责编码，但是issue不应该直接找coder，产品经理(PM)负责在coding前后进行需求梳理、需求验收。但是PM不应该直接修改程序员的coding过程，所以PM就是一层代理，在coder无感知的情况下增加了功能与访问控制。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StaticProxy</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Issue client = <span class="keyword">new</span> PM();</span><br><span class="line">        client.coding();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">interface</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">Coder</span> <span class="keyword">implements</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;coding&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PM</span> <span class="keyword">implements</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> <span class="keyword">static</span> Issue issue = <span class="keyword">new</span> Coder();</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.beforeDoing();</span><br><span class="line">            issue.coding();</span><br><span class="line">            <span class="keyword">this</span>.afterDoing();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">beforeDoing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;需求梳理&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">afterDoing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;需求验收&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-1-2-动态代理"><a href="#2-1-2-动态代理" class="headerlink" title="2.1.2. 动态代理"></a>2.1.2. 动态代理</h3><p>上面的代码有两个bug，</p>
+<ol>
+<li>如果我有多个程序员，如JavaCoder、PythonCoder，那么是不是也需要多个PM吗？</li>
+<li>PM不会coding。。。</li>
+</ol>
+<p>为了解决这两个问题，需要用到动态代理</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DynamicProxy</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        PM pmWithPython = <span class="keyword">new</span> PM(<span class="keyword">new</span> PythonCoder());</span><br><span class="line">        PM pmWithJava = <span class="keyword">new</span> PM(<span class="keyword">new</span> JavaCoder());</span><br><span class="line">        Issue pythonIssue = (Issue) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> Class[]&#123;Issue.class&#125;,</span><br><span class="line">                pmWithPython);</span><br><span class="line">        pythonIssue.coding();</span><br><span class="line"></span><br><span class="line">        Issue javaIssue = (Issue) Proxy.newProxyInstance(ClassLoader.getSystemClassLoader(),</span><br><span class="line">                <span class="keyword">new</span> Class[]&#123;Issue.class&#125;,</span><br><span class="line">                pmWithJava);</span><br><span class="line">        javaIssue.coding();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="class"><span class="keyword">interface</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line">        <span class="function"><span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span></span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">JavaCoder</span> <span class="keyword">implements</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;coding by java&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PythonCoder</span> <span class="keyword">implements</span> <span class="title">Issue</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">coding</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;coding by python&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">PM</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> Issue issue;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">PM</span><span class="params">(Issue issue)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.issue = issue;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="meta">@Override</span></span><br><span class="line">        <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">            beforeDoing();</span><br><span class="line">            proxy = method.invoke(issue, args);</span><br><span class="line">            afterDoing();</span><br><span class="line">            <span class="keyword">return</span> proxy;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">beforeDoing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;需求梳理&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">afterDoing</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;需求验收&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>很多人会纠结，代理模式和装饰模式有什么区别，网上大多数的文章说装饰模式是为了增强功能，代理模式是为了控制访问，这是不能赞同的一种说法。我认为区别在于思想，装饰模式是你明确知道要把某个对象做哪些扩展，而代理则是你不和对象直接交互，而是通过第三者沟通。 动态代理，则是可以选择无关的第三者，不需要有共同的接口或父类。</p>
+<h3 id="2-2-JDBC"><a href="#2-2-JDBC" class="headerlink" title="2.2. JDBC"></a>2.2. JDBC</h3><p>简单的实现代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.sql.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">JdbcApp</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String url = <span class="string">&quot;jdbc:mysql://localhost:3306/mysql&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String username = <span class="string">&quot;root&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> String password = <span class="string">&quot;&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> <span class="keyword">throws</span> ClassNotFoundException, SQLException </span>&#123;</span><br><span class="line">        Class.forName(<span class="string">&quot;com.mysql.jdbc.Driver&quot;</span>);</span><br><span class="line">        Connection connection = DriverManager.getConnection(url, username, password);</span><br><span class="line">        Statement statement = connection.createStatement();</span><br><span class="line"></span><br><span class="line">        ResultSet resultSet = statement.executeQuery(<span class="string">&quot;select * from user&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (resultSet.next()) &#123;</span><br><span class="line">            String Host = resultSet.getString(<span class="string">&quot;Host&quot;</span>);</span><br><span class="line">            String User = resultSet.getString(<span class="string">&quot;User&quot;</span>);</span><br><span class="line">            System.out.println(<span class="string">&quot;Host: &quot;</span> + Host + <span class="string">&quot;, User: &quot;</span> + User);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-1-JDBC做了哪些事"><a href="#2-2-1-JDBC做了哪些事" class="headerlink" title="2.2.1 JDBC做了哪些事"></a>2.2.1 JDBC做了哪些事</h4><p><img src="http://image.crick.wang/sourcecode-mybatis-1-1.png" alt="sourcecode-mybatis-1"></p>
+<h4 id="2-2-2-Class-forName做了什么？"><a href="#2-2-2-Class-forName做了什么？" class="headerlink" title="2.2.2 Class.forName做了什么？"></a>2.2.2 Class.forName做了什么？</h4><p>通过反射将驱动注册进DriverManager中，用于创建connection时使用。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.mysql.cj.jdbc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.sql.DriverManager;</span><br><span class="line"><span class="keyword">import</span> java.sql.SQLException;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Driver</span> <span class="keyword">extends</span> <span class="title">NonRegisteringDriver</span> <span class="keyword">implements</span> <span class="title">java</span>.<span class="title">sql</span>.<span class="title">Driver</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Driver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            DriverManager.registerDriver(<span class="keyword">new</span> Driver());</span><br><span class="line">        &#125; <span class="keyword">catch</span> (SQLException var1) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;Can&#x27;t register driver!&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> Connection <span class="title">getConnection</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        String url, java.util.Properties info, Class&lt;?&gt; caller)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line"></span><br><span class="line">        ClassLoader callerCL = caller != <span class="keyword">null</span> ? caller.getClassLoader() : <span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">synchronized</span>(DriverManager.class) &#123;</span><br><span class="line">            <span class="comment">// synchronize loading of the correct classloader.</span></span><br><span class="line">            <span class="keyword">if</span> (callerCL == <span class="keyword">null</span>) &#123;</span><br><span class="line">                callerCL = Thread.currentThread().getContextClassLoader();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(url == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">&quot;The url cannot be null&quot;</span>, <span class="string">&quot;08001&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        println(<span class="string">&quot;DriverManager.getConnection(\&quot;&quot;</span> + url + <span class="string">&quot;\&quot;)&quot;</span>);</span><br><span class="line"></span><br><span class="line">        SQLException reason = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(DriverInfo aDriver : registeredDrivers) &#123;</span><br><span class="line">            <span class="comment">// If the caller does not have permission to load the driver then</span></span><br><span class="line">            <span class="comment">// skip it.</span></span><br><span class="line">            <span class="keyword">if</span>(isDriverAllowed(aDriver.driver, callerCL)) &#123;</span><br><span class="line">                <span class="keyword">try</span> &#123;</span><br><span class="line">                    println(<span class="string">&quot;    trying &quot;</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                    Connection con = aDriver.driver.connect(url, info);</span><br><span class="line">                    <span class="keyword">if</span> (con != <span class="keyword">null</span>) &#123;</span><br><span class="line">                        <span class="comment">// Success!</span></span><br><span class="line">                        println(<span class="string">&quot;getConnection returning &quot;</span> + aDriver.driver.getClass().getName());</span><br><span class="line">                        <span class="keyword">return</span> (con);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span> (SQLException ex) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (reason == <span class="keyword">null</span>) &#123;</span><br><span class="line">                        reason = ex;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line"></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                println(<span class="string">&quot;    skipping: &quot;</span> + aDriver.getClass().getName());</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if we got here nobody could connect.</span></span><br><span class="line">        <span class="keyword">if</span> (reason != <span class="keyword">null</span>)    &#123;</span><br><span class="line">            println(<span class="string">&quot;getConnection failed: &quot;</span> + reason);</span><br><span class="line">            <span class="keyword">throw</span> reason;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        println(<span class="string">&quot;getConnection: no suitable driver found for &quot;</span>+ url);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">&quot;No suitable driver found for &quot;</span>+ url, <span class="string">&quot;08001&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>反射运行静态块，但是不会生成实例。</p>
+<h4 id="2-2-3-可以不写Class-forName吗？"><a href="#2-2-3-可以不写Class-forName吗？" class="headerlink" title="2.2.3 可以不写Class.forName吗？"></a>2.2.3 可以不写Class.forName吗？</h4><p>可以，因为DriverManager中通过spi初始化了驱动。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DriverManager</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">static</span> CopyOnWriteArrayList&lt;DriverInfo&gt; registeredDrivers = <span class="keyword">new</span> CopyOnWriteArrayList&lt;&gt;();</span><br><span class="line">    <span class="keyword">static</span> &#123;</span><br><span class="line">        loadInitialDrivers();</span><br><span class="line">        println(<span class="string">&quot;JDBC DriverManager initialized&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loadInitialDrivers</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        String drivers;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            drivers = AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;String&gt;() &#123;</span><br><span class="line">                <span class="function"><span class="keyword">public</span> String <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> System.getProperty(<span class="string">&quot;jdbc.drivers&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            drivers = <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        AccessController.doPrivileged(<span class="keyword">new</span> PrivilegedAction&lt;Void&gt;() &#123;</span><br><span class="line">            <span class="function"><span class="keyword">public</span> Void <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">                ServiceLoader&lt;Driver&gt; loadedDrivers = ServiceLoader.load(Driver.class);</span><br><span class="line">                Iterator&lt;Driver&gt; driversIterator = loadedDrivers.iterator();</span><br><span class="line"></span><br><span class="line">                <span class="keyword">try</span>&#123;</span><br><span class="line">                    <span class="keyword">while</span>(driversIterator.hasNext()) &#123;</span><br><span class="line">                        driversIterator.next();</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125; <span class="keyword">catch</span>(Throwable t) &#123;</span><br><span class="line">                <span class="comment">// Do nothing</span></span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line"></span><br><span class="line">        println(<span class="string">&quot;DriverManager.initialize: jdbc.drivers = &quot;</span> + drivers);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (drivers == <span class="keyword">null</span> || drivers.equals(<span class="string">&quot;&quot;</span>)) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        String[] driversList = drivers.split(<span class="string">&quot;:&quot;</span>);</span><br><span class="line">        println(<span class="string">&quot;number of Drivers:&quot;</span> + driversList.length);</span><br><span class="line">        <span class="keyword">for</span> (String aDriver : driversList) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                println(<span class="string">&quot;DriverManager.Initialize: loading &quot;</span> + aDriver);</span><br><span class="line">                Class.forName(aDriver, <span class="keyword">true</span>,</span><br><span class="line">                        ClassLoader.getSystemClassLoader());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">                println(<span class="string">&quot;DriverManager.Initialize: load failed: &quot;</span> + ex);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对spi做一个简单的介绍</p>
+<blockquote>
+<p>SPI 简介SPI 全称为(Service Provider Interface) ,是JDK内置的一种服务提供发现机制。</p>
+</blockquote>
+<p>简单来说，我们定义了一个服务interface，jar包可以编写实现，并通过文件声明实现类，让服务发现并动态替换。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">SpiDemoApi</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">print</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpiDemoImplA</span> <span class="keyword">implements</span> <span class="title">SpiDemoApi</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;spi A impl&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpiDemoImplB</span> <span class="keyword">implements</span> <span class="title">SpiDemoApi</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;spi B impl&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>在META-INF/services目录下以接口全路径名命名的文件，并在其中声明实现类的全路径名。声明的方法可以通过ServiceLoader发现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.util.ServiceLoader;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpiApp</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        ServiceLoader&lt;SpiDemoApi&gt; serviceLoader = ServiceLoader.load(SpiDemoApi.class);</span><br><span class="line">        <span class="keyword">for</span> (SpiDemoApi service : serviceLoader) &#123;</span><br><span class="line">            service.print();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>dubbo、log、jdbc都使用了spi相关技术。</p>
+<p>spi<br>dubbo log jdbc</p>
+<p>SpringFactoriesLoader</p>
+<h3 id="2-3-反射"><a href="#2-3-反射" class="headerlink" title="2.3. 反射"></a>2.3. 反射</h3><h4 id="2-3-1-类"><a href="#2-3-1-类" class="headerlink" title="2.3.1 类"></a>2.3.1 类</h4><h2 id="3-MyBatis"><a href="#3-MyBatis" class="headerlink" title="3. MyBatis"></a>3. MyBatis</h2><blockquote>
+<p>MyBatis 是一款优秀的持久层框架，它支持定制化 SQL、存储过程以及高级映射。MyBatis 避免了几乎所有的 JDBC 代码和手动设置参数以及获取结果集。MyBatis 可以使用简单的 XML 或注解来配置和映射原生信息，将接口和 Java 的 POJOs(Plain Old Java Objects,普通的 Java对象)映射成数据库中的记录。</p>
+</blockquote>
+<h3 id="3-1-入口"><a href="#3-1-入口" class="headerlink" title="3.1. 入口"></a>3.1. 入口</h3><p>因为springboot给我们带来开发便利的同时，隐藏了太多细节，已经忘记了MyBatis的启动方式。</p>
+<h3 id="3-2-driver-connection"><a href="#3-2-driver-connection" class="headerlink" title="3.2. driver + connection"></a>3.2. driver + connection</h3><p>在实际应用的过程中，每次都创建一次connection会极大的影响性能，所以我们会选择连接池技术，简单来说就是维护一个connection的list，每次请求从list中取出一个connection。Mybatis提供了3中方式实现数据源初始化。</p>
+<p><img src="http://image.crick.wang/sourcecode-mybatis-2-1.png" alt="sourcecode-mybatis-2"></p>
+<p>每次获取connection都会判断driver是否已注册 </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> Connection <span class="title">doGetConnection</span><span class="params">(Properties properties)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">  initializeDriver();</span><br><span class="line">  Connection connection = DriverManager.getConnection(url, properties);</span><br><span class="line">  configureConnection(connection);</span><br><span class="line">  <span class="keyword">return</span> connection;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">initializeDriver</span><span class="params">()</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (!registeredDrivers.containsKey(driver)) &#123;</span><br><span class="line">    Class&lt;?&gt; driverType;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      <span class="keyword">if</span> (driverClassLoader != <span class="keyword">null</span>) &#123;</span><br><span class="line">        driverType = Class.forName(driver, <span class="keyword">true</span>, driverClassLoader);</span><br><span class="line">      &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        driverType = Resources.classForName(driver);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="comment">// DriverManager requires the driver to be loaded via the system ClassLoader.</span></span><br><span class="line">      <span class="comment">// http://www.kfu.com/~nsayer/Java/dyn-jdbc.html</span></span><br><span class="line">      Driver driverInstance = (Driver)driverType.newInstance();</span><br><span class="line">      DriverManager.registerDriver(<span class="keyword">new</span> DriverProxy(driverInstance));</span><br><span class="line">      registeredDrivers.put(driver, driverInstance);</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> SQLException(<span class="string">&quot;Error setting driver on UnpooledDataSource. Cause: &quot;</span> + e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>PooledConnection 使用了动态代理，在不改变Connection的前提下，使关闭的connection加入到闲置连接池内。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">PooledConnection</span> <span class="keyword">implements</span> <span class="title">InvocationHandler</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">    String methodName = method.getName();</span><br><span class="line">    <span class="keyword">if</span> (CLOSE.hashCode() == methodName.hashCode() &amp;&amp; CLOSE.equals(methodName)) &#123;</span><br><span class="line">      dataSource.pushConnection(<span class="keyword">this</span>);</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!Object.class.equals(method.getDeclaringClass())) &#123;</span><br><span class="line">          <span class="comment">// issue #579 toString() should never fail</span></span><br><span class="line">          <span class="comment">// throw an SQLException instead of a Runtime</span></span><br><span class="line">          checkConnection();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> method.invoke(realConnection, args);</span><br><span class="line">      &#125; <span class="keyword">catch</span> (Throwable t) &#123;</span><br><span class="line">        <span class="keyword">throw</span> </span><br><span class="line">ExceptionUtil.unwrapThrowable(t);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-statement-query"><a href="#3-3-statement-query" class="headerlink" title="3.3. statement + query"></a>3.3. statement + query</h3><p>mybatis项目中有statement这个包，直接看其中的类。</p>
+<p><img src="http://image.crick.wang/sourcecode-mybatis-3.png" alt="sourcecode-mybatis-3"></p>
+<p>StatementHandler定义了获取Statement的接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StatementHandler</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">  &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(Statement statement, ResultHandler resultHandler)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line">  <span class="function">Statement <span class="title">prepare</span><span class="params">(Connection connection)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>BaseStatementHandler实现了prepare接口，并留了一个钩子函数instantiateStatement</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">BaseStatementHandler</span> <span class="keyword">implements</span> <span class="title">StatementHandler</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">public</span> Statement <span class="title">prepare</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    ErrorContext.instance().sql(boundSql.getSql());</span><br><span class="line">    Statement statement = <span class="keyword">null</span>;</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">      statement = instantiateStatement(connection);</span><br><span class="line">      setStatementTimeout(statement);</span><br><span class="line">      setFetchSize(statement);</span><br><span class="line">      <span class="keyword">return</span> statement;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (SQLException e) &#123;</span><br><span class="line">      closeStatement(statement);</span><br><span class="line">      <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">      closeStatement(statement);</span><br><span class="line">      <span class="keyword">throw</span> <span class="keyword">new</span> ExecutorException(<span class="string">&quot;Error preparing statement.  Cause: &quot;</span> + e, e);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> <span class="keyword">abstract</span> Statement <span class="title">instantiateStatement</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException</span>;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>SimpleStatementHandler继承BaseStatementHandler并重写instantiateStatement</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SimpleStatementHandler</span> <span class="keyword">extends</span> <span class="title">BaseStatementHandler</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="keyword">public</span> &lt;E&gt; <span class="function">List&lt;E&gt; <span class="title">query</span><span class="params">(Statement statement, ResultHandler resultHandler)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    String sql = boundSql.getSql();</span><br><span class="line">    statement.execute(sql);</span><br><span class="line">    <span class="keyword">return</span> resultSetHandler.&lt;E&gt;handleResultSets(statement);</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="meta">@Override</span></span><br><span class="line">  <span class="function"><span class="keyword">protected</span> Statement <span class="title">instantiateStatement</span><span class="params">(Connection connection)</span> <span class="keyword">throws</span> SQLException </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mappedStatement.getResultSetType() != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> connection.createStatement(mappedStatement.getResultSetType().getValue(), ResultSet.CONCUR_READ_ONLY);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">return</span> connection.createStatement();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里有一个两个成员变量，我们先mark一下，稍后再去阅读。</p>
+<ol>
+<li>MappedStatement 现在知道它可以获取resultSetType。</li>
+<li>BoundSql 获取sql</li>
+</ol>
+<p>SimpleStatementHandler实现了StatementHandler提供的query接口方法，通过statement.execute执行。</p>
+<h3 id="3-4-ResultSet"><a href="#3-4-ResultSet" class="headerlink" title="3.4. ResultSet"></a>3.4. ResultSet</h3><p>MyBatis被称为半个ORM系统，就是因为它对ResultSet的映射。我们来看一下实现，同样有一个包名叫resultset。。</p>
+<p><img src="http://image.crick.wang/sourcecode-mybatis-4.png" alt="sourcecode-mybatis-4"></p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/mybatis/" rel="tag"># mybatis</a>
+              <a href="/tagcloud/soucecode/" rel="tag"># soucecode</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2018/02/24/2017/" rel="prev" title="2017年终总结">
+      <i class="fa fa-chevron-left"></i> 2017年终总结
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2018/04/06/wechat-message-proxy/" rel="next" title="监控告警 http 代理企业微信服务">
+      监控告警 http 代理企业微信服务 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2018/03/23/soucecode-mybatis/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

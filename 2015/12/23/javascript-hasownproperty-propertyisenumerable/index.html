@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="转载请注明出处WangYuheng’s Blog 起因javascript对象就是各种属性的集合，业务场景为接收用户传来的options参数，如果默认defaultOptions存在传入的参数属性，则进行替换。所以存在一个检查对象是否包含某个属性的操作。在原型属性中找到了hasOwnProperty和propertyIsEnumerable两个方法。那么这两个方法有什么区别呢？各自的使用场景又是什">
+<meta property="og:type" content="article">
+<meta property="og:title" content="javascript检查属性是否存在(hasOwnProperty和propertyIsEnumerable的区别)">
+<meta property="og:url" content="https://blog.yuheng.wang/2015/12/23/javascript-hasownproperty-propertyisenumerable/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="转载请注明出处WangYuheng’s Blog 起因javascript对象就是各种属性的集合，业务场景为接收用户传来的options参数，如果默认defaultOptions存在传入的参数属性，则进行替换。所以存在一个检查对象是否包含某个属性的操作。在原型属性中找到了hasOwnProperty和propertyIsEnumerable两个方法。那么这两个方法有什么区别呢？各自的使用场景又是什">
+<meta property="og:locale">
+<meta property="article:published_time" content="2015-12-23T09:06:22.000Z">
+<meta property="article:modified_time" content="2016-12-09T12:19:12.000Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="javascript">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2015/12/23/javascript-hasownproperty-propertyisenumerable/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>javascript检查属性是否存在(hasOwnProperty和propertyIsEnumerable的区别) | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%B7%E5%9B%A0"><span class="nav-number">1.</span> <span class="nav-text">起因</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hasOwnProperty-NaN"><span class="nav-number">2.</span> <span class="nav-text">hasOwnProperty</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#propertyIsEnumerable-NaN"><span class="nav-number">3.</span> <span class="nav-text">propertyIsEnumerable</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE%E5%B1%9E%E6%80%A7"><span class="nav-number">3.1.</span> <span class="nav-text">枚举属性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E4%B8%80-undefined"><span class="nav-number">4.</span> <span class="nav-text">扩展一 !&#x3D;&#x3D; undefined</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%A9%E5%B1%95%E4%BA%8C-in"><span class="nav-number">5.</span> <span class="nav-text">扩展二 in</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">6.</span> <span class="nav-text">总结</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/23/javascript-hasownproperty-propertyisenumerable/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          javascript检查属性是否存在(hasOwnProperty和propertyIsEnumerable的区别)
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-23 17:06:22" itemprop="dateCreated datePublished" datetime="2015-12-23T17:06:22+08:00">2015-12-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>javascript对象就是各种属性的集合，业务场景为接收用户传来的options参数，如果默认defaultOptions存在传入的参数属性，则进行替换。所以存在一个检查对象是否包含某个属性的操作。<br>在原型属性中找到了hasOwnProperty和propertyIsEnumerable两个方法。那么这两个方法有什么区别呢？各自的使用场景又是什么呢？</p>
+<h1 id="hasOwnProperty-NaN"><a href="#hasOwnProperty-NaN" class="headerlink" title="hasOwnProperty"></a>hasOwnProperty</h1><p>hasOwnProperty()方法可以接收一个字符参数，用来判断对象中是否存在以字符参数命名的属性。它只会查找自身属性，不会根据原型链进行查找。<br><strong>注：原型链会再另一篇文章中做详细的介绍！</strong></p>
+<pre><code>var obj = &#123;x:&quot;1&quot;&#125;;
+obj.y = function()&#123;&#125;;
+console.log(obj.hasOwnProperty(&quot;x&quot;)); //true
+console.log(obj.hasOwnProperty(&quot;y&quot;)); //true 方法也是属性
+console.log(obj.hasOwnProperty(&quot;z&quot;)); //false 属性不存在
+console.log(obj.hasOwnProperty(&quot;toString&quot;)); //false hasOwnProperty是继承Object的属性，自身属性中不存在
+</code></pre>
+<h1 id="propertyIsEnumerable-NaN"><a href="#propertyIsEnumerable-NaN" class="headerlink" title="propertyIsEnumerable"></a>propertyIsEnumerable</h1><p>propertyIsEnumerable()方法在hasOwnProperty()的基础上，校验属性是否为枚举属性。也就是说属性必须满足为自身属性且为枚举属性时，才会返回true。</p>
+<h2 id="枚举属性"><a href="#枚举属性" class="headerlink" title="枚举属性"></a>枚举属性</h2><p>枚举属性，其实是可被枚举，表示该属性可以在对象中被遍历。javascript属性默认均为枚举属性。如</p>
+<pre><code>var obj = &#123;x:&quot;1&quot;&#125;;
+Object.defineProperty(obj, &#39;y&#39;, &#123;value : &#39;2&#39;, enumerable : true &#125;);
+Object.defineProperty(obj, &#39;z&#39;, &#123;value : &#39;3&#39;, enumerable : false &#125;);
+console.log(obj);//Object &#123;x: &quot;1&quot;, y: &quot;2&quot;, z: &quot;3&quot;&#125;
+for (var i in obj) &#123;
+    console.log(i); //x,y
+&#125;
+</code></pre>
+<p>上述代码中属性z被手动指定为非枚举属性，因此没有被遍历。<br>结合上面的2例子，可以清晰的知道propertyIsEnumerable()函数的作用：</p>
+<pre><code>var obj = &#123;x:&quot;1&quot;&#125;;
+obj.y = function()&#123;&#125;;
+Object.defineProperty(obj, &#39;z&#39;, &#123;value : &#39;2&#39;, enumerable : true &#125;);
+Object.defineProperty(obj, &#39;w&#39;, &#123;value : &#39;3&#39;, enumerable : false &#125;);
+console.log(obj.propertyIsEnumerable(&quot;x&quot;)); //true 属性默认为枚举属性
+console.log(obj.propertyIsEnumerable(&quot;y&quot;)); //true 方法也是属性
+console.log(obj.propertyIsEnumerable(&quot;z&quot;)); //true
+console.log(obj.propertyIsEnumerable(&quot;w&quot;)); //false 属性不是枚举属性
+console.log(obj.propertyIsEnumerable(&quot;v&quot;)); //false 属性不存在
+console.log(obj.propertyIsEnumerable(&quot;toString&quot;)); //false propertyIsEnumerable是继承Object的属性，自身属性中不存在
+</code></pre>
+<h1 id="扩展一-undefined"><a href="#扩展一-undefined" class="headerlink" title="扩展一 !== undefined"></a>扩展一 !== undefined</h1><p>有一种简单的方法可以判断属性是否存在，通过属性!== undefined来判断。此时会检测自身和继承来的属性。之所以使用!==而不是!=是因为!==可以区分undefined和null。但是此方法有一个弊端，当属性存在且值为undefined时，无法做出准确判断。如：</p>
+<pre><code>var obj = &#123;x:&quot;1&quot;, y:undefined, z:null&#125;;
+console.log(obj.x !== undefined); //true 属性存在
+console.log(obj.y !== undefined); //false 此时会出现歧义，不能准确判断属性是不存在还是属性值为undefined
+console.log(obj.z !== undefined); //true 属性存在
+console.log(obj.z != undefined); //false != 不能区分undefined和null，将两者同等对待
+console.log(obj.w !== undefined); //false 属性不存在
+console.log(obj.toString !== undefined); //true 存在toString函数属性。
+</code></pre>
+<h1 id="扩展二-in"><a href="#扩展二-in" class="headerlink" title="扩展二 in"></a>扩展二 in</h1><p>为了避免!==undefined带来的歧义，可以使用in运算符进行属性存在的检测。in是根据属性，而不是通过属性值来判断是否存在。</p>
+<pre><code>var obj = &#123;x:&quot;1&quot;, y:undefined, z:null&#125;;
+console.log(&quot;x&quot; in obj); //true 属性存在
+console.log(&quot;y&quot; in obj); //true 属性存在
+console.log(&quot;z&quot; in obj); //true 属性存在
+console.log(&quot;w&quot; in obj); //false 属性不存在
+console.log(&quot;toString&quot; in obj); //true 属性存在
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><ul>
+<li>hasOwnProperty 自身存在的属性</li>
+<li>propertyIsEnumerable 自身存在的属性，且为枚举属性</li>
+<li>!== undefined 自身存在的属性，继承的属性，不能识别值为undefined的属性</li>
+<li>in 自身存在的属性，继承的属性</li>
+</ul>
+<p>根据具体业务场景，自由选择或组合对应的方法，可以实现对属性的检测。</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/javascript/" rel="tag"># javascript</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2015/12/22/java-xml-by-dom/" rel="prev" title="java通过DOM操作xml">
+      <i class="fa fa-chevron-left"></i> java通过DOM操作xml
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2015/12/29/html-360-webkit/" rel="next" title="360浏览器指定Webkit(chrome)内核">
+      360浏览器指定Webkit(chrome)内核 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2015/12/23/javascript-hasownproperty-propertyisenumerable/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

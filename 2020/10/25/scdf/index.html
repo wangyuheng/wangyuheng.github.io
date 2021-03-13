@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="What Microservice based Streaming and Batch data processing for Cloud Foundry and Kubernetes">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring Cloud Data Flow 入门">
+<meta property="og:url" content="https://blog.yuheng.wang/2020/10/25/scdf/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="What Microservice based Streaming and Batch data processing for Cloud Foundry and Kubernetes">
+<meta property="og:locale">
+<meta property="og:image" content="https://image.crick.wang/mweb/SCDF-event-driven-applications.gif">
+<meta property="og:image" content="https://image.crick.wang/mweb/16030161223482.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035425320745.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035229504390.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035232360718.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035445690603.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035443539633.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035236462403.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035236677036.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/dataflow-task-lifecycle.gif">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035444946051.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035449417864.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035451713208.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035451761383.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035454202663.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035454870024.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16036282823075.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16029993900615.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035457542560.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035457847721.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16036292349065.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/%E6%88%AA%E5%B1%8F2020-10-24%20%E4%B8%8B%E5%8D%889.24.09.png">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035788009803.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035461293459.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035763569958.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035781241462.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/16035799973264.jpg">
+<meta property="article:published_time" content="2020-10-25T15:31:55.000Z">
+<meta property="article:modified_time" content="2020-11-06T15:27:21.510Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="springcloud">
+<meta property="article:tag" content="大数据">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.crick.wang/mweb/SCDF-event-driven-applications.gif">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2020/10/25/scdf/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>Spring Cloud Data Flow 入门 | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Concept"><span class="nav-number">1.1.</span> <span class="nav-text">Concept</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%84%E4%BB%B6"><span class="nav-number">1.2.</span> <span class="nav-text">组件</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">2.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-Application"><span class="nav-number">2.2.</span> <span class="nav-text">创建 Application</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Task"><span class="nav-number">2.3.</span> <span class="nav-text">Task</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-Task"><span class="nav-number">2.3.1.</span> <span class="nav-text">创建 Task</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%90%E8%A1%8C-Task"><span class="nav-number">2.3.2.</span> <span class="nav-text">运行 Task</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%A1%E8%AE%A1%E7%95%99%E7%97%95"><span class="nav-number">2.4.</span> <span class="nav-text">审计留痕</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Stream"><span class="nav-number">2.5.</span> <span class="nav-text">Stream</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-Stream"><span class="nav-number">2.5.1.</span> <span class="nav-text">创建 Stream</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%91%E5%B8%83-Stream"><span class="nav-number">2.5.2.</span> <span class="nav-text">发布 Stream</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Shell"><span class="nav-number">2.6.</span> <span class="nav-text">Shell</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%82%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">观点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E7%82%B9"><span class="nav-number">3.1.</span> <span class="nav-text">优点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%AD%E7%AB%8B"><span class="nav-number">3.2.</span> <span class="nav-text">中立</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%BA%E7%82%B9"><span class="nav-number">3.3.</span> <span class="nav-text">缺点</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%84%E6%96%99"><span class="nav-number">4.</span> <span class="nav-text">资料</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2020/10/25/scdf/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Spring Cloud Data Flow 入门
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-10-25 23:31:55" itemprop="dateCreated datePublished" datetime="2020-10-25T23:31:55+08:00">2020-10-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springcloud/" itemprop="url" rel="index"><span itemprop="name">springcloud</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><blockquote>
+<p>Microservice based Streaming and Batch data processing for Cloud Foundry and Kubernetes</p>
+</blockquote>
+<span id="more"></span>
+
+<p>简单解释一下<code>Streaming</code>和<code>Batch</code>处理的区别</p>
+<ul>
+<li><code>Streaming</code>: 应用始终处于启动状态，有数据就处理。通过消息传递中间件消耗或生成无限量的数据。</li>
+<li><code>Batch(Task)</code>: 需要处理数据时启动应用，处理完成后关闭应用，只处理有限量的数据​。</li>
+</ul>
+<p>思考一个问题。<strong>如何动态启动一个未启动的Spring项目？</strong></p>
+<p>答案是配置了一个<code>maven jar</code>包地址，或者是一个<code>docker image</code>地址，在任务触发时，下载对应的程序(镜像)并启动。</p>
+<p><img src="https://image.crick.wang/mweb/SCDF-event-driven-applications.gif" alt="SCDF-event-driven-applications"></p>
+<h3 id="Concept"><a href="#Concept" class="headerlink" title="Concept"></a>Concept</h3><ul>
+<li><strong>Application</strong>: 指向某一个<strong>jar</strong>或<strong>docker</strong>的<code>Stream</code>或<code>Batch</code>程序</li>
+<li><strong>Task</strong>: 通过<strong>DSL</strong>组装多个<code>Application</code>，定义处理任务</li>
+<li><strong>Stream</strong>: 通过<strong>DSL</strong>组装多个<code>Application</code>，按照<code>source-&gt;processor-&gt;sink</code>定义数据处理流</li>
+<li><strong>Job</strong>: 每个<code>Task</code>的执行记录，包括入参及结果记录</li>
+</ul>
+<h3 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h3><p><img src="https://image.crick.wang/mweb/16030161223482.jpg"></p>
+<ul>
+<li><strong>Data Flow Server</strong>: 定义、校验并执行 <code>Stream</code>和<code>Batch</code>，监听应用状态，记录执行记录。<ul>
+<li>基于 <strong>DSL</strong> 定义<code>Stream</code>和<code>Batch</code></li>
+<li>通过 <strong>jar包</strong> 或者 <strong>docker镜像</strong> 注册应用</li>
+<li>执行<code>Stream</code>和<code>Batch</code>并记录执行记录，监听应用状态</li>
+</ul>
+</li>
+<li><strong>Skipper Server</strong>: 负责流处理发布<ul>
+<li>部署<code>Streams</code>到一或多个平台</li>
+<li>基于蓝绿更新策略升级或回滚<code>Stream</code></li>
+<li>持久化<code>Stream</code>的描述信息，包括历史版本</li>
+</ul>
+</li>
+<li><strong>Database</strong>: <strong>Data Flow Server</strong>和<strong>Skipper Server</strong>依赖关系数据库。<ul>
+<li>默认通过内嵌的<code>H2</code>数据库启动，支持多种关系型数据库</li>
+<li>在服务启动时自动创建表结构</li>
+<li>Task可以通过配置共享外部数据库作为持久化</li>
+</ul>
+</li>
+<li><strong>Messaging Middleware</strong>: 用于消息驱动模型的消息中间件。<ul>
+<li>支持<code>Kafka</code>、<code>RabbitMQ</code></li>
+<li><code>Stream</code>必须通过消息中间件驱动</li>
+</ul>
+</li>
+<li><strong>Monitor</strong>: 监控系统运行指标。<ul>
+<li>通过<code>Prometheus</code>或<code>InfluxDB</code>存储</li>
+<li>通过<code>Grafana</code>展示</li>
+</ul>
+</li>
+</ul>
+<p><img src="https://image.crick.wang/mweb/16035425320745.jpg"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>上面的概念和组件有点复杂？我们先快速启动一个应用，通过界面看一下如何使用</p>
+<h3 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h3><p>可以通过一句docker命令启动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run --rm -it -p 9393:9393 springcloud&#x2F;spring-cloud-dataflow-server:2.6.3</span><br></pre></td></tr></table></figure>
+
+<p>通过 <a target="_blank" rel="noopener" href="http://localhost:9393/dashboard/#/about">http://localhost:9393/dashboard/#/about</a> 访问管理界面</p>
+<p><img src="https://image.crick.wang/mweb/16035229504390.jpg"></p>
+<p>注: <code>Schedules</code>未开启的原因是单机版的安装方式不支持定时任务。</p>
+<h3 id="创建-Application"><a href="#创建-Application" class="headerlink" title="创建 Application"></a>创建 Application</h3><p>提供了三种方式，但是要注意，<strong>不支持直接上传jar包或者发现运行中的应用，只能指定maven仓库地址(或者docker地址)进行拉取</strong></p>
+<p><img src="https://image.crick.wang/mweb/16035232360718.jpg"></p>
+<p>选用第二种(import from an HTTP URI location)，并选择官方<strong>Task Apps Maven</strong>示例，本质上是从官方拉取下列配置，在 第三种(import from properties) 中输入下列信息也是同样的效果。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">task.timestamp&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:timestamp-task:2.1.1.RELEASE</span><br><span class="line">task.timestamp.metadata&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:timestamp-task:jar:metadata:2.1.1.RELEASE</span><br><span class="line">task.composed-task-runner&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:composedtaskrunner-task:2.1.4.RELEASE</span><br><span class="line">task.composed-task-runner.metadata&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:composedtaskrunner-task:jar:metadata:2.1.4.RELEASE</span><br><span class="line">task.timestamp-batch&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:timestamp-batch-task:2.1.1.RELEASE</span><br><span class="line">task.timestamp-batch.metadata&#x3D;maven:&#x2F;&#x2F;org.springframework.cloud.task.app:timestamp-batch-task:jar:metadata:2.1.1.RELEASE</span><br></pre></td></tr></table></figure>
+
+<p>每个<code>application</code>需要指定应用地址和<code>metadata</code>信息地址。<code>metadata</code>会在使用过程中明确参数输入表单。如果未指定<code>metadata</code>地址，会尝试通过应用进行提取。</p>
+<p>导入的应用可以在应用列表中查看，可以通过<strong>show details</strong>查看应用的<code>metadata</code></p>
+<p><img src="https://image.crick.wang/mweb/16035445690603.jpg" alt="-w1439"></p>
+<p><code>metadata</code>通过KV形式展示</p>
+<p><img src="https://image.crick.wang/mweb/16035443539633.jpg" alt="-w1437"></p>
+<p><strong>注意: 这里有一个坑。</strong>如果你按照官方示例 <a target="_blank" rel="noopener" href="https://github.com/spring-cloud/spring-cloud-task/tree/master/spring-cloud-task-samples/timestamp">https://github.com/spring-cloud/spring-cloud-task/tree/master/spring-cloud-task-samples/timestamp</a> 新建了一个<code>Spring Cloud Task</code>, 会发现没办法查看<code>metadata</code>信息，原因是因为官方项目中缺少配置文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">classpath*:&#x2F;META-INF&#x2F;dataflow-configuration-metadata.properties</span><br></pre></td></tr></table></figure>
+
+<p>内容为<code>configuration-properties.classes</code>执行配置类</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">configuration-properties.classes&#x3D;wang.yuheng.SyncPrestoProperties</span><br></pre></td></tr></table></figure>
+
+<p><code>Spring Cloud Data Flow</code> 对<code>metadata</code>解析过程如下:</p>
+<p><img src="https://image.crick.wang/mweb/16035236462403.jpg"><br><img src="https://image.crick.wang/mweb/16035236677036.jpg"></p>
+<p><strong>另一个坑</strong>是，如果是<code>maven</code>地址，会先从**localRepository(.m2)**获取<code>jar</code>文件解析<code>metadata</code>。而如果你设置的是<code>docker</code>，每次都会通过网络进行<code>docker</code>鉴权并下载，无法直接判断本地是否存在，所以速度会比<code>maven</code>慢很多。</p>
+<h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p><img src="https://image.crick.wang/mweb/dataflow-task-lifecycle.gif" alt="dataflow-task-lifecycle"></p>
+<h4 id="创建-Task"><a href="#创建-Task" class="headerlink" title="创建 Task"></a>创建 Task</h4><p>可以通过页面或者DSL定义Task</p>
+<p><img src="https://image.crick.wang/mweb/16035444946051.jpg" alt="-w1425"></p>
+<p>创建好的<code>Task</code>会存在于<code>Tasks</code>列表中，可以在列表页查看<code>Task</code>详情或者执行任务(生成<code>job</code>)</p>
+<p><img src="https://image.crick.wang/mweb/16035449417864.jpg" alt="-w1435"></p>
+<p>如果通过<strong>Cloud</strong>方式进行部署，可以指定定时任务，相比普通任务，可以通过<code>cron expression</code>设置定时</p>
+<p><img src="https://image.crick.wang/mweb/16035451713208.jpg"><br><img src="https://image.crick.wang/mweb/16035451761383.jpg"></p>
+<h4 id="运行-Task"><a href="#运行-Task" class="headerlink" title="运行 Task"></a>运行 Task</h4><p>可以在<strong>Task</strong>列表中选择要执行的<strong>Task</strong>，并通过<strong>KV List</strong>的方式指定入参及properties。明确一下这2个概念</p>
+<ul>
+<li>properties: 配置参数，比如数据库配置</li>
+<li>Arguments: 方法入参，即 <code>String[] args</code></li>
+</ul>
+<p><img src="https://image.crick.wang/mweb/16035454202663.jpg" alt="-w1084"></p>
+<p>每次执行会生成一个<code>Job</code>记录，可以在<code>Task</code>或者<code>Job</code>列表中查看执行状态、日志等信息</p>
+<p><img src="https://image.crick.wang/mweb/16035454870024.jpg" alt="-w1421"></p>
+<h3 id="审计留痕"><a href="#审计留痕" class="headerlink" title="审计留痕"></a>审计留痕</h3><p><strong>Audit Records</strong>页面会看到触发数据及执行记录等信息，包括不同方式(Restful、Shell、WebUI)触发的行为。开启登录验证后可以查看操作人信息。</p>
+<p><img src="https://image.crick.wang/mweb/16036282823075.jpg" alt="-w1437"></p>
+<h3 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h3><p><img src="https://image.crick.wang/mweb/16029993900615.jpg"></p>
+<p>使用<code>Stream</code>需要依赖<code>skipper-server</code>和消息中间件，通过<strong>docker-compose</strong>启动</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">mysql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">mysql:5.7.25</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dataflow-mysql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">MYSQL_DATABASE:</span> <span class="string">dataflow</span></span><br><span class="line">      <span class="attr">MYSQL_USER:</span> <span class="string">root</span></span><br><span class="line">      <span class="attr">MYSQL_ROOT_PASSWORD:</span> <span class="string">rootpw</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="number">3306</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">kafka-broker:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">confluentinc/cp-kafka:5.3.1</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dataflow-kafka</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9092&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://kafka-broker:9092</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">KAFKA_ZOOKEEPER_CONNECT=zookeeper:2181</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">KAFKA_ADVERTISED_HOST_NAME=kafka-broker</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR=1</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">zookeeper</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">zookeeper:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">confluentinc/cp-zookeeper:5.3.1</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dataflow-kafka-zookeeper</span></span><br><span class="line">    <span class="attr">expose:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;2181&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">ZOOKEEPER_CLIENT_PORT=2181</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">dataflow-server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">springcloud/spring-cloud-dataflow-server:2.6.3</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dataflow-server</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;9393:9393&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.brokers=PLAINTEXT://kafka-broker:9092</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.streams.binder.brokers=PLAINTEXT://kafka-broker:9092</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.binder.zkNodes=zookeeper:2181</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">spring.cloud.dataflow.applicationProperties.stream.spring.cloud.stream.kafka.streams.binder.zkNodes=zookeeper:2181</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">spring.cloud.skipper.client.serverUri=http://skipper-server:7577/api</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dataflow</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_USERNAME=root</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_PASSWORD=rootpw</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">kafka-broker</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">&quot;./wait-for-it.sh mysql:3306 -- java -jar /maven/spring-cloud-dataflow-server.jar&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOST_MOUNT_PATH:-.&#125;:$&#123;DOCKER_MOUNT_PATH:-/root/scdf&#125;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">app-import:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">springcloud/openjdk:2.0.0.RELEASE</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">dataflow-app-import</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">dataflow-server</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">&gt;</span></span><br><span class="line">      <span class="string">/bin/sh</span> <span class="string">-c</span> <span class="string">&quot;</span></span><br><span class="line"><span class="string">        ./wait-for-it.sh -t 180 dataflow-server:9393;</span></span><br><span class="line"><span class="string">        wget -qO- &#x27;http://dataflow-server:9393/apps&#x27; --post-data=&#x27;uri=$&#123;STREAM_APPS_URI:-https://dataflow.spring.io/kafka-maven-latest&amp;force=true&#125;&#x27;;</span></span><br><span class="line"><span class="string">        echo &#x27;Stream apps imported&#x27;</span></span><br><span class="line"><span class="string">        wget -qO- &#x27;http://dataflow-server:9393/apps&#x27; --post-data=&#x27;uri=$&#123;TASK_APPS_URI:-https://dataflow.spring.io/task-maven-latest&amp;force=true&#125;&#x27;;</span></span><br><span class="line"><span class="string">        echo &#x27;Task apps imported&#x27;&quot;</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">skipper-server:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">springcloud/spring-cloud-skipper-server:2.5.2</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">skipper</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;7577:7577&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;20000-20105:20000-20105&quot;</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_LOW=20000</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_CLOUD_SKIPPER_SERVER_PLATFORM_LOCAL_ACCOUNTS_DEFAULT_PORTRANGE_HIGH=20100</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/dataflow</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_USERNAME=root</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_PASSWORD=rootpw</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">SPRING_DATASOURCE_DRIVER_CLASS_NAME=org.mariadb.jdbc.Driver</span></span><br><span class="line">    <span class="attr">entrypoint:</span> <span class="string">&quot;./wait-for-it.sh mysql:3306 -- java -jar /maven/spring-cloud-skipper-server.jar&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">$&#123;HOST_MOUNT_PATH:-.&#125;:$&#123;DOCKER_MOUNT_PATH:-/root/scdf&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建-Stream"><a href="#创建-Stream" class="headerlink" title="创建 Stream"></a>创建 Stream</h4><p>同样可以通过页面或者<strong>DSL</strong>按照<code>source-&gt;processor-&gt;sink</code>定义<strong>Stream</strong>。每个<code>source-&gt;processor-&gt;sink</code>是一个Stream，可以同时创建多个独立的<strong>Stream</strong></p>
+<p><img src="https://image.crick.wang/mweb/16035457542560.jpg" alt="-w1429"></p>
+<p><img src="https://image.crick.wang/mweb/16035457847721.jpg" alt="-w1343"></p>
+<h4 id="发布-Stream"><a href="#发布-Stream" class="headerlink" title="发布 Stream"></a>发布 Stream</h4><p><strong>Stream</strong> 创建成功后，需要通过<code>skipper-server</code>发布至<strong>Runtime</strong>，基于消息队列进行驱动并执行数据处理</p>
+<p><strong>注意</strong>: 如果要使用流，需要找一个支持流的持久化，如 <code>Redis</code></p>
+<p>在列表页可以查看<code>Stream</code>详情，或者发布<code>Stream</code>。</p>
+<p><img src="https://image.crick.wang/mweb/16036292349065.jpg" alt="-w1430"></p>
+<p>发布时需要指定每个<strong>Application</strong>的<strong>properties</strong>，并且指定资源限制。如果是发布至k8s环境，会根据集群配置进行分配。</p>
+<p><img src="https://image.crick.wang/mweb/%E6%88%AA%E5%B1%8F2020-10-24%20%E4%B8%8B%E5%8D%889.24.09.png" alt="截屏2020-10-24 下午9.24.09"></p>
+<p><strong>细节</strong>: 会按照<strong>label</strong>在<code>kafka</code>中创建对应的<strong>topic</strong></p>
+<p><img src="https://image.crick.wang/mweb/16035788009803.jpg" alt="-w1438"></p>
+<p>发布后可以在<strong>Runtime</strong>查看对应的<code>Stream</code>状态及详情</p>
+<p><img src="https://image.crick.wang/mweb/16035461293459.jpg"></p>
+<p><img src="https://image.crick.wang/mweb/16035763569958.jpg" alt="-w1357"></p>
+<p>通过<strong>docker-compose</strong>启动，所以会在<code>skipper-server</code>这台机器上运行相关Jar包作为<strong>消息Consumer</strong></p>
+<p><img src="https://image.crick.wang/mweb/16035781241462.jpg" alt="-w1427"></p>
+<h3 id="Shell"><a href="#Shell" class="headerlink" title="Shell"></a>Shell</h3><p>上述操作均可通过<code>命令行</code> or <code>Restful</code>进行调用，并且配置都可以导出为对应的配置文件(<code>DSL</code>、<code>Task</code>、<code>Stream</code>等)</p>
+<p><img src="https://image.crick.wang/mweb/16035799973264.jpg" alt="-w1434"></p>
+<p>基于此就可配合当前使用的<code>CICD</code>完成<code>devops</code>。</p>
+<p>想象一个场景，在你提交代码后，自动发布至某个环境等待运行。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">1. push code</span><br><span class="line">2. maven package</span><br><span class="line">3. deploy maven repository</span><br><span class="line">4. create application</span><br><span class="line">5. create task</span><br><span class="line">6. run task</span><br></pre></td></tr></table></figure>
+
+<h2 id="观点"><a href="#观点" class="headerlink" title="观点"></a>观点</h2><p>现实骨感，未来部分期待，如果你正在 All in Spring Cloud。<br>整体基于<strong>Spring Cloud</strong>，但是又拥抱<strong>docker</strong>。如果只是<strong>docker</strong>就可以去掉很多限制，就像是<strong>k8s</strong>和 <strong>Spring Cloud</strong> 组件本身就存在诸多重复</p>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>基于Spring微服务，无切换成本，可独立开发、测试</li>
+<li>完整的闭环，提供了从服务定制、管理、运行、监控全生命周期解决方案</li>
+<li>拖拽式UI操作界面，配合DSL，配置简单，页面看起来很现代(你知道我在讽刺谁)</li>
+</ol>
+<h3 id="中立"><a href="#中立" class="headerlink" title="中立"></a>中立</h3><ol>
+<li>未提供特定的计算引擎集群，类似 Flink、Spark 等</li>
+<li>不能覆盖工作流场景</li>
+<li>稳定性，目测现阶段上生产可以很快成为<strong>contributors</strong></li>
+<li>资源占用(看到有吐槽，但是未测试，不发表评论)</li>
+<li>前端使用页面angularjs编写</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>仅基于Spring微服务，比如一行命令 or 一句sql 必须通过Spring Cloud Task(or Stream) 编写。通过Java编写job，你需要一个高版本的JDK</li>
+<li>依赖<strong>maven repo</strong> (可能提供了http、ftp等其他方式，但是笔者没找到。。)</li>
+<li>如果涉及到大数据处理，还是要依靠Hadoop中的模块。那么为什么混用，而不是直接使用全家桶呢？</li>
+</ol>
+<h2 id="资料"><a href="#资料" class="headerlink" title="资料"></a>资料</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://dataflow.spring.io/docs/concepts/tooling/">https://dataflow.spring.io/docs/concepts/tooling/</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.springcloud.cc/spring-cloud-dataflow.html#_launching_a_task_externally_from_spring_cloud_data_flow">https://www.springcloud.cc/spring-cloud-dataflow.html#_launching_a_task_externally_from_spring_cloud_data_flow</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/springcloud/" rel="tag"># springcloud</a>
+              <a href="/tagcloud/%E5%A4%A7%E6%95%B0%E6%8D%AE/" rel="tag"># 大数据</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/17/github-profile-readme/" rel="prev" title="自定义Github个人首页">
+      <i class="fa fa-chevron-left"></i> 自定义Github个人首页
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/21/ddd-generator/" rel="next" title="如何用GraphQL+JavaPoet把前端逼成瓶颈">
+      如何用GraphQL+JavaPoet把前端逼成瓶颈 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2020/10/25/scdf/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

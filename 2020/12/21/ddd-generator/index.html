@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="AKA: 如何炒了自己 -_-# 代码已开源： https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用GraphQL+JavaPoet把前端逼成瓶颈">
+<meta property="og:url" content="https://blog.yuheng.wang/2020/12/21/ddd-generator/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="AKA: 如何炒了自己 -_-# 代码已开源： https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc">
+<meta property="og:locale">
+<meta property="og:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMTQ1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxMDAzcHg7aGVpZ2h0OjE0NXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTAwMyAxNDUiIHdpZHRoPSIxMDAzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFnbWdpM3l5ZjloNHEiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9IjEzNiIgeDI9IjEzNiIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSIzNjUiIHgyPSIzNjUiIHkxPSI0MC4yOTY5IiB5Mj0iMTAyLjI5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iNTg3IiB4Mj0iNTg3IiB5MT0iNDAuMjk2OSIgeTI9IjEwMi4yOTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9Ijg1NSIgeDI9Ijg1NSIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzNCIgeD0iMTciIHk9IjI0Ljk5NTEiPklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMzQiIHg9IjE3IiB5PSIxMjEuMjkyIj5JbnB1dFN0cmVhbSBmb3IgR3JhcGhxbFNjaGVtYTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjE4MiIgeD0iMjcyIiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY4IiB4PSIyNzkiIHk9IjI0Ljk5NTEiPlR5cGVEZWZpbml0aW9uUmVnaXN0cnk8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIxODIiIHg9IjI3MiIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjgiIHg9IjI3OSIgeT0iMTIxLjI5MiI+VHlwZURlZmluaXRpb25SZWdpc3RyeTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjIxIiB4PSI0NzUiIHk9IjI0Ljk5NTEiPlN0cmVhbSZsdDtEZ3JhcGhTY2hlbWFUeXBlJmd0OzwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSIxMDEuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyMSIgeD0iNDc1IiB5PSIxMjEuMjkyIj5TdHJlYW0mbHQ7RGdyYXBoU2NoZW1hVHlwZSZndDs8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIyNzIiIHg9IjcxNyIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI1OCIgeD0iNzI0IiB5PSIyNC45OTUxIj5TdHJlYW0mbHQ7U3RyaW5nJmd0OyBmb3IgRGdyYXBoU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjcyIiB4PSI3MTciIHk9IjEwMS4yOTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjU4IiB4PSI3MjQiIHk9IjEyMS4yOTIiPlN0cmVhbSZsdDtTdHJpbmcmZ3Q7IGZvciBEZ3JhcGhTY2hlbWE8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNTMsNTIuMjk2OSwzNjMsNTYuMjk2OSwzNTMsNjAuMjk2OSwzNTcsNTYuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTM2IiB4Mj0iMzU5IiB5MT0iNTYuMjk2OSIgeTI9IjU2LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjU3NS41LDY2LjI5NjksNTg1LjUsNzAuMjk2OSw1NzUuNSw3NC4yOTY5LDU3OS41LDcwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjM2NSIgeDI9IjU4MS41IiB5MT0iNzAuMjk2OSIgeTI9IjcwLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9Ijg0Myw4MC4yOTY5LDg1Myw4NC4yOTY5LDg0Myw4OC4yOTY5LDg0Nyw4NC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiIHgxPSI1ODcuNSIgeDI9Ijg0OSIgeTE9Ijg0LjI5NjkiIHkyPSI4NC4yOTY5Ii8+PCEtLU1ENT1bOTIxOTM2NDQxMmZiYjYzNmEyYmJjY2Y1YjA2NmY4NGFdCkBzdGFydHVtbA0KcGFydGljaXBhbnQgIklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hIiBhcyBBDQpwYXJ0aWNpcGFudCAiVHlwZURlZmluaXRpb25SZWdpc3RyeSIgYXMgVERSDQpwYXJ0aWNpcGFudCAiU3RyZWFtPERncmFwaFNjaGVtYVR5cGU+IiBhcyBTRFNUDQpwYXJ0aWNpcGFudCAiU3RyZWFtPFN0cmluZz4gZm9yIERncmFwaFNjaGVtYSIgYXMgU1MNCg0KQSAtPiBURFINClREUiAtPiBTRFNUDQpTRFNUIC0+IFNTDQpAZW5kdW1sDQoKUGxhbnRVTUwgdmVyc2lvbiAxLjIwMjEuM2JldGE2KFVua25vd24gY29tcGlsZSB0aW1lKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogSmF2YShUTSkgU0UgUnVudGltZSBFbnZpcm9ubWVudApKVk06IEphdmEgSG90U3BvdChUTSkgNjQtQml0IFNlcnZlciBWTQpEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogVVMKLS0+PC9nPjwvc3ZnPg==">
+<meta property="og:image" content="https://blog.yuheng.wang/2020/12/21/ddd-generator/media/15988734258249/16084659052797.jpg">
+<meta property="og:image" content="https://blog.yuheng.wang/2020/12/21/ddd-generator/media/15988734258249/16084660229221.jpg">
+<meta property="article:published_time" content="2020-12-20T16:17:03.000Z">
+<meta property="article:modified_time" content="2020-12-20T16:24:42.054Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="ddd">
+<meta property="article:tag" content="GraphQL">
+<meta property="article:tag" content="Arc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMTQ1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxMDAzcHg7aGVpZ2h0OjE0NXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTAwMyAxNDUiIHdpZHRoPSIxMDAzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFnbWdpM3l5ZjloNHEiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9IjEzNiIgeDI9IjEzNiIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSIzNjUiIHgyPSIzNjUiIHkxPSI0MC4yOTY5IiB5Mj0iMTAyLjI5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iNTg3IiB4Mj0iNTg3IiB5MT0iNDAuMjk2OSIgeTI9IjEwMi4yOTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9Ijg1NSIgeDI9Ijg1NSIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzNCIgeD0iMTciIHk9IjI0Ljk5NTEiPklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMzQiIHg9IjE3IiB5PSIxMjEuMjkyIj5JbnB1dFN0cmVhbSBmb3IgR3JhcGhxbFNjaGVtYTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjE4MiIgeD0iMjcyIiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY4IiB4PSIyNzkiIHk9IjI0Ljk5NTEiPlR5cGVEZWZpbml0aW9uUmVnaXN0cnk8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIxODIiIHg9IjI3MiIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjgiIHg9IjI3OSIgeT0iMTIxLjI5MiI+VHlwZURlZmluaXRpb25SZWdpc3RyeTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjIxIiB4PSI0NzUiIHk9IjI0Ljk5NTEiPlN0cmVhbSZsdDtEZ3JhcGhTY2hlbWFUeXBlJmd0OzwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSIxMDEuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyMSIgeD0iNDc1IiB5PSIxMjEuMjkyIj5TdHJlYW0mbHQ7RGdyYXBoU2NoZW1hVHlwZSZndDs8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIyNzIiIHg9IjcxNyIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI1OCIgeD0iNzI0IiB5PSIyNC45OTUxIj5TdHJlYW0mbHQ7U3RyaW5nJmd0OyBmb3IgRGdyYXBoU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjcyIiB4PSI3MTciIHk9IjEwMS4yOTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjU4IiB4PSI3MjQiIHk9IjEyMS4yOTIiPlN0cmVhbSZsdDtTdHJpbmcmZ3Q7IGZvciBEZ3JhcGhTY2hlbWE8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNTMsNTIuMjk2OSwzNjMsNTYuMjk2OSwzNTMsNjAuMjk2OSwzNTcsNTYuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTM2IiB4Mj0iMzU5IiB5MT0iNTYuMjk2OSIgeTI9IjU2LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjU3NS41LDY2LjI5NjksNTg1LjUsNzAuMjk2OSw1NzUuNSw3NC4yOTY5LDU3OS41LDcwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjM2NSIgeDI9IjU4MS41IiB5MT0iNzAuMjk2OSIgeTI9IjcwLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9Ijg0Myw4MC4yOTY5LDg1Myw4NC4yOTY5LDg0Myw4OC4yOTY5LDg0Nyw4NC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiIHgxPSI1ODcuNSIgeDI9Ijg0OSIgeTE9Ijg0LjI5NjkiIHkyPSI4NC4yOTY5Ii8+PCEtLU1ENT1bOTIxOTM2NDQxMmZiYjYzNmEyYmJjY2Y1YjA2NmY4NGFdCkBzdGFydHVtbA0KcGFydGljaXBhbnQgIklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hIiBhcyBBDQpwYXJ0aWNpcGFudCAiVHlwZURlZmluaXRpb25SZWdpc3RyeSIgYXMgVERSDQpwYXJ0aWNpcGFudCAiU3RyZWFtPERncmFwaFNjaGVtYVR5cGU+IiBhcyBTRFNUDQpwYXJ0aWNpcGFudCAiU3RyZWFtPFN0cmluZz4gZm9yIERncmFwaFNjaGVtYSIgYXMgU1MNCg0KQSAtPiBURFINClREUiAtPiBTRFNUDQpTRFNUIC0+IFNTDQpAZW5kdW1sDQoKUGxhbnRVTUwgdmVyc2lvbiAxLjIwMjEuM2JldGE2KFVua25vd24gY29tcGlsZSB0aW1lKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogSmF2YShUTSkgU0UgUnVudGltZSBFbnZpcm9ubWVudApKVk06IEphdmEgSG90U3BvdChUTSkgNjQtQml0IFNlcnZlciBWTQpEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogVVMKLS0+PC9nPjwvc3ZnPg==">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2020/12/21/ddd-generator/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>如何用GraphQL+JavaPoet把前端逼成瓶颈 | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-GraphQL-Schema-gt-Dgraphql-Schema"><span class="nav-number">1.</span> <span class="nav-text">1. GraphQL Schema -&gt; Dgraphql Schema</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-%E6%A6%82%E5%BF%B5"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 概念:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E6%96%B9%E6%A1%88"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%B3%A8%E6%84%8F"><span class="nav-number">1.3.</span> <span class="nav-text">1.3 注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GraphQL-Schema-gt-JavaCode"><span class="nav-number">2.</span> <span class="nav-text">2. GraphQL Schema -&gt; JavaCode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-JavaPoet"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 JavaPoet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 实现</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%B3%A8%E6%84%8F"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Maven-Plugin"><span class="nav-number">3.</span> <span class="nav-text">3. Maven Plugin</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E6%95%88%E6%9E%9C"><span class="nav-number">4.</span> <span class="nav-text">4. 效果</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-0-%E6%B7%BB%E5%8A%A0Maven%E6%8F%92%E4%BB%B6%E4%BE%9D%E8%B5%96"><span class="nav-number">4.1.</span> <span class="nav-text">4.0 添加Maven插件依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-%E5%88%9B%E5%BB%BAschema-%E9%BB%98%E8%AE%A4%E8%B7%AF%E5%BE%84%E4%B8%BA-resources-graphql-schema-graphqls"><span class="nav-number">4.2.</span> <span class="nav-text">4.1 创建schema. 默认路径为 resources:graphql&#x2F;schema.graphqls</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-%E6%96%B0%E5%BB%BA%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%8C-%E9%BB%98%E8%AE%A4%E8%B7%AF%E5%BE%84%E4%B8%BA-resources-arc-generator-json"><span class="nav-number">4.3.</span> <span class="nav-text">4.2 新建配置文件， 默认路径为 resources:arc-generator.json</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-%E6%89%A7%E8%A1%8C%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-number">4.4.</span> <span class="nav-text">4.3 执行命令行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-4-%E4%BB%A3%E7%A0%81%E7%94%9F%E6%88%90"><span class="nav-number">4.5.</span> <span class="nav-text">4.4 代码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-%E7%BC%BA%E9%99%B7"><span class="nav-number">5.</span> <span class="nav-text">5. 缺陷</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-GraphQL%E6%8F%8F%E8%BF%B0%E5%8A%9B%E4%B8%8D%E5%A4%9F%E3%80%82%E5%8F%AA%E6%8F%8F%E8%BF%B0%E6%9D%A5%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%B8%8E%E7%B1%BB%E5%9E%8B%EF%BC%8C%E6%B2%A1%E6%9C%89%E6%8F%8F%E8%BF%B0%E6%95%B0%E6%8D%AE%E5%AD%98%E5%82%A8%E5%8F%AF%E8%83%BD%E4%BC%9A%E7%94%A8%E5%88%B0%E7%9A%84%E4%B8%BB%E9%94%AE%E3%80%81%E7%B4%A2%E5%BC%95%E3%80%81%E7%BC%93%E5%AD%98%E7%AD%89%E4%BF%A1%E6%81%AF%EF%BC%8C%E4%BB%A5%E5%8F%8ADDD%E4%B8%AD%E7%9A%84%E9%99%90%E7%95%8C%E4%B8%8A%E4%B8%8B%E6%96%87-BoundedContext-%E3%80%81%E8%81%9A%E5%90%88%E6%A0%B9-AggregateRoot-%E7%AD%89%E6%A6%82%E5%BF%B5"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 GraphQL描述力不够。只描述来数据结构与类型，没有描述数据存储可能会用到的主键、索引、缓存等信息，以及DDD中的限界上下文(BoundedContext)、聚合根(AggregateRoot)等概念</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-%E7%94%9F%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81%E5%92%8C%E5%AE%9E%E7%8E%B0%E4%BB%A3%E7%A0%81%E6%B7%B7%E5%90%88%EF%BC%8C%E5%A6%82%E4%BD%95%E8%BF%9B%E8%A1%8Ccode-review%EF%BC%9F"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 生成的代码和实现代码混合，如何进行code review？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-Dgraph%E6%9B%B4%E6%96%B0%E6%97%B6%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%EF%BC%9F"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 Dgraph更新时数据如何处理？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E4%BB%8D%E9%9C%80%E7%BC%96%E5%86%99%E5%AE%9E%E7%8E%B0%E7%B1%BB-%E7%94%9F%E6%88%90%E7%9A%84%E4%BB%A3%E7%A0%81%E6%98%AF%E5%90%A6%E5%85%81%E8%AE%B8%E7%BC%96%E8%BE%91%EF%BC%9F"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 仍需编写实现类(生成的代码是否允许编辑？)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-5-%E8%87%AA%E5%8A%A8%E5%8C%96%E7%94%9F%E6%88%90%E5%90%8E%E5%8F%91%E7%8E%B0%E6%97%A0%E4%BA%8B%E5%8F%AF%E5%81%9A%EF%BC%8C%E4%B8%8D%E5%8F%AF%E6%9B%BF%E4%BB%A3%E6%80%A7%E5%A6%82%E4%BD%95%E4%BF%9D%E9%9A%9C%EF%BC%9F"><span class="nav-number">5.5.</span> <span class="nav-text">5.5 自动化生成后发现无事可做，不可替代性如何保障？</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2020/12/21/ddd-generator/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          如何用GraphQL+JavaPoet把前端逼成瓶颈
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-12-21 00:17:03" itemprop="dateCreated datePublished" datetime="2020-12-21T00:17:03+08:00">2020-12-21</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ddd/" itemprop="url" rel="index"><span itemprop="name">ddd</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>AKA: 如何炒了自己 -_-#</p>
+<p>代码已开源： <a target="_blank" rel="noopener" href="https://github.com/YituHealthcare/Arc">https://github.com/YituHealthcare/Arc</a></p>
+<span id="more"></span>
+
+<p>上篇文章<a target="_blank" rel="noopener" href="https://wangyuheng.github.io/2020/08/09/ddd-graphql-dgraph/">《DDD探险——基于GraphQL+Dgraph实践》</a>中提到了一种假设</p>
+<blockquote>
+<p>如果前端能通过领域模型进行数据操作，能否通过<code>GraphQL Schema</code>同时描述领域模型、API接口以及数据库结构？</p>
+</blockquote>
+<p>基于此假设提供了<code>Arc</code>框架，同时采用<code>Dgraph</code>作为数据存储。<br>既然我们已经有了<strong>Schema</strong>，能否基于这个描述自动生成系统实现？通过降低开发成本、提升效率，达成快速迭代、试错<strong>领域模型</strong>的目的。</p>
+<p>尝试通过<strong>代码生成器</strong>来完成这个假设。</p>
+<h2 id="1-GraphQL-Schema-gt-Dgraphql-Schema"><a href="#1-GraphQL-Schema-gt-Dgraphql-Schema" class="headerlink" title="1. GraphQL Schema -&gt; Dgraphql Schema"></a>1. GraphQL Schema -&gt; Dgraphql Schema</h2><h3 id="1-1-概念"><a href="#1-1-概念" class="headerlink" title="1.1 概念:"></a>1.1 概念:</h3><ol>
+<li><strong>Dgraph Schema:</strong> <code>Dgraph</code>数据库结构化语句，类似<code>mysql</code>中的<strong>DDL</strong></li>
+<li><strong>predicate:</strong> <code>Dgraph</code>的数据库字段，一个<code>predicate</code>可以被多个<code>type</code>使用</li>
+<li><strong>domainClass:</strong> <code>Arc</code>框架中定义<code>javaBean</code>类型，用于反序列化</li>
+</ol>
+<h3 id="1-2-方案"><a href="#1-2-方案" class="headerlink" title="1.2 方案"></a>1.2 方案</h3><p>解析<code>GraphQL Schema</code>后，根据转换逻辑生成<code>Dgraph Schema</code></p>
+<img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMTQ1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxMDAzcHg7aGVpZ2h0OjE0NXB4OyIgdmVyc2lvbj0iMS4xIiB2aWV3Qm94PSIwIDAgMTAwMyAxNDUiIHdpZHRoPSIxMDAzcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFnbWdpM3l5ZjloNHEiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9IjEzNiIgeDI9IjEzNiIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wO3N0cm9rZS1kYXNoYXJyYXk6NS4wLDUuMDsiIHgxPSIzNjUiIHgyPSIzNjUiIHkxPSI0MC4yOTY5IiB5Mj0iMTAyLjI5NjkiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDtzdHJva2UtZGFzaGFycmF5OjUuMCw1LjA7IiB4MT0iNTg3IiB4Mj0iNTg3IiB5MT0iNDAuMjk2OSIgeTI9IjEwMi4yOTY5Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7c3Ryb2tlLWRhc2hhcnJheTo1LjAsNS4wOyIgeDE9Ijg1NSIgeDI9Ijg1NSIgeTE9IjQwLjI5NjkiIHkyPSIxMDIuMjk2OSIvPjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzNCIgeD0iMTciIHk9IjI0Ljk5NTEiPklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjQ4IiB4PSIxMCIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMzQiIHg9IjE3IiB5PSIxMjEuMjkyIj5JbnB1dFN0cmVhbSBmb3IgR3JhcGhxbFNjaGVtYTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjE4MiIgeD0iMjcyIiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTY4IiB4PSIyNzkiIHk9IjI0Ljk5NTEiPlR5cGVEZWZpbml0aW9uUmVnaXN0cnk8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIxODIiIHg9IjI3MiIgeT0iMTAxLjI5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNjgiIHg9IjI3OSIgeT0iMTIxLjI5MiI+VHlwZURlZmluaXRpb25SZWdpc3RyeTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSI1Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjIxIiB4PSI0NzUiIHk9IjI0Ljk5NTEiPlN0cmVhbSZsdDtEZ3JhcGhTY2hlbWFUeXBlJmd0OzwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjFnbWdpM3l5ZjloNHEpIiBoZWlnaHQ9IjMwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjIzNSIgeD0iNDY4IiB5PSIxMDEuMjk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyMSIgeD0iNDc1IiB5PSIxMjEuMjkyIj5TdHJlYW0mbHQ7RGdyYXBoU2NoZW1hVHlwZSZndDs8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2YxZ21naTN5eWY5aDRxKSIgaGVpZ2h0PSIzMC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIyNzIiIHg9IjcxNyIgeT0iNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI1OCIgeD0iNzI0IiB5PSIyNC45OTUxIj5TdHJlYW0mbHQ7U3RyaW5nJmd0OyBmb3IgRGdyYXBoU2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmMWdtZ2kzeXlmOWg0cSkiIGhlaWdodD0iMzAuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMjcyIiB4PSI3MTciIHk9IjEwMS4yOTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjU4IiB4PSI3MjQiIHk9IjEyMS4yOTIiPlN0cmVhbSZsdDtTdHJpbmcmZ3Q7IGZvciBEZ3JhcGhTY2hlbWE8L3RleHQ+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNTMsNTIuMjk2OSwzNjMsNTYuMjk2OSwzNTMsNjAuMjk2OSwzNTcsNTYuMjk2OSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7IiB4MT0iMTM2IiB4Mj0iMzU5IiB5MT0iNTYuMjk2OSIgeTI9IjU2LjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjU3NS41LDY2LjI5NjksNTg1LjUsNzAuMjk2OSw1NzUuNSw3NC4yOTY5LDU3OS41LDcwLjI5NjkiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIgeDE9IjM2NSIgeDI9IjU4MS41IiB5MT0iNzAuMjk2OSIgeTI9IjcwLjI5NjkiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9Ijg0Myw4MC4yOTY5LDg1Myw4NC4yOTY5LDg0Myw4OC4yOTY5LDg0Nyw4NC4yOTY5IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiIHgxPSI1ODcuNSIgeDI9Ijg0OSIgeTE9Ijg0LjI5NjkiIHkyPSI4NC4yOTY5Ii8+PCEtLU1ENT1bOTIxOTM2NDQxMmZiYjYzNmEyYmJjY2Y1YjA2NmY4NGFdCkBzdGFydHVtbA0KcGFydGljaXBhbnQgIklucHV0U3RyZWFtIGZvciBHcmFwaHFsU2NoZW1hIiBhcyBBDQpwYXJ0aWNpcGFudCAiVHlwZURlZmluaXRpb25SZWdpc3RyeSIgYXMgVERSDQpwYXJ0aWNpcGFudCAiU3RyZWFtPERncmFwaFNjaGVtYVR5cGU+IiBhcyBTRFNUDQpwYXJ0aWNpcGFudCAiU3RyZWFtPFN0cmluZz4gZm9yIERncmFwaFNjaGVtYSIgYXMgU1MNCg0KQSAtPiBURFINClREUiAtPiBTRFNUDQpTRFNUIC0+IFNTDQpAZW5kdW1sDQoKUGxhbnRVTUwgdmVyc2lvbiAxLjIwMjEuM2JldGE2KFVua25vd24gY29tcGlsZSB0aW1lKQooR1BMIHNvdXJjZSBkaXN0cmlidXRpb24pCkphdmEgUnVudGltZTogSmF2YShUTSkgU0UgUnVudGltZSBFbnZpcm9ubWVudApKVk06IEphdmEgSG90U3BvdChUTSkgNjQtQml0IFNlcnZlciBWTQpEZWZhdWx0IEVuY29kaW5nOiBVVEYtOApMYW5ndWFnZTogZW4KQ291bnRyeTogVVMKLS0+PC9nPjwvc3ZnPg=='>
+
+<p>注意<code>Arc</code>框架限制</p>
+<ol>
+<li>DB结构中拥有框架依赖通用<code>predicate</code>，如 <code>domainClass</code></li>
+<li>为了解决<code>predicate</code>跨<code>type</code>定义问题，<code>dgraph</code>中的<code>predicate</code>命名增加<code>type</code>为<strong>前缀</strong></li>
+</ol>
+<h3 id="1-3-注意"><a href="#1-3-注意" class="headerlink" title="1.3 注意"></a>1.3 注意</h3><ol>
+<li>需要框架提供根据<code>DgraphSchema</code>自动初始化数据库的能力</li>
+</ol>
+<h2 id="2-GraphQL-Schema-gt-JavaCode"><a href="#2-GraphQL-Schema-gt-JavaCode" class="headerlink" title="2. GraphQL Schema -&gt; JavaCode"></a>2. GraphQL Schema -&gt; JavaCode</h2><h3 id="2-1-JavaPoet"><a href="#2-1-JavaPoet" class="headerlink" title="2.1 JavaPoet"></a>2.1 JavaPoet</h3><blockquote>
+<p>JavaPoet is a Java API for generating .java source files.</p>
+</blockquote>
+<p>通过<code>JavaPoet</code>可以方便、详细的描述<strong>Java源文件</strong>并生成。</p>
+<p>看官方issue发现很多人希望提供快速生成<code>getter</code>、<code>setter</code>方法的方式，官方并未采纳，给出的回复是</p>
+<blockquote>
+<p>Basically we’re a tool for generating exactly what you tell us and not a tool for inferring code to generate. You can write a static method or helper class which can produce a field, getter, and setting in one shot onto a TypeSpec.Builder.</p>
+</blockquote>
+<p>这个回复也明确了<code>JavaPoet</code>的定位。其实生成相关方法的方式非常简单</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FieldSpecGenSetter</span> <span class="keyword">implements</span> <span class="title">Function</span>&lt;<span class="title">FieldSpec</span>, <span class="title">MethodSpec</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MethodSpec <span class="title">apply</span><span class="params">(FieldSpec fieldSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodSpec.methodBuilder(<span class="string">&quot;set&quot;</span> + StringUtils.capitalize(fieldSpec.name))</span><br><span class="line">                .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                .addParameter(fieldSpec.type, fieldSpec.name)</span><br><span class="line">                .addStatement(<span class="string">&quot;this.$L = $L&quot;</span>, fieldSpec.name, fieldSpec.name)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">FieldSpecGenGetter</span> <span class="keyword">implements</span> <span class="title">Function</span>&lt;<span class="title">FieldSpec</span>, <span class="title">MethodSpec</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> MethodSpec <span class="title">apply</span><span class="params">(FieldSpec fieldSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodSpec.methodBuilder(GenSpecUtil.getGetterPrefix(fieldSpec) + StringUtils.capitalize(fieldSpec.name))</span><br><span class="line">                .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                .addStatement(<span class="string">&quot;return $L&quot;</span>, fieldSpec.name)</span><br><span class="line">                .returns(fieldSpec.type)</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>提供一个生成<code>Builder</code>的示例，基本涵盖了全部定义</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TypeSpecGenBuilder</span> <span class="keyword">implements</span> <span class="title">UnaryOperator</span>&lt;<span class="title">TypeSpec</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> TypeSpec <span class="title">apply</span><span class="params">(TypeSpec source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (CollectionUtils.isEmpty(source.fieldSpecs)) &#123;</span><br><span class="line">            <span class="keyword">return</span> source;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            TypeSpec target = TypeSpec.classBuilder(source.name + <span class="string">&quot;Builder&quot;</span>).build();</span><br><span class="line">            <span class="keyword">return</span> source.toBuilder()</span><br><span class="line">                    .addMethod(getAllArgsConstructor(source.fieldSpecs))</span><br><span class="line">                    .addMethod(getNoArgsConstructor())</span><br><span class="line">                    .addMethod(getBuilderInstanceMethod(target))</span><br><span class="line">                    .addType(getBuilderType(source, target))</span><br><span class="line">                    .build();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> MethodSpec <span class="title">getAllArgsConstructor</span><span class="params">(List&lt;FieldSpec&gt; fieldSpecs)</span> </span>&#123;</span><br><span class="line">        MethodSpec.Builder builder = MethodSpec.constructorBuilder()</span><br><span class="line">                .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                .addParameters(fieldSpecs.stream().map(f -&gt; ParameterSpec.builder(f.type, f.name).build()).collect(Collectors.toList()));</span><br><span class="line">        fieldSpecs.forEach(fieldSpec -&gt; builder.addStatement(<span class="string">&quot;this.$L = $L&quot;</span>, fieldSpec.name, fieldSpec.name));</span><br><span class="line">        <span class="keyword">return</span> builder.build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> MethodSpec <span class="title">getNoArgsConstructor</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodSpec.constructorBuilder().addModifiers(Modifier.PUBLIC).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> MethodSpec <span class="title">getBuilderInstanceMethod</span><span class="params">(TypeSpec target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodSpec.methodBuilder(<span class="string">&quot;builder&quot;</span>)</span><br><span class="line">                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)</span><br><span class="line">                .returns(getType(target))</span><br><span class="line">                .addStatement(<span class="string">&quot;return new $T()&quot;</span>, getType(target))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> TypeSpec <span class="title">getBuilderType</span><span class="params">(TypeSpec source, TypeSpec target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> target.toBuilder()</span><br><span class="line">                .addFields(source.fieldSpecs.stream().map(it -&gt; FieldSpec.builder(it.type, it.name, Modifier.PRIVATE).build()).collect(Collectors.toList()))</span><br><span class="line">                .addModifiers(Modifier.PUBLIC, Modifier.STATIC)</span><br><span class="line">                .addMethod(MethodSpec.constructorBuilder().addModifiers(Modifier.PRIVATE).build())</span><br><span class="line">                .addMethods(getBuilderSetMethodSpecList(source, target))</span><br><span class="line">                .addMethod(getSourceInstanceMethod(source))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> List&lt;MethodSpec&gt; <span class="title">getBuilderSetMethodSpecList</span><span class="params">(TypeSpec source, TypeSpec target)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> source.fieldSpecs.stream()</span><br><span class="line">                .map(fieldSpec -&gt; MethodSpec.methodBuilder(fieldSpec.name)</span><br><span class="line">                        .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                        .returns(getType(target))</span><br><span class="line">                        .addParameter(ParameterSpec.builder(fieldSpec.type, fieldSpec.name).build())</span><br><span class="line">                        .addStatement(<span class="string">&quot;this.$L = $L&quot;</span>, fieldSpec.name, fieldSpec.name)</span><br><span class="line">                        .addStatement(<span class="string">&quot;return this&quot;</span>)</span><br><span class="line">                        .build()).collect(Collectors.toList());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> MethodSpec <span class="title">getSourceInstanceMethod</span><span class="params">(TypeSpec source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> MethodSpec.methodBuilder(<span class="string">&quot;build&quot;</span>)</span><br><span class="line">                .addStatement(<span class="string">&quot;return new $L($L)&quot;</span>, source.name, source.fieldSpecs.stream().map(f -&gt; f.name).collect(Collectors.joining(<span class="string">&quot;,&quot;</span>)))</span><br><span class="line">                .addModifiers(Modifier.PUBLIC)</span><br><span class="line">                .returns(ClassName.get(<span class="string">&quot;&quot;</span>, source.name))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> TypeName <span class="title">getType</span><span class="params">(TypeSpec typeSpec)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> ClassName.get(<span class="string">&quot;&quot;</span>, typeSpec.name);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-实现"><a href="#2-2-实现" class="headerlink" title="2.2 实现"></a>2.2 实现</h3><p>基于 <code>graphql-java</code> 解析 <code>GraphqlSchema</code>，通过 <code>javapoet</code> 按照<code>Arc</code>约束生成相关<strong>java文件</strong></p>
+<ul>
+<li><code>Graphql Enum</code> -&gt; <code>dictionary</code></li>
+<li><code>Graphql input</code> -&gt; <code>input</code></li>
+<li><code>Graphql type</code> -&gt; <code>type</code>、<code>api</code>、<code>repository</code></li>
+</ul>
+<h3 id="2-3-注意"><a href="#2-3-注意" class="headerlink" title="2.3 注意"></a>2.3 注意</h3><ol>
+<li>通过只提供<code>interface</code>方式，避免修改生成的代码。保障每次<strong>schema</strong>变更后都可以重新生成。</li>
+<li>如果存在需要修改生成代码的场景，通过<strong>配置</strong>方式跳过相关<strong>Java源文件</strong>生成。</li>
+</ol>
+<h2 id="3-Maven-Plugin"><a href="#3-Maven-Plugin" class="headerlink" title="3. Maven Plugin"></a>3. Maven Plugin</h2><p>生成逻辑通过上述定义完成后，如何触发生成的动作？<strong>Maven插件</strong>是一个不错的选择。<br>只需要继承<code>AbstractMojo</code>在<code>Override execute()</code>中调用相关生成方法即可。这里暂不展开<strong>如何开发Maven插件</strong>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Mojo(name = &quot;generate&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GeneratorMojo</span> <span class="keyword">extends</span> <span class="title">AbstractMojo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Parameter(defaultValue = &quot;$&#123;project&#125;&quot;, readonly = true, required = true)</span></span><br><span class="line">    <span class="keyword">private</span> MavenProject project;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Parameter(defaultValue = &quot;$&#123;basedir&#125;/src/main/resources/arc-generator.json&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> File configJson;</span><br><span class="line">    <span class="meta">@Parameter(defaultValue = &quot;$&#123;basedir&#125;/src/main/resources/graphql/schema.graphqls&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> File schemaPath;</span><br><span class="line">    <span class="meta">@Parameter(property = &quot;target&quot;, defaultValue = &quot;all&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String target;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TARGET_ALL = <span class="string">&quot;all&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TARGET_JAVA = <span class="string">&quot;java&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TARGET_DGRAPH = <span class="string">&quot;dgraph&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">execute</span><span class="params">()</span> <span class="keyword">throws</span> MojoExecutionException, MojoFailureException </span>&#123;</span><br><span class="line">        <span class="keyword">final</span> CodeGenConfig config = getConfig();</span><br><span class="line">        <span class="keyword">if</span> (TARGET_ALL.equalsIgnoreCase(target) || TARGET_JAVA.equalsIgnoreCase(target)) &#123;</span><br><span class="line">            generateJava(config);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (TARGET_ALL.equalsIgnoreCase(target) || TARGET_DGRAPH.equalsIgnoreCase(target)) &#123;</span><br><span class="line">            generateDgraph(config);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后再命令行执行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn arc:generate</span><br></pre></td></tr></table></figure>
+<p>即可按照配置及规则生成相关代码。也可以通过参数决定只生成<strong>java代码</strong>，不生成 <code>Dgraph Schema</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn arc:generate -Dtarget=java</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-效果"><a href="#4-效果" class="headerlink" title="4. 效果"></a>4. 效果</h2><h3 id="4-0-添加Maven插件依赖"><a href="#4-0-添加Maven插件依赖" class="headerlink" title="4.0 添加Maven插件依赖"></a>4.0 添加Maven插件依赖</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.yituhealthcare<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>arc-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.4.0<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-1-创建schema-默认路径为-resources-graphql-schema-graphqls"><a href="#4-1-创建schema-默认路径为-resources-graphql-schema-graphqls" class="headerlink" title="4.1 创建schema. 默认路径为 resources:graphql/schema.graphqls"></a>4.1 创建schema. 默认路径为 resources:graphql/schema.graphqls</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">scalar DateTime</span><br><span class="line"></span><br><span class="line">schema&#123;</span><br><span class="line">    query: Query,</span><br><span class="line">    mutation: Mutation</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Query&#123;</span><br><span class="line">    project(</span><br><span class="line">        id: String</span><br><span class="line">    ): Project</span><br><span class="line">    users: [User]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Mutation&#123;</span><br><span class="line">    createProject(</span><br><span class="line">        payload: ProjectInput</span><br><span class="line">    ): Project</span><br><span class="line">    createMilestone(</span><br><span class="line">        payload: MilestoneInput</span><br><span class="line">    ): Milestone</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">项目分类</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">enum ProjectCategory &#123;</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    示例项目</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    DEMO</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    生产项目</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    PRODUCTION</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">名称</span><br><span class="line">为了达到某个产品迭代、产品模块开发、或者科研调研等目的所做的工作.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">type Project&#123;</span><br><span class="line">    id: String!</span><br><span class="line">    name: String!</span><br><span class="line">    description: String!</span><br><span class="line">    category: ProjectCategory</span><br><span class="line">    createTime: DateTime!</span><br><span class="line">    milestones(</span><br><span class="line">        status: MilestoneStatus</span><br><span class="line">    ): [Milestone]</span><br><span class="line">&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">里程碑</span><br><span class="line">表述一个Project的某个时间阶段及阶段性目标. 一个Project可以同时拥有多个处于相同或者不同阶段的Milestone.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">type Milestone&#123;</span><br><span class="line">    id: String!</span><br><span class="line">    name: String!</span><br><span class="line">    status: MilestoneStatus</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type User &#123;</span><br><span class="line">    name: String!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">里程碑状态</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">enum MilestoneStatus&#123;</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    未开始</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    NOT_STARTED,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    进行中</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    DOING,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    发布</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    RELEASE,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    关闭</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    CLOSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">input ProjectInput&#123;</span><br><span class="line">    name: String!</span><br><span class="line">    description: String!</span><br><span class="line">    vendorBranches: [String!]!</span><br><span class="line">    category: ProjectCategory!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">input MilestoneInput&#123;</span><br><span class="line">    projectId: String!</span><br><span class="line">    name: String!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-新建配置文件，-默认路径为-resources-arc-generator-json"><a href="#4-2-新建配置文件，-默认路径为-resources-arc-generator-json" class="headerlink" title="4.2 新建配置文件， 默认路径为 resources:arc-generator.json"></a>4.2 新建配置文件， 默认路径为 resources:arc-generator.json</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;basePackage&quot;</span>: <span class="string">&quot;com.github.yituhealthcare.arcgeneratorsample&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;dropAll&quot;</span>: <span class="literal">false</span>,</span><br><span class="line">  <span class="attr">&quot;genStrategies&quot;</span>: [</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;codeGenOperation&quot;</span>: <span class="string">&quot;SKIP_IF_EXISTED&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;codeGenType&quot;</span>: <span class="string">&quot;REPO&quot;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    &#123;</span><br><span class="line">      <span class="attr">&quot;codeGenOperation&quot;</span>: <span class="string">&quot;OVERRIDE&quot;</span>,</span><br><span class="line">      <span class="attr">&quot;codeGenType&quot;</span>: <span class="string">&quot;API&quot;</span></span><br><span class="line">    &#125;</span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;ignoreJavaFileNames&quot;</span>: [</span><br><span class="line">    <span class="string">&quot;User&quot;</span></span><br><span class="line">  ],</span><br><span class="line">  <span class="attr">&quot;dgraphPath&quot;</span>: <span class="string">&quot;dgraph/schema.dgraph&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-执行命令行"><a href="#4-3-执行命令行" class="headerlink" title="4.3 执行命令行"></a>4.3 执行命令行</h3><p><img src="media/15988734258249/16084659052797.jpg" alt="-w688"></p>
+<h3 id="4-4-代码生成"><a href="#4-4-代码生成" class="headerlink" title="4.4 代码生成"></a>4.4 代码生成</h3><p><img src="media/15988734258249/16084660229221.jpg" alt="-w942"></p>
+<p>在聊清楚schema后，只需要执行一行命令，然后编写一个实现类即可完成接口服务的开发。在schema修改后，重复执行这个过程。</p>
+<h2 id="5-缺陷"><a href="#5-缺陷" class="headerlink" title="5. 缺陷"></a>5. 缺陷</h2><h3 id="5-1-GraphQL描述力不够。只描述来数据结构与类型，没有描述数据存储可能会用到的主键、索引、缓存等信息，以及DDD中的限界上下文-BoundedContext-、聚合根-AggregateRoot-等概念"><a href="#5-1-GraphQL描述力不够。只描述来数据结构与类型，没有描述数据存储可能会用到的主键、索引、缓存等信息，以及DDD中的限界上下文-BoundedContext-、聚合根-AggregateRoot-等概念" class="headerlink" title="5.1 GraphQL描述力不够。只描述来数据结构与类型，没有描述数据存储可能会用到的主键、索引、缓存等信息，以及DDD中的限界上下文(BoundedContext)、聚合根(AggregateRoot)等概念"></a>5.1 GraphQL描述力不够。只描述来数据结构与类型，没有描述数据存储可能会用到的主键、索引、缓存等信息，以及DDD中的限界上下文(BoundedContext)、聚合根(AggregateRoot)等概念</h3><p>可以通过自定义directive实现相关扩展定义，比如: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">scalar DateTime</span><br><span class="line">directive @Cache on FIELD_DEFINITION</span><br><span class="line">directive @Alloftext on FIELD_DEFINITION</span><br><span class="line">directive @AggregateRoot on OBJECT</span><br><span class="line"></span><br><span class="line">type Project @AggregateRoot &#123;</span><br><span class="line">    id: String!</span><br><span class="line">    name: String! @Cache @Alloftext</span><br><span class="line">    description: String!</span><br><span class="line">    createTime: DateTime!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>但是这个时候<code>QL</code>已经变成了<code>DSL</code>，需要考虑额外的学习、推广成本</p>
+<h3 id="5-2-生成的代码和实现代码混合，如何进行code-review？"><a href="#5-2-生成的代码和实现代码混合，如何进行code-review？" class="headerlink" title="5.2 生成的代码和实现代码混合，如何进行code review？"></a>5.2 生成的代码和实现代码混合，如何进行code review？</h3><p>schema和生成的代码先提交一次PR，对schema进行review。之后的实现代码再单独提交PR</p>
+<h3 id="5-3-Dgraph更新时数据如何处理？"><a href="#5-3-Dgraph更新时数据如何处理？" class="headerlink" title="5.3 Dgraph更新时数据如何处理？"></a>5.3 Dgraph更新时数据如何处理？</h3><p>已经上线后无法自动迭代。数据版本迁移不应属于开发过程</p>
+<h3 id="5-4-仍需编写实现类-生成的代码是否允许编辑？"><a href="#5-4-仍需编写实现类-生成的代码是否允许编辑？" class="headerlink" title="5.4 仍需编写实现类(生成的代码是否允许编辑？)"></a>5.4 仍需编写实现类(生成的代码是否允许编辑？)</h3><p>理想情况是完全通过代码生成完成相关实现。但是实际业务并不是简单的crud，如果通过schema描述复杂业务，就会发现本质上是通过schema来编写另一种java代码。所以只生成interface，需要开发者补全相关实现。让schema专注于描述DDD。不排除提供生成简单crud实现的功能，在修改了相关实现类后，再通过配置<code>SKIP_IF_EXISTED</code>跳过相关实现</p>
+<h3 id="5-5-自动化生成后发现无事可做，不可替代性如何保障？"><a href="#5-5-自动化生成后发现无事可做，不可替代性如何保障？" class="headerlink" title="5.5 自动化生成后发现无事可做，不可替代性如何保障？"></a>5.5 自动化生成后发现无事可做，不可替代性如何保障？</h3><p>-_-#</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/ddd/" rel="tag"># ddd</a>
+              <a href="/tagcloud/GraphQL/" rel="tag"># GraphQL</a>
+              <a href="/tagcloud/Arc/" rel="tag"># Arc</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/10/25/scdf/" rel="prev" title="Spring Cloud Data Flow 入门">
+      <i class="fa fa-chevron-left"></i> Spring Cloud Data Flow 入门
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/12/25/jetbrains-open-source-license/" rel="next" title="还在全网找IDEA激活码？快去官网免费申请JetBrains全家桶License！">
+      还在全网找IDEA激活码？快去官网免费申请JetBrains全家桶License！ <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2020/12/21/ddd-generator/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

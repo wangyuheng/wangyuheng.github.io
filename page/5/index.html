@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="天行健 男儿当立志！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wangyuheng&#39;s Blog">
+<meta property="og:url" content="https://blog.yuheng.wang/page/5/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="天行健 男儿当立志！">
+<meta property="og:locale">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="wangyuheng, blog, java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.yuheng.wang/page/5/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content index posts-expand">
+          
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/29/painter-13/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/29/painter-13/" class="post-title-link" itemprop="url">绘画板 13——变形 (下)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-29 14:27:49" itemprop="dateCreated datePublished" datetime="2016-09-29T14:27:49+08:00">2016-09-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h3><p>变形这部分代码比较多，所以分为上下两部分。在(上)中已经实现了左侧中间点的变形操作。但是一共有8个操作点，为了避免混乱，抽离handle.border.listener.js提供8个点的变形方法。</p>
+<h4 id="y轴移动"><a href="#y轴移动" class="headerlink" title="y轴移动"></a>y轴移动</h4><p>之前左侧中间点的操作可以视为x轴移动，现在只需要实现y轴移动的算法，即可实现8个点的移动。因为角落的四个点其实就是同时向2个方向移动。</p>
+<p>以topCenter为例，设定Top，以上为正方向，1为向上运动，-1为向下运动。</p>
+<p>  var tTop = 1; </p>
+<p>计算鼠标y轴移动距离</p>
+<p>  var dy = currPoint.y - lastPoint.y;</p>
+<p>屏幕左上角为(0,0)点，所以图形的新高度为 </p>
+<pre><code>var height = ele.height() - tTop * dy;
+</code></pre>
+<p>判断height，如果小于0，说明达到图形的y轴0点，要根据y轴进行翻转。</p>
+<pre><code>var height = ele.height() - tTop * dy;
+if (height &gt; 0) &#123;
+    var newY = ele.y() + tTop * dy;
+    ele.y(newY).height(height);
+&#125; else &#123;
+    //invert
+    tTop = -tTop;
+    ele.height(-height).matrix(new SVG.Matrix(ele).flip(&#39;y&#39;, ele.bbox().cy));
+&#125;
+</code></pre>
+<h4 id="成员变量"><a href="#成员变量" class="headerlink" title="成员变量"></a>成员变量</h4><p>根据x、y两个方向的移动，推测出需要如下成员变量</p>
+<pre><code>var lastPoint;
+var xLeft;
+var yTop;
+var ele;
+</code></pre>
+<p>ele可以在初始化时完成，为当前操作的元素，lastPoint、xLeft、yTop需要在开始拖拽时初始化。</p>
+<h4 id="通用方法"><a href="#通用方法" class="headerlink" title="通用方法"></a>通用方法</h4><p>为了节省代码，抽象了4个通用方法left(dx)、right(dx)、top(dy)、bottom(dy)</p>
+<p>8个操作点根据需要，获取当前的鼠标移动距离，并调用其中的1或2个通用方法，即可实现变形效果。</p>
+<h4 id="绑定并触发"><a href="#绑定并触发" class="headerlink" title="绑定并触发"></a>绑定并触发</h4><p>在构造函数中，除了初始化ele，还需要给ele绑定对应的事件。</p>
+<p>在HandleBorder中，监听8个操作点的dragstart和dragmove事件，调用对应方法。</p>
+<pre><code>var HandleBorderListener = function(targetElement) &#123;
+    ele = targetElement;
+    ele.on(&#39;leftCenterDragStart&#39;, leftCenterDragStart);
+    ele.on(&#39;leftCenterDragMove&#39;, leftCenterDragMove);
+    ele.on(&#39;rightCenterDragStart&#39;, rightCenterDragStart);
+    ele.on(&#39;rightCenterDragMove&#39;, rightCenterDragMove);
+    ele.on(&#39;topCenterDragStart&#39;, topCenterDragStart);
+    ele.on(&#39;topCenterDragMove&#39;, topCenterDragMove);
+    ele.on(&#39;bottomCenterDragStart&#39;, bottomCenterDragStart);
+    ele.on(&#39;bottomCenterDragMove&#39;, bottomCenterDragMove);
+    ele.on(&#39;leftTopDragStart&#39;, leftTopDragStart);
+    ele.on(&#39;leftTopDragMove&#39;, leftTopDragMove);
+    ele.on(&#39;leftBottomDragStart&#39;, leftBottomDragStart);
+    ele.on(&#39;leftBottomDragMove&#39;, leftBottomDragMove);
+    ele.on(&#39;rightTopDragStart&#39;, rightTopDragStart);
+    ele.on(&#39;rightTopDragMove&#39;, rightTopDragMove);
+    ele.on(&#39;rightBottomDragStart&#39;, rightBottomDragStart);
+    ele.on(&#39;rightBottomDragMove&#39;, rightBottomDragMove);
+&#125;
+</code></pre>
+<p>在HandleBorder中，在create方法中 </p>
+<pre><code>_this.rectLeftCenter.on(&quot;dragstart&quot;, function() &#123;
+    _this.currentElement.fire(&quot;leftCenterDragStart&quot;, &#123;
+        currPoint: event.detail.p
+    &#125;);
+&#125;);
+_this.rectLeftCenter.on(&quot;dragmove&quot;, function() &#123;
+    _this.currentElement.fire(&quot;leftCenterDragMove&quot;, &#123;
+        currPoint: event.detail.p
+    &#125;);
+&#125;);
+_this.rectLeftCenter.on(&quot;afterdragmove&quot;, function() &#123;
+    _this.rebound(_this.currentElement.bbox());
+&#125;);
+</code></pre>
+<h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><p>完整代码如下</p>
+<pre><code>(function() &#123;
+    var lastPoint;
+    var xLeft;
+    var yTop;
+    var ele;
+
+    function left(dx) &#123;
+        var width = ele.width() - xLeft * dx;
+        if (width &gt; 0) &#123;
+            var newX = ele.x() + xLeft * dx;
+            ele.x(newX).width(width);
+        &#125; else &#123;
+            //invert
+            xLeft = -xLeft;
+            ele.x(ele.bbox().x2).width(-width).matrix(new SVG.Matrix(ele).flip(&#39;x&#39;, ele.bbox().cx));
+        &#125;
+    &#125;
+
+    function right(dx) &#123;
+        var width = ele.width() - xLeft * dx;
+        if (width &gt; 0) &#123;
+            ele.width(width);
+        &#125; else &#123;
+            //invert
+            xLeft = -xLeft;
+            ele.width(-width).matrix(new SVG.Matrix(ele).flip(&#39;x&#39;, ele.bbox().cx));
+        &#125;
+    &#125;
+
+    function top(dy) &#123;
+        var height = ele.height() - tTop * dy;
+        if (height &gt; 0) &#123;
+            var newY = ele.y() + tTop * dy;
+            ele.y(newY).height(height);
+        &#125; else &#123;
+            //invert
+            tTop = -tTop;
+            ele.height(-height).matrix(new SVG.Matrix(ele).flip(&#39;y&#39;, ele.bbox().cy));
+        &#125;
+    &#125;
+
+    function bottom(dy) &#123;
+        var height = ele.height() - tTop * dy;
+        if (height &gt; 0) &#123;
+            ele.height(height);
+        &#125; else &#123;
+            //invert
+            tTop = -tTop;
+            ele.height(-height).matrix(new SVG.Matrix(ele).flip(&#39;y&#39;, ele.bbox().cy));
+        &#125;
+    &#125;
+
+    function leftCenterDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = 1;
+    &#125;
+
+    function leftCenterDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        left(dx);
+        lastPoint = currPoint;
+    &#125;
+
+    function rightCenterDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = -1;
+    &#125;
+
+    function rightCenterDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        right(dx);
+        lastPoint = currPoint;
+    &#125;
+
+    function topCenterDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        tTop = 1;
+    &#125;
+
+    function topCenterDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dy = currPoint.y - lastPoint.y;
+        top(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    function bottomCenterDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        tTop = -1;
+    &#125;
+
+    function bottomCenterDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dy = currPoint.y - lastPoint.y;
+        bottom(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    function leftTopDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = 1;
+        tTop = 1;
+    &#125;
+
+    function leftTopDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        var dy = currPoint.y - lastPoint.y;
+        left(dx);
+        top(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    function leftBottomDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = 1;
+        tTop = -1;
+    &#125;
+
+    function leftBottomDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        var dy = currPoint.y - lastPoint.y;
+        left(dx);
+        bottom(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    function rightTopDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = -1;
+        tTop = 1;
+    &#125;
+
+    function rightTopDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        var dy = currPoint.y - lastPoint.y;
+        right(dx);
+        top(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    function rightBottomDragStart(data) &#123;
+        lastPoint = data.detail.currPoint;
+        xLeft = -1;
+        tTop = -1;
+    &#125;
+
+    function rightBottomDragMove(data) &#123;
+        var currPoint = data.detail.currPoint;
+        var dx = currPoint.x - lastPoint.x;
+        var dy = currPoint.y - lastPoint.y;
+        right(dx);
+        bottom(dy);
+        lastPoint = currPoint;
+    &#125;
+
+    var HandleBorderListener = function(targetElement) &#123;
+        ele = targetElement;
+        ele.on(&#39;leftCenterDragStart&#39;, leftCenterDragStart);
+        ele.on(&#39;leftCenterDragMove&#39;, leftCenterDragMove);
+        ele.on(&#39;rightCenterDragStart&#39;, rightCenterDragStart);
+        ele.on(&#39;rightCenterDragMove&#39;, rightCenterDragMove);
+        ele.on(&#39;topCenterDragStart&#39;, topCenterDragStart);
+        ele.on(&#39;topCenterDragMove&#39;, topCenterDragMove);
+        ele.on(&#39;bottomCenterDragStart&#39;, bottomCenterDragStart);
+        ele.on(&#39;bottomCenterDragMove&#39;, bottomCenterDragMove);
+        ele.on(&#39;leftTopDragStart&#39;, leftTopDragStart);
+        ele.on(&#39;leftTopDragMove&#39;, leftTopDragMove);
+        ele.on(&#39;leftBottomDragStart&#39;, leftBottomDragStart);
+        ele.on(&#39;leftBottomDragMove&#39;, leftBottomDragMove);
+        ele.on(&#39;rightTopDragStart&#39;, rightTopDragStart);
+        ele.on(&#39;rightTopDragMove&#39;, rightTopDragMove);
+        ele.on(&#39;rightBottomDragStart&#39;, rightBottomDragStart);
+        ele.on(&#39;rightBottomDragMove&#39;, rightBottomDragMove);
+    &#125;
+
+    this.HandleBorderListener = HandleBorderListener;
+&#125;)();
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/28/painter-12/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/28/painter-12/" class="post-title-link" itemprop="url">绘画板 12——变形 (上)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-28 10:40:21" itemprop="dateCreated datePublished" datetime="2016-09-28T10:40:21+08:00">2016-09-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="变形"><a href="#变形" class="headerlink" title="变形"></a>变形</h3><p>既然实现了拖拽效果，就可以在此基础上，实现另一个效果：变形。</p>
+<h4 id="HandlerBorder"><a href="#HandlerBorder" class="headerlink" title="HandlerBorder"></a>HandlerBorder</h4><p>在实现变形效果之前，先讲解一下HandlerBorder。这是在pick时，选中元素后，在元素周围出现的4个黑框。 现在将其扩展为8个黑框，拖拽黑框，实现元素的变形效果。</p>
+<p>先分析一下HandlerBorder的代码</p>
+<pre><code>(function() &#123;
+
+    var sideLength = 8;
+    var sideWidth = &#123;
+        width: 1
+    &#125;;
+
+    var HandleBorder = function(svgDoc) &#123;
+        this.init(svgDoc);
+    &#125;
+
+    HandleBorder.prototype = &#123;
+        constructor: HandleBorder,
+        init: function(svgDoc) &#123;
+            this.currentSvgDoc = svgDoc;
+            this.create();
+            return this;
+        &#125;,
+    &#125;;
+
+    HandleBorder.prototype.create = function() &#123;
+        var _this = this;
+
+        _this.handleBorderGroup = _this.currentSvgDoc.group();
+
+        _this.blockGroup = _this.handleBorderGroup.group();
+
+        _this.rectLeftTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectLeftBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectRightTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectRightBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+
+        _this.rectLeftCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectRightCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectTopCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+        _this.rectBottomCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth);
+
+    &#125;;
+
+    HandleBorder.prototype.rebound = function(bbox) &#123;
+        var _this = this;
+
+        var x1 = bbox.x;
+        var y1 = bbox.y;
+        var x2 = bbox.x2;
+        var y2 = bbox.y2;
+        _this.rectLeftTop.move(x1 - sideLength, y1 - sideLength);
+        _this.rectLeftBottom.move(x1 - sideLength, y2);
+        _this.rectRightTop.move(x2, y1 - sideLength);
+        _this.rectRightBottom.move(x2, y2);
+
+        _this.rectLeftCenter.move(x1 - sideLength, (y2 + y1 - sideLength) / 2);
+        _this.rectRightCenter.move(x2, (y2 + y1 - sideLength) / 2);
+        _this.rectTopCenter.move((x2 + x1 - sideLength) / 2, y1 - sideLength);
+        _this.rectBottomCenter.move((x2 + x1 - sideLength) / 2, y2);
+
+    &#125;;
+
+    HandleBorder.prototype.show = function(svgEle) &#123;
+        if (!svgEle) &#123;
+            return;
+        &#125;
+        this.currentElement = svgEle;
+        this.handleBorderGroup.show();
+
+        this.rebound(svgEle.bbox());
+    &#125;;
+
+    HandleBorder.prototype.hide = function() &#123;
+        this.handleBorderGroup.hide();
+    &#125;;
+
+    this.HandleBorder = HandleBorder;
+
+&#125;)();
+</code></pre>
+<ol>
+<li>HandleBorder有一个构造函数，调用create方法。create方法中创建了一个group，并在group中创建8个矩形。</li>
+<li>在调用HandleBorder时，先new一个实例，然后调用其show方法，先将8个矩形的group显示出来，再重新设定其位置rebound。</li>
+<li>rebound方法根据元素边框坐标和小矩形的边长，计算其位置，分布在4个边角与4个边长中点。</li>
+</ol>
+<h4 id="变形原理"><a href="#变形原理" class="headerlink" title="变形原理"></a>变形原理</h4><ol>
+<li>将HandleBorder中的8个小矩形，作为操作框，绑定可拖拽效果。</li>
+<li>拖拽时，判断其移动距离与方向，使图形对应改变宽高，达到变形效果。</li>
+<li>为了避免拖拽时，操作框移动到任意位置，每次拖拽时，重新设置其位置rebound。</li>
+</ol>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><h5 id="实现拖拽"><a href="#实现拖拽" class="headerlink" title="实现拖拽"></a>实现拖拽</h5><p>小矩形增加.draggable()方法调用。</p>
+<pre><code>_this.rectLeftTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectLeftBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectRightTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectRightBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+
+_this.rectLeftCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectRightCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectTopCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+_this.rectBottomCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+</code></pre>
+<h5 id="绑定拖拽事件"><a href="#绑定拖拽事件" class="headerlink" title="绑定拖拽事件"></a>绑定拖拽事件</h5><p>以左侧中心点操作框 rectLeftCenter 为例</p>
+<p>在dragstart时，获取鼠标所在坐标lastPoint</p>
+<pre><code>var lastPoint = null;
+_this.rectLeftCenter.on(&quot;dragstart&quot;, function(event) &#123;
+    lastPoint = event.detail.p;
+&#125;);
+</code></pre>
+<p>event.detail中包含4个成员变量，可以参考svg.draggable.js中的代码</p>
+<pre><code>this.el.fire(&#39;dragstart&#39;, &#123;event: e, p: this.startPoints.point, m: this.m, handler: this&#125;)
+</code></pre>
+<p>绑定dragmove事件，并重新计算鼠标坐标。</p>
+<pre><code>_this.rectLeftCenter.on(&quot;dragmove&quot;, function() &#123;
+    var currPoint = event.detail.p;
+    lastPoint = currPoint;
+&#125;);
+</code></pre>
+<h5 id="计算图形改变"><a href="#计算图形改变" class="headerlink" title="计算图形改变"></a>计算图形改变</h5><p>dragmove时可以活动当前坐标和上次坐标，计算出x轴移动的距离 </p>
+<pre><code>var dx = currPoint.x - lastPoint.x;
+</code></pre>
+<p>定义一个变量xLeft = 1;表明鼠标移动方向，向左移动，则为1， 否则为-1; 并在拖拽开始时，初始化</p>
+<pre><code>_this.rectLeftCenter.on(&quot;dragstart&quot;, function(event) &#123;
+    lastPoint = event.detail.p;
+    xLeft = 1;
+&#125;);
+    
+</code></pre>
+<p>新的元素宽度为 </p>
+<pre><code>var width = ele.width() - xLeft * dx;
+</code></pre>
+<p>判断width是否大于0，如果大于0，则表示正向移动， 则新坐标x为</p>
+<pre><code>var newX = ele.x() + xLeft * dx;
+</code></pre>
+<p>重新设定元素的x坐标和width，即可实现变形效果。</p>
+<pre><code>ele.x(newX).width(width);
+</code></pre>
+<p>如果为反向移动，则width小于 0，此时反转xLeft，坐标原点应为元素的bbox的x2点，并根据x的中点做flip翻转。</p>
+<pre><code>xLeft = -xLeft;
+ele.x(ele.bbox().x2).width(-width).matrix(new SVG.Matrix(ele).flip(&#39;x&#39;, ele.bbox().cx));
+</code></pre>
+<h5 id="反转坐标复位"><a href="#反转坐标复位" class="headerlink" title="反转坐标复位"></a>反转坐标复位</h5><p>翻转之后的rebound无法复原，需要在rebound同样执行矩阵。</p>
+<pre><code>this.blockGroup.matrix(new SVG.Matrix(_this.currentElement));
+</code></pre>
+<h5 id="限制拖拽轨迹"><a href="#限制拖拽轨迹" class="headerlink" title="限制拖拽轨迹"></a>限制拖拽轨迹</h5><p>为了避免拖拽时，小矩形可以任意移动，则在拖拽时，执行rebound操作校准。svg.draggable.js默认为提供此事件，扩展svg.draggable.js 增加如下方法。在DragHander.prototype.drag的结尾处增加 </p>
+<pre><code>// so we can use it in the end-method, too
+this.el.fire(&#39;afterdragmove&#39;, &#123; event: e, p: p, m: this.m, handler: this &#125;);
+</code></pre>
+<p>并在小矩形中监听次事件，执行复位校准。</p>
+<pre><code>_this.rectLeftCenter.on(&quot;afterdragmove&quot;, function() &#123;
+    _this.rebound(_this.currentElement.bbox());
+&#125;);
+</code></pre>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>handle.border.js完整代码如下</p>
+<pre><code>(function() &#123;
+
+    var sideLength = 8;
+    var sideWidth = &#123;
+        width: 1
+    &#125;;
+
+    var HandleBorder = function(svgDoc) &#123;
+        this.init(svgDoc);
+    &#125;
+
+    HandleBorder.prototype = &#123;
+        constructor: HandleBorder,
+        init: function(svgDoc) &#123;
+            this.currentSvgDoc = svgDoc;
+            this.create();
+            return this;
+        &#125;,
+    &#125;;
+
+    HandleBorder.prototype.create = function() &#123;
+        var _this = this;
+
+        _this.handleBorderGroup = _this.currentSvgDoc.group();
+
+        _this.blockGroup = _this.handleBorderGroup.group();
+
+        _this.rectLeftTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectLeftBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectRightTop = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectRightBottom = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+
+        _this.rectLeftCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectRightCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectTopCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+        _this.rectBottomCenter = this.blockGroup.rect(sideLength, sideLength).stroke(sideWidth).draggable();
+
+
+        var lastPoint = null;
+        var xLeft;
+        _this.rectLeftCenter.on(&quot;dragstart&quot;, function(event) &#123;
+            lastPoint = event.detail.p;
+            xLeft = 1;
+        &#125;);
+
+        _this.rectLeftCenter.on(&quot;dragmove&quot;, function() &#123;
+            var currPoint = event.detail.p;
+            var currPoint = event.detail.p;
+            var dx = currPoint.x - lastPoint.x;
+
+            var ele = _this.currentElement;
+            var width = ele.width() - xLeft * dx;
+
+            if (width &gt; 0) &#123;
+                var newX = ele.x() + xLeft * dx;
+                ele.x(newX).width(width);
+            &#125; else &#123;
+                //invert
+                xLeft = -xLeft;
+                ele.x(ele.bbox().x2).width(-width).matrix(new SVG.Matrix(ele).flip(&#39;x&#39;, ele.bbox().cx));
+            &#125;
+
+            lastPoint = currPoint;
+        &#125;);
+        _this.rectLeftCenter.on(&quot;afterdragmove&quot;, function() &#123;
+            _this.rebound(_this.currentElement.bbox());
+        &#125;);
+
+    &#125;;
+
+
+    HandleBorder.prototype.rebound = function(bbox) &#123;
+        var _this = this;
+
+        var x1 = bbox.x;
+        var y1 = bbox.y;
+        var x2 = bbox.x2;
+        var y2 = bbox.y2;
+        _this.rectLeftTop.move(x1 - sideLength, y1 - sideLength);
+        _this.rectLeftBottom.move(x1 - sideLength, y2);
+        _this.rectRightTop.move(x2, y1 - sideLength);
+        _this.rectRightBottom.move(x2, y2);
+
+        _this.rectLeftCenter.move(x1 - sideLength, (y2 + y1 - sideLength) / 2);
+        _this.rectRightCenter.move(x2, (y2 + y1 - sideLength) / 2);
+        _this.rectTopCenter.move((x2 + x1 - sideLength) / 2, y1 - sideLength);
+        _this.rectBottomCenter.move((x2 + x1 - sideLength) / 2, y2);
+
+        this.blockGroup.matrix(new SVG.Matrix(_this.currentElement));
+    &#125;;
+
+    HandleBorder.prototype.show = function(svgEle) &#123;
+        if (!svgEle) &#123;
+            return;
+        &#125;
+        this.currentElement = svgEle;
+        this.handleBorderGroup.show();
+
+        this.rebound(svgEle.bbox());
+    &#125;;
+
+    HandleBorder.prototype.hide = function() &#123;
+        this.handleBorderGroup.hide();
+    &#125;;
+
+    this.HandleBorder = HandleBorder;
+
+&#125;)();
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>涉及到数学思维，总是绕不出去，只能不断的试错。</p>
+<p>为每个操作框绑定事件太繁琐，是否可以通用？</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/26/painter-11/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/26/painter-11/" class="post-title-link" itemprop="url">绘画板 11——拖拽</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-26 14:58:19" itemprop="dateCreated datePublished" datetime="2016-09-26T14:58:19+08:00">2016-09-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="拖拽"><a href="#拖拽" class="headerlink" title="拖拽"></a>拖拽</h3><p>使用svgjs官方推荐的拖拽插件<a target="_blank" rel="noopener" href="https://github.com/wout/svg.draggable.js">https://github.com/wout/svg.draggable.js</a> 实现元素的拖拽效果</p>
+<p>暴露了4种事件监听 </p>
+<ul>
+<li>  beforedrag</li>
+<li>  dragstart</li>
+<li>  dragmove (you can call preventDefault on this one)</li>
+<li>  dragend</li>
+</ul>
+<p>可以根据需要结合。</p>
+<p>在Element 的mouseover事件监听中，执行 _ele.draggable(); 方法，实现元素的可拖拽效果</p>
+<p>为了避免拖拽后，触发click事件，导致pick状态变更，在这里监听了dragend事件，并将pick状态设置为未选中，则click事件触发时，一定会处理为选中。</p>
+<pre><code>(function() &#123;
+
+    SVG.extend(SVG.Doc, &#123;
+        transformPoint: function(event) &#123;
+            event = event || window.event;
+            var touches = event.changedTouches &amp;&amp; event.changedTouches[0] || event;
+            var node = this.node;
+            var point = node.createSVGPoint();
+            point.x = touches.pageX - window.scrollX;
+            point.y = touches.pageY - window.scrollY;
+            var matrix = node.getScreenCTM().inverse();
+            return point.matrixTransform(matrix);
+        &#125;
+    &#125;);
+
+    SVG.extend(SVG.Element, &#123;
+        pickable: function(enabled) &#123;
+            var _ele = this;
+            GlobalStatus.pushElements(_ele);
+            var color = _ele._stroke;
+            var width = _ele.attr(&quot;stroke-width&quot;);
+            _ele.on(&quot;mouseover&quot;, function() &#123;
+                console.log(&quot;element mouseover&quot;);
+                if (GlobalStatus.isPicked()) &#123;
+                    _ele.stroke(&#123;
+                        width: width * 2,
+                        color: &#39;red&#39;
+                    &#125;);
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;pointer&quot;);
+                    _ele.draggable();
+                    return false;
+                &#125; else if (GlobalStatus.isPreFilled()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_fill.cur), auto&quot;);
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_delete.cur), auto&quot;);
+                &#125;
+                _ele.draggable(false);
+
+            &#125;);
+            _ele.on(&quot;mouseout&quot;, function() &#123;
+                if (GlobalStatus.isPicked()) &#123;
+                    _ele.stroke(&#123;
+                        width: width,
+                        color: color
+                    &#125;);
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125; else if (GlobalStatus.isPreFilled()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125;
+
+            &#125;);
+            _ele.on(&quot;click&quot;, function() &#123;
+                console.log(&quot;click&quot;);
+                if (GlobalStatus.isPreFilled()) &#123;
+                    if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                        _ele.fill(GlobalStatus.getFillColor());
+                        _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+                    &#125; else &#123;
+                        _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+                    &#125;
+
+                &#125; else if (GlobalStatus.isPicked()) &#123;
+                    if (_ele.attr(&quot;picked&quot;)) &#123;
+                        _ele.fire(&quot;unPick&quot;);
+                    &#125; else &#123;
+                        _ele.fire(&quot;pick&quot;);
+                    &#125;
+
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    _ele.remove();
+                &#125;
+            &#125;);
+            _ele.on(&quot;mousedown&quot;, function(event) &#123;
+                console.log(&quot;element mousedown&quot;);
+                if (GlobalStatus.isPicked()) &#123;
+                    event.preventDefault();
+                    event.stopPropagation();
+                    return false;
+                &#125;
+            &#125;);
+
+            _ele.on(&quot;dragend&quot;, function(event) &#123;
+                console.log(&quot;element dragend&quot;);
+                _ele.fire(&quot;unPick&quot;);
+            &#125;);
+            _ele.on(&quot;beforedrag&quot;, function(event) &#123;
+                console.log(&quot;element beforedrag&quot;);
+            &#125;);
+            _ele.on(&quot;pick&quot;, function() &#123;
+                console.log(&quot;pick&quot;);
+                _ele.attr(&quot;picked&quot;, true);
+                _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+                _ele.handleBorder.showShade(_ele);
+                GlobalStatus.pushPicked(_ele);
+            &#125;);
+            _ele.on(&quot;unPick&quot;, function() &#123;
+                console.log(&quot;unPick&quot;);
+                _ele.attr(&quot;picked&quot;, null);
+                _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+                GlobalStatus.removePicked(_ele);
+
+            &#125;);
+            return this;
+        &#125;
+
+    &#125;);
+&#125;)();
+</code></pre>
+<p>mouseover中的draggable();和 dragend事件中的fire(“unPick”);都不是很好的设计，需要重构。</p>
+<h3 id="bug修复"><a href="#bug修复" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="dragend事件中的fire-“unPick”"><a href="#dragend事件中的fire-“unPick”" class="headerlink" title="dragend事件中的fire(“unPick”)"></a>dragend事件中的fire(“unPick”)</h4><p>针对dragend事件中的fire(“unPick”); 修改设计思路，在element记录开始拖拽时的坐标点数据，和dragend进行比较，如果坐标改变，表示元素发生移动，则按拖拽处理，需要触发fire(“unPick”); 否则，按照click事件处理。</p>
+<pre><code>_ele.dragStartPoint = null;
+_ele.on(&quot;dragstart&quot;, function(event) &#123;
+    console.log(&quot;element dragstart&quot;);
+    _ele.dragStartPoint = event.detail.p;
+&#125;);
+_ele.on(&quot;dragend&quot;, function(event) &#123;
+    console.log(&quot;element dragend&quot;);
+    if (_ele.dragStartPoint.x == event.detail.p.x &amp;&amp; _ele.dragStartPoint.y == event.detail.p.y) &#123;
+
+    &#125; else &#123;
+        _ele.fire(&quot;unPick&quot;);
+    &#125;
+&#125;);
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/26/painter-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/26/painter-10/" class="post-title-link" itemprop="url">绘画板 10——多选元素</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-26 10:57:16" itemprop="dateCreated datePublished" datetime="2016-09-26T10:57:16+08:00">2016-09-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="多选元素"><a href="#多选元素" class="headerlink" title="多选元素"></a>多选元素</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>在选择按钮状态下，可以绘制一个曲线矩形，遍历所有元素判断，如果当前元素在矩形的坐标范围内，则元素被选中。</p>
+<p>矩形四个点的坐标范围为x,x+width,y,y+height</p>
+<h4 id="变更element-click事件"><a href="#变更element-click事件" class="headerlink" title="变更element click事件"></a>变更element click事件</h4><p>选择元素时，需要触发元素选中事件。如果触发click，会增加额外判断，并延时。所以单独抽离pick事件，将click中的事件处理指向pick</p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (GlobalStatus.isPreFilled()) &#123;
+        if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+            _ele.fill(GlobalStatus.getFillColor());
+            _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+        &#125; else &#123;
+            _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+        &#125;
+
+    &#125; else if (GlobalStatus.isPicked()) &#123;
+        _ele.fire(&quot;pick&quot;);
+    &#125; else if (GlobalStatus.isRecycle()) &#123;
+        _ele.remove();
+    &#125;
+&#125;);
+_ele.on(&quot;pick&quot;, function() &#123;
+    if (_ele.attr(&quot;picked&quot;)) &#123;
+        _ele.attr(&quot;picked&quot;, null);
+        _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+        GlobalStatus.removePicked(_ele);
+    &#125; else &#123;
+        _ele.attr(&quot;picked&quot;, true);
+        _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+        _ele.handleBorder.showShade(_ele);
+        GlobalStatus.pushPicked(_ele);
+
+    &#125;
+&#125;);
+</code></pre>
+<h4 id="新增draw-tool-pick-js"><a href="#新增draw-tool-pick-js" class="headerlink" title="新增draw.tool.pick.js"></a>新增draw.tool.pick.js</h4><p>新增DrawTool.Pick，操作与Rect类似，唯一的区别在于mouseup时判断元素是否在绘制的虚线矩形范围内，并对应触发pick事件。</p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    function mousedown(event) &#123;
+        console.log(&#39;pick mousedown&#39;);
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&#123;
+            &quot;fill-opacity&quot;: GlobalStatus.getFillOpacity(),
+            &quot;stroke-dasharray&quot;: &quot;13 10&quot;
+        &#125;).stroke(&#123;
+            width: &quot;1&quot;,
+            color: &quot;grey&quot;
+        &#125;);
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;pick mousemove&#39;);
+        if (drawing) &#123;
+            var svgPoint = svgDoc.transformPoint(event);
+            var x = svgPoint.x;
+            var y = svgPoint.y;
+
+            var newWidth = x - startPoint.x;
+            var newHeight = y - startPoint.y;
+            var startX = startPoint.x;
+            var startY = startPoint.y;
+            if (newWidth &lt; 0) &#123;
+                startX += newWidth;
+            &#125;
+
+            if (newHeight &lt; 0) &#123;
+                startY += newHeight;
+            &#125;
+            newWidth = Math.abs(newWidth);
+            newHeight = Math.abs(newHeight);
+            element.x(startX).y(startY).width(newWidth).height(newHeight);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;pick mouseup &#39; + element);
+        drawing = false;
+        if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+            var sx = element.x();
+            var ex = element.x() + element.width();
+            var sy = element.y();
+            var ey = element.y() + element.height();
+            $(GlobalStatus.getAllElements()).each(function() &#123;
+                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
+                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
+                    if (!this.attr(&quot;picked&quot;)) &#123;
+                        this.fire(&quot;pick&quot;);
+                    &#125;
+                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
+                    this.fire(&quot;pick&quot;);
+                &#125;
+            &#125;)
+        &#125;
+        parent.removeElement(element);
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Pick = function(parentEle) &#123;
+        parent = parentEle;
+        console.log(parent);
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Pick = Pick;
+
+&#125;)();
+</code></pre>
+<h4 id="首页监听选择按钮"><a href="#首页监听选择按钮" class="headerlink" title="首页监听选择按钮"></a>首页监听选择按钮</h4><p>在首页监听选择按钮，被选中时，创建DrawTool.Pick对象</p>
+<pre><code>$(&quot;#tool_pick&quot;).on(&quot;click&quot;, function() &#123;
+    resetCurrentDrawTool();
+    currentDrawTool = new DrawTool.Pick(svgDoc);
+&#125;);
+</code></pre>
+<h3 id="弊端"><a href="#弊端" class="headerlink" title="弊端"></a>弊端</h3><p>有一个不足的地方，元素必须全在范围内，才能被选中。如果被选中部分，则无法选中。没想到好的解决方案。</p>
+<h3 id="bug修复"><a href="#bug修复" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="picked状态混乱"><a href="#picked状态混乱" class="headerlink" title="picked状态混乱"></a>picked状态混乱</h4><p>click和mouseup互相冲突，导致选中状态丢失。</p>
+<p>将pick拆分为pick和unPick两个事件，分别处理选中状态，而不进行判断。将判断交给上层调用方法</p>
+<pre><code> _ele.on(&quot;click&quot;, function() &#123;
+      console.log(&quot;click&quot;);
+      if (GlobalStatus.isPreFilled()) &#123;
+          if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+              _ele.fill(GlobalStatus.getFillColor());
+              _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+          &#125; else &#123;
+              _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+          &#125;
+
+      &#125; else if (GlobalStatus.isPicked()) &#123;
+          if (_ele.attr(&quot;picked&quot;)) &#123;
+              _ele.fire(&quot;unPick&quot;);
+          &#125; else &#123;
+              _ele.fire(&quot;pick&quot;);
+          &#125;
+
+      &#125; else if (GlobalStatus.isRecycle()) &#123;
+          _ele.remove();
+      &#125;
+  &#125;);
+  _ele.on(&quot;pick&quot;, function() &#123;
+      console.log(&quot;pick&quot;);
+      _ele.attr(&quot;picked&quot;, true);
+      _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+      _ele.handleBorder.showShade(_ele);
+      GlobalStatus.pushPicked(_ele);
+  &#125;);
+  _ele.on(&quot;unPick&quot;, function() &#123;
+      console.log(&quot;unPick&quot;);
+      _ele.attr(&quot;picked&quot;, null);
+      _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+      GlobalStatus.removePicked(_ele);
+
+  &#125;);
+  
+</code></pre>
+<p>Pick中</p>
+<pre><code>function mouseup(event) &#123;
+    console.log(&#39;pick mouseup &#39; + element);
+    if (drawing) &#123;
+        drawing = false;
+        if (element &amp;&amp; element.attr(&quot;width&quot;) &gt; 20) &#123;
+            var sx = element.x();
+            var ex = element.x() + element.width();
+            var sy = element.y();
+            var ey = element.y() + element.height();
+            $(GlobalStatus.getAllElements()).each(function() &#123;
+                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
+                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
+                    if (!this.attr(&quot;picked&quot;)) &#123;
+                        this.fire(&quot;pick&quot;);
+                    &#125;
+                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
+                    this.fire(&quot;unPick&quot;);
+                &#125;
+            &#125;)
+        &#125;
+        element &amp;&amp; element.remove();
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<h4 id="Pick拥有背景色"><a href="#Pick拥有背景色" class="headerlink" title="Pick拥有背景色"></a>Pick拥有背景色</h4><p>修改Pick的mousedown方法，独立设置style，不关联颜色选择器</p>
+<pre><code>function mousedown(event) &#123;
+    console.log(&#39;pick mousedown&#39;);
+    if (!drawing) &#123;
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        element = parent.rect(0, 0).style(&#123;
+            &quot;fill-opacity&quot;: &quot;0.0&quot;,
+            &quot;stroke-dasharray&quot;: &quot;10&quot;
+        &#125;).stroke(&#123;
+            width: &quot;1&quot;,
+            color: &quot;grey&quot;
+        &#125;);
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<h4 id="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"><a href="#mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失" class="headerlink" title="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"></a>mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失</h4><p>再回到画板时，鼠标已经移开，但是并未执行mouseup方法，因为时间的监听范围为画板内。所以mouseover事件继续执行，导致多生成了一个element。为了避免此问题，在mouse事件中增加drawing状态判断，以Rect为例 </p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    function mousedown(event) &#123;
+        console.log(&#39;rect mousedown&#39;);
+        if (!drawing) &#123;
+            drawing = true;
+            startPoint = svgDoc.transformPoint(event);
+            element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+                width: GlobalStatus.getLineSize(),
+                color: GlobalStatus.getFontColor()
+            &#125;);
+        &#125;
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;rect mousemove&#39;);
+        if (drawing) &#123;
+            var svgPoint = svgDoc.transformPoint(event);
+            var x = svgPoint.x;
+            var y = svgPoint.y;
+
+            var newWidth = x - startPoint.x;
+            var newHeight = y - startPoint.y;
+            var startX = startPoint.x;
+            var startY = startPoint.y;
+            if (newWidth &lt; 0) &#123;
+                startX += newWidth;
+            &#125;
+
+            if (newHeight &lt; 0) &#123;
+                startY += newHeight;
+            &#125;
+            newWidth = Math.abs(newWidth);
+            newHeight = Math.abs(newHeight);
+            element.x(startX).y(startY).width(newWidth).height(newHeight);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;rect mouseup &#39; + element);
+        if (drawing) &#123;
+            drawing = false;
+            if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+                element.pickable();
+            &#125; else &#123;
+                parent.removeElement(element);
+            &#125;
+        &#125;
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Rect = function(parentEle) &#123;
+        parent = parentEle;
+        console.log(parent);
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Rect = Rect;
+
+&#125;)();
+</code></pre>
+<p>所有DrawTool类方法都要增加此</p>
+<h3 id="bug修复-1"><a href="#bug修复-1" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="选择其他DrawTool后，选中状态不丢失。"><a href="#选择其他DrawTool后，选中状态不丢失。" class="headerlink" title="选择其他DrawTool后，选中状态不丢失。"></a>选择其他DrawTool后，选中状态不丢失。</h4><p>在GlobalStatus增加清除所有选中状态的方法</p>
+<pre><code>unPickAll() &#123;
+    $(GlobalStatus.getPickeds()).each(function() &#123;
+        this.fire(&quot;unPick&quot;);
+    &#125;);
+    return this;
+&#125;
+</code></pre>
+<p>在index的resetCurrentDrawTool方法中调用执行</p>
+<pre><code>function resetCurrentDrawTool() &#123;
+    currentDrawTool &amp;&amp; currentDrawTool.stop();
+    GlobalStatus.unPickAll();
+    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+&#125;
+</code></pre>
+<p>同时给右键的取消按钮增加此方法调用</p>
+<pre><code>label: &#39; 取消&#39;,
+action: function () &#123;
+    GlobalStatus.unPickAll();
+    return false;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/26/painter-9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/26/painter-9/" class="post-title-link" itemprop="url">绘画板 09——自定义右键菜单</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-26 10:25:12" itemprop="dateCreated datePublished" datetime="2016-09-26T10:25:12+08:00">2016-09-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="自定义右键菜单"><a href="#自定义右键菜单" class="headerlink" title="自定义右键菜单"></a>自定义右键菜单</h3><p>使用开源的jquery插件<a target="_blank" rel="noopener" href="https://github.com/joewalnes/jquery-simple-context-menu">jquery-simple-context-menu.js-1.3.2</a> 实现自定义右键菜单的效果。<br>插件内容比较简单，方便进行二次开发和定制。</p>
+<p>插件的设计思路主要是基于jquery，监听contextmenu事件，并append自定义的div菜单列表。</p>
+<p>新增mouse_action.js，用于监听鼠标事件。给svg区域设置插件自定义的contextPopup事件。</p>
+<pre><code>(function()&#123;
+    $(&#39;#svgPanel&#39;).contextPopup(&#123;
+    items: [
+        &#123;
+            label: &#39; 取消&#39;,
+            action: function () &#123;
+            &#125;
+        &#125;,
+        &#123;
+            label: &#39; 选择&#39;,
+            action: function () &#123;
+                $(&quot;#tool_pick&quot;).click();
+            &#125;
+        &#125;,
+        &#123;
+            label: &#39; 清屏&#39;,
+            action: function () &#123;
+                $(&quot;#clear_all&quot;).click();
+            &#125;
+        &#125;
+    ]
+&#125;);
+&#125;)();
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>修改了js文件的命名规则，用’.’替换了’_’</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/25/painter-8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/25/painter-8/" class="post-title-link" itemprop="url">绘画板 08——删除与清屏</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-25 13:59:09" itemprop="dateCreated datePublished" datetime="2016-09-25T13:59:09+08:00">2016-09-25</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>GlobalStatus增加isRecycle()方法，用来判断删除按钮是否被点击</p>
+<pre><code>isRecycle: function()&#123;
+    return $(&quot;#tool_delete&quot;).hasClass(&quot;active&quot;);
+&#125;,
+</code></pre>
+<p>在Element扩展的click方法中，增加删除判断，执行remove()方法。并在mouseover时修改鼠标图标显示</p>
+<pre><code>(function() &#123;
+
+    SVG.extend(SVG.Doc, &#123;
+        transformPoint: function(event) &#123;
+            event = event || window.event;
+            var touches = event.changedTouches &amp;&amp; event.changedTouches[0] || event;
+            var node = this.node;
+            var point = node.createSVGPoint();
+            point.x = touches.pageX - window.scrollX;
+            point.y = touches.pageY - window.scrollY;
+            var matrix = node.getScreenCTM().inverse();
+            return point.matrixTransform(matrix);
+        &#125;
+    &#125;);
+
+    SVG.extend(SVG.Element, &#123;
+        pickable: function(enabled) &#123;
+            var _ele = this;
+            GlobalStatus.pushElements(_ele);
+            var color = _ele._stroke;
+            var width = _ele.attr(&quot;stroke-width&quot;);
+            _ele.on(&quot;mouseover&quot;, function() &#123;
+                if (GlobalStatus.isPicked()) &#123;
+                    _ele.stroke(&#123;
+                        width: width * 2,
+                        color: &#39;red&#39;
+                    &#125;);
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;pointer&quot;);
+                &#125; else if (GlobalStatus.isPreFilled()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_fill.cur), auto&quot;);
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_delete.cur), auto&quot;);
+                &#125;
+
+
+            &#125;);
+            _ele.on(&quot;mouseout&quot;, function() &#123;
+                if (GlobalStatus.isPicked()) &#123;
+                    _ele.stroke(&#123;
+                        width: width,
+                        color: color
+                    &#125;);
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125; else if (GlobalStatus.isPreFilled()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+                &#125;
+
+            &#125;);
+            _ele.on(&quot;click&quot;, function() &#123;
+                if (GlobalStatus.isPreFilled()) &#123;
+                    if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                        _ele.fill(GlobalStatus.getFillColor());
+                        _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+                    &#125; else &#123;
+                        _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+                    &#125;
+
+                &#125; else if (GlobalStatus.isPicked()) &#123;
+                    if (!_ele.attr(&quot;picked&quot;)) &#123;
+                        _ele.attr(&quot;picked&quot;, true);
+                        _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+                        _ele.handleBorder.showShade(_ele);
+                        GlobalStatus.pushPicked(_ele);
+                    &#125; else &#123;
+                        _ele.attr(&quot;picked&quot;, null);
+                        _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+                        GlobalStatus.removePicked(_ele);
+                    &#125;
+                &#125; else if (GlobalStatus.isRecycle()) &#123;
+                    _ele.remove();
+                &#125;
+            &#125;);
+            return this;
+        &#125;
+
+    &#125;);
+&#125;)();
+</code></pre>
+<h3 id="清屏"><a href="#清屏" class="headerlink" title="清屏"></a>清屏</h3><p>单击清屏按钮时，清空所有的element元素，不需要按钮被点击状态。</p>
+<p>此时有一个思考，是遍历所有的元素执行删除操作，还是重新设置svg doc。</p>
+<p>先用遍历方法执行。</p>
+<p>将elementList抽象到GlobalStatus方法中管理，并在元素完成后执行添加操作。</p>
+<pre><code>elementList : [],
+pushElements: function(o)&#123;
+    return this.elementList.push(o);
+&#125;,
+removeElements: function(o) &#123;
+    return this.elementList.remove(o);
+&#125;,
+getAllElements: function()&#123;
+    return this.elementList;
+&#125;
+</code></pre>
+<p>监听清屏按钮，遍历删除element</p>
+<pre><code>    $(&quot;#clear_all&quot;).on(&quot;click&quot;, function() &#123;
+        $(GlobalStatus.getAllElements()).each(function()&#123;
+            this.remove();
+        &#125;);
+    &#125;);
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/24/painter-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/24/painter-7/" class="post-title-link" itemprop="url">绘画板 07——图层移动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-24 18:30:07" itemprop="dateCreated datePublished" datetime="2016-09-24T18:30:07+08:00">2016-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="图层移动"><a href="#图层移动" class="headerlink" title="图层移动"></a>图层移动</h3><p>svgjs提供了图层移动的方法，实现方式如下</p>
+<pre><code>, forward: function() &#123;
+    var i = this.position() + 1
+  , p = this.parent()
+
+    // move node one step forward
+  p.removeElement(this).add(this, i)
+
+    // make sure defs node is always at the top
+  if (p instanceof SVG.Doc)
+      p.node.appendChild(p.defs().node)
+
+    return this
+  &#125;
+  // Send given element one step backward
+, backward: function() &#123;
+    var i = this.position()
+
+    if (i &gt; 0)
+      this.parent().removeElement(this).add(this, i - 1)
+
+    return this
+  &#125;
+  // Send given element all the way to the front
+, front: function() &#123;
+    var p = this.parent()
+
+    // Move node forward
+  p.node.appendChild(this.node)
+
+    // Make sure defs node is always at the top
+  if (p instanceof SVG.Doc)
+      p.node.appendChild(p.defs().node)
+
+    return this
+  &#125;
+  // Send given element all the way to the back
+, back: function() &#123;
+    if (this.position() &gt; 0)
+      this.parent().removeElement(this).add(this, 0)
+
+    return this
+  &#125;
+ 
+</code></pre>
+<p>在按钮上绑定对应函数，并结合已选中元素，即可实现图层移动效果。此时需要注意，避免g元素，并且判断是否为最上(下)层元素，因为源码种只是执行+1 -1操作，如果最上层继续向上移动多次后，需要向下移动多次，才可以实现图层的切换效果。g元素的判断为偷懒方法，需要考虑是否考虑白名单的数组，以及改用迭代的方式进行</p>
+<pre><code>    $(&quot;#tool_layer_front&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                this
+                this.front();
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_back&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                this.back();
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_backward&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                if (this.previous()) &#123;
+                    //TODO 迭代 且使用白名单数组
+                    if (this.previous().type == &quot;g&quot;) &#123;
+                        this.backward();
+                    &#125;
+                    this.backward();
+                &#125;
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_forward&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                if (this.next()) &#123;
+                    if (this.next().type == &quot;g&quot;) &#123;
+                        this.forward();
+                    &#125;
+                    this.forward();
+                &#125;
+            &#125;);
+        &#125;
+    &#125;);
+    
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>这里发现了一个bug。在图层移动的时候，单步移动有时会失效。排查后发现，是因为mousedown时，已经生成了一个element，但在页面中看不出来。为了解决此bug，在mouseup时，增加了一个判断，如果页面不可见，则将此element在parent中移除。parent为svgDoc</p>
+<pre><code>function mouseup(event) &#123;
+    console.log(&#39;rect mouseup &#39; + element);
+    drawing = false;
+    if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+        element.pickable();
+    &#125; else &#123;
+        parent.removeElement(element);
+    &#125;
+    return false;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/24/painter-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/24/painter-6/" class="post-title-link" itemprop="url">绘画板 06——铅笔与自定义鼠标图标</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-24 17:59:04" itemprop="dateCreated datePublished" datetime="2016-09-24T17:59:04+08:00">2016-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="自定义鼠标图标"><a href="#自定义鼠标图标" class="headerlink" title="自定义鼠标图标"></a>自定义鼠标图标</h3><p>可以通过css设置cursor的方式指定鼠标图标样式</p>
+<p>| default | 默认光标（通常是一个箭头） |<br>| auto | 默认。浏览器设置的光标。 |<br>| crosshair | 光标呈现为十字线。 |<br>| pointer | 光标呈现为指示链接的指针（一只手） |<br>| move | 此光标指示某对象可被移动。 |<br>| e-resize | 此光标指示矩形框的边缘可被向右（东）移动。 |<br>| ne-resize | 此光标指示矩形框的边缘可被向上及向右移动（北/东）。 |<br>| nw-resize | 此光标指示矩形框的边缘可被向上及向左移动（北/西）。 |<br>| n-resize | 此光标指示矩形框的边缘可被向上（北）移动。 |<br>| se-resize | 此光标指示矩形框的边缘可被向下及向右移动（南/东）。 |<br>| sw-resize | 此光标指示矩形框的边缘可被向下及向左移动（南/西）。 |<br>| s-resize | 此光标指示矩形框的边缘可被向下移动（南）。 |<br>| w-resize | 此光标指示矩形框的边缘可被向左移动（西）。 |<br>| text | 此光标指示文本。 |<br>| wait | 此光标指示程序正忙（通常是一只表或沙漏）。 |<br>| help | 此光标指示可用的帮助（通常是一个问号或一个气球）。 |</p>
+<p>也可以通过url指定自定义的图标样式，通常为.cur文件。</p>
+<pre><code>$(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+</code></pre>
+<p>auto为指定图标不存在时，鼠标显示的样式。</p>
+<h3 id="铅笔"><a href="#铅笔" class="headerlink" title="铅笔"></a>铅笔</h3><p>通过svg的path属性，可以绘制出鼠标移动轨迹，实现铅笔画图效果。svgjs提供了path()函数，值为</p>
+<ul>
+<li>  M = moveto</li>
+<li>  L = lineto</li>
+<li>  H = horizontal lineto</li>
+<li>  V = vertical lineto</li>
+<li>  C = curveto</li>
+<li>  S = smooth curveto</li>
+<li>  Q = quadratic Belzier curve</li>
+<li>  T = smooth quadratic Belzier curveto</li>
+<li>  A = elliptical Arc</li>
+<li>  Z = closepath</li>
+</ul>
+<p>所以mousedown时做 M+坐标点，mousemove时，为L+坐标点，可以指定不同的路径数据以达到不同的绘制效果，所以在构造函数中增加了一个prefix字段。</p>
+<p>pencil.js 代码如下</p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    var plot = null;
+    var plotPrefix = null;
+    var defaultPlotPrefix = &#39;L&#39;;
+
+    function mousedown(event) &#123;
+        console.log(&#39;pencil mousedown&#39;);
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        plot = &#39;M&#39; + startPoint.x + &#39; &#39; + startPoint.y;
+        element = parent.path(plot).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+            width: GlobalStatus.getLineSize(),
+            color: GlobalStatus.getFontColor()
+        &#125;);
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;pencil mousemove&#39;);
+        if (drawing) &#123;
+            var startPoint = svgDoc.transformPoint(event);
+            console.log(plot);
+            plot += plotPrefix + startPoint.x + &#39; &#39; + startPoint.y;
+            element.plot(plot);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;pencil mouseup &#39; + element);
+        drawing = false;
+        if (element.attr(&quot;d&quot;).split(plotPrefix).length &gt; 2) &#123;
+            element.pickable();
+        &#125;
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Pencil = function(parentEle, prefix) &#123;
+        parent = parentEle;
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        plotPrefix = prefix || defaultPlotPrefix;
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Pencil = Pencil;
+
+&#125;)();
+</code></pre>
+<p>在首页监听铅笔的点击事件，并在页面加载完成后默认调用 $(“#tool_pencil”).click();</p>
+<pre><code>    $(&quot;#tool_pencil&quot;).on(&quot;click&quot;, function() &#123;
+        resetCurrentDrawTool();
+        currentDrawTool = new DrawTool.Pencil(svgDoc);
+        $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+    &#125;);
+    
+</code></pre>
+<p>加了一个彩蛋，监听铅笔按钮的双击事件，可以绘制映射线。</p>
+<pre><code>    $(&quot;#tool_pencil&quot;).on(&quot;dblclick&quot;, function() &#123;
+        resetCurrentDrawTool();
+        currentDrawTool = new DrawTool.Pencil(svgDoc, &#39;T&#39;);
+        $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+    &#125;);
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>在Tools的listener方法中，都加了一个return false; 避免事件向上传递。</p>
+<p>在模拟的下拉列表lizeSize中，通过属性data-line-size记录width值，在GlobalStatus.getLineSize()中调用。</p>
+<p>将已选择元素抽象到在GlobalStatus中，并提供管理方法。</p>
+<pre><code>pickedElementList: [],
+pushPicked: function(o)&#123;
+    return this.pickedElementList.push(o);
+&#125;,
+removePicked: function(o) &#123;
+    return this.pickedElementList.remove(o);
+&#125;,
+getPickeds: function()&#123;
+    return this.pickedElementList;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/23/painter-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/23/painter-5/" class="post-title-link" itemprop="url">绘画板 05——设置图形边框颜色与背景色（喷枪）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-23 11:23:01" itemprop="dateCreated datePublished" datetime="2016-09-23T11:23:01+08:00">2016-09-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="边框与背景色"><a href="#边框与背景色" class="headerlink" title="边框与背景色"></a>边框与背景色</h3><p>首先，使用了开源的 <a target="_blank" rel="noopener" href="https://github.com/bgrins/spectrum">spectrum.js</a> 作为颜色选择器，<br>之前以SVG对象保存全局方法与对象，现在通过新定义一个GlobalStatus，存在全局属性，并通过按钮状态判断状态</p>
+<pre><code>var GlobalStatus = &#123;
+    defaultFontColor:&quot;#0073c6&quot;,
+    defaultFillColor:&quot;#ececec&quot;,
+    defaultLineSize:&quot;2&quot;,
+    isPicked:function()&#123;
+        return $(&quot;#tool_pick&quot;).hasClass(&quot;active&quot;);
+    &#125;,
+    isPreFilled:function()&#123;
+        return $(&quot;#tool_fill&quot;).hasClass(&quot;active&quot;);
+    &#125;,
+    getFontColor:function()&#123;
+        return $(&quot;#font_color&quot;).attr(&quot;data-color&quot;);
+    &#125;,
+    getFillColor:function()&#123;
+        return $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;);
+    &#125;,
+    getLineSize:function()&#123;
+        return this.defaultLineSize;
+    &#125;,
+    getFillOpacity:function()&#123;
+        var fillOpacity = &quot;0.0&quot;;
+        if (this.getFillColor() != this.defaultFillColor) &#123;
+            fillOpacity = &quot;1.0&quot;;
+        &#125;
+        return fillOpacity;
+    &#125;
+&#125;
+</code></pre>
+<p>在首页给默认线条颜色及背景颜色赋值，并设置状态data-color保存颜色值</p>
+<pre><code>    $(&quot;#font_color span&quot;).css(&quot;background&quot;, GlobalStatus.defaultFontColor);
+    $(&quot;#font_color&quot;).attr(&quot;data-color&quot;, GlobalStatus.defaultFontColor);
+    $(&quot;#fill_color span&quot;).css(&quot;background&quot;, GlobalStatus.defaultFillColor);
+    $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;, GlobalStatus.defaultFillColor);
+</code></pre>
+<p>颜色选择器发生变化时，同时变更颜色与data-color属性值</p>
+<pre><code>    $(&quot;#colorPalettes&quot;).spectrum(&#123;
+        flat: true,
+        showPaletteOnly: true,
+        color: &#39;#0073c6&#39;,
+        move: function(tinycolor) &#123;
+            console.log(&quot;color move&quot;);
+            console.log(tinycolor.toHexString())
+            if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;, tinycolor.toHexString());
+                $(&quot;#fill_color span&quot;).eq(0).css(&quot;background&quot;, tinycolor.toHexString());
+
+            &#125; else if ($(&quot;#font_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                $(&quot;#font_color&quot;).attr(&quot;data-color&quot;, tinycolor.toHexString());
+                $(&quot;#font_color span&quot;).eq(0).css(&quot;background&quot;, tinycolor.toHexString());
+            &#125;
+
+        &#125;,
+
+        palette: spectrumColors
+    &#125;);
+    
+</code></pre>
+<p>这里有一个取巧的地方，为了让背景颜色透明显示，规定ececec为透明颜色。选择此颜色时，将透明度opacity设置为全透明。</p>
+<p>这样做有一个问题，如果用户自定义此颜色，可以将自定义的颜色修改为ececed，不会在视觉上有较大影响。</p>
+<p>在绘制元素时，通过GlobalStatus设置元素的边框、颜色、及透明度。已rect为例</p>
+<pre><code>function mousedown(event) &#123;
+    console.log(&#39;rect mousedown&#39;);
+    drawing = true;
+    startPoint = svgDoc.transformPoint(event);
+    element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+        width: GlobalStatus.getLineSize(),
+        color: GlobalStatus.getFontColor()
+    &#125;);
+&#125;
+</code></pre>
+<p>此时，绘制的颜色就会根据设置的颜色及背景色发生变化。</p>
+<h3 id="喷枪"><a href="#喷枪" class="headerlink" title="喷枪"></a>喷枪</h3><p>在GlobalStatus中增加了isPreFilled()方法，判断喷枪是否被选中。在Element的扩展方法中，监听click事件。<br>如果为选中喷枪的点击，则修改元素的对应属性值即可。</p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (GlobalStatus.isPreFilled()) &#123;
+        if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+            _ele.fill(GlobalStatus.getFillColor());
+            _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+        &#125; else &#123;
+            _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+        &#125;
+
+    &#125; else if (GlobalStatus.isPicked()) &#123;
+        if (!_ele.attr(&quot;picked&quot;)) &#123;
+            _ele.attr(&quot;picked&quot;, true);
+            console.log(_ele.handleBorder);
+            _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+            _ele.handleBorder.showShade(_ele);
+            pickedElementList.push(_ele);
+        &#125; else &#123;
+            _ele.attr(&quot;picked&quot;, null);
+            _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+            pickedElementList.remove(_ele);
+        &#125;
+    &#125;
+&#125;);
+</code></pre>
+<p>这里有一个用户体验的问题，喷枪是同时修改边框色和背景色，还是分别修改？</p>
+<p>现在的实现方法为分别修改。用户需要点击线条与背景色，然后再用喷枪工具分别修改元素颜色。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/22/painter-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/22/painter-4/" class="post-title-link" itemprop="url">绘画板 04——增加操作框（矩阵变化）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-22 10:57:58" itemprop="dateCreated datePublished" datetime="2016-09-22T10:57:58+08:00">2016-09-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<p>针对元素进行操作时，如果采用更改边框颜色的形式，会和修改边框冲突。所以采用增加4个操作边框的形式，既能表示元素被选中，又能在后续增加拖拽，变形等操作。</p>
+<p>增加了一个HandleBorder类，并扩展其prototype属性对象，增加方法</p>
+<ol>
+<li>createShade 用于创建4个边框</li>
+<li>judgeShade 用于将4个小矩形，放至所选元素的4个边角</li>
+<li>showShade 显示操作边框</li>
+<li>隐藏操作边框</li>
+</ol>
+<p>加入了一些距离计算和矩阵，详细代码如下 </p>
+<pre><code>(function() &#123;
+
+    var sbw = 6;
+    var bw = &#123;
+        width: 1
+    &#125;;
+
+    var HandleBorder = function(svgDoc) &#123;
+        this.init(svgDoc);
+    &#125;
+
+    HandleBorder.prototype = &#123;
+        constructor: HandleBorder,
+        init: function(svgDoc) &#123;
+            this.currentSvgDoc = svgDoc;
+            this.createShade();
+            return this;
+        &#125;,
+    &#125;;
+
+    HandleBorder.prototype.createShade = function() &#123;
+        var _this = this;
+
+        _this.transformerGroup = _this.currentSvgDoc.group();
+
+        _this.blockGroup = _this.transformerGroup.group();
+
+        _this.rectLT = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;lt&#39;
+        &#125;);
+        _this.rectLB = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;lb&#39;
+        &#125;);
+        _this.rectRT = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;rt&#39;
+        &#125;);
+        _this.rectRB = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;rb&#39;
+        &#125;);
+
+    &#125;;
+
+    HandleBorder.prototype.judgeShade = function(bbox, matrix) &#123;
+        var x1 = bbox.x;
+        var y1 = bbox.y;
+        var x2 = bbox.x2;
+        var y2 = bbox.y2;
+
+
+        this.rectLT.move(x1 - sbw, y1 - sbw);
+        this.rectLB.move(x1 - sbw, y2);
+        this.rectRT.move(x2, y1 - sbw);
+        this.rectRB.move(x2, y2);
+
+        this.blockGroup.matrix(matrix);
+
+    &#125;;
+
+    HandleBorder.prototype.showShade = function(svgEle) &#123;
+        if (!svgEle) &#123;
+            return;
+        &#125;
+        this.currentElement = svgEle;
+        this.transformerGroup.show();
+
+        this.judgeShade(svgEle.bbox(), new SVG.Matrix(svgEle));
+    &#125;;
+
+    HandleBorder.prototype.hideShade = function() &#123;
+        this.transformerGroup.hide();
+    &#125;;
+
+    this.HandleBorder = HandleBorder;
+
+&#125;)();
+</code></pre>
+<p>在Element的扩展方法中，利用HandleBorder替换边框颜色变更操作，并将new的HandleBorder对象绑定到元素中 </p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (SVG.isPicked()) &#123;
+        if (!_ele.attr(&quot;picked&quot;)) &#123;
+            _ele.attr(&quot;picked&quot;, true);
+            console.log(_ele.handleBorder);
+            _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+            _ele.handleBorder.showShade(_ele);
+            pickedElementList.push(_ele);
+        &#125; else &#123;
+            _ele.attr(&quot;picked&quot;, null);
+            _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+            pickedElementList.remove(_ele);
+        &#125;
+    &#125;
+&#125;);
+</code></pre>
+<p>扩展了一个pickedElementList数组，并在SVG扩展中提供获取方法 </p>
+<pre><code>    getPickedElementList: function()&#123;
+        return pickedElementList;
+    &#125;
+    
+</code></pre>
+<p>为了方便移除操作，强化了数组操作，提供了remove方法 </p>
+<pre><code>Array.prototype.indexOf = function(val) &#123;
+    for (var i = 0; i &lt; this.length; i++) &#123;
+        if (this[i] == val) return i;
+    &#125;
+    return -1;
+&#125;;
+Array.prototype.remove = function(val) &#123;
+    var index = this.indexOf(val);
+    if (index &gt; -1) &#123;
+        this.splice(index, 1);
+    &#125;
+&#125;;
+</code></pre>
+<p>选择元素操作已经完成，可以在此基础上绑定颜色操作，以及拖拽及变形操作。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/4/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/6/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>

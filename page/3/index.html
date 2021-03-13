@@ -1,0 +1,1336 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="天行健 男儿当立志！">
+<meta property="og:type" content="website">
+<meta property="og:title" content="wangyuheng&#39;s Blog">
+<meta property="og:url" content="https://blog.yuheng.wang/page/3/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="天行健 男儿当立志！">
+<meta property="og:locale">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="wangyuheng, blog, java">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://blog.yuheng.wang/page/3/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content index posts-expand">
+          
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/07/05/kafka/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/07/05/kafka/" class="post-title-link" itemprop="url">浅入浅出kafka</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-07-05 22:59:30" itemprop="dateCreated datePublished" datetime="2018-07-05T22:59:30+08:00">2018-07-05</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/kafka/" itemprop="url" rel="index"><span itemprop="name">kafka</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>wikipedia的解释</p>
+<blockquote>
+<p>弗兰兹·卡夫卡，生活于奥匈帝国统治下的捷克德语小说家，本职为保险业职员。主要作品有小说《审判》、《城堡》、《变形记》等。</p>
+</blockquote>
+<p>kafka官网的解释</p>
+<blockquote>
+<p>Kafka是由Apache软件基金会开发的一个开源<code>流处理</code>平台，由Scala和Java编写。Kafka是一种<code>高吞吐量</code>的<code>分布式</code> <code>发布订阅</code> <code>消息系统</code>，它可以处理消费者规模的网站中的所有动作流数据。 </p>
+</blockquote>
+<p>两个kafka有一个共同特点: 很会写</p>
+<h3 id="消息系统"><a href="#消息系统" class="headerlink" title="消息系统"></a>消息系统</h3><p>实现低耦合、可靠投递、广播、流量控制、最终一致性等一系列功能，成为异步RPC的主要手段之一。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/07/05/kafka/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/28/docker-kafka-broker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/28/docker-kafka-broker/" class="post-title-link" itemprop="url">docker单点kafka扩容</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-28 18:59:49" itemprop="dateCreated datePublished" datetime="2018-06-28T18:59:49+08:00">2018-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>公司为了快速上线，几个月前通过docker镜像 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/wurstmeister/kafka/">kafka</a> 部署了一台kafka-borker。Dockerfile如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM wurstmeister&#x2F;kafka:latest</span><br><span class="line"></span><br><span class="line">ENV KAFKA_MESSAGE_MAX_BYTES&#x3D;21474836</span><br><span class="line">ENV KAFKA_AUTO_CREATE_TOPICS_ENABLE&#x3D;true</span><br><span class="line">ENV KAFKA_CREATE_TOPICS&#x3D;test:1:1</span><br><span class="line">ENV KAFKA_ZOOKEEPER_CONNECT&#x3D;zk1:2181</span><br><span class="line"></span><br><span class="line">VOLUME [&quot;&#x2F;kafka&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>随着业务的增长，单节点的kafka-broker已经成为一个潜在的可靠性隐患。所以借着N年难得一遇的停机维护，决定把kafka-broker扩容为主备集群模式，提升稳定性，并为日后的分区扩容提供可能(不停服)。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/28/docker-kafka-broker/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/28/ddl2plantuml/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/28/ddl2plantuml/" class="post-title-link" itemprop="url">DDL转plantuml格式ER图</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-28 18:59:49" itemprop="dateCreated datePublished" datetime="2018-06-28T18:59:49+08:00">2018-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>项目源码地址: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/ddl2plantuml">github</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>通过plantuml绘制数据库ER图，手写字段信息成本太大。需要一套DDL转换plantuml的工具。</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMjE1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo4NjJweDtoZWlnaHQ6MjE1cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NjIgMjE1IiB3aWR0aD0iODYycHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnkxYmJ1NzZzOGR3byIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48cGF0aCBkPSJNMzgyLjMxMzksMTUuMTI4NSBDMzg1LjQ5NzIsOS42NDU1IDM5MS45NzY4LDguNTMwMSAzOTUuNTA4LDE0LjczNTcgQzM5Ny44MDc1LDkuMTgxMyA0MDMuNTQzNSw4LjkyMzIgNDA3LjA1NTgsMTMuMzI5NiBDNDA5Ljc5NjUsNi44MTUxIDQxMy44Nzg3LDYuMjg5OSA0MTguMjI3NywxMS44NDA0IEM0MjEuODg4Myw2LjE5NDUgNDI3LjIxNjYsNy42MTgyIDQzMC4xMjQ2LDEyLjY3NjggQzQzNC41MzAxLDYgNDM5LjgxNDcsNi45NDIyIDQ0My4zMDEyLDEzLjU4NTggQzQ0Ny40ODI2LDcuODI2NiA0NTIuMjE2Niw5LjA5NjQgNDU1LjcwNTIsMTQuMzY1MSBDNDY1LjExNjEsMTkuMDgxNiA0NjUuNjIxMywyMy45ODM3IDQ1Ny4zNDU2LDMwLjQ5ODYgQzQ2NS4zNzc4LDM0LjI1MzUgNDY3LjE5NjMsNDAuNzAwNiA0NjEuMTY5MSw0Ny41OTkxIEM0NjYuNjQ0NCw1My44OTg3IDQ2Ni4zODE4LDU5LjA1ODggNDU3LjU5NDksNjEuNzU4MSBDNDYzLjk1ODUsNjguNDY2NiA0NjQuODcwOCw3NC4zNzIzIDQ1NC45NjYzLDc4LjUzMTQgQzQ1Mi4xNTQyLDgzLjg0NTIgNDQ3LjcyNzcsODMuNzIyMyA0NDQuMDM5OSw3OS41Mzg5IEM0NDEuMTY5NSw4NS43ODA3IDQzNi40MTE3LDg2Ljk5NzMgNDMxLjk5MjYsODEuMDcyMyBDNDI4Ljc3MDcsODguMjAyNCA0MjQuNDUzLDg5Ljk4MzggNDE4LjQwNTksODMuOTk5MiBDNDE0LjEzNDgsODguMTMwNSA0MTAuNTUwMSw4OC44NDg5IDQwNy41OTQ5LDgyLjYyNTQgQzQwMi4xNzE0LDg4LjMyNTcgMzk4LjE5MDcsODYuMDc2MyAzOTUuNDk3LDc5Ljg1NTIgQzM5MS4xMTM1LDg2LjM3MzIgMzg2Ljc5ODIsODQuODgzNyAzODIuNjE5Miw3OS42MzE1IEMzNzQuNDk3OCw3NC45Nzg2IDM3My40NDAzLDY4LjUxMDcgMzgxLjAyMzIsNjIuNDAzIEMzNzMuMDMzNyw1OC44MzMgMzczLjc4NDIsNTEuMzcwOCAzNzkuOTMwMiw0Ni44MDk5IEMzNzIuMzQyMSw0MS4xNDM2IDM3MS45OTIyLDMzLjUwNzIgMzgxLjgyNjQsMjkuNzgwOSBDMzc0LjE5ODQsMjUuMzgyNiAzNzUuOTkzMywxOS4wNjI2IDM4Mi4zMTM5LDE1LjEyODUgIiBmaWxsPSIjRkZGRkZGIiBmaWx0ZXI9InVybCgjZnkxYmJ1NzZzOGR3bykiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjxwb2x5Z29uIGZpbGw9IiNGRkZGRkYiIGZpbHRlcj0idXJsKCNmeTFiYnU3NnM4ZHdvKSIgcG9pbnRzPSIxNiwxMzAuMTA2MywyMjMuMjUsMTMwLjEwNjMsMjMwLjI1LDE0MC4xMDYzLDg0NSwxNDAuMTA2Myw4NDUsMjA4LjEwNjMsMTYsMjA4LjEwNjMsMTYsMTMwLjEwNjMiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjE2IiB4Mj0iMjMwLjI1IiB5MT0iMTQwLjEwNjMiIHkyPSIxNDAuMTA2MyIvPjwhLS1NRDU9WzcwNjc3OWYxN2ZhYjUyODJlMDZiYzIzOGZhNzA5ZDM1XQplbnRpdHkgY29udmVydC0tPjxlbGxpcHNlIGN4PSI0MTgiIGN5PSIzNy42MDYzIiBmaWxsPSIjMDA4MDAwIiBmaWx0ZXI9InVybCgjZnkxYmJ1NzZzOGR3bykiIHJ4PSIxMiIgcnk9IjEyIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjQxNCwyNS42MDYzLDQyMCwyMC42MDYzLDQxOCwyNS42MDYzLDQyMCwzMC42MDYzLDQxNCwyNS42MDYzIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMzkwIiB5PSI2Ni42MDE0Ij5jb252ZXJ0PC90ZXh0PjwhLS1NRDU9W2EwYWE4ZDNjYzE3YzcwMzhlZWMxZTc5M2FiZmZiMDIzXQplbnRpdHkgc3RlcDEtLT48cG9seWdvbiBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnkxYmJ1NzZzOGR3bykiIHBvaW50cz0iMzIsMTU2LjEwNjMsNDIsMTQ2LjEwNjMsMTMwLDE0Ni4xMDYzLDEzMCwxODIuNDAzMSwxMjAsMTkyLjQwMzEsMzIsMTkyLjQwMzEsMzIsMTU2LjEwNjMiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjEyMCIgeDI9IjEzMCIgeTE9IjE1Ni4xMDYzIiB5Mj0iMTQ2LjEwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIzMiIgeDI9IjEyMCIgeTE9IjE1Ni4xMDYzIiB5Mj0iMTU2LjEwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIxMjAiIHgyPSIxMjAiIHkxPSIxNTYuMTA2MyIgeTI9IjE5Mi40MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTgiIHg9IjQ3IiB5PSIxNzkuMTAxNCI+cmVhZCBkZGw8L3RleHQ+PCEtLU1ENT1bOTVmNWJhMjY1ZThmMGY0NWE2MzllNjY5NTk5NjJkYWVdCmVudGl0eSBzdGVwMi0tPjxwb2x5Z29uIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeTFiYnU3NnM4ZHdvKSIgcG9pbnRzPSIxNjUuNSwxNTYuMTA2MywxNzUuNSwxNDYuMTA2MywzMzIuNSwxNDYuMTA2MywzMzIuNSwxODIuNDAzMSwzMjIuNSwxOTIuNDAzMSwxNjUuNSwxOTIuNDAzMSwxNjUuNSwxNTYuMTA2MyIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMzIyLjUiIHgyPSIzMzIuNSIgeTE9IjE1Ni4xMDYzIiB5Mj0iMTQ2LjEwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIxNjUuNSIgeDI9IjMyMi41IiB5MT0iMTU2LjEwNjMiIHkyPSIxNTYuMTA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjMyMi41IiB4Mj0iMzIyLjUiIHkxPSIxNTYuMTA2MyIgeTI9IjE5Mi40MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTI3IiB4PSIxODAuNSIgeT0iMTc5LjEwMTQiPmV4dHJhY3QgdGFibGUgaW5mbzwvdGV4dD48IS0tTUQ1PVswZWYxNDBjZTNmZDRjMDc3MDJlOGY4MGQxMmJkYjllM10KZW50aXR5IHN0ZXAzLS0+PHBvbHlnb24gZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Z5MWJidTc2czhkd28pIiBwb2ludHM9IjM2Ny41LDE1Ni4xMDYzLDM3Ny41LDE0Ni4xMDYzLDY0OC41LDE0Ni4xMDYzLDY0OC41LDE4Mi40MDMxLDYzOC41LDE5Mi40MDMxLDM2Ny41LDE5Mi40MDMxLDM2Ny41LDE1Ni4xMDYzIiBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSI2MzguNSIgeDI9IjY0OC41IiB5MT0iMTU2LjEwNjMiIHkyPSIxNDYuMTA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjM2Ny41IiB4Mj0iNjM4LjUiIHkxPSIxNTYuMTA2MyIgeTI9IjE1Ni4xMDYzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iNjM4LjUiIHgyPSI2MzguNSIgeTE9IjE1Ni4xMDYzIiB5Mj0iMTkyLjQwMzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNDEiIHg9IjM4Mi41IiB5PSIxNzkuMTAxNCI+cmVwbGFjZSBieSB0ZW1wbGF0ZSBmb3IgcGxhbnR1bWw8L3RleHQ+PCEtLU1ENT1bYjM2NTg2Mzc2ODM0MTcxNTM5ZGQzNWMyMGJkNGU4OGVdCmVudGl0eSBzdGVwNC0tPjxwb2x5Z29uIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeTFiYnU3NnM4ZHdvKSIgcG9pbnRzPSI2ODMuNSwxNTYuMTA2Myw2OTMuNSwxNDYuMTA2Myw4MjguNSwxNDYuMTA2Myw4MjguNSwxODIuNDAzMSw4MTguNSwxOTIuNDAzMSw2ODMuNSwxOTIuNDAzMSw2ODMuNSwxNTYuMTA2MyIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iODE4LjUiIHgyPSI4MjguNSIgeTE9IjE1Ni4xMDYzIiB5Mj0iMTQ2LjEwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSI2ODMuNSIgeDI9IjgxOC41IiB5MT0iMTU2LjEwNjMiIHkyPSIxNTYuMTA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjgxOC41IiB4Mj0iODE4LjUiIHkxPSIxNTYuMTA2MyIgeTI9IjE5Mi40MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA1IiB4PSI2OTguNSIgeT0iMTc5LjEwMTQiPndyaXRlIHBsYW50dW1sPC90ZXh0PjwhLS1NRDU9W2Y0Nzc2YzQ2MWZmZTQzYjVjNTMxNDBlZjg2MGYzY2I0XQplbnRpdHkgRERMLS0+PGVsbGlwc2UgY3g9IjM0MCIgY3k9IjE0LjYwNjMiIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeTFiYnU3NnM4ZHdvKSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48cGF0aCBkPSJNMzQwLDIyLjYwNjMgTDM0MCw0OS42MDYzIE0zMjcsMzAuNjA2MyBMMzUzLDMwLjYwNjMgTTM0MCw0OS42MDYzIEwzMjcsNjQuNjA2MyBNMzQwLDQ5LjYwNjMgTDM1Myw2NC42MDYzICIgZmlsbD0ibm9uZSIgZmlsdGVyPSJ1cmwoI2Z5MWJidTc2czhkd28pIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzMCIgeD0iMzI1IiB5PSI4My4xMDE0Ij5EREw8L3RleHQ+PCEtLU1ENT1bMzRlODYxMmRiZmYxNTI5NmIwNmQ5N2QzZWQ2YzQ5OTFdCmVudGl0eSBwbGFudFVtbC0tPjxlbGxpcHNlIGN4PSI1MTQiIGN5PSIxNC42MDYzIiBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnkxYmJ1NzZzOGR3bykiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHBhdGggZD0iTTUxNCwyMi42MDYzIEw1MTQsNDkuNjA2MyBNNTAxLDMwLjYwNjMgTDUyNywzMC42MDYzIE01MTQsNDkuNjA2MyBMNTAxLDY0LjYwNjMgTTUxNCw0OS42MDYzIEw1MjcsNjQuNjA2MyAiIGZpbGw9Im5vbmUiIGZpbHRlcj0idXJsKCNmeTFiYnU3NnM4ZHdvKSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjUiIHg9IjQ4MS41IiB5PSI4My4xMDE0Ij5wbGFudFVtbDwvdGV4dD48IS0tTUQ1PVtkZmQ4ZTEwMzAwOGMxNTQwNGJhNjJkOGZkZWI4MzdhZF0KbGluayBEREwgdG8gY29udmVydC0tPjxwYXRoIGQ9Ik0zNTUuMjM0LDQ1LjYwNjMgQzM2NC45NzgsNDUuNjA2MyAzNzQuNzIxLDQ1LjYwNjMgMzg0LjQ2NCw0NS42MDYzICIgZmlsbD0ibm9uZSIgaWQ9IkRETC10by1jb252ZXJ0IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjM4OS41NTksNDUuNjA2MywzODAuNTU5LDQxLjYwNjMsMzg0LjU1OSw0NS42MDYzLDM4MC41NTksNDkuNjA2MywzODkuNTU5LDQ1LjYwNjMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9W2ZiOGFiZGJkNzk1M2M1NDI5YTRlODYyZThjMDRiN2M5XQpsaW5rIGNvbnZlcnQgdG8gcGxhbnRVbWwtLT48cGF0aCBkPSJNNDQ2LjEyNSw0NS42MDYzIEM0NTYuMTM1LDQ1LjYwNjMgNDY2LjE0NCw0NS42MDYzIDQ3Ni4xNTQsNDUuNjA2MyAiIGZpbGw9Im5vbmUiIGlkPSJjb252ZXJ0LXRvLXBsYW50VW1sIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjQ4MS4zODgsNDUuNjA2Myw0NzIuMzg4LDQxLjYwNjMsNDc2LjM4OCw0NS42MDYzLDQ3Mi4zODgsNDkuNjA2Myw0ODEuMzg4LDQ1LjYwNjMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9Wzg3OGZiZDlmMzA3Yjg4OTcyNjM2MmJhNzE1ZjM3OTA3XQpsaW5rIGNvbnZlcnQgdG8gc3RlcDEtLT48cGF0aCBkPSJNNDAxLjE5NSw3MC4wNjYzIEMzOTMuNjA4LDc4Ljg5NTMgMzgzLjg5Niw4OC4xMTgzIDM3Myw5My42MDYzIEMyODIuOTc0LDEzOC45NDc4IDI0Mi4yMDEsODYuMjM3MyAxNDgsMTIyLjEwNjMgQzEzNS4wNzksMTI3LjAyNjQgMTIyLjIzMywxMzQuOTE5OSAxMTEuMjk3LDE0Mi43ODk1ICIgZmlsbD0ibm9uZSIgaWQ9ImNvbnZlcnQtdG8tc3RlcDEiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMTA3LjA0OCwxNDUuOTE1MSwxMTYuNjY4NSwxNDMuODA2NCwxMTEuMDc2MywxNDIuOTUzMiwxMTEuOTI5NSwxMzcuMzYxMSwxMDcuMDQ4LDE0NS45MTUxIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVs2NmQxMWQxZTYwMDAwM2I5YTFmYjI4Y2I4ZWI2M2I4NF0KbGluayBzdGVwMSB0byBzdGVwMi0tPjxwYXRoIGQ9Ik0xMzAuMjE5LDE2OS4xMDYzIEMxNDAuMjI4LDE2OS4xMDYzIDE1MC4yMzgsMTY5LjEwNjMgMTYwLjI0OCwxNjkuMTA2MyAiIGZpbGw9Im5vbmUiIGlkPSJzdGVwMS10by1zdGVwMiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIxNjUuNDgyLDE2OS4xMDYzLDE1Ni40ODIsMTY1LjEwNjMsMTYwLjQ4MiwxNjkuMTA2MywxNTYuNDgyLDE3My4xMDYzLDE2NS40ODIsMTY5LjEwNjMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9W2VmMDVkZDQ4OWViMDZiYTNhODA2ZjVkNGZlYjc0NGJiXQpsaW5rIHN0ZXAyIHRvIHN0ZXAzLS0+PHBhdGggZD0iTTMzMi43MiwxNjkuMTA2MyBDMzQyLjUzNCwxNjkuMTA2MyAzNTIuMzQ5LDE2OS4xMDYzIDM2Mi4xNjQsMTY5LjEwNjMgIiBmaWxsPSJub25lIiBpZD0ic3RlcDItdG8tc3RlcDMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMzY3LjI5NiwxNjkuMTA2MywzNTguMjk2LDE2NS4xMDYzLDM2Mi4yOTYsMTY5LjEwNjMsMzU4LjI5NiwxNzMuMTA2MywzNjcuMjk2LDE2OS4xMDYzIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVs5YTMxMWUwOTA1YjI0NTUwNzc5MGRjZTc3YTM1NzhlNV0KbGluayBzdGVwMyB0byBzdGVwNC0tPjxwYXRoIGQ9Ik02NDguOTUzLDE2OS4xMDYzIEM2NTguNjg2LDE2OS4xMDYzIDY2OC40MTksMTY5LjEwNjMgNjc4LjE1MiwxNjkuMTA2MyAiIGZpbGw9Im5vbmUiIGlkPSJzdGVwMy10by1zdGVwNCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI2ODMuMjQyLDE2OS4xMDYzLDY3NC4yNDIsMTY1LjEwNjMsNjc4LjI0MiwxNjkuMTA2Myw2NzQuMjQyLDE3My4xMDYzLDY4My4yNDIsMTY5LjEwNjMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzlmOTIxZTNjNjc0NDA3Y2YxNTcyNGNiOWY1YzQxMzE3XQpyZXZlcnNlIGxpbmsgY29udmVydCB0byBzdGVwNC0tPjxwYXRoIGQ9Ik00MzguNzE3LDczLjcyMzMgQzQ0NS44OTcsODEuMzMyMyA0NTQuNTQzLDg4LjgyNDMgNDY0LDkzLjYwNjMgQzU0NC45MTEsMTM0LjUxOTEgNTc5LjU1NCw5NC43NjQzIDY2NiwxMjIuMTA2MyBDNjg0LjQwNCwxMjcuOTI3MiA3MDMuNjA5LDEzNy4yMzg4IDcxOS41MjgsMTQ1Ljk2NjUgIiBmaWxsPSJub25lIiBpZD0iY29udmVydC1iYWNrdG8tc3RlcDQiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iNDM1LjMxMyw2OS45OTAzLDQzOC40MjMzLDc5LjMzNTEsNDM4LjY4MjcsNzMuNjg0Miw0NDQuMzMzNiw3My45NDM2LDQzNS4zMTMsNjkuOTkwMyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bY2E3ODJjNTRhMDZkNWZkZWE2NDZkYzEzZDE4ZWE4NjRdCkBzdGFydHVtbA0KYWN0b3IgRERMDQphY3RvciBwbGFudFVtbA0KDQpjbG91ZCB7DQogICAgY29udHJvbCBjb252ZXJ0ICNncmVlbg0KfQ0KDQpwYWNrYWdlIHsNCiAgICBub2RlICJyZWFkIGRkbCIgQVMgc3RlcDENCiAgICBub2RlICJleHRyYWN0IHRhYmxlIGluZm8iIEFTIHN0ZXAyDQogICAgbm9kZSAicmVwbGFjZSBieSB0ZW1wbGF0ZSBmb3IgcGxhbnR1bWwiIEFTIHN0ZXAzDQogICAgbm9kZSAid3JpdGUgcGxhbnR1bWwiIEFTIHN0ZXA0DQp9DQoNCkRETCAtcmlnaHQtPiBjb252ZXJ0DQpjb252ZXJ0IC1yaWdodC0+IHBsYW50VW1sDQoNCmNvbnZlcnQgLWRvd24tPiBzdGVwMQ0Kc3RlcDEgLXJpZ2h0LT4gc3RlcDIgDQpzdGVwMiAtcmlnaHQtPiBzdGVwMw0Kc3RlcDMgLXJpZ2h0LT4gc3RlcDQNCnN0ZXA0IC1sZWZ0LT4gY29udmVydA0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNihVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4='>
+
+<ol>
+<li>读取同目录下<strong>ddl.sql</strong>文件</li>
+<li>基于 <code>;</code> 分割建表语句</li>
+<li>依赖 <a target="_blank" rel="noopener" href="https://github.com/alibaba/druid">druid</a> 进行sql解析</li>
+<li>定义plantuml模版</li>
+<li><code>replaceAll</code>替换模版内容</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/28/ddl2plantuml/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/27/swagger-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/27/swagger-nginx/" class="post-title-link" itemprop="url">稳定的静态swagger接口服务</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-27 12:59:49" itemprop="dateCreated datePublished" datetime="2018-06-27T12:59:49+08:00">2018-06-27</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <blockquote>
+<p>“swagger接口服务是我本机，如果我下班关机回家，对方如何进行联调？”</p>
+</blockquote>
+<p>如果你有类似的疑问，这篇文章可以帮助你。</p>
+<p>项目源码地址: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/static-swagger-api">github</a></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/27/swagger-nginx/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/26/monitor/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/26/monitor/" class="post-title-link" itemprop="url">浅入浅出监控系统</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-26 21:01:47" itemprop="dateCreated datePublished" datetime="2018-06-26T21:01:47+08:00">2018-06-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="如何搭建一个监控系统"><a href="#如何搭建一个监控系统" class="headerlink" title="如何搭建一个监控系统"></a>如何搭建一个监控系统</h2><p>生产环境必须是可监控的，一个对开发者黑盒的线上应用无异于灾难。一个简单的监控系统大致包含以下几部分: </p>
+<ol>
+<li>采集数据</li>
+<li>保存数据</li>
+<li>数据可视化</li>
+<li>监控告警</li>
+</ol>
+<p><img src="http://image.crick.wang/monitor-00.jpg" alt="m0"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/26/monitor/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/05/06/http-param/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/05/06/http-param/" class="post-title-link" itemprop="url">Http参数格式约定</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-05-06 15:54:22" itemprop="dateCreated datePublished" datetime="2018-05-06T15:54:22+08:00">2018-05-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/http/" itemprop="url" rel="index"><span itemprop="name">http</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h2><p>微服务通过http协议进行内容传递，因为http协议自由且松散，所以有必要提供一套强有力的约定来限制接口。<br>服务内部实现，可以基于个人编程风格，但涉及到交互协作，必须提供风格一致的输入输出，减少开发与维护成本。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/05/06/http-param/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/04/22/haro-cms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/22/haro-cms/" class="post-title-link" itemprop="url">翻新第一个私活 CMS 项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-22 09:32:57" itemprop="dateCreated datePublished" datetime="2018-04-22T09:32:57+08:00">2018-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1. 项目背景"></a>1. 项目背景</h2><p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/Haro-CMS">https://github.com/wangyuheng/Haro-CMS</a></p>
+<p>最近因为换电脑整理资料的过程中，发现了自己之前写过的一些项目，现在准备拿出来升级一下，构建自己的技术体系。看着三个月前的代码，已经似曾相识了，那三年前的呢？<br>这个项目是用来做企业展示的简易CMS系统，后台管理员可以编辑展示内容，发布新闻；访问用户可以查看企业信息，并反馈建议。这个系统当时应该熬了几个通宵，因为5000大洋实在太吸引人。。而且还是三个人分。。。人的时间好像是越往后越值钱，现在看可能觉得不值，但还是很感谢熬夜编码的自己。<br>项目当时考虑了很多：分布式，前后端分离，甚至是saas化，希望根据用户反馈，或者再接到类似的项目，可以进一步完善，但是并没有什么后续。所以项目历史就是一个基于web.xml配置的spring单机应用。</p>
+<h3 id="1-1-依赖项目"><a href="#1-1-依赖项目" class="headerlink" title="1.1 依赖项目"></a>1.1 依赖项目</h3><ol>
+<li>spring-boot</li>
+<li>h2</li>
+<li>gson</li>
+</ol>
+<p>目前将其升级为spring-boot应用，并且为了开发演示方便，开发环境使用了H2数据库。一直觉得，项目不需要修改任何配置就能跑起来很重要。</p>
+<h2 id="2-项目code"><a href="#2-项目code" class="headerlink" title="2. 项目code"></a>2. 项目code</h2><p>企业信息展示，分为3个module</p>
+<ol>
+<li><strong>admin</strong> 管理人员编辑展示内容</li>
+<li><strong>view</strong> 展示企业信息及新闻</li>
+<li><strong>core</strong> 业务数据层</li>
+</ol>
+<p><img src="https://img.hacpai.com/file/2018/04/cfa23976ccd54d3a8dbd95011cfc3e5d_haro_design.png" alt="haro_designpng"></p>
+<p>新版spring boot已不推荐使用jsp，带来很多不便，如： 不能直接运行java， 需要使用maven spring boot 插件运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run</span><br></pre></td></tr></table></figure>
+
+<p>admin 和 view 只负责业务渲染与鉴权，业务操作放在core中，方便后期进行前后端分离。<br>生产环境数据库使用mysql，为了方便演示，开发环境使用H2内嵌数据库。</p>
+<h3 id="2-1-admin"><a href="#2-1-admin" class="headerlink" title="2.1 admin"></a>2.1 admin</h3><p><img src="https://img.hacpai.com/file/2018/04/93c438b9541c4ae58a739f11150fe1db_haro_admin.png" alt="haro_adminpng"></p>
+<h3 id="2-2-view"><a href="#2-2-view" class="headerlink" title="2.2 view"></a>2.2 view</h3><p><img src="https://img.hacpai.com/file/2018/04/5cd50b4aff8d456aa1d2eb9bc6b31021_haro_view.png" alt="haro_viewpng"></p>
+<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3 问题"></a>3 问题</h2><p>之前的项目基于spring开发，采用web.xml配置。spring-boot通过约定大于配置，极大的简化了这部分工作，但是有时候又会因为不熟悉带来迷茫。明明我没有这个配置，怎么就生效了。。而且jsp又不推荐使用，所以虽然大部分是在删代码，单还是遇到了很多问题。</p>
+<h3 id="3-1-设置视图解析器InternalResourceViewResolver"><a href="#3-1-设置视图解析器InternalResourceViewResolver" class="headerlink" title="3.1 设置视图解析器InternalResourceViewResolver"></a>3.1 设置视图解析器InternalResourceViewResolver</h3><p>原项目在mvc-dispatcher-servlet.xml文件中配置 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/pages/&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>spring-boot提供了默认配置prefix = “spring.mvc”，详情可以参看org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties类， 并在org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration类中自动注入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication(type = Type.SERVLET)</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123; Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class &#125;)</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)</span></span><br><span class="line"><span class="meta">@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(&#123; DispatcherServletAutoConfiguration.class,</span></span><br><span class="line"><span class="meta">		ValidationAutoConfiguration.class &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcAutoConfiguration</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">		<span class="meta">@Bean</span></span><br><span class="line">		<span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> InternalResourceViewResolver <span class="title">defaultViewResolver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			InternalResourceViewResolver resolver = <span class="keyword">new</span> InternalResourceViewResolver();</span><br><span class="line">			resolver.setPrefix(<span class="keyword">this</span>.mvcProperties.getView().getPrefix());</span><br><span class="line">			resolver.setSuffix(<span class="keyword">this</span>.mvcProperties.getView().getSuffix());</span><br><span class="line">			<span class="keyword">return</span> resolver;</span><br><span class="line">		&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以只需在application.properties中添加配置项</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.view.prefix</span>=<span class="string">/WEB-INF/pages/</span></span><br><span class="line"><span class="meta">spring.mvc.view.suffix</span>=<span class="string">.jsp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-静态资源请求"><a href="#3-2-静态资源请求" class="headerlink" title="3.2 静态资源请求"></a>3.2 静态资源请求</h3><p>未实现前后端分离的项目，css、js等静态资源仍保存在项目中。spring-boot建议保存在resource/static目录下，并通过spring.resources.static-locations属性设置目录位置，并且需要制定mapping规则。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.static-path-pattern</span>=<span class="string">/static/**</span></span><br><span class="line"><span class="meta">spring.resources.static-locations</span>=<span class="string">classpath:/static/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-spring-boot-运行war项目"><a href="#3-3-spring-boot-运行war项目" class="headerlink" title="3.3 spring-boot 运行war项目"></a>3.3 spring-boot 运行war项目</h3><p>需要添加tomcat-embed依赖，并且设置servlet初始化。如果使用jsp标签，一般也需要添加jstl依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Provided --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>repackage<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages=&#123;&quot;wang.crick.business.haro&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewAPP</span> <span class="keyword">extends</span> <span class="title">SpringBootServletInitializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> SpringApplicationBuilder <span class="title">configure</span><span class="params">(SpringApplicationBuilder application)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> application.sources(ViewAPP.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ViewAPP.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要通过spring-boot maven插件运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-自定义请求后缀匹配"><a href="#3-4-自定义请求后缀匹配" class="headerlink" title="3.4 自定义请求后缀匹配"></a>3.4 自定义请求后缀匹配</h3><p>旧项目中为了提高seo通过servlet-mapping指定请求路径为.html</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.html<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>spring-boot在org.springframework.boot.autoconfigure.web.ServerProperties提供了servlet相关配置，可以通过application.properties配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">server.servlet.path</span>=<span class="string">*.html</span></span><br></pre></td></tr></table></figure>
+
+<p>但是目前希望忽略后缀，即请求index和index.html都可以路由到对应的页面，此时可以通过设置pathmatch属性实现</p>
+<blockquote>
+<pre><code>   /**
+     * Whether to use suffix pattern match (&quot;.*&quot;) when matching patterns to requests.
+     * If enabled a method mapped to &quot;/users&quot; also matches to &quot;/users.*&quot;.
+     */
+</code></pre>
+</blockquote>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.pathmatch.use-suffix-pattern</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-使用内存数据库H2"><a href="#3-5-使用内存数据库H2" class="headerlink" title="3.5 使用内存数据库H2"></a>3.5 使用内存数据库H2</h3><p>为了让程序可以“无痛”运行，在代码中使用了基于内存的H2数据库，生产环境可以考虑mysql等关系型数据库，只需修改对应的配置即可。</p>
+<p>需要添加H2依赖，引入驱动。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在配置文件application.properties中直接配置路径、驱动、以及账户信息</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:h2:mem:~/.h2/haro</span></span><br><span class="line"><span class="meta">spring.datasource.schema</span>=<span class="string">classpath:db/schema.sql</span></span><br><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">org.h2.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
+
+<p>db/schema.sql放置在resource目录下，保存了DDL以及开发环境所需数据。DDL支持情况为标准sql语句，部分工具导出的脚本需要简单修改。在程序启动过程中，会初始化执行，如果有异常，会在控制台中有详细提示。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/04/07/hexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/07/hexo/" class="post-title-link" itemprop="url">在github上免费搭建hexo博客</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-07 22:35:28" itemprop="dateCreated datePublished" datetime="2018-04-07T22:35:28+08:00">2018-04-07</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/hexo/" itemprop="url" rel="index"><span itemprop="name">hexo</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="1-简介"><a href="#1-简介" class="headerlink" title="1 简介"></a>1 简介</h3><p>阅读本文需要你已掌握如下知识</p>
+<ol>
+<li>git</li>
+<li>markdown</li>
+</ol>
+<p>现在写blog的人越来越少，但是在程序员这个群体中，还是很愿意分享自己的经验，也是对自己知识的一个积累。但是通过网站记录博客，定制化功能有限，不够灵活，也不希望给自己带来流量。而自己搭建一个博客平台的成本又比较大，这时可以考虑使用静态博客框架，同时兼顾了便捷性与功能性。hexo是其中的佼佼者，官方的定义如下</p>
+<blockquote>
+<p>A fast, simple &amp; powerful blog framework</p>
+</blockquote>
+<p>hexo是一款静态博客生成框架，拥有多套主题，可以通过github发布自己的博客，满足了程序员的geek特质。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/04/07/hexo/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/04/06/wechat-message-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/06/wechat-message-proxy/" class="post-title-link" itemprop="url">监控告警 http 代理企业微信服务</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-06 00:30:50" itemprop="dateCreated datePublished" datetime="2018-04-06T00:30:50+08:00">2018-04-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1. 项目背景"></a>1. 项目背景</h2><p>朋友在一家日企，运维工具老旧，希望增加一款系统告警工具。我提议通过微信企业号（改版为企业微信）或者短信推送告警信息。提出两点要求：</p>
+<ol>
+<li>可以群发给企业微信中的多个人</li>
+<li>监测健康检测服务是否存活（绕嘴。。）</li>
+</ol>
+<p>做了第一版demo，定位为通信渠道的http代理。贴出企业微信相关代码，如果有需要的同学可以拿去用，记得点个star就好。<br><a target="_blank" rel="noopener" href="https://github.com/wangyuheng/pharos">https://github.com/wangyuheng/pharos</a> </p>
+<h3 id="1-1-依赖项目"><a href="#1-1-依赖项目" class="headerlink" title="1.1 依赖项目"></a>1.1 依赖项目</h3><p>因为定位为http代理，并未使用数据库及持久化工具。</p>
+<ol>
+<li>springboot </li>
+<li>企业微信接口 <a target="_blank" rel="noopener" href="https://work.weixin.qq.com/api/doc">https://work.weixin.qq.com/api/doc</a> </li>
+<li>可能是目前最好最全的微信Java开发工具包（SDK）<a target="_blank" rel="noopener" href="https://github.com/Wechat-Group/weixin-java-tools">https://github.com/Wechat-Group/weixin-java-tools</a></li>
+<li>swagger 工具 <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/spring-boot-swagger-starter">https://github.com/wangyuheng/spring-boot-swagger-starter</a></li>
+</ol>
+<h2 id="2-项目code"><a href="#2-项目code" class="headerlink" title="2. 项目code"></a>2. 项目code</h2><p>代理入口为健康检测工具，出口为企业微信、短信等。同时需要保障和健康检测工具之间的网络通畅。</p>
+<p><img src="http://image.crick.wang/wechat-message-proxy-00.png" alt="wechat-message-proxy-00"></p>
+<p>最近在尝试画图</p>
+<h3 id="2-1-微信接口"><a href="#2-1-微信接口" class="headerlink" title="2.1 微信接口"></a>2.1 微信接口</h3><p>企业微信相关配置如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wechat:</span><br><span class="line">  cp:</span><br><span class="line">    corpid:</span><br><span class="line">    agentid:</span><br><span class="line">    corp:</span><br><span class="line">      secret:</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>corpid 企业ID</li>
+<li>agentid 应用ID，在企业微信管理后台创建应用后，可以查看应用ID</li>
+<li>corp.secret 应用的凭证密钥</li>
+</ol>
+<p>weixin-java-tools已经对微信接口进行了友好的封装，可以通过标签、部门等分组，查询用户标识。配置bean方法如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.crick.business.pharos.config;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.WxCpService;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.impl.WxCpDepartmentServiceImpl;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.impl.WxCpServiceImpl;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.impl.WxCpTagServiceImpl;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.impl.WxCpUserServiceImpl;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.config.WxCpConfigStorage;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.config.WxCpInMemoryConfigStorage;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Value;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnClass;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(WxCpService.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WechatCpConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;wechat.cp.corpid&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String corpid;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;wechat.cp.corp.secret&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String corpSecret;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;wechat.cp.agentid&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> Integer agentid;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> WxCpConfigStorage <span class="title">configStorage</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        WxCpInMemoryConfigStorage configStorage = <span class="keyword">new</span> WxCpInMemoryConfigStorage();</span><br><span class="line">        logger.info(<span class="string">&quot;****************wechat properties start****************&quot;</span>);</span><br><span class="line">        logger.info(<span class="string">&quot;corpid:&#123;&#125;&quot;</span>, corpid);</span><br><span class="line">        logger.info(<span class="string">&quot;corpSecret:&#123;&#125;&quot;</span>, corpSecret);</span><br><span class="line">        logger.info(<span class="string">&quot;agentid:&#123;&#125;&quot;</span>, agentid);</span><br><span class="line">        logger.info(<span class="string">&quot;****************wechat properties end****************&quot;</span>);</span><br><span class="line">        configStorage.setCorpId(corpid);</span><br><span class="line">        configStorage.setCorpSecret(corpSecret);</span><br><span class="line">        configStorage.setAgentId(agentid);</span><br><span class="line">        <span class="keyword">return</span> configStorage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> WxCpService <span class="title">WxCpService</span><span class="params">(WxCpConfigStorage configStorage)</span> </span>&#123;</span><br><span class="line">        WxCpService wxCpService = <span class="keyword">new</span> WxCpServiceImpl();</span><br><span class="line">        wxCpService.setWxCpConfigStorage(configStorage);</span><br><span class="line">        wxCpService.setTagService(<span class="keyword">new</span> WxCpTagServiceImpl(wxCpService));</span><br><span class="line">        wxCpService.setDepartmentService(<span class="keyword">new</span> WxCpDepartmentServiceImpl(wxCpService));</span><br><span class="line">        wxCpService.setUserService(<span class="keyword">new</span> WxCpUserServiceImpl(wxCpService));</span><br><span class="line">        <span class="keyword">return</span> wxCpService;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同时也提供了发送消息、已经封装消息的类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.crick.business.pharos.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.bean.WxCpMessage;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AlertTextBuilder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Integer agentid;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">AlertTextBuilder</span><span class="params">(Integer agentid)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.agentid = agentid;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> WxCpMessage <span class="title">buildForTag</span><span class="params">(String content, String tag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> WxCpMessage.TEXT().agentId(agentid).content(content).toTag(tag).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> WxCpMessage <span class="title">buildForUsers</span><span class="params">(String content, String users)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> WxCpMessage.TEXT().agentId(agentid).content(content).toUser(users).build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.crick.business.pharos.service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.common.exception.WxErrorException;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.api.WxCpService;</span><br><span class="line"><span class="keyword">import</span> me.chanjar.weixin.cp.bean.WxCpUser;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.Logger;</span><br><span class="line"><span class="keyword">import</span> org.slf4j.LoggerFactory;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.stereotype.Service;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.util.List;</span><br><span class="line"><span class="keyword">import</span> java.util.stream.Collectors;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Service</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WechatAlertService</span> <span class="keyword">implements</span> <span class="title">AlertService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> WxCpService wxCpService;</span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> AlertTextBuilder alertTextBuilder;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">alertTextToTag</span><span class="params">(String content, String tag)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            wxCpService.messageSend(alertTextBuilder.buildForTag(content, tag));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (WxErrorException e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;alertTextToTag error! tag:&#123;&#125;&quot;</span>, tag, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">alertTextToUsers</span><span class="params">(String content, List&lt;String&gt; users)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            wxCpService.messageSend(alertTextBuilder.buildForUsers(content, String.join(<span class="string">&quot;,&quot;</span>, users)));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (WxErrorException e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;alertTextToUsers error! users:&#123;&#125;&quot;</span>, users, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">alertTextToDepartment</span><span class="params">(String content, Integer department)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            List&lt;WxCpUser&gt; wxCpUserList = wxCpService.getUserService().listSimpleByDepartment(department, <span class="keyword">true</span>, <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">null</span> != wxCpUserList) &#123;</span><br><span class="line">                String userList = wxCpUserList.stream()</span><br><span class="line">                        .map(WxCpUser::getUserId)</span><br><span class="line">                        .collect(Collectors.joining(<span class="string">&quot;,&quot;</span>));</span><br><span class="line">                wxCpService.messageSend(alertTextBuilder.buildForUsers(content, userList));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (WxErrorException e) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;alertTextToDepartment error! department:&#123;&#125;&quot;</span>, department, e);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-restful接口"><a href="#2-2-restful接口" class="headerlink" title="2.2 restful接口"></a>2.2 restful接口</h3><p>对外暴露的接口主要提供两个功能</p>
+<ol>
+<li>代理企业微信，用于查询部门、标签、userId等</li>
+<li>发送告警信息</li>
+</ol>
+<p>具体实现在service中，restful暴露了http请求接口及swagger接口。并且将首页指向了swagger页面</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:swagger-ui.html&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img src="http://image.crick.wang/wechat-message-proxy-01.png" alt="wechat-message-proxy-01"></p>
+<h3 id="2-3-验权"><a href="#2-3-验权" class="headerlink" title="2.3 验权"></a>2.3 验权</h3><p>两种验权方式</p>
+<ol>
+<li>参数+secret通过SHA加密签名</li>
+<li>ip白名单</li>
+</ol>
+<p>通过interceptor实现</p>
+<h4 id="2-3-1-白名单校验"><a href="#2-3-1-白名单校验" class="headerlink" title="2.3.1 白名单校验"></a>2.3.1 白名单校验</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AuthorInterceptor</span> <span class="keyword">extends</span> <span class="title">HandlerInterceptorAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;#&#123;&#x27;$&#123;white.list&#125;&#x27;.split(&#x27;,&#x27;)&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;String&gt; whiteList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> HandlerMethod) &#123;</span><br><span class="line">            HandlerMethod handlerMethod = (HandlerMethod) handler;</span><br><span class="line">            <span class="keyword">if</span> (handlerMethod.getBeanType().isAnnotationPresent(Anonymous.class)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        String clientIp = getIpAddress(request);</span><br><span class="line">        <span class="keyword">if</span> (!whiteList.contains(clientIp)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RestfulException(<span class="string">&quot;client ip: &quot;</span> + clientIp + <span class="string">&quot; not in white list&quot;</span>, RestfulErrorCode.AUTHOR_ERROR);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.preHandle(request, response, handler);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> String <span class="title">getIpAddress</span><span class="params">(HttpServletRequest request)</span> </span>&#123;</span><br><span class="line">        String ip = request.getHeader(<span class="string">&quot;x-forwarded-for&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">&quot;unknown&quot;</span>.equalsIgnoreCase(ip)) &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">&quot;Proxy-Client-IP&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">&quot;unknown&quot;</span>.equalsIgnoreCase(ip)) &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">&quot;WL-Proxy-Client-IP&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">&quot;unknown&quot;</span>.equalsIgnoreCase(ip)) &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">&quot;HTTP_CLIENT_IP&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">&quot;unknown&quot;</span>.equalsIgnoreCase(ip)) &#123;</span><br><span class="line">            ip = request.getHeader(<span class="string">&quot;HTTP_X_FORWARDED_FOR&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (ip == <span class="keyword">null</span> || ip.length() == <span class="number">0</span> || <span class="string">&quot;unknown&quot;</span>.equalsIgnoreCase(ip)) &#123;</span><br><span class="line">            ip = request.getRemoteAddr();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ip;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-2-接口参数签名校验"><a href="#2-3-2-接口参数签名校验" class="headerlink" title="2.3.2 接口参数签名校验"></a>2.3.2 接口参数签名校验</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SignInterceptor</span> <span class="keyword">extends</span> <span class="title">HandlerInterceptorAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;secret.key&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> String secretKey;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">preHandle</span><span class="params">(HttpServletRequest request, HttpServletResponse response, Object handler)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (handler <span class="keyword">instanceof</span> HandlerMethod) &#123;</span><br><span class="line">            HandlerMethod handlerMethod = (HandlerMethod) handler;</span><br><span class="line">            <span class="keyword">if</span> (handlerMethod.getBeanType().isAnnotationPresent(Anonymous.class)) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        String sign = request.getParameter(<span class="string">&quot;sign&quot;</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> == sign || <span class="string">&quot;&quot;</span>.equals(sign)) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> RestfulException(<span class="string">&quot;must have a sign param!&quot;</span>, RestfulErrorCode.SIGN_ERROR);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            Map&lt;String, String[]&gt; parameters = request.getParameterMap();</span><br><span class="line">            <span class="keyword">if</span> (parameters.size() &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                <span class="keyword">for</span> (String key : parameters.keySet()) &#123;</span><br><span class="line">                    <span class="keyword">if</span> (<span class="string">&quot;sign&quot;</span>.equals(key)) &#123;</span><br><span class="line">                        <span class="keyword">continue</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    sb.append(key).append(<span class="string">&quot;-&quot;</span>).append(Arrays.toString(parameters.get(key))).append(<span class="string">&quot;-&quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                sb.append(<span class="string">&quot;token&quot;</span>).append(<span class="string">&quot;-&quot;</span>).append(secretKey);</span><br><span class="line">                <span class="keyword">if</span> (!sign.equals(EncryptUtil.sha1(sb.toString()))) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RestfulException(<span class="string">&quot;sign check fail!&quot;</span>, RestfulErrorCode.SIGN_ERROR);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.preHandle(request, response, handler);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>SHA加密工具封装</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EncryptUtil</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">EncryptUtil</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SHA_1_ALGORITHM = <span class="string">&quot;SHA-1&quot;</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String SHA_256_ALGORITHM = <span class="string">&quot;SHA-256&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">sha1</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sha(source, SHA_1_ALGORITHM);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">sha256</span><span class="params">(String source)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> sha(source, SHA_256_ALGORITHM);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> String <span class="title">sha</span><span class="params">(String source, String instance)</span> </span>&#123;</span><br><span class="line">        MessageDigest md;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            md = MessageDigest.getInstance(instance);</span><br><span class="line">            md.update(source.getBytes());</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">new</span> String(Hex.encodeHex(md.digest()));</span><br><span class="line">        &#125; <span class="keyword">catch</span> (NoSuchAlgorithmException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>如果需要对sign有效期进行校验，需要提供获取服务器时钟的方法，避免因为服务器时间不一致导致的时间差, 此方法可以通过@Anonymous去掉验权操作。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RestController</span></span><br><span class="line"><span class="meta">@RequestMapping(&quot;common&quot;)</span></span><br><span class="line"><span class="meta">@Anonymous</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonController</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取系统时间，避免客户端时间不一致</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="meta">@GetMapping(&quot;current&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Long <span class="title">current</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> System.currentTimeMillis();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-4-健康检测"><a href="#2-4-健康检测" class="headerlink" title="2.4 健康检测"></a>2.4 健康检测</h3><p>定时用http get 请求确认网络通畅，如果网络连接失败次数超过阈值，报警给系统管理员</p>
+<p>通过Scheduled编写定时任务</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PingCheckTask</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> OkHttpClient okHttpClient = <span class="keyword">new</span> OkHttpClient();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Logger logger = LoggerFactory.getLogger(<span class="keyword">this</span>.getClass());</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;ping.service.url&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String serviceUrl;</span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;ping.period:3&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> period;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> Map&lt;String, Integer&gt; errorCalculate = <span class="keyword">new</span> ConcurrentHashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">resetCount</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">        errorCalculate.put(url, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">pushCount</span><span class="params">(String url)</span> </span>&#123;</span><br><span class="line">        errorCalculate.put(url, errorCalculate.getOrDefault(url, <span class="number">0</span>) + <span class="number">1</span>);</span><br><span class="line">        <span class="keyword">return</span> errorCalculate.get(url);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Scheduled(cron = &quot;0/20 * * * * ?&quot;)</span> <span class="comment">// 每20秒执行一次</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">scheduler</span><span class="params">()</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        Request request = <span class="keyword">new</span> Request.Builder()</span><br><span class="line">                .url(serviceUrl)</span><br><span class="line">                .build();</span><br><span class="line">        Response response = okHttpClient.newCall(request).execute();</span><br><span class="line">        <span class="keyword">if</span> (response.isSuccessful()) &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;ping check &#123;&#125; success!&quot;</span>, serviceUrl);</span><br><span class="line">            resetCount(serviceUrl);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            logger.info(<span class="string">&quot;ping check &#123;&#125; fail! response:&#123;&#125;&quot;</span>, serviceUrl, response);</span><br><span class="line">            <span class="keyword">int</span> count = pushCount(serviceUrl);</span><br><span class="line">            <span class="keyword">if</span> (count &gt; period) &#123;</span><br><span class="line">                <span class="comment">// alert to admin!</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在配置bean中需要注入bean并允许启动调度</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableScheduling</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebConfig</span> <span class="keyword">implements</span> <span class="title">WebMvcConfigurer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"> <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> PingCheckTask <span class="title">pingCheckTask</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> PingCheckTask();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="3-其他"><a href="#3-其他" class="headerlink" title="3. 其他"></a>3. 其他</h2><p>项目写的比较仓促，后续根据实际使用场景进行调整优化。都是站在巨人的肩膀上，利用现成的工具进行拼装。 如果有建议或者希望实现哪些功能，可以留言或者给我提issue <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/pharos">https://github.com/wangyuheng/pharos</a> 。 </p>
+<blockquote>
+<p>春城无处不飞花，寒食东风御柳斜。</p>
+</blockquote>
+<p>推荐大家吃 青团（艾团）， 简直发现了新大陆</p>
+<p><img src="http://image.crick.wang/wechat-message-proxy-02.png" alt="wechat-message-proxy-02"></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/03/23/soucecode-mybatis/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/03/23/soucecode-mybatis/" class="post-title-link" itemprop="url">MyBatis 源码浅入浅出（草稿）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-03-23 23:46:45" itemprop="dateCreated datePublished" datetime="2018-03-23T23:46:45+08:00">2018-03-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/soucecode/" itemprop="url" rel="index"><span itemprop="name">soucecode</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-关于阅读源码"><a href="#1-关于阅读源码" class="headerlink" title="1. 关于阅读源码"></a>1. 关于阅读源码</h2><p>工作中使用到的框架容易成为最熟悉的陌生代码，可以熟练使用，但是并不知道其中原理。阅读源码可以帮助我们知其然，亦知其所以然，既可以在工作中更好的使用框架特性，也可以借鉴其中优秀的设计思想。</p>
+<p>但是面对框架庞大的代码量，往往不知如何下手。总结了一些方法，可以帮助coder战胜恐惧，顺利的开始阅读源码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/03/23/soucecode-mybatis/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/2/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/4/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+
+    </div>
+</body>
+</html>

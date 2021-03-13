@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="DDD还可以这么搞？！！ 代码已开源： https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DDD探险——基于GraphQL+Dgraph实践">
+<meta property="og:url" content="https://blog.yuheng.wang/2020/08/09/ddd-graphql-dgraph/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="DDD还可以这么搞？！！ 代码已开源： https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc">
+<meta property="og:locale">
+<meta property="og:image" content="https://image.crick.wang/mweb/15966371401996.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15965531978029.jpg">
+<meta property="og:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMTM2cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxNzhweDtoZWlnaHQ6MTM2cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNzggMTM2IiB3aWR0aD0iMTc4cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjg3M3Blb2ViN29laSIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48ZWxsaXBzZSBjeD0iMzcuMjg0MyIgY3k9IjIwLjUyMzYiIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmODczcGVvZWI3b2VpKSIgcng9IjMxLjI4NDMiIHJ5PSIxNC41MjM2IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iMjMuMjg0MyIgeT0iMjMuMzcwMyI+6K6o6K66PC90ZXh0PjxlbGxpcHNlIGN4PSIxMzUuMjg0MyIgY3k9IjIwLjUyMzYiIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmODczcGVvZWI3b2VpKSIgcng9IjMxLjI4NDMiIHJ5PSIxNC41MjM2IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iMTIxLjI4NDMiIHk9IjIzLjM3MDMiPuiuvuiuoTwvdGV4dD48ZWxsaXBzZSBjeD0iMTM1LjI4NDMiIGN5PSIxMDkuNTIzNiIgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Y4NzNwZW9lYjdvZWkpIiByeD0iMzEuMjg0MyIgcnk9IjE0LjUyMzYiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4IiB4PSIxMjEuMjg0MyIgeT0iMTEyLjM3MDMiPuWunui3tTwvdGV4dD48ZWxsaXBzZSBjeD0iMzcuMjg0MyIgY3k9IjEwOS41MjM2IiBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjg3M3Blb2ViN29laSkiIHJ4PSIzMS4yODQzIiByeT0iMTQuNTIzNiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjgiIHg9IjIzLjI4NDMiIHk9IjExMi4zNzAzIj7mjqjnv7s8L3RleHQ+PCEtLU1ENT1bNWUyZWVjNjJhNTBiMjZiNmIwZGI2YzEyZTRlZTI4OWNdCmxpbmsgQSB0byBCLS0+PHBhdGggZD0iTTY5LjI3MzQsMjAuNSBDNzkuMTEzNCwyMC41IDg4Ljk1MzMsMjAuNSA5OC43OTMyLDIwLjUgIiBmaWxsPSJub25lIiBpZD0iQS10by1CIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjEwMy45Mzg5LDIwLjUsOTQuOTM4OSwxNi41LDk4LjkzODksMjAuNSw5NC45Mzg5LDI0LjUsMTAzLjkzODksMjAuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bY2QyNWQ4MjQ3MzI0MjA3ZjgyOGE0ZGI5ZjU4ZWQ2OWRdCmxpbmsgQiB0byBDLS0+PHBhdGggZD0iTTEzNS41LDM1LjA5MzggQzEzNS41LDQ5LjY5MjMgMTM1LjUsNzMuMDAwNSAxMzUuNSw4OS40MjkzICIgZmlsbD0ibm9uZSIgaWQ9IkItdG8tQyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIxMzUuNSw5NC43MTQ2LDEzOS41LDg1LjcxNDYsMTM1LjUsODkuNzE0NiwxMzEuNSw4NS43MTQ2LDEzNS41LDk0LjcxNDYiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzlkNjgzMmU4OWVhNzMyNDVhMGIzOWIyZTRhYTdlYmUyXQpyZXZlcnNlIGxpbmsgRCB0byBDLS0+PHBhdGggZD0iTTc0LjQxOTEsMTA5LjUgQzg0LjI1OSwxMDkuNSA5NC4wOTksMTA5LjUgMTAzLjkzODksMTA5LjUgIiBmaWxsPSJub25lIiBpZD0iRC1iYWNrdG8tQyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI2OS4yNzM0LDEwOS41LDc4LjI3MzQsMTEzLjUsNzQuMjczNCwxMDkuNSw3OC4yNzM0LDEwNS41LDY5LjI3MzQsMTA5LjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9Wzk1YmFkNWRlY2I5NTAyMDIzN2FjMmYyMTliZWE3NmE1XQpyZXZlcnNlIGxpbmsgQSB0byBELS0+PHBhdGggZD0iTTM3LjUsNDAuMzU1OSBDMzcuNSw1Ni43MjQ0IDM3LjUsODAuMDQwMyAzNy41LDk0LjcxNDYgIiBmaWxsPSJub25lIiBpZD0iQS1iYWNrdG8tRCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNy41LDM1LjA5MzgsMzMuNSw0NC4wOTM4LDM3LjUsNDAuMDkzOCw0MS41LDQ0LjA5MzgsMzcuNSwzNS4wOTM4IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVtiN2Y3MjI2NzcwMjMzZWZlZTkyYjlkOTYyYzJiMjI2M10KQHN0YXJ0dW1sDQp1c2VjYXNlICLorqjorroiIGFzIEENCnVzZWNhc2UgIuiuvuiuoSIgYXMgQg0KdXNlY2FzZSAi5a6e6Le1IiBhcyBDDQp1c2VjYXNlICLmjqjnv7siIGFzIEQNCg0KQSAtcmlnaHQtPiBCDQpCIC1kb3duLT4gQw0KQyAtbGVmdC0+IEQNCkQgLXVwLT4gQQ0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNihVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4=">
+<meta property="og:image" content="https://image.crick.wang/mweb/15965553653110.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15965561430703.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15965558298434.jpg">
+<meta property="og:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNDgwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo0MTRweDtoZWlnaHQ6NDgwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0MTQgNDgwIiB3aWR0aD0iNDE0cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnhqOGt6dm1qNDJxMCIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48ZWxsaXBzZSBjeD0iMjA0IiBjeT0iMjAiIGZpbGw9IiMwMDAwMDAiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgcng9IjEwIiByeT0iMTAiIHN0eWxlPSJzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MS4wOyIvPjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjI3MyIgeD0iNjcuNSIgeT0iNTAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNDkiIHg9IjgxLjUiIHk9IjcxLjEzODciPmNyZWF0ZSBncmFwaHFsLnNjaGVtYSAmYW1wOyBkZ3JhcGguc2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgaGVpZ2h0PSI3NS44NzUiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMTUzIiB4PSIxMjcuNSIgeT0iMTAzLjk2ODgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjE0MS41IiB5PSIxMjUuMTA3NCI+Y3JlYXRlIGphdmFCZWFuIHdpdGg8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iODYiIHg9IjE0MS41IiB5PSIxMzkuMDc2MiI+QERncmFwaFR5cGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjEiIHg9IjE0MS41IiB5PSIxNTMuMDQ0OSI+QFVpZEZpZWxkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjExMyIgeD0iMTQxLjUiIHk9IjE2Ny4wMTM3Ij5AUmVsYXRpb25zaGlwRmllbGQ8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMzg2IiB4PSIxMSIgeT0iMTk5Ljg0MzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzNjIiIHg9IjI1IiB5PSIyMjAuOTgyNCI+Y3JlYXRlIEBSZXBvc2l0b3J5IGNsYXNzIGV4dGVuZHMgU2ltcGxlRGdyYXBoUmVwb3NpdG9yeTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnhqOGt6dm1qNDJxMCkiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIzMzAiIHg9IjM5IiB5PSIyNTMuODEyNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwNiIgeD0iNTMiIHk9IjI3NC45NTEyIj5hZGQgeHhEZ3JhcGgueG1sIGZvciBjb21wbGV4IHBlcnNpc3RlbmNlIGhhbmRsZTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnhqOGt6dm1qNDJxMCkiIGhlaWdodD0iNjEuOTA2MyIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIyODQiIHg9IjYyIiB5PSIzMDcuNzgxMyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI1NiIgeD0iNzYiIHk9IjMyOC45MTk5Ij5jcmVhdGUgQERhdGFGZXRjaGVyU2VydmljZSBjbGFzcyBpbmNsdWRlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijk2IiB4PSI3NiIgeT0iMzQyLjg4ODciPkBHcmFwaHFsUXVlcnk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA5IiB4PSI3NiIgeT0iMzU2Ljg1NzQiPkBHcmFwaHFsTXV0YXRpb248L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMzU1IiB4PSIyNi41IiB5PSIzODkuNjg3NSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMzMSIgeD0iNDAuNSIgeT0iNDEwLjgyNjIiPmJyb3dzZXIgaHR0cDovL2xvY2FsaG9zdDoke3BvcnR9L3BsYXlncm91bmQgZm9yIGRlYnVnPC90ZXh0PjxlbGxpcHNlIGN4PSIyMDQiIGN5PSI0NTMuNjU2MyIgZmlsbD0iI0ZGRkZGRiIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiByeD0iMTAiIHJ5PSIxMCIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyLjU7IiB4MT0iMTk3LjgxMjgiIHgyPSIyMTAuMTg3MiIgeTE9IjQ0Ny40NjkxIiB5Mj0iNDU5Ljg0MzQiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjIuNTsiIHgxPSIyMTAuMTg3MiIgeDI9IjE5Ny44MTI4IiB5MT0iNDQ3LjQ2OTEiIHkyPSI0NTkuODQzNCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjMwIiB5Mj0iNTAiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCw0MCwyMDQsNTAsMjA4LDQwLDIwNCw0NCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iODMuOTY4OCIgeTI9IjEwMy45Njg4Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIyMDAsOTMuOTY4OCwyMDQsMTAzLjk2ODgsMjA4LDkzLjk2ODgsMjA0LDk3Ljk2ODgiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjE3OS44NDM4IiB5Mj0iMTk5Ljg0MzgiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCwxODkuODQzOCwyMDQsMTk5Ljg0MzgsMjA4LDE4OS44NDM4LDIwNCwxOTMuODQzOCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iMjMzLjgxMjUiIHkyPSIyNTMuODEyNSIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjAwLDI0My44MTI1LDIwNCwyNTMuODEyNSwyMDgsMjQzLjgxMjUsMjA0LDI0Ny44MTI1IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIyMDQiIHgyPSIyMDQiIHkxPSIyODcuNzgxMyIgeTI9IjMwNy43ODEzIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIyMDAsMjk3Ljc4MTMsMjA0LDMwNy43ODEzLDIwOCwyOTcuNzgxMywyMDQsMzAxLjc4MTMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjM2OS42ODc1IiB5Mj0iMzg5LjY4NzUiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCwzNzkuNjg3NSwyMDQsMzg5LjY4NzUsMjA4LDM3OS42ODc1LDIwNCwzODMuNjg3NSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iNDIzLjY1NjMiIHkyPSI0NDMuNjU2MyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjAwLDQzMy42NTYzLDIwNCw0NDMuNjU2MywyMDgsNDMzLjY1NjMsMjA0LDQzNy42NTYzIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVsxOGZiNWZjMzUxYzhkMzQ3Mjk5YmRjMjg5YTM0ZWE5Y10KQHN0YXJ0dW1sDQpzdGFydA0KDQo6IGNyZWF0ZSBncmFwaHFsLnNjaGVtYSAmIGRncmFwaC5zY2hlbWE7DQo6IGNyZWF0ZSBqYXZhQmVhbiB3aXRoIFxuIEBEZ3JhcGhUeXBlIFxuIEBVaWRGaWVsZCBcbiBAUmVsYXRpb25zaGlwRmllbGQ7DQo6IGNyZWF0ZSBAUmVwb3NpdG9yeSBjbGFzcyBleHRlbmRzIFNpbXBsZURncmFwaFJlcG9zaXRvcnk7DQo6IGFkZCB4eERncmFwaC54bWwgZm9yIGNvbXBsZXggcGVyc2lzdGVuY2UgaGFuZGxlOw0KOiBjcmVhdGUgQERhdGFGZXRjaGVyU2VydmljZSBjbGFzcyBpbmNsdWRlIFxuIEBHcmFwaHFsUXVlcnkgXG4gQEdyYXBocWxNdXRhdGlvbjsNCjogYnJvd3NlciBodHRwOi8vbG9jYWxob3N0OiR7cG9ydH0vcGxheWdyb3VuZCBmb3IgZGVidWc7DQoNCmVuZA0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNihVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4=">
+<meta property="og:image" content="https://image.crick.wang/mweb/15966354288629.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15966354471616.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15966356171597.jpg">
+<meta property="og:image" content="https://image.crick.wang/mweb/15966358843813.jpg">
+<meta property="article:published_time" content="2020-08-09T08:53:12.000Z">
+<meta property="article:modified_time" content="2020-12-20T16:21:40.757Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="ddd">
+<meta property="article:tag" content="GraphQL">
+<meta property="article:tag" content="Arc">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://image.crick.wang/mweb/15966371401996.jpg">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2020/08/09/ddd-graphql-dgraph/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>DDD探险——基于GraphQL+Dgraph实践 | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-DDD"><span class="nav-number">1.</span> <span class="nav-text">1. DDD</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-DDD-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 DDD 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-1-DDD-%E7%AE%80%E5%8D%95%E7%A4%BA%E4%BE%8B"><span class="nav-number">1.2.</span> <span class="nav-text">1.1.1 DDD 简单示例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-1-2-DDD-%E4%B8%8D%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.3.</span> <span class="nav-text">1.1.2 DDD 不是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8DDD"><span class="nav-number">1.4.</span> <span class="nav-text">1.2 为什么要用DDD</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-3-%E6%80%8E%E4%B9%88%E7%94%A8DDD"><span class="nav-number">1.5.</span> <span class="nav-text">1.3 怎么用DDD</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-GraphQL"><span class="nav-number">2.</span> <span class="nav-text">2. GraphQL</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-1-GraphQL-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 GraphQL 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8GraphQL"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 为什么要用GraphQL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-3-%E6%80%8E%E4%B9%88%E7%94%A8GraphQL"><span class="nav-number">2.3.</span> <span class="nav-text">2.3 怎么用GraphQL</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-Dgraph"><span class="nav-number">3.</span> <span class="nav-text">3. Dgraph</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-GraphQL-%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 GraphQL 是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8Dgraph"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 为什么要用Dgraph</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-%E6%80%8E%E4%B9%88%E7%94%A8Dgraph"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 怎么用Dgraph</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-%E9%A2%86%E5%9F%9F%E4%BA%8B%E4%BB%B6"><span class="nav-number">4.</span> <span class="nav-text">4. 领域事件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-Arc"><span class="nav-number">5.</span> <span class="nav-text">5. Arc</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-1-%E5%BC%80%E5%8F%91%E6%B5%81%E7%A8%8B"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 开发流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-2-Sample"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 Sample</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-3-%E6%95%88%E6%9E%9C"><span class="nav-number">5.3.</span> <span class="nav-text">5.3 效果</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-%E5%90%8E%E7%BB%AD%E8%AE%A1%E5%88%92"><span class="nav-number">5.4.</span> <span class="nav-text">5.4 后续计划</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-%E5%BC%8A%E7%AB%AF"><span class="nav-number">6.</span> <span class="nav-text">6. 弊端</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#7-%E7%9B%B8%E5%85%B3%E5%B7%A5%E5%85%B7%E6%8E%A8%E8%8D%90"><span class="nav-number">7.</span> <span class="nav-text">7. 相关工具推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#7-1-%E5%B7%A5%E5%85%B7"><span class="nav-number">7.1.</span> <span class="nav-text">7.1 工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-2-%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="nav-number">7.2.</span> <span class="nav-text">7.2 最佳实践</span></a></li></ol></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2020/08/09/ddd-graphql-dgraph/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          DDD探险——基于GraphQL+Dgraph实践
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2020-08-09 16:53:12" itemprop="dateCreated datePublished" datetime="2020-08-09T16:53:12+08:00">2020-08-09</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/ddd/" itemprop="url" rel="index"><span itemprop="name">ddd</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>DDD还可以这么搞？！！</p>
+<p>代码已开源： <a target="_blank" rel="noopener" href="https://github.com/YituHealthcare/Arc">https://github.com/YituHealthcare/Arc</a></p>
+<span id="more"></span>
+
+<h2 id="1-DDD"><a href="#1-DDD" class="headerlink" title="1. DDD"></a>1. DDD</h2><p>《DDD从入门到放弃》 只需要一张脑图</p>
+<p><img src="https://image.crick.wang/mweb/15966371401996.jpg" alt="00"></p>
+<p>一个很奇怪的现象，介绍DDD的文章基本往往只聊思想和概念，不聊落地和代码。<br>“思想，意会就好”，或者说是不是DDD只负责前期的设计。</p>
+<p>因为不像设计模式一样有直观的代码用例，又拥有大量生涩难懂的概念，往往在落地时遇到了困境。本文基于笔者对DDD的理解、记录技术选型过程及激进的代码讲解，槽点过多，欢迎沟通。</p>
+<h3 id="1-1-DDD-是什么"><a href="#1-1-DDD-是什么" class="headerlink" title="1.1 DDD 是什么"></a>1.1 DDD 是什么</h3><p>DDD (Domain-Driven Design) 领域驱动设计。指对软件所涉及到的领域进行建模，以应对系统规模过大时引起的软件复杂性的问题。</p>
+<p><img src="https://image.crick.wang/mweb/15965531978029.jpg" alt="01"></p>
+<h3 id="1-1-1-DDD-简单示例"><a href="#1-1-1-DDD-简单示例" class="headerlink" title="1.1.1 DDD 简单示例"></a>1.1.1 DDD 简单示例</h3><p>尝试通过一个简单的示例来说明</p>
+<p>如果我希望提供 <strong>更新用户密码or用户姓名or年龄</strong> 的功能，基于面向数据的角度，我会有一张user的表，上述操作都是对user表的更新，我可以设计为 <code>UserService.save(user)</code> 来实现，并通过键值约束实现一些重复限制。但是后续迭代时只看到这个方法，不了解被外部如何使用，这个方法很快就无法继续迭代。</p>
+<p>我们尝试<strong>不要专注在实体和值对象</strong>，通过语义明确的API来实现。所以我可以提供N个方法</p>
+<ul>
+<li><code>UserService.updatePassword(password, userId);</code></li>
+<li><code>UserService.updateName(name, userId);</code></li>
+<li><code>UserService.updateAge(age, userId);</code></li>
+</ul>
+<p>这种代码已经很符合基于Spring+贫血模型的风格</p>
+<p>我们再重新审视一下最原始的需求，<strong>更新用户密码or用户姓名or年龄</strong>，这个操作是否应该由User来完成？ 比如</p>
+<ul>
+<li><code>User.updatePassword(password);</code></li>
+<li><code>User.updateName(name);</code></li>
+<li><code>User.updateAge(age);</code></li>
+</ul>
+<p>这就是DDD风格的代码，按照最贴合业务及正向思维的逻辑来编写。如果我们不考虑数据持久化、如何配合Spring使用这些必须解决的问题的话，会更完美一些。当然，如果我们拥有一台内存无限、永不宕机的服务器，也可以实现。</p>
+<h3 id="1-1-2-DDD-不是什么"><a href="#1-1-2-DDD-不是什么" class="headerlink" title="1.1.2 DDD 不是什么"></a>1.1.2 DDD 不是什么</h3><p><strong>DDD不是银弹</strong>。</p>
+<p>如果是银弹，或者说适用于大部分场景，那么DDD应该早就变成主流了(另一方面的原因是对工程人员的要求较高)。<br>但是在某些特定场景下，DDD是很合适的一套方案。 </p>
+<h3 id="1-2-为什么要用DDD"><a href="#1-2-为什么要用DDD" class="headerlink" title="1.2 为什么要用DDD"></a>1.2 为什么要用DDD</h3><p>在一个创新探索领域、或者行业门槛较高的领域，只从工程角度太片面，需要引入领域专家一同工作。</p>
+<p>这时有几个问题</p>
+<ol>
+<li>不同职业，使用不同工具，说着不同术语的人如何协同工作？如何确认彼此的想法已对齐？</li>
+<li>如何加深业务理解和更准确的定义，以便实现业务深耕和探索？</li>
+<li>建模知识如何沉淀？除了业务专家口口相传这种10bit/s的数据量传播方式外，是否有更通用高效的方法？</li>
+<li>在业务探索期，如何降低频繁变更的成本？不需要在业务建模、架构设计与编码之间相互翻译？</li>
+</ol>
+<p>也许通过DDD可以解决上述问题。</p>
+<p>​思考：如果一个行业相对成熟稳定，已经有知名的产品，是不是直接把对方的解决方案“借鉴”过来更好一些？</p>
+<h3 id="1-3-怎么用DDD"><a href="#1-3-怎么用DDD" class="headerlink" title="1.3 怎么用DDD"></a>1.3 怎么用DDD</h3><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMTM2cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDoxNzhweDtoZWlnaHQ6MTM2cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNzggMTM2IiB3aWR0aD0iMTc4cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjg3M3Blb2ViN29laSIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48ZWxsaXBzZSBjeD0iMzcuMjg0MyIgY3k9IjIwLjUyMzYiIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmODczcGVvZWI3b2VpKSIgcng9IjMxLjI4NDMiIHJ5PSIxNC41MjM2IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iMjMuMjg0MyIgeT0iMjMuMzcwMyI+6K6o6K66PC90ZXh0PjxlbGxpcHNlIGN4PSIxMzUuMjg0MyIgY3k9IjIwLjUyMzYiIGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmODczcGVvZWI3b2VpKSIgcng9IjMxLjI4NDMiIHJ5PSIxNC41MjM2IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iMTIxLjI4NDMiIHk9IjIzLjM3MDMiPuiuvuiuoTwvdGV4dD48ZWxsaXBzZSBjeD0iMTM1LjI4NDMiIGN5PSIxMDkuNTIzNiIgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Y4NzNwZW9lYjdvZWkpIiByeD0iMzEuMjg0MyIgcnk9IjE0LjUyMzYiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4IiB4PSIxMjEuMjg0MyIgeT0iMTEyLjM3MDMiPuWunui3tTwvdGV4dD48ZWxsaXBzZSBjeD0iMzcuMjg0MyIgY3k9IjEwOS41MjM2IiBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZjg3M3Blb2ViN29laSkiIHJ4PSIzMS4yODQzIiByeT0iMTQuNTIzNiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjgiIHg9IjIzLjI4NDMiIHk9IjExMi4zNzAzIj7mjqjnv7s8L3RleHQ+PCEtLU1ENT1bNWUyZWVjNjJhNTBiMjZiNmIwZGI2YzEyZTRlZTI4OWNdCmxpbmsgQSB0byBCLS0+PHBhdGggZD0iTTY5LjI3MzQsMjAuNSBDNzkuMTEzNCwyMC41IDg4Ljk1MzMsMjAuNSA5OC43OTMyLDIwLjUgIiBmaWxsPSJub25lIiBpZD0iQS10by1CIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjEwMy45Mzg5LDIwLjUsOTQuOTM4OSwxNi41LDk4LjkzODksMjAuNSw5NC45Mzg5LDI0LjUsMTAzLjkzODksMjAuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bY2QyNWQ4MjQ3MzI0MjA3ZjgyOGE0ZGI5ZjU4ZWQ2OWRdCmxpbmsgQiB0byBDLS0+PHBhdGggZD0iTTEzNS41LDM1LjA5MzggQzEzNS41LDQ5LjY5MjMgMTM1LjUsNzMuMDAwNSAxMzUuNSw4OS40MjkzICIgZmlsbD0ibm9uZSIgaWQ9IkItdG8tQyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIxMzUuNSw5NC43MTQ2LDEzOS41LDg1LjcxNDYsMTM1LjUsODkuNzE0NiwxMzEuNSw4NS43MTQ2LDEzNS41LDk0LjcxNDYiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzlkNjgzMmU4OWVhNzMyNDVhMGIzOWIyZTRhYTdlYmUyXQpyZXZlcnNlIGxpbmsgRCB0byBDLS0+PHBhdGggZD0iTTc0LjQxOTEsMTA5LjUgQzg0LjI1OSwxMDkuNSA5NC4wOTksMTA5LjUgMTAzLjkzODksMTA5LjUgIiBmaWxsPSJub25lIiBpZD0iRC1iYWNrdG8tQyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI2OS4yNzM0LDEwOS41LDc4LjI3MzQsMTEzLjUsNzQuMjczNCwxMDkuNSw3OC4yNzM0LDEwNS41LDY5LjI3MzQsMTA5LjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9Wzk1YmFkNWRlY2I5NTAyMDIzN2FjMmYyMTliZWE3NmE1XQpyZXZlcnNlIGxpbmsgQSB0byBELS0+PHBhdGggZD0iTTM3LjUsNDAuMzU1OSBDMzcuNSw1Ni43MjQ0IDM3LjUsODAuMDQwMyAzNy41LDk0LjcxNDYgIiBmaWxsPSJub25lIiBpZD0iQS1iYWNrdG8tRCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIzNy41LDM1LjA5MzgsMzMuNSw0NC4wOTM4LDM3LjUsNDAuMDkzOCw0MS41LDQ0LjA5MzgsMzcuNSwzNS4wOTM4IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVtiN2Y3MjI2NzcwMjMzZWZlZTkyYjlkOTYyYzJiMjI2M10KQHN0YXJ0dW1sDQp1c2VjYXNlICLorqjorroiIGFzIEENCnVzZWNhc2UgIuiuvuiuoSIgYXMgQg0KdXNlY2FzZSAi5a6e6Le1IiBhcyBDDQp1c2VjYXNlICLmjqjnv7siIGFzIEQNCg0KQSAtcmlnaHQtPiBCDQpCIC1kb3duLT4gQw0KQyAtbGVmdC0+IEQNCkQgLXVwLT4gQQ0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNihVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4='>
+
+<ol>
+<li>通过用户故事，每个人按照自己的理解定义相关”领域实践”、”行为操作”及”用户角色”，结构格式为<ol>
+<li><code>actor-&gt;command-&gt;event</code>，即:某人做了某个操作，产生了某个事件</li>
+</ol>
+</li>
+<li>定义通用语言(团队自己创建的公用语言)，基于上述定义，通过归纳总结，明确常识及概念，并给出定义，最终输出业务词典表。后续通过常识名沟通讨论<ol>
+<li>通用语言需要明确限界上下文(Bounded Context)，这个常识名只在对应的上下文内代表相应的含义。同一个概念在不同上下文内，代表着不同的含义，拥有不同的属性及行为</li>
+<li>对齐过程中包括但不限于<ul>
+<li>讨论</li>
+<li>参考资料</li>
+<li>引用标准</li>
+<li>查阅词典</li>
+</ul>
+</li>
+<li>示例<ol>
+<li>Project: 为了达到某个产品迭代、产品模块开发等目的所做的工作. </li>
+<li>Milestone: 表述一个Project的某个时间阶段及阶段性目标. 一个Project可以同时拥有多个处于相同或者不同阶段的Milestone.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>通过<strong>EventStorming</strong>将用户故事抽象为”贴纸领域图”，并按照聚合根进行聚合<ol>
+<li>此过程和通用语言定义可同时进行，在讨论时明确定义</li>
+<li><strong>EventStorming</strong>详情可以通过 <a target="_blank" rel="noopener" href="https://www.eventstorming.com/">https://www.eventstorming.com</a> 了解，不再详细展开</li>
+</ol>
+</li>
+</ol>
+<p><img src="https://image.crick.wang/mweb/15965553653110.jpg" alt="02"></p>
+<p>上述过程相对通用，在我的实践过程中，又增加了一步</p>
+<ol>
+<li>按照聚合后的”贴纸领域图”编写<code>GraphQL Schema</code></li>
+</ol>
+<h2 id="2-GraphQL"><a href="#2-GraphQL" class="headerlink" title="2. GraphQL"></a>2. GraphQL</h2><h3 id="2-1-GraphQL-是什么"><a href="#2-1-GraphQL-是什么" class="headerlink" title="2.1 GraphQL 是什么"></a>2.1 GraphQL 是什么</h3><p><a target="_blank" rel="noopener" href="https://graphql.org/">https://graphql.org/</a></p>
+<blockquote>
+<p>一种用于 API 的查询语言<br>GraphQL 既是一种用于 API 的查询语言也是一个满足你数据查询的运行时。 GraphQL 对你的 API 中的数据提供了一套易于理解的完整描述，使得客户端能够准确地获得它需要的数据，而且没有任何冗余，也让 API 更容易地随着时间推移而演进，还能用于构建强大的开发者工具</p>
+</blockquote>
+<h3 id="2-2-为什么要用GraphQL"><a href="#2-2-为什么要用GraphQL" class="headerlink" title="2.2 为什么要用GraphQL"></a>2.2 为什么要用GraphQL</h3><p>如何保障领域模型和实践之间同时变动？</p>
+<p>​前文调侃说”如果我们拥有一台内存无限、永不宕机的机器”，我们可以很方便的开发出符合DDD的代码，而这就是我们代码的领域层。但是实际工作中，我们不仅没有这台机器，而且不得不和各方进行交互，比如说我们要和UI交互，提供相关数据。这时根据六边形orCA架构，我们拓展其中的一条边。</p>
+<p><img src="https://image.crick.wang/mweb/15965561430703.jpg" alt="03"></p>
+<p><img src="https://image.crick.wang/mweb/15965558298434.jpg" alt="04"></p>
+<p>此时问题出现了。当我们画了实体、连了各种关系线之后，还要再去拉平，做各种转换(从领域层到API交互层，前端也会做同样的各种<code>xxObject</code>的转换，但我们明明是在同一套共同创建的领域模型下进行开发)。这个过程叫做api定义。</p>
+<p>如果前端能通过领域模型进行数据操作，是不是可以省略这一过程？那么在2者之间找到一个平衡点，就是通过<code>GraphQL Schema</code>描述领域模型，同时也描述了接口。</p>
+<h3 id="2-3-怎么用GraphQL"><a href="#2-3-怎么用GraphQL" class="headerlink" title="2.3 怎么用GraphQL"></a>2.3 怎么用GraphQL</h3><p>网上的例子大多是内存中的数据，而没有使用数据库的demo，无论是关系型数据库还是nosql。因为实现起来不优雅，拉低了GraphQL的使用体验</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">GraphQLDataFetchers</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> List&lt;Map&lt;String, String&gt;&gt; authors = Arrays.asList(</span><br><span class="line">            ImmutableMap.of(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;author-1&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;firstName&quot;</span>, <span class="string">&quot;Joanne&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;lastName&quot;</span>, <span class="string">&quot;Rowling&quot;</span>),</span><br><span class="line">            ImmutableMap.of(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;author-2&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;firstName&quot;</span>, <span class="string">&quot;Herman&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;lastName&quot;</span>, <span class="string">&quot;Melville&quot;</span>),</span><br><span class="line">            ImmutableMap.of(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;author-3&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;firstName&quot;</span>, <span class="string">&quot;Anne&quot;</span>,</span><br><span class="line">                    <span class="string">&quot;lastName&quot;</span>, <span class="string">&quot;Rice&quot;</span>)</span><br><span class="line">    );</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataFetcher <span class="title">getAuthorDataFetcher</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; &#123;</span><br><span class="line">            Map&lt;String,String&gt; book = dataFetchingEnvironment.getSource();</span><br><span class="line">            String authorId = book.get(<span class="string">&quot;authorId&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> authors</span><br><span class="line">                    .stream()</span><br><span class="line">                    .filter(author -&gt; author.get(<span class="string">&quot;id&quot;</span>).equals(authorId))</span><br><span class="line">                    .findFirst()</span><br><span class="line">                    .orElse(<span class="keyword">null</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>基于前面的推理，我们已经用schema描述了领域模型和api，那么能否再向下拓展一层，用来描述持久化信息呢？</p>
+<h2 id="3-Dgraph"><a href="#3-Dgraph" class="headerlink" title="3. Dgraph"></a>3. Dgraph</h2><h3 id="3-1-GraphQL-是什么"><a href="#3-1-GraphQL-是什么" class="headerlink" title="3.1 GraphQL 是什么"></a>3.1 GraphQL 是什么</h3><blockquote>
+<p>Dgraph is an open-source, scalable, distributed, highly available and fast graph database, designed from the ground up to be run in production.</p>
+</blockquote>
+<h3 id="3-2-为什么要用Dgraph"><a href="#3-2-为什么要用Dgraph" class="headerlink" title="3.2 为什么要用Dgraph"></a>3.2 为什么要用Dgraph</h3><ol>
+<li>图数据库更直观，符合领域设计的过程，比如项目中添加用户，其实只是在项目和用户之间连接一条<code>belong</code>的线</li>
+<li>支持GraphQL</li>
+</ol>
+<h3 id="3-3-怎么用Dgraph"><a href="#3-3-怎么用Dgraph" class="headerlink" title="3.3 怎么用Dgraph"></a>3.3 怎么用Dgraph</h3><ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/dgraph-io/dgraph4j">https://github.com/dgraph-io/dgraph4j</a></li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Query</span></span><br><span class="line">String query = </span><br><span class="line"><span class="string">&quot;query all($a: string)&#123;\n&quot;</span> +</span><br><span class="line"><span class="string">&quot;  all(func: eq(name, $a)) &#123;\n&quot;</span> +</span><br><span class="line"><span class="string">&quot;    name\n&quot;</span> +</span><br><span class="line"> <span class="string">&quot;&#125;\n&quot;</span> +</span><br><span class="line"><span class="string">&quot;&#125;\n&quot;</span>;</span><br><span class="line"></span><br><span class="line">Map&lt;String, String&gt; vars = Collections.singletonMap(<span class="string">&quot;$a&quot;</span>, <span class="string">&quot;Alice&quot;</span>);</span><br><span class="line"></span><br><span class="line">AsyncTransaction txn = dgraphAsyncClient.newTransaction();</span><br><span class="line">txn.query(query).thenAccept(response -&gt; &#123;</span><br><span class="line">    <span class="comment">// Deserialize</span></span><br><span class="line">    People ppl = gson.fromJson(res.getJson().toStringUtf8(), People.class);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Print results</span></span><br><span class="line">    System.out.printf(<span class="string">&quot;people found: %d\n&quot;</span>, ppl.all.size());</span><br><span class="line">    ppl.all.forEach(person -&gt; System.out.println(person.name));</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<p>我觉得官方示例唯一的作用是说明java不适合，快来学Go吧。。</p>
+<h2 id="4-领域事件"><a href="#4-领域事件" class="headerlink" title="4. 领域事件"></a>4. 领域事件</h2><p>通过消息队列订阅领域事件，进行异步交互即可。</p>
+<h2 id="5-Arc"><a href="#5-Arc" class="headerlink" title="5. Arc"></a>5. Arc</h2><p>上面吐槽和挖坑了这么多，是因为希望用一套框架解决问题，让DDD的落地实操更顺滑。</p>
+<p>Arc集成&amp;实现了很多功能</p>
+<p>整体</p>
+<ul>
+<li>集成zipkin链路追踪</li>
+<li>接入Spring，通过配置+Annotation的方式简化操作</li>
+</ul>
+<p>GraphQL 层面</p>
+<ul>
+<li>内嵌了playground &amp; voyager 方便调试及梳理领域关系</li>
+<li>自定义异常处理</li>
+<li>intercept自定义拦截器</li>
+<li>提供graphqlClient用于服务端之间GraphQL调用</li>
+<li>自动解析schema定义的type、union type 及interface类型</li>
+<li>封装controller层，扫描并解析@DataFetcherService及@GraphqlMutation、@GraphqlQuery方法</li>
+</ul>
+<p>Dgraph 层面</p>
+<ul>
+<li>intercept自定义拦截器</li>
+<li>通过 properties 配置数据库信息</li>
+<li>自动扫描xxxDgraph.xml， 支持编写复杂语句，并提供静态、动态变量处理</li>
+<li>提供RDF处理工具</li>
+<li>SimpleRepository提供save、getOne、getAll、relationship、upsert等基本操作</li>
+</ul>
+<p>mq </p>
+<ul>
+<li>基于VM轻量级消息队列</li>
+<li>拦截并基于订阅发送领域消息</li>
+</ul>
+<h3 id="5-1-开发流程"><a href="#5-1-开发流程" class="headerlink" title="5.1 开发流程"></a>5.1 开发流程</h3><p>通过maven添加Arc框架后的整体开发流程:</p>
+<img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iNDgwcHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo0MTRweDtoZWlnaHQ6NDgwcHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA0MTQgNDgwIiB3aWR0aD0iNDE0cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZnhqOGt6dm1qNDJxMCIgd2lkdGg9IjMwMCUiIHg9Ii0xIiB5PSItMSI+PGZlR2F1c3NpYW5CbHVyIHJlc3VsdD0iYmx1ck91dCIgc3RkRGV2aWF0aW9uPSIyLjAiLz48ZmVDb2xvck1hdHJpeCBpbj0iYmx1ck91dCIgcmVzdWx0PSJibHVyT3V0MiIgdHlwZT0ibWF0cml4IiB2YWx1ZXM9IjAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIC40IDAiLz48ZmVPZmZzZXQgZHg9IjQuMCIgZHk9IjQuMCIgaW49ImJsdXJPdXQyIiByZXN1bHQ9ImJsdXJPdXQzIi8+PGZlQmxlbmQgaW49IlNvdXJjZUdyYXBoaWMiIGluMj0iYmx1ck91dDMiIG1vZGU9Im5vcm1hbCIvPjwvZmlsdGVyPjwvZGVmcz48Zz48ZWxsaXBzZSBjeD0iMjA0IiBjeT0iMjAiIGZpbGw9IiMwMDAwMDAiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgcng9IjEwIiByeT0iMTAiIHN0eWxlPSJzdHJva2U6bm9uZTtzdHJva2Utd2lkdGg6MS4wOyIvPjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgaGVpZ2h0PSIzMy45Njg4IiByeD0iMTIuNSIgcnk9IjEyLjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgd2lkdGg9IjI3MyIgeD0iNjcuNSIgeT0iNTAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNDkiIHg9IjgxLjUiIHk9IjcxLjEzODciPmNyZWF0ZSBncmFwaHFsLnNjaGVtYSAmYW1wOyBkZ3JhcGguc2NoZW1hPC90ZXh0PjxyZWN0IGZpbGw9IiNGRUZFQ0UiIGZpbHRlcj0idXJsKCNmeGo4a3p2bWo0MnEwKSIgaGVpZ2h0PSI3NS44NzUiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMTUzIiB4PSIxMjcuNSIgeT0iMTAzLjk2ODgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjE0MS41IiB5PSIxMjUuMTA3NCI+Y3JlYXRlIGphdmFCZWFuIHdpdGg8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iODYiIHg9IjE0MS41IiB5PSIxMzkuMDc2MiI+QERncmFwaFR5cGU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjEiIHg9IjE0MS41IiB5PSIxNTMuMDQ0OSI+QFVpZEZpZWxkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjExMyIgeD0iMTQxLjUiIHk9IjE2Ny4wMTM3Ij5AUmVsYXRpb25zaGlwRmllbGQ8L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMzg2IiB4PSIxMSIgeT0iMTk5Ljg0MzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMiIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzNjIiIHg9IjI1IiB5PSIyMjAuOTgyNCI+Y3JlYXRlIEBSZXBvc2l0b3J5IGNsYXNzIGV4dGVuZHMgU2ltcGxlRGdyYXBoUmVwb3NpdG9yeTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnhqOGt6dm1qNDJxMCkiIGhlaWdodD0iMzMuOTY4OCIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIzMzAiIHg9IjM5IiB5PSIyNTMuODEyNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwNiIgeD0iNTMiIHk9IjI3NC45NTEyIj5hZGQgeHhEZ3JhcGgueG1sIGZvciBjb21wbGV4IHBlcnNpc3RlbmNlIGhhbmRsZTwvdGV4dD48cmVjdCBmaWxsPSIjRkVGRUNFIiBmaWx0ZXI9InVybCgjZnhqOGt6dm1qNDJxMCkiIGhlaWdodD0iNjEuOTA2MyIgcng9IjEyLjUiIHJ5PSIxMi41IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHdpZHRoPSIyODQiIHg9IjYyIiB5PSIzMDcuNzgxMyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI1NiIgeD0iNzYiIHk9IjMyOC45MTk5Ij5jcmVhdGUgQERhdGFGZXRjaGVyU2VydmljZSBjbGFzcyBpbmNsdWRlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9Ijk2IiB4PSI3NiIgeT0iMzQyLjg4ODciPkBHcmFwaHFsUXVlcnk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTIiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA5IiB4PSI3NiIgeT0iMzU2Ljg1NzQiPkBHcmFwaHFsTXV0YXRpb248L3RleHQ+PHJlY3QgZmlsbD0iI0ZFRkVDRSIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiBoZWlnaHQ9IjMzLjk2ODgiIHJ4PSIxMi41IiByeT0iMTIuNSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB3aWR0aD0iMzU1IiB4PSIyNi41IiB5PSIzODkuNjg3NSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEyIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMzMSIgeD0iNDAuNSIgeT0iNDEwLjgyNjIiPmJyb3dzZXIgaHR0cDovL2xvY2FsaG9zdDoke3BvcnR9L3BsYXlncm91bmQgZm9yIGRlYnVnPC90ZXh0PjxlbGxpcHNlIGN4PSIyMDQiIGN5PSI0NTMuNjU2MyIgZmlsbD0iI0ZGRkZGRiIgZmlsdGVyPSJ1cmwoI2Z4ajhrenZtajQycTApIiByeD0iMTAiIHJ5PSIxMCIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoyLjU7IiB4MT0iMTk3LjgxMjgiIHgyPSIyMTAuMTg3MiIgeTE9IjQ0Ny40NjkxIiB5Mj0iNDU5Ljg0MzQiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMwMDAwMDA7c3Ryb2tlLXdpZHRoOjIuNTsiIHgxPSIyMTAuMTg3MiIgeDI9IjE5Ny44MTI4IiB5MT0iNDQ3LjQ2OTEiIHkyPSI0NTkuODQzNCIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjMwIiB5Mj0iNTAiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCw0MCwyMDQsNTAsMjA4LDQwLDIwNCw0NCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iODMuOTY4OCIgeTI9IjEwMy45Njg4Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIyMDAsOTMuOTY4OCwyMDQsMTAzLjk2ODgsMjA4LDkzLjk2ODgsMjA0LDk3Ljk2ODgiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjE3OS44NDM4IiB5Mj0iMTk5Ljg0MzgiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCwxODkuODQzOCwyMDQsMTk5Ljg0MzgsMjA4LDE4OS44NDM4LDIwNCwxOTMuODQzOCIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iMjMzLjgxMjUiIHkyPSIyNTMuODEyNSIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjAwLDI0My44MTI1LDIwNCwyNTMuODEyNSwyMDgsMjQzLjgxMjUsMjA0LDI0Ny44MTI1IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuNTsiIHgxPSIyMDQiIHgyPSIyMDQiIHkxPSIyODcuNzgxMyIgeTI9IjMwNy43ODEzIi8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSIyMDAsMjk3Ljc4MTMsMjA0LDMwNy43ODEzLDIwOCwyOTcuNzgxMywyMDQsMzAxLjc4MTMiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjIwNCIgeDI9IjIwNCIgeTE9IjM2OS42ODc1IiB5Mj0iMzg5LjY4NzUiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjIwMCwzNzkuNjg3NSwyMDQsMzg5LjY4NzUsMjA4LDM3OS42ODc1LDIwNCwzODMuNjg3NSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iMjA0IiB4Mj0iMjA0IiB5MT0iNDIzLjY1NjMiIHkyPSI0NDMuNjU2MyIvPjxwb2x5Z29uIGZpbGw9IiNBODAwMzYiIHBvaW50cz0iMjAwLDQzMy42NTYzLDIwNCw0NDMuNjU2MywyMDgsNDMzLjY1NjMsMjA0LDQzNy42NTYzIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVsxOGZiNWZjMzUxYzhkMzQ3Mjk5YmRjMjg5YTM0ZWE5Y10KQHN0YXJ0dW1sDQpzdGFydA0KDQo6IGNyZWF0ZSBncmFwaHFsLnNjaGVtYSAmIGRncmFwaC5zY2hlbWE7DQo6IGNyZWF0ZSBqYXZhQmVhbiB3aXRoIFxuIEBEZ3JhcGhUeXBlIFxuIEBVaWRGaWVsZCBcbiBAUmVsYXRpb25zaGlwRmllbGQ7DQo6IGNyZWF0ZSBAUmVwb3NpdG9yeSBjbGFzcyBleHRlbmRzIFNpbXBsZURncmFwaFJlcG9zaXRvcnk7DQo6IGFkZCB4eERncmFwaC54bWwgZm9yIGNvbXBsZXggcGVyc2lzdGVuY2UgaGFuZGxlOw0KOiBjcmVhdGUgQERhdGFGZXRjaGVyU2VydmljZSBjbGFzcyBpbmNsdWRlIFxuIEBHcmFwaHFsUXVlcnkgXG4gQEdyYXBocWxNdXRhdGlvbjsNCjogYnJvd3NlciBodHRwOi8vbG9jYWxob3N0OiR7cG9ydH0vcGxheWdyb3VuZCBmb3IgZGVidWc7DQoNCmVuZA0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNihVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4='>
+
+<ol>
+<li>定义领域模型，产生graphql.schema及dgraph.schema文件。</li>
+<li>创建javaBean并指定@DgraphType、@UidField、@RelationshipField</li>
+<li>创建 SimpleDgraphRepository 的子类声明为@Repository</li>
+<li>编写xxDgraph.xml实现query方法实现复杂DB操作</li>
+<li>创建 @DataFetcherService类及@GraphqlQuery、@GraphqlMutation 方法</li>
+<li>通过 <a href="http://localhost:${port}/playground">http://localhost:${port}/playground</a> 进行调试</li>
+</ol>
+<h3 id="5-2-Sample"><a href="#5-2-Sample" class="headerlink" title="5.2 Sample"></a>5.2 Sample</h3><p>graphql schema</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br></pre></td><td class="code"><pre><span class="line">scalar DateTime</span><br><span class="line"></span><br><span class="line">schema&#123;</span><br><span class="line">    query: Query,</span><br><span class="line">    mutation: Mutation</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Query&#123;</span><br><span class="line">    project(</span><br><span class="line">        id: String</span><br><span class="line">    ): Project</span><br><span class="line">    users: [User]</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type Mutation&#123;</span><br><span class="line">    createProject(</span><br><span class="line">        payload: ProjectInput</span><br><span class="line">    ): Project</span><br><span class="line">    createMilestone(</span><br><span class="line">        payload: MilestoneInput</span><br><span class="line">    ): Milestone</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">项目分类</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">enum ProjectCategory &#123;</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    示例项目</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    DEMO</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    生产项目</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    PRODUCTION</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">名称</span><br><span class="line">为了达到某个产品迭代、产品模块开发、或者科研调研等目的所做的工作.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">type Project&#123;</span><br><span class="line">    id: String!</span><br><span class="line">    name: String!</span><br><span class="line">    description: String!</span><br><span class="line">    category: ProjectCategory</span><br><span class="line">    createTime: DateTime!</span><br><span class="line">    milestones(</span><br><span class="line">        status: MilestoneStatus</span><br><span class="line">    ): [Milestone]</span><br><span class="line">&#125;</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">里程碑</span><br><span class="line">表述一个Project的某个时间阶段及阶段性目标. 一个Project可以同时拥有多个处于相同或者不同阶段的Milestone.</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">type Milestone&#123;</span><br><span class="line">    id: String!</span><br><span class="line">    name: String!</span><br><span class="line">    status: MilestoneStatus</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">type User &#123;</span><br><span class="line">    name: String!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">里程碑状态</span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">enum MilestoneStatus&#123;</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    未开始</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    NOT_STARTED,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    进行中</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    DOING,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    发布</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    RELEASE,</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    关闭</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    CLOSE</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">input ProjectInput&#123;</span><br><span class="line">    name: String!</span><br><span class="line">    description: String!</span><br><span class="line">    vendorBranches: [String!]!</span><br><span class="line">    category: ProjectCategory!</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">input MilestoneInput&#123;</span><br><span class="line">    projectId: String!</span><br><span class="line">    name: String!</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>java 领域</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Slf4j</span></span><br><span class="line"><span class="meta">@DataFetcherService</span></span><br><span class="line"><span class="meta">@DgraphType(&quot;PROJECT&quot;)</span></span><br><span class="line"><span class="meta">@Data</span></span><br><span class="line"><span class="meta">@AllArgsConstructor</span></span><br><span class="line"><span class="meta">@NoArgsConstructor</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Project</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String RELATIONSHIP_HAS = <span class="string">&quot;has&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Getter(AccessLevel.NONE)</span></span><br><span class="line">    <span class="meta">@Setter(AccessLevel.NONE)</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> ProjectRepository projectRepository;</span><br><span class="line">    <span class="meta">@Getter(AccessLevel.NONE)</span></span><br><span class="line">    <span class="meta">@Setter(AccessLevel.NONE)</span></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> MilestoneRepository milestoneRepository;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@UidField</span></span><br><span class="line">    <span class="keyword">private</span> String id;</span><br><span class="line">    <span class="keyword">private</span> String name;</span><br><span class="line">    <span class="keyword">private</span> String description;</span><br><span class="line">    <span class="keyword">private</span> ProjectCategory category;</span><br><span class="line">    <span class="keyword">private</span> OffsetDateTime createTime;</span><br><span class="line">    <span class="meta">@RelationshipField(RELATIONSHIP_HAS)</span></span><br><span class="line">    <span class="keyword">private</span> List&lt;Milestone&gt; milestoneList;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GraphqlMutation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataFetcher&lt;Project&gt; <span class="title">createProject</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; &#123;</span><br><span class="line">            ProjectInput input = GraphqlPayloadUtil.resolveArguments(dataFetchingEnvironment.getArguments(), ProjectInput.class);</span><br><span class="line">            OffsetDateTime now = OffsetDateTime.now();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.name = input.getName();</span><br><span class="line">            <span class="keyword">this</span>.description = input.getDescription();</span><br><span class="line">            <span class="keyword">this</span>.category = input.getCategory();</span><br><span class="line">            <span class="keyword">this</span>.createTime = now;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">this</span>.id = projectRepository.save(<span class="keyword">this</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">this</span>;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GraphqlMutation</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataFetcher&lt;Milestone&gt; <span class="title">createMilestone</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; &#123;</span><br><span class="line">            MilestoneInput input = GraphqlPayloadUtil.resolveArguments(dataFetchingEnvironment.getArguments(), MilestoneInput.class);</span><br><span class="line"><span class="comment">//可以正向通过project创建milestone，也可以先创建milestone，再关联project</span></span><br><span class="line"><span class="comment">//            this.id = input.getProjectId();</span></span><br><span class="line"><span class="comment">//            this.milestoneList = Collections.singletonList(new Milestone(input.getName()));</span></span><br><span class="line"><span class="comment">//            this.id = projectRepository.save(this);</span></span><br><span class="line"></span><br><span class="line">            Milestone milestone = <span class="keyword">new</span> Milestone(input.getName());</span><br><span class="line">            milestone.setStatus(MilestoneStatus.NOT_STARTED);</span><br><span class="line">            String milestoneId = milestoneRepository.save(milestone);</span><br><span class="line">            milestone.setId(milestoneId);</span><br><span class="line"></span><br><span class="line">            milestoneRepository.createRelationship(RelationshipInformation.builder()</span><br><span class="line">                    .sourceList(Collections.singletonList(input.getProjectId()))</span><br><span class="line">                    .relationship(RELATIONSHIP_HAS)</span><br><span class="line">                    .targetList(Collections.singletonList(milestoneId))</span><br><span class="line">                    .build());</span><br><span class="line"></span><br><span class="line">            <span class="keyword">return</span> milestone;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@GraphqlQuery</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> DataFetcher&lt;Project&gt; <span class="title">project</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; &#123;</span><br><span class="line">            String id = dataFetchingEnvironment.getArgument(<span class="string">&quot;id&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> projectRepository.getOne(id)</span><br><span class="line">                    .orElse(<span class="keyword">null</span>);</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@GraphqlQuery(type = &quot;Project&quot;)</span></span><br><span class="line">    <span class="keyword">public</span> DataFetcher&lt;List&lt;Milestone&gt;&gt; milestones() &#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; &#123;</span><br><span class="line">            Project project = dataFetchingEnvironment.getSource();</span><br><span class="line">            List&lt;Milestone&gt; milestones = milestoneRepository.listByProjectId(project.id);</span><br><span class="line">            String status = dataFetchingEnvironment.getArgument(<span class="string">&quot;status&quot;</span>);</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isEmpty(status)) &#123;</span><br><span class="line">                <span class="keyword">return</span> milestones;</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                MilestoneStatus milestoneStatus = MilestoneStatus.valueOf(status);</span><br><span class="line">                <span class="keyword">return</span> milestones.stream()</span><br><span class="line">                        .filter(m -&gt; m.getStatus().equals(milestoneStatus))</span><br><span class="line">                        .collect(Collectors.toList());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 只是为了展示合并请求</span></span><br><span class="line">    <span class="meta">@GraphqlQuery</span></span><br><span class="line">    <span class="keyword">public</span> DataFetcher&lt;List&lt;User&gt;&gt; users() &#123;</span><br><span class="line">        <span class="keyword">return</span> dataFetchingEnvironment -&gt; Arrays.asList(</span><br><span class="line">                User.builder().name(<span class="string">&quot;u1&quot;</span>).build(),</span><br><span class="line">                User.builder().name(<span class="string">&quot;u2&quot;</span>).build(),</span><br><span class="line">                User.builder().name(<span class="string">&quot;u3&quot;</span>).build()</span><br><span class="line">        );</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Consumer(topic = &quot;users&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">usersListener</span><span class="params">(Message&lt;DomainEvent&gt; record)</span> </span>&#123;</span><br><span class="line">        log.info(<span class="string">&quot;listen users event: &#123;&#125;&quot;</span>, record);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>repository </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Repository</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MilestoneRepository</span> <span class="keyword">extends</span> <span class="title">SimpleDgraphRepository</span>&lt;<span class="title">Milestone</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> List&lt;Milestone&gt; <span class="title">listByProjectId</span><span class="params">(String projectId)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, String&gt; vars = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        vars.put(<span class="string">&quot;projectId&quot;</span>, projectId);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.queryForList(<span class="string">&quot;milestone.listByProjectId&quot;</span>, vars);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>MilestoneDgraph.xml</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dgraph</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">var</span> <span class="attr">id</span>=<span class="string">&quot;type&quot;</span>&gt;</span></span><br><span class="line">        MILESTONE</span><br><span class="line">    <span class="tag">&lt;/<span class="name">var</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">var</span> <span class="attr">id</span>=<span class="string">&quot;common&quot;</span>&gt;</span></span><br><span class="line">        uid</span><br><span class="line">        expand(MILESTONE)</span><br><span class="line">    <span class="tag">&lt;/<span class="name">var</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">query</span> <span class="attr">id</span>=<span class="string">&quot;listByProjectId&quot;</span>&gt;</span></span><br><span class="line">        query listByProjectId($projectId: string) &#123;</span><br><span class="line">            var(func:uid($projectId)) &#123;</span><br><span class="line">                has &#123;</span><br><span class="line">                    var mids as uid</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            listByProjectId(func:uid(mids)) &#123;</span><br><span class="line">                uid</span><br><span class="line">                expand(_all_)</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">query</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">mutation</span> <span class="attr">id</span>=<span class="string">&quot;updateStatus&quot;</span>&gt;</span></span><br><span class="line">        &lt;![CDATA[</span><br><span class="line">            &lt;$id&gt; &lt;MILESTONE.status&gt; &quot;$status&quot; .</span><br><span class="line">        ]]&gt;</span><br><span class="line">    <span class="tag">&lt;/<span class="name">mutation</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dgraph</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-效果"><a href="#5-3-效果" class="headerlink" title="5.3 效果"></a>5.3 效果</h3><p>localhost:8080/playground</p>
+<p><img src="https://image.crick.wang/mweb/15966354288629.jpg" alt="05"></p>
+<p><img src="https://image.crick.wang/mweb/15966354471616.jpg" alt="06"></p>
+<p><img src="https://image.crick.wang/mweb/15966356171597.jpg" alt="07"></p>
+<p><img src="https://image.crick.wang/mweb/15966358843813.jpg" alt="08"></p>
+<h3 id="5-4-后续计划"><a href="#5-4-后续计划" class="headerlink" title="5.4 后续计划"></a>5.4 后续计划</h3><ol>
+<li>通过schema自动生成相关代码</li>
+<li>解析GraphQL，动态生成Dgraph查询</li>
+</ol>
+<h2 id="6-弊端"><a href="#6-弊端" class="headerlink" title="6. 弊端"></a>6. 弊端</h2><ol>
+<li>领域间的交互必须通过GraphQL，client封装不够优雅</li>
+<li>Dgraph不擅长统计计算，比如统计类通过基于AOP+MQ通过mysql存储相关指标</li>
+<li>前后端技术体系同时变更</li>
+</ol>
+<h2 id="7-相关工具推荐"><a href="#7-相关工具推荐" class="headerlink" title="7. 相关工具推荐"></a>7. 相关工具推荐</h2><h3 id="7-1-工具"><a href="#7-1-工具" class="headerlink" title="7.1 工具"></a>7.1 工具</h3><p>好用的工具已经集成到Arc中，而在schema确定时候的实现成本又很低，导致编写Mock的意义不大。但仍列出部分开源代码，以作参考</p>
+<ol>
+<li><strong>API Mock</strong> <ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/APIs-guru/graphql-faker">graphql-faker</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.graphql-tools.com/">graphql-tools</a></li>
+</ol>
+</li>
+<li><strong>SDL</strong><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/graphql-editor/graphql-editor">graphql-editor</a></li>
+<li><a target="_blank" rel="noopener" href="https://apis.guru/graphql-voyager">voyager</a></li>
+</ol>
+</li>
+<li><strong>IDE</strong><ol>
+<li><a target="_blank" rel="noopener" href="https://github.com/prisma-labs/graphql-playground/releases">graphql-playground</a></li>
+<li><a target="_blank" rel="noopener" href="https://graphiql-test.netlify.app/cdn/">graphiql</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/hasura/graphqurl">graphqurl</a></li>
+</ol>
+</li>
+</ol>
+<h3 id="7-2-最佳实践"><a href="#7-2-最佳实践" class="headerlink" title="7.2 最佳实践"></a>7.2 最佳实践</h3><ol>
+<li>规范 <a target="_blank" rel="noopener" href="https://spec.graphql.org/">https://spec.graphql.org/</a></li>
+<li>教程 <a target="_blank" rel="noopener" href="https://www.howtographql.com/">https://www.howtographql.com/</a></li>
+<li>开放api示例 <a target="_blank" rel="noopener" href="https://github.com/APIs-guru/graphql-apis">https://github.com/APIs-guru/graphql-apis</a></li>
+<li><a target="_blank" rel="noopener" href="https://dgraph.io/tour">https://dgraph.io/tour</a></li>
+</ol>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/ddd/" rel="tag"># ddd</a>
+              <a href="/tagcloud/GraphQL/" rel="tag"># GraphQL</a>
+              <a href="/tagcloud/Arc/" rel="tag"># Arc</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2020/05/05/embedded-spring-mq/" rel="prev" title="Spring 嵌入式轻量消息队列">
+      <i class="fa fa-chevron-left"></i> Spring 嵌入式轻量消息队列
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2020/08/30/kotlin-graalvm-picocli/" rel="next" title="Kotlin使用GraalVM+Picocli开发原生命令行应用">
+      Kotlin使用GraalVM+Picocli开发原生命令行应用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2020/08/09/ddd-graphql-dgraph/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>
