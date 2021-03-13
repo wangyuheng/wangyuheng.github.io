@@ -370,83 +370,6 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/28/docker-kafka-broker/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/06/28/docker-kafka-broker/" class="post-title-link" itemprop="url">docker单点kafka扩容</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2018-06-28 18:59:49" itemprop="dateCreated datePublished" datetime="2018-06-28T18:59:49+08:00">2018-06-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>公司为了快速上线，几个月前通过docker镜像 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/wurstmeister/kafka/">kafka</a> 部署了一台kafka-borker。Dockerfile如下</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM wurstmeister&#x2F;kafka:latest</span><br><span class="line"></span><br><span class="line">ENV KAFKA_MESSAGE_MAX_BYTES&#x3D;21474836</span><br><span class="line">ENV KAFKA_AUTO_CREATE_TOPICS_ENABLE&#x3D;true</span><br><span class="line">ENV KAFKA_CREATE_TOPICS&#x3D;test:1:1</span><br><span class="line">ENV KAFKA_ZOOKEEPER_CONNECT&#x3D;zk1:2181</span><br><span class="line"></span><br><span class="line">VOLUME [&quot;&#x2F;kafka&quot;]</span><br></pre></td></tr></table></figure>
-
-<p>随着业务的增长，单节点的kafka-broker已经成为一个潜在的可靠性隐患。所以借着N年难得一遇的停机维护，决定把kafka-broker扩容为主备集群模式，提升稳定性，并为日后的分区扩容提供可能(不停服)。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/06/28/docker-kafka-broker/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/28/ddl2plantuml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -508,6 +431,83 @@
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2018/06/28/ddl2plantuml/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/28/docker-kafka-broker/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/06/28/docker-kafka-broker/" class="post-title-link" itemprop="url">docker单点kafka扩容</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-06-28 18:59:49" itemprop="dateCreated datePublished" datetime="2018-06-28T18:59:49+08:00">2018-06-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/devops/" itemprop="url" rel="index"><span itemprop="name">devops</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>公司为了快速上线，几个月前通过docker镜像 <a target="_blank" rel="noopener" href="https://hub.docker.com/r/wurstmeister/kafka/">kafka</a> 部署了一台kafka-borker。Dockerfile如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">FROM wurstmeister&#x2F;kafka:latest</span><br><span class="line"></span><br><span class="line">ENV KAFKA_MESSAGE_MAX_BYTES&#x3D;21474836</span><br><span class="line">ENV KAFKA_AUTO_CREATE_TOPICS_ENABLE&#x3D;true</span><br><span class="line">ENV KAFKA_CREATE_TOPICS&#x3D;test:1:1</span><br><span class="line">ENV KAFKA_ZOOKEEPER_CONNECT&#x3D;zk1:2181</span><br><span class="line"></span><br><span class="line">VOLUME [&quot;&#x2F;kafka&quot;]</span><br></pre></td></tr></table></figure>
+
+<p>随着业务的增长，单节点的kafka-broker已经成为一个潜在的可靠性隐患。所以借着N年难得一遇的停机维护，决定把kafka-broker扩容为主备集群模式，提升稳定性，并为日后的分区扩容提供可能(不停服)。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2018/06/28/docker-kafka-broker/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
