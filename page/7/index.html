@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,129 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/06/bug-javascript-breadcrumb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/06/bug-javascript-breadcrumb/" class="post-title-link" itemprop="url">利用js抽象通用面包屑导航片段失败</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-06 10:18:44" itemprop="dateCreated datePublished" datetime="2016-09-06T10:18:44+08:00">2016-09-06</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>利用js记录路由值，抽象面包屑导航模块，导致业务复杂度上升</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>每个导航菜单都包含多个参数，利用js记录每个来源请求的地址+参数, 但抽象能力不足，导致设计过分复杂，而且是无用功。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在每个页面中写静态导航</p>
+<h3 id="附录为失败的导航js"><a href="#附录为失败的导航js" class="headerlink" title="附录为失败的导航js"></a>附录为失败的导航js</h3><pre><code>var breadcrumb = &#123;
+    _cachekey: &#39;breadcrumbs&#39;,
+    _breadcrumbs: [],
+    init: function() &#123;
+        this.clearBreadcrumb();
+    &#125;,
+    courseIndexInit: function() &#123;
+        if (breadcrumb._breadcrumbs.length == 0) &#123;
+            breadcrumb._breadcrumbs = WName.get(breadcrumb._cachekey);
+            for (var i = 0; i &lt; breadcrumb._breadcrumbs.length; i++) &#123;
+                var _thisBreadcrumb = breadcrumb._breadcrumbs[i];
+                $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
+                $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).on(&quot;click&quot;, _thisBreadcrumb.fn);
+            &#125;
+        &#125;
+    &#125;,
+    refreshWNCache: function() &#123;
+        WName.get(breadcrumb._cachekey) &amp;&amp; WName.remove(breadcrumb._cachekey);
+        WName.put(breadcrumb._cachekey, breadcrumb._breadcrumbs);
+    &#125;,
+    refresh: function() &#123;
+        this.refreshWNCache();
+        $(&#39;#breadCrumbMenu&#39;).children().remove();
+        for (var i = 0; i &lt; breadcrumb._breadcrumbs.length; i++) &#123;
+            var _thisBreadcrumb = breadcrumb._breadcrumbs[i];
+            $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
+            $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).on(&quot;click&quot;, _thisBreadcrumb.fn);
+        &#125;
+    &#125;,
+    fillBreadcrumb: function(vName, vFoo, vIndex) &#123;
+        var _thisBreadcrumb = this.breadcrumbTemplate[vName];
+        $(&quot;#breadCrumbMenu #&quot; + vName).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
+        if (vFoo) &#123;
+            _thisBreadcrumb.fn = vFoo;
+        &#125;
+        this._breadcrumbs[_thisBreadcrumb.seq] = _thisBreadcrumb;
+        this._breadcrumbs.splice(1 + _thisBreadcrumb.seq, this._breadcrumbs.length);
+        $(&quot;#breadCrumbMenu #&quot; + vName).on(&quot;click&quot;, _thisBreadcrumb.fn);
+        this.refresh();
+    &#125;,
+    clearBreadcrumb: function() &#123;
+        this._breadcrumbs = [];
+        $(&#39;#breadCrumbMenu&#39;).children().remove();
+        WName.put(breadcrumb._cachekey, null);
+        WName.get(breadcrumb._cachekey) &amp;&amp; WName.remove(breadcrumb._cachekey);
+    &#125;,
+    breadcrumbTemplate: &#123;
+        courseList: &#123; name: &#39;courseList&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#courseList&quot; id=&quot;courseList&quot;&gt;课程列表&lt;/a&gt;&lt;/span&gt;&#39;, seq: 0 &#125;,
+        course: &#123; name: &#39;course&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#course&quot; id=&quot;course&quot;&gt;课程首页&lt;/a&gt;&lt;/span&gt;&#39;, seq: 1 &#125;,
+        user: &#123; name: &#39;user&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#userBase&quot; id=&quot;user&quot;&gt;电子档案&lt;/a&gt;&lt;/span&gt;&#39;, seq: 0, fn: function() &#123; user.forupdateinfo() &#125; &#125;
+    &#125;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -954,99 +1077,6 @@ source ~/.bashrc
 </code></pre>
 <h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>mvn -version
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/01/linux-nginx-starter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/01/linux-nginx-starter/" class="post-title-link" itemprop="url">CentOS通过yum安装nginx</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-01 20:39:00" itemprop="dateCreated datePublished" datetime="2016-09-01T20:39:00+08:00">2016-09-01</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
-<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
-</code></pre>
-<p>通过命令打开文档，输入如下内容</p>
-<pre><code>[nginx]
-name=nginx repo
-baseurl=http://nginx.org/packages/centos/7/$basearch/
-gpgcheck=0
-enabled=1
-</code></pre>
-<p>其中centos表明当前系统，7表示系统版本。</p>
-<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
-</code></pre>
-<p>安装程序执行完毕后，可以通过</p>
-<pre><code>nginx -v
-</code></pre>
-<p>查看安装nginx版本，并确认程序安装成功。</p>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
-</code></pre>
-<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a target="_blank" rel="noopener" href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
-</code></pre>
-<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
-<pre><code>service nginx restart
-</code></pre>
-<p>刷新浏览器，可以看见修改以生效。</p>
 
       
     </div>

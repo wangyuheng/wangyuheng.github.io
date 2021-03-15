@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,115 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/18/linux-mongodb/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/05/18/linux-mongodb/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装MongoDB-3.2</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-05-18 15:51:47" itemprop="dateCreated datePublished" datetime="2016-05-18T15:51:47+08:00">2016-05-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>工作需要，在虚拟机中安装了一个CentOS7的linux环境，用来测试MongoDB。记录一下MongoDB的安装和配置过程。</p>
+<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><p>安装过程通过yum方式，需要配置repo。</p>
+<h4 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h4><pre><code>vi /etc/yum.repos.d/mongodb-org-3.2.repo
+</code></pre>
+<p>通过命令打开文档，输入如下内容</p>
+<pre><code>[mongodb-org-3.2]
+name=MongoDB Repository
+baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.2/x86_64/
+gpgcheck=1
+enabled=1
+gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
+</code></pre>
+<h4 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h4><pre><code>sudo yum install -y mongodb-org
+</code></pre>
+<h4 id="设置mongodb监听端口"><a href="#设置mongodb监听端口" class="headerlink" title="设置mongodb监听端口"></a>设置mongodb监听端口</h4><pre><code>semanage port -a -t mongod_port_t -p tcp 27017
+</code></pre>
+<h4 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h4><pre><code>sudo service mongod start
+</code></pre>
+<h4 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h4><pre><code>chkconfig mongod on
+</code></pre>
+<p>此时会看到服务启动成功的提示 【OK】</p>
+<h3 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h3><p>在虚拟机中安装好环境后，如何用本机环境进行开发访问？<br>本机为windows环境并没有安装mongodb客户端程序，无法通过命令行直接访问，全部依赖于java代码访问。<br>此时有个问题，mongodb安装完成后，默认只监听本机ip(localhost)，必须要修改绑定</p>
+<h4 id="查看本机ip"><a href="#查看本机ip" class="headerlink" title="查看本机ip"></a>查看本机ip</h4><p>为了让mongodb监听虚拟机的ip(局域网内ip)，必须先将虚拟机的网络连接环境设置为桥接。通过命令查看</p>
+<pre><code>ifconfig
+</code></pre>
+<p>注：因为我的安装镜像为mini.iso，默认并没有安装网络工具，此时可能会报错<br>ifconfig command not found，需要先安装此工具集</p>
+<pre><code>yum install net-tools
+</code></pre>
+<h4 id="修改绑定监听IP"><a href="#修改绑定监听IP" class="headerlink" title="修改绑定监听IP"></a>修改绑定监听IP</h4><pre><code>vi /etc/mongod.conf
+</code></pre>
+<p>打开文档，并将bind_ip修改为ifconfig查看到的本地ip</p>
+<h4 id="重启mongodb服务"><a href="#重启mongodb服务" class="headerlink" title="重启mongodb服务"></a>重启mongodb服务</h4><pre><code>sudo service mongod restart
+</code></pre>
+<h4 id="创建集合（数据库）"><a href="#创建集合（数据库）" class="headerlink" title="创建集合（数据库）"></a>创建集合（数据库）</h4><p>需要进入mongo后，才可以执行mongo相关命令。进入方式为执行如下命令。默认ip为127.0.0.1，因为修改过bind_ip，所以此处的ip地址为刚配置的bing_ip</p>
+<pre><code>mongo ip地址
+</code></pre>
+<p>创建集合</p>
+<pre><code>use zero
+</code></pre>
+<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><p>mongodb默认为允许匿名用户访问，可以通过以下命令添加此集合的管理员账户</p>
+<pre><code>db.createUser(&#123;user:&#39;zero_admin&#39;,pwd:&#39;zero_123456&#39;,roles:[&#123;role:&#39;dbOwner&#39;,db:&#39;zero&#39;&#125;]&#125;) 
+</code></pre>
+<p>至此，已完成在虚拟机中搭建mongodb服务，并可在本机程序访问调试。下篇文章将介绍如何通过java程序连接mongodb</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1571,122 +1680,6 @@ Unblock with &#39;mysqladmin flush-hosts&#39;
  
 </code></pre>
 <p>此命令会清空所有的hosts缓存信息，执行后即可链接</p>
-<p><strong>Best regards</strong><br><strong>Wang Yuheng</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/14/clear-mysql-query-cache/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/14/clear-mysql-query-cache/" class="post-title-link" itemprop="url">清空mysql查询缓存</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-14 19:55:13" itemprop="dateCreated datePublished" datetime="2015-12-14T19:55:13+08:00">2015-12-14</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h1 id="mysql-查询缓存"><a href="#mysql-查询缓存" class="headerlink" title="mysql 查询缓存"></a>mysql 查询缓存</h1><p>在sql调优的过程中，发现原本很慢的一条sql（将近1分钟） 在第二次运行时， 瞬间就完成了（0.04sec）。<br>这是因为mysql自带的缓存机制，将查询结果进行缓存，如果table数据未发生变化，再次使用同一条sql进行查询时，直接从上次的查询结果缓存中读取数据，而不是重新分析、执行sql。<br>如果table数据发生变化，所有与之相关的缓存都会被释放刷新，这样就不会出现数据脏读问题。</p>
-<blockquote>
-<p>The query cache stores the text of a SELECT statement together with the corresponding result that was sent to the client. If an identical statement is received later, the server retrieves the results from the query cache rather than parsing and executing the statement again. The query cache is shared among sessions, so a result set generated by one client can be sent in response to the same query issued by another client.</p>
-</blockquote>
-<hr>
-<h1 id="是否使用查询缓存"><a href="#是否使用查询缓存" class="headerlink" title="是否使用查询缓存"></a>是否使用查询缓存</h1><p>为了避免缓存，可以在sql查询语句的字段前增加 <strong>SQL_NO_CACHE</strong> 关键字<br>如：</p>
-<pre><code>select * from t_user;
-
-select SQL_NO_CACHE * from t_user;
-</code></pre>
-<p>反之，你也可以使用 <strong>SQL_CACHE</strong> 关键字，强制mysql从缓存中读取数据</p>
-<pre><code>select SQL_CACHE * from t_user;
-</code></pre>
-<p>mysql还提供了一种释放全部缓存的方法</p>
-<pre><code>reset query cache;  
-</code></pre>
-<hr>
-<h1 id="设置查询缓存"><a href="#设置查询缓存" class="headerlink" title="设置查询缓存"></a>设置查询缓存</h1><p>查看是否有查询缓存。</p>
-<pre><code>SHOW VARIABLES LIKE &#39;have_query_cache&#39;;
-</code></pre>
-<p><strong>注意</strong>，只要数据库拥有查询缓存功能，这个VALUE就是YES，无论查询缓存是否启用。</p>
-<p>则查询缓存为启用状态。mysql默认为启用状态</p>
-<p>mysql查询缓存可以通过两个变量来控制，<strong>query_cache_type</strong>和<strong>query_cache_size</strong>。</p>
-<hr>
-<h2 id="query-cache-type"><a href="#query-cache-type" class="headerlink" title="query_cache_type"></a>query_cache_type</h2><pre><code>SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
-</code></pre>
-<p><strong>query_cache_type</strong>包含三种状态</p>
-<ul>
-<li><strong>0</strong> or <strong>OFF</strong> 此时不会从缓存中读取查询数据</li>
-<li><strong>1</strong> or <strong>ON</strong> 表示除非声明了<strong>SELECT SQL_NO_CACHE</strong>，否则都会从缓存中读取数据</li>
-<li><strong>2</strong> or <strong>DEMAND</strong> 表示所有语句都会从缓存中读取，相当于所有查询语句都使用了<strong>SELECT SQL_CACHE</strong></li>
-</ul>
-<p>通过如下命令可以设置查询缓存状态(需要管理员权限)，执行后，需要重启mysql服务才能生效。</p>
-<pre><code>SET GLOBAL query_cache_type = 1;  
-</code></pre>
-<p>但是此命令会影响所有的使用此mysql服务的client。可以通过如下命令，关闭此客户端的查询缓存状态，但是同样需要重启server后才能生效。</p>
-<pre><code>SET SESSION query_cache_type = OFF;
-
-SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
-</code></pre>
-<h2 id="query-cache-size"><a href="#query-cache-size" class="headerlink" title="query_cache_size"></a>query_cache_size</h2><pre><code>SHOW VARIABLES LIKE &#39;query_cache_size&#39;;
-</code></pre>
-<p><strong>query_cache_size</strong>表示缓存大小，默认为1M。如果设置为0，则相当于<strong>query_cache_size=OFF</strong>。</p>
-<p>同样可通过 <strong>SET GLOBAL</strong> 进行设置</p>
-<pre><code>SET GLOBAL query_cache_size=40000;
-</code></pre>
-<p>需要注意的是，设置的query_cache_size，并不全是用于存储数据，还有约40KB的空间来维护查询缓存的结构。</p>
-<hr>
 <p><strong>Best regards</strong><br><strong>Wang Yuheng</strong></p>
 
       

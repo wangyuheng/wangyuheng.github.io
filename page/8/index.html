@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,99 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/01/linux-nginx-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/01/linux-nginx-starter/" class="post-title-link" itemprop="url">CentOS通过yum安装nginx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-01 20:39:00" itemprop="dateCreated datePublished" datetime="2016-09-01T20:39:00+08:00">2016-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/nginx/" itemprop="url" rel="index"><span itemprop="name">nginx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
+</code></pre>
+<p>通过命令打开文档，输入如下内容</p>
+<pre><code>[nginx]
+name=nginx repo
+baseurl=http://nginx.org/packages/centos/7/$basearch/
+gpgcheck=0
+enabled=1
+</code></pre>
+<p>其中centos表明当前系统，7表示系统版本。</p>
+<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
+</code></pre>
+<p>安装程序执行完毕后，可以通过</p>
+<pre><code>nginx -v
+</code></pre>
+<p>查看安装nginx版本，并确认程序安装成功。</p>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
+</code></pre>
+<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a target="_blank" rel="noopener" href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
+</code></pre>
+<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
+<pre><code>service nginx restart
+</code></pre>
+<p>刷新浏览器，可以看见修改以生效。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -983,113 +1076,6 @@ antd-init --type plain-react
     list: function()&#123;&#125;
 &#125;
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/06/29/bug-java-iterator-illegalstateexception/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/06/29/bug-java-iterator-illegalstateexception/" class="post-title-link" itemprop="url">Iterator调用remove()时抛出异常 java.lang.IllegalStateException</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-06-29 14:20:33" itemprop="dateCreated datePublished" datetime="2016-06-29T14:20:33+08:00">2016-06-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="问题"><a href="#问题" class="headerlink" title="[问题]"></a>[问题]</h3><p>Iterator remove()时抛出异常 java.lang.IllegalStateException</p>
-<pre><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;();
-list.add(&quot;a&quot;);
-list.add(&quot;b&quot;);
-list.add(&quot;c&quot;);
-list.add(&quot;d&quot;);
-Iterator&lt;String&gt; it = list.iterator();
-int i =3;
-while(it.hasNext()) &#123;
-//                it.next();
-    if (i--&gt;1) &#123;
-        it.remove();
-    &#125;
-&#125;
-System.out.println(list.size());
-</code></pre>
-<h3 id="原因"><a href="#原因" class="headerlink" title="[原因]"></a>[原因]</h3><p>没有调用next() 方法</p>
-<h3 id="怎么发现的"><a href="#怎么发现的" class="headerlink" title="[怎么发现的]"></a>[怎么发现的]</h3><p>跟踪代码，查看Iterator.class源码，在源码注释中看到</p>
-<pre><code>/**
- * 
- * Removes from the underlying collection the last element returned by the
- * iterator (optional operation).  This method can be called only once per
- * call to &lt;tt&gt;next&lt;/tt&gt;.  The behavior of an iterator is unspecified if
- * the underlying collection is modified while the iteration is in
- * progress in any way other than by calling this method.
- *
- * @exception UnsupportedOperationException if the &lt;tt&gt;remove&lt;/tt&gt;
- *          operation is not supported by this Iterator.
- 
- * @exception IllegalStateException if the &lt;tt&gt;next&lt;/tt&gt; method has not
- *          yet been called, or the &lt;tt&gt;remove&lt;/tt&gt; method has already
- *          been called after the last call to the &lt;tt&gt;next&lt;/tt&gt;
- *          method.
- */
-void remove();
-</code></pre>
-<h3 id="修复"><a href="#修复" class="headerlink" title="[修复]"></a>[修复]</h3><p>先调用next()方法，再调用remove()方法</p>
-<h3 id="我导致的"><a href="#我导致的" class="headerlink" title="[我导致的]"></a>[我导致的]</h3><p>是的</p>
-<h3 id="解决Bug的时间"><a href="#解决Bug的时间" class="headerlink" title="[解决Bug的时间]"></a>[解决Bug的时间]</h3><p>3分钟</p>
-<h3 id="教训"><a href="#教训" class="headerlink" title="[教训]"></a>[教训]</h3><p>需要熟悉Iterator使用方法及设计原理</p>
 
       
     </div>

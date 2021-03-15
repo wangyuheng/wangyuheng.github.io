@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,201 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/22/painter-4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/22/painter-4/" class="post-title-link" itemprop="url">绘画板 04——增加操作框（矩阵变化）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-22 10:57:58" itemprop="dateCreated datePublished" datetime="2016-09-22T10:57:58+08:00">2016-09-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<p>针对元素进行操作时，如果采用更改边框颜色的形式，会和修改边框冲突。所以采用增加4个操作边框的形式，既能表示元素被选中，又能在后续增加拖拽，变形等操作。</p>
+<p>增加了一个HandleBorder类，并扩展其prototype属性对象，增加方法</p>
+<ol>
+<li>createShade 用于创建4个边框</li>
+<li>judgeShade 用于将4个小矩形，放至所选元素的4个边角</li>
+<li>showShade 显示操作边框</li>
+<li>隐藏操作边框</li>
+</ol>
+<p>加入了一些距离计算和矩阵，详细代码如下 </p>
+<pre><code>(function() &#123;
+
+    var sbw = 6;
+    var bw = &#123;
+        width: 1
+    &#125;;
+
+    var HandleBorder = function(svgDoc) &#123;
+        this.init(svgDoc);
+    &#125;
+
+    HandleBorder.prototype = &#123;
+        constructor: HandleBorder,
+        init: function(svgDoc) &#123;
+            this.currentSvgDoc = svgDoc;
+            this.createShade();
+            return this;
+        &#125;,
+    &#125;;
+
+    HandleBorder.prototype.createShade = function() &#123;
+        var _this = this;
+
+        _this.transformerGroup = _this.currentSvgDoc.group();
+
+        _this.blockGroup = _this.transformerGroup.group();
+
+        _this.rectLT = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;lt&#39;
+        &#125;);
+        _this.rectLB = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;lb&#39;
+        &#125;);
+        _this.rectRT = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;rt&#39;
+        &#125;);
+        _this.rectRB = this.blockGroup.rect(sbw, sbw).stroke(bw).attr(&#123;
+            &#39;_operate-type&#39;: &#39;scale&#39;,
+            &#39;_direction&#39;: &#39;rb&#39;
+        &#125;);
+
+    &#125;;
+
+    HandleBorder.prototype.judgeShade = function(bbox, matrix) &#123;
+        var x1 = bbox.x;
+        var y1 = bbox.y;
+        var x2 = bbox.x2;
+        var y2 = bbox.y2;
+
+
+        this.rectLT.move(x1 - sbw, y1 - sbw);
+        this.rectLB.move(x1 - sbw, y2);
+        this.rectRT.move(x2, y1 - sbw);
+        this.rectRB.move(x2, y2);
+
+        this.blockGroup.matrix(matrix);
+
+    &#125;;
+
+    HandleBorder.prototype.showShade = function(svgEle) &#123;
+        if (!svgEle) &#123;
+            return;
+        &#125;
+        this.currentElement = svgEle;
+        this.transformerGroup.show();
+
+        this.judgeShade(svgEle.bbox(), new SVG.Matrix(svgEle));
+    &#125;;
+
+    HandleBorder.prototype.hideShade = function() &#123;
+        this.transformerGroup.hide();
+    &#125;;
+
+    this.HandleBorder = HandleBorder;
+
+&#125;)();
+</code></pre>
+<p>在Element的扩展方法中，利用HandleBorder替换边框颜色变更操作，并将new的HandleBorder对象绑定到元素中 </p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (SVG.isPicked()) &#123;
+        if (!_ele.attr(&quot;picked&quot;)) &#123;
+            _ele.attr(&quot;picked&quot;, true);
+            console.log(_ele.handleBorder);
+            _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+            _ele.handleBorder.showShade(_ele);
+            pickedElementList.push(_ele);
+        &#125; else &#123;
+            _ele.attr(&quot;picked&quot;, null);
+            _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+            pickedElementList.remove(_ele);
+        &#125;
+    &#125;
+&#125;);
+</code></pre>
+<p>扩展了一个pickedElementList数组，并在SVG扩展中提供获取方法 </p>
+<pre><code>    getPickedElementList: function()&#123;
+        return pickedElementList;
+    &#125;
+    
+</code></pre>
+<p>为了方便移除操作，强化了数组操作，提供了remove方法 </p>
+<pre><code>Array.prototype.indexOf = function(val) &#123;
+    for (var i = 0; i &lt; this.length; i++) &#123;
+        if (this[i] == val) return i;
+    &#125;
+    return -1;
+&#125;;
+Array.prototype.remove = function(val) &#123;
+    var index = this.indexOf(val);
+    if (index &gt; -1) &#123;
+        this.splice(index, 1);
+    &#125;
+&#125;;
+</code></pre>
+<p>选择元素操作已经完成，可以在此基础上绑定颜色操作，以及拖拽及变形操作。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1224,129 +1419,6 @@ Tool.Rect(svgDraw);
 <p>IE8下不起作用</p>
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>IE8无法通过label for 修改隐藏的表单元素值</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>利用input hidden 通过js监听label的click事件并改变hidden表单元素的值</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/06/bug-javascript-breadcrumb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/06/bug-javascript-breadcrumb/" class="post-title-link" itemprop="url">利用js抽象通用面包屑导航片段失败</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-06 10:18:44" itemprop="dateCreated datePublished" datetime="2016-09-06T10:18:44+08:00">2016-09-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>利用js记录路由值，抽象面包屑导航模块，导致业务复杂度上升</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>每个导航菜单都包含多个参数，利用js记录每个来源请求的地址+参数, 但抽象能力不足，导致设计过分复杂，而且是无用功。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在每个页面中写静态导航</p>
-<h3 id="附录为失败的导航js"><a href="#附录为失败的导航js" class="headerlink" title="附录为失败的导航js"></a>附录为失败的导航js</h3><pre><code>var breadcrumb = &#123;
-    _cachekey: &#39;breadcrumbs&#39;,
-    _breadcrumbs: [],
-    init: function() &#123;
-        this.clearBreadcrumb();
-    &#125;,
-    courseIndexInit: function() &#123;
-        if (breadcrumb._breadcrumbs.length == 0) &#123;
-            breadcrumb._breadcrumbs = WName.get(breadcrumb._cachekey);
-            for (var i = 0; i &lt; breadcrumb._breadcrumbs.length; i++) &#123;
-                var _thisBreadcrumb = breadcrumb._breadcrumbs[i];
-                $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
-                $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).on(&quot;click&quot;, _thisBreadcrumb.fn);
-            &#125;
-        &#125;
-    &#125;,
-    refreshWNCache: function() &#123;
-        WName.get(breadcrumb._cachekey) &amp;&amp; WName.remove(breadcrumb._cachekey);
-        WName.put(breadcrumb._cachekey, breadcrumb._breadcrumbs);
-    &#125;,
-    refresh: function() &#123;
-        this.refreshWNCache();
-        $(&#39;#breadCrumbMenu&#39;).children().remove();
-        for (var i = 0; i &lt; breadcrumb._breadcrumbs.length; i++) &#123;
-            var _thisBreadcrumb = breadcrumb._breadcrumbs[i];
-            $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
-            $(&quot;#breadCrumbMenu #&quot; + _thisBreadcrumb.name).on(&quot;click&quot;, _thisBreadcrumb.fn);
-        &#125;
-    &#125;,
-    fillBreadcrumb: function(vName, vFoo, vIndex) &#123;
-        var _thisBreadcrumb = this.breadcrumbTemplate[vName];
-        $(&quot;#breadCrumbMenu #&quot; + vName).length == 0 &amp;&amp; $(&#39;#breadCrumbMenu&#39;).append(_thisBreadcrumb.htmlTxt);
-        if (vFoo) &#123;
-            _thisBreadcrumb.fn = vFoo;
-        &#125;
-        this._breadcrumbs[_thisBreadcrumb.seq] = _thisBreadcrumb;
-        this._breadcrumbs.splice(1 + _thisBreadcrumb.seq, this._breadcrumbs.length);
-        $(&quot;#breadCrumbMenu #&quot; + vName).on(&quot;click&quot;, _thisBreadcrumb.fn);
-        this.refresh();
-    &#125;,
-    clearBreadcrumb: function() &#123;
-        this._breadcrumbs = [];
-        $(&#39;#breadCrumbMenu&#39;).children().remove();
-        WName.put(breadcrumb._cachekey, null);
-        WName.get(breadcrumb._cachekey) &amp;&amp; WName.remove(breadcrumb._cachekey);
-    &#125;,
-    breadcrumbTemplate: &#123;
-        courseList: &#123; name: &#39;courseList&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#courseList&quot; id=&quot;courseList&quot;&gt;课程列表&lt;/a&gt;&lt;/span&gt;&#39;, seq: 0 &#125;,
-        course: &#123; name: &#39;course&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#course&quot; id=&quot;course&quot;&gt;课程首页&lt;/a&gt;&lt;/span&gt;&#39;, seq: 1 &#125;,
-        user: &#123; name: &#39;user&#39;, htmlTxt: &#39;&lt;span&gt;&lt;b&gt;/&lt;/b&gt;&lt;a href=&quot;#userBase&quot; id=&quot;user&quot;&gt;电子档案&lt;/a&gt;&lt;/span&gt;&#39;, seq: 0, fn: function() &#123; user.forupdateinfo() &#125; &#125;
-    &#125;
-&#125;
-</code></pre>
 
       
     </div>

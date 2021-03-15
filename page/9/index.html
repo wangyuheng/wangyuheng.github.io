@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">102</span>
+          <span class="site-state-item-count">103</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">33</span>
+        <span class="site-state-item-count">34</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">92</span>
+        <span class="site-state-item-count">93</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,113 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/06/29/bug-java-iterator-illegalstateexception/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/29/bug-java-iterator-illegalstateexception/" class="post-title-link" itemprop="url">Iterator调用remove()时抛出异常 java.lang.IllegalStateException</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-29 14:20:33" itemprop="dateCreated datePublished" datetime="2016-06-29T14:20:33+08:00">2016-06-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="[问题]"></a>[问题]</h3><p>Iterator remove()时抛出异常 java.lang.IllegalStateException</p>
+<pre><code>List&lt;String&gt; list = new ArrayList&lt;String&gt;();
+list.add(&quot;a&quot;);
+list.add(&quot;b&quot;);
+list.add(&quot;c&quot;);
+list.add(&quot;d&quot;);
+Iterator&lt;String&gt; it = list.iterator();
+int i =3;
+while(it.hasNext()) &#123;
+//                it.next();
+    if (i--&gt;1) &#123;
+        it.remove();
+    &#125;
+&#125;
+System.out.println(list.size());
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="[原因]"></a>[原因]</h3><p>没有调用next() 方法</p>
+<h3 id="怎么发现的"><a href="#怎么发现的" class="headerlink" title="[怎么发现的]"></a>[怎么发现的]</h3><p>跟踪代码，查看Iterator.class源码，在源码注释中看到</p>
+<pre><code>/**
+ * 
+ * Removes from the underlying collection the last element returned by the
+ * iterator (optional operation).  This method can be called only once per
+ * call to &lt;tt&gt;next&lt;/tt&gt;.  The behavior of an iterator is unspecified if
+ * the underlying collection is modified while the iteration is in
+ * progress in any way other than by calling this method.
+ *
+ * @exception UnsupportedOperationException if the &lt;tt&gt;remove&lt;/tt&gt;
+ *          operation is not supported by this Iterator.
+ 
+ * @exception IllegalStateException if the &lt;tt&gt;next&lt;/tt&gt; method has not
+ *          yet been called, or the &lt;tt&gt;remove&lt;/tt&gt; method has already
+ *          been called after the last call to the &lt;tt&gt;next&lt;/tt&gt;
+ *          method.
+ */
+void remove();
+</code></pre>
+<h3 id="修复"><a href="#修复" class="headerlink" title="[修复]"></a>[修复]</h3><p>先调用next()方法，再调用remove()方法</p>
+<h3 id="我导致的"><a href="#我导致的" class="headerlink" title="[我导致的]"></a>[我导致的]</h3><p>是的</p>
+<h3 id="解决Bug的时间"><a href="#解决Bug的时间" class="headerlink" title="[解决Bug的时间]"></a>[解决Bug的时间]</h3><p>3分钟</p>
+<h3 id="教训"><a href="#教训" class="headerlink" title="[教训]"></a>[教训]</h3><p>需要熟悉Iterator使用方法及设计原理</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1400,115 +1507,6 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
 <pre><code>use zero
 </code></pre>
 <h3 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h3><p>mongodb默认为允许匿名用户访问，可以通过以下命令添加此集合的管理员账户</p>
-<pre><code>db.createUser(&#123;user:&#39;zero_admin&#39;,pwd:&#39;zero_123456&#39;,roles:[&#123;role:&#39;dbOwner&#39;,db:&#39;zero&#39;&#125;]&#125;) 
-</code></pre>
-<p>至此，已完成在虚拟机中搭建mongodb服务，并可在本机程序访问调试。下篇文章将介绍如何通过java程序连接mongodb</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/18/linux-mongodb/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/05/18/linux-mongodb/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装MongoDB-3.2</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-05-18 15:51:47" itemprop="dateCreated datePublished" datetime="2016-05-18T15:51:47+08:00">2016-05-18</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/linux/" itemprop="url" rel="index"><span itemprop="name">linux</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>工作需要，在虚拟机中安装了一个CentOS7的linux环境，用来测试MongoDB。记录一下MongoDB的安装和配置过程。</p>
-<h3 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h3><p>安装过程通过yum方式，需要配置repo。</p>
-<h4 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h4><pre><code>vi /etc/yum.repos.d/mongodb-org-3.2.repo
-</code></pre>
-<p>通过命令打开文档，输入如下内容</p>
-<pre><code>[mongodb-org-3.2]
-name=MongoDB Repository
-baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.2/x86_64/
-gpgcheck=1
-enabled=1
-gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
-</code></pre>
-<h4 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h4><pre><code>sudo yum install -y mongodb-org
-</code></pre>
-<h4 id="设置mongodb监听端口"><a href="#设置mongodb监听端口" class="headerlink" title="设置mongodb监听端口"></a>设置mongodb监听端口</h4><pre><code>semanage port -a -t mongod_port_t -p tcp 27017
-</code></pre>
-<h4 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h4><pre><code>sudo service mongod start
-</code></pre>
-<h4 id="开机自启动"><a href="#开机自启动" class="headerlink" title="开机自启动"></a>开机自启动</h4><pre><code>chkconfig mongod on
-</code></pre>
-<p>此时会看到服务启动成功的提示 【OK】</p>
-<h3 id="开发调试"><a href="#开发调试" class="headerlink" title="开发调试"></a>开发调试</h3><p>在虚拟机中安装好环境后，如何用本机环境进行开发访问？<br>本机为windows环境并没有安装mongodb客户端程序，无法通过命令行直接访问，全部依赖于java代码访问。<br>此时有个问题，mongodb安装完成后，默认只监听本机ip(localhost)，必须要修改绑定</p>
-<h4 id="查看本机ip"><a href="#查看本机ip" class="headerlink" title="查看本机ip"></a>查看本机ip</h4><p>为了让mongodb监听虚拟机的ip(局域网内ip)，必须先将虚拟机的网络连接环境设置为桥接。通过命令查看</p>
-<pre><code>ifconfig
-</code></pre>
-<p>注：因为我的安装镜像为mini.iso，默认并没有安装网络工具，此时可能会报错<br>ifconfig command not found，需要先安装此工具集</p>
-<pre><code>yum install net-tools
-</code></pre>
-<h4 id="修改绑定监听IP"><a href="#修改绑定监听IP" class="headerlink" title="修改绑定监听IP"></a>修改绑定监听IP</h4><pre><code>vi /etc/mongod.conf
-</code></pre>
-<p>打开文档，并将bind_ip修改为ifconfig查看到的本地ip</p>
-<h4 id="重启mongodb服务"><a href="#重启mongodb服务" class="headerlink" title="重启mongodb服务"></a>重启mongodb服务</h4><pre><code>sudo service mongod restart
-</code></pre>
-<h4 id="创建集合（数据库）"><a href="#创建集合（数据库）" class="headerlink" title="创建集合（数据库）"></a>创建集合（数据库）</h4><p>需要进入mongo后，才可以执行mongo相关命令。进入方式为执行如下命令。默认ip为127.0.0.1，因为修改过bind_ip，所以此处的ip地址为刚配置的bing_ip</p>
-<pre><code>mongo ip地址
-</code></pre>
-<p>创建集合</p>
-<pre><code>use zero
-</code></pre>
-<h4 id="创建用户"><a href="#创建用户" class="headerlink" title="创建用户"></a>创建用户</h4><p>mongodb默认为允许匿名用户访问，可以通过以下命令添加此集合的管理员账户</p>
 <pre><code>db.createUser(&#123;user:&#39;zero_admin&#39;,pwd:&#39;zero_123456&#39;,roles:[&#123;role:&#39;dbOwner&#39;,db:&#39;zero&#39;&#125;]&#125;) 
 </code></pre>
 <p>至此，已完成在虚拟机中搭建mongodb服务，并可在本机程序访问调试。下篇文章将介绍如何通过java程序连接mongodb</p>
