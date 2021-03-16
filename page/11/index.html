@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,90 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/15/mysql-host-is-blocked/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/12/15/mysql-host-is-blocked/" class="post-title-link" itemprop="url">Host 'xxxx' is blocked because of many connection errors; unblock with 'mysqladmin flush-hosts'</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-15 09:41:17" itemprop="dateCreated datePublished" datetime="2015-12-15T09:41:17+08:00">2015-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>由于网络连接不稳定，在连接局域网内的mysql开发服务器时，连续多次断开，结果无法连接到mysql服务器，报错内容如下：</p>
+<pre><code>Host &#39;host_name&#39; is blocked because of many connection errors.
+Unblock with &#39;mysqladmin flush-hosts&#39;
+</code></pre>
+<p>这是mysql自带的一种保护机制，如果客户端连续连接失败次数<strong>max_connect_errors</strong>，超过默认值，则会拒绝客户端继续连接。<br>可以通过</p>
+<pre><code>SHOW VARIABLES LIKE &#39;max_connect_errors&#39;
+    
+</code></pre>
+<p>查看允许连接失败的次数，默认为100次。由于网络不稳，可能会让JDBC等连接很快超过此默认值，可以通过修改此默认值来避免出现连接失败的情形，如</p>
+<pre><code>SET GLOBAL max_connect_errors=10000;
+</code></pre>
+<p> 如果本机已被拒绝连接，可以通过另一台可连接到mysql服务器的主机执行以下命令</p>
+<pre><code> mysqladmin flush-hosts -h localhost -uroot -p *****
+ 
+</code></pre>
+<p>此命令会清空所有的hosts缓存信息，执行后即可链接</p>
+<p><strong>Best regards</strong><br><strong>Wang Yuheng</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   

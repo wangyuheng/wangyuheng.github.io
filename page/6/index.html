@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,173 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/23/painter-5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/23/painter-5/" class="post-title-link" itemprop="url">绘画板 05——设置图形边框颜色与背景色（喷枪）</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-23 11:23:01" itemprop="dateCreated datePublished" datetime="2016-09-23T11:23:01+08:00">2016-09-23</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="边框与背景色"><a href="#边框与背景色" class="headerlink" title="边框与背景色"></a>边框与背景色</h3><p>首先，使用了开源的 <a target="_blank" rel="noopener" href="https://github.com/bgrins/spectrum">spectrum.js</a> 作为颜色选择器，<br>之前以SVG对象保存全局方法与对象，现在通过新定义一个GlobalStatus，存在全局属性，并通过按钮状态判断状态</p>
+<pre><code>var GlobalStatus = &#123;
+    defaultFontColor:&quot;#0073c6&quot;,
+    defaultFillColor:&quot;#ececec&quot;,
+    defaultLineSize:&quot;2&quot;,
+    isPicked:function()&#123;
+        return $(&quot;#tool_pick&quot;).hasClass(&quot;active&quot;);
+    &#125;,
+    isPreFilled:function()&#123;
+        return $(&quot;#tool_fill&quot;).hasClass(&quot;active&quot;);
+    &#125;,
+    getFontColor:function()&#123;
+        return $(&quot;#font_color&quot;).attr(&quot;data-color&quot;);
+    &#125;,
+    getFillColor:function()&#123;
+        return $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;);
+    &#125;,
+    getLineSize:function()&#123;
+        return this.defaultLineSize;
+    &#125;,
+    getFillOpacity:function()&#123;
+        var fillOpacity = &quot;0.0&quot;;
+        if (this.getFillColor() != this.defaultFillColor) &#123;
+            fillOpacity = &quot;1.0&quot;;
+        &#125;
+        return fillOpacity;
+    &#125;
+&#125;
+</code></pre>
+<p>在首页给默认线条颜色及背景颜色赋值，并设置状态data-color保存颜色值</p>
+<pre><code>    $(&quot;#font_color span&quot;).css(&quot;background&quot;, GlobalStatus.defaultFontColor);
+    $(&quot;#font_color&quot;).attr(&quot;data-color&quot;, GlobalStatus.defaultFontColor);
+    $(&quot;#fill_color span&quot;).css(&quot;background&quot;, GlobalStatus.defaultFillColor);
+    $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;, GlobalStatus.defaultFillColor);
+</code></pre>
+<p>颜色选择器发生变化时，同时变更颜色与data-color属性值</p>
+<pre><code>    $(&quot;#colorPalettes&quot;).spectrum(&#123;
+        flat: true,
+        showPaletteOnly: true,
+        color: &#39;#0073c6&#39;,
+        move: function(tinycolor) &#123;
+            console.log(&quot;color move&quot;);
+            console.log(tinycolor.toHexString())
+            if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                $(&quot;#fill_color&quot;).attr(&quot;data-color&quot;, tinycolor.toHexString());
+                $(&quot;#fill_color span&quot;).eq(0).css(&quot;background&quot;, tinycolor.toHexString());
+
+            &#125; else if ($(&quot;#font_color&quot;).hasClass(&quot;active&quot;)) &#123;
+                $(&quot;#font_color&quot;).attr(&quot;data-color&quot;, tinycolor.toHexString());
+                $(&quot;#font_color span&quot;).eq(0).css(&quot;background&quot;, tinycolor.toHexString());
+            &#125;
+
+        &#125;,
+
+        palette: spectrumColors
+    &#125;);
+    
+</code></pre>
+<p>这里有一个取巧的地方，为了让背景颜色透明显示，规定ececec为透明颜色。选择此颜色时，将透明度opacity设置为全透明。</p>
+<p>这样做有一个问题，如果用户自定义此颜色，可以将自定义的颜色修改为ececed，不会在视觉上有较大影响。</p>
+<p>在绘制元素时，通过GlobalStatus设置元素的边框、颜色、及透明度。已rect为例</p>
+<pre><code>function mousedown(event) &#123;
+    console.log(&#39;rect mousedown&#39;);
+    drawing = true;
+    startPoint = svgDoc.transformPoint(event);
+    element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+        width: GlobalStatus.getLineSize(),
+        color: GlobalStatus.getFontColor()
+    &#125;);
+&#125;
+</code></pre>
+<p>此时，绘制的颜色就会根据设置的颜色及背景色发生变化。</p>
+<h3 id="喷枪"><a href="#喷枪" class="headerlink" title="喷枪"></a>喷枪</h3><p>在GlobalStatus中增加了isPreFilled()方法，判断喷枪是否被选中。在Element的扩展方法中，监听click事件。<br>如果为选中喷枪的点击，则修改元素的对应属性值即可。</p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (GlobalStatus.isPreFilled()) &#123;
+        if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+            _ele.fill(GlobalStatus.getFillColor());
+            _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+        &#125; else &#123;
+            _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+        &#125;
+
+    &#125; else if (GlobalStatus.isPicked()) &#123;
+        if (!_ele.attr(&quot;picked&quot;)) &#123;
+            _ele.attr(&quot;picked&quot;, true);
+            console.log(_ele.handleBorder);
+            _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+            _ele.handleBorder.showShade(_ele);
+            pickedElementList.push(_ele);
+        &#125; else &#123;
+            _ele.attr(&quot;picked&quot;, null);
+            _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+            pickedElementList.remove(_ele);
+        &#125;
+    &#125;
+&#125;);
+</code></pre>
+<p>这里有一个用户体验的问题，喷枪是同时修改边框色和背景色，还是分别修改？</p>
+<p>现在的实现方法为分别修改。用户需要点击线条与背景色，然后再用喷枪工具分别修改元素颜色。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1348,77 +1515,6 @@ Tool.Rect(svgDraw);
 <p>禁用</p>
 <pre><code>chkconfig iptables off
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/06/bug-html-ie8-hided-radio/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/06/bug-html-ie8-hided-radio/" class="post-title-link" itemprop="url">bug html ie8 hided radio</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-06 10:23:41" itemprop="dateCreated datePublished" datetime="2016-09-06T10:23:41+08:00">2016-09-06</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>将radio表单元素放在隐藏的div中，利用显示的label for 试图改变radio的值 </p>
-<p>IE8下不起作用</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>IE8无法通过label for 修改隐藏的表单元素值</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>利用input hidden 通过js监听label的click事件并改变hidden表单元素的值</p>
 
       
     </div>

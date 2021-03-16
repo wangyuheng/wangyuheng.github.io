@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">103</span>
+          <span class="site-state-item-count">104</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">34</span>
+        <span class="site-state-item-count">35</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-count">94</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,88 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/01/linux-maven-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/01/linux-maven-starter/" class="post-title-link" itemprop="url">linux安装maven(非yum)</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-01 20:42:25" itemprop="dateCreated datePublished" datetime="2016-09-01T20:42:25+08:00">2016-09-01</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/maven/" itemprop="url" rel="index"><span itemprop="name">maven</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>通过yum安装maven，发现需要依赖jdk，希望通过绿色方式安装。</p>
+<h3 id="下载maven"><a href="#下载maven" class="headerlink" title="下载maven"></a>下载maven</h3><p>在官网下载Binary tar.gz archive版本</p>
+<pre><code>wget http://mirrors.hust.edu.cn/apache/maven/maven-3/3.3.9/binaries/apache-maven-3.3.9-bin.tar.gz
+</code></pre>
+<h3 id="解压"><a href="#解压" class="headerlink" title="解压"></a>解压</h3><pre><code>tar -zxvf apache-maven-3.3.9-bin.tar.gz
+</code></pre>
+<h3 id="将目录移动到local"><a href="#将目录移动到local" class="headerlink" title="将目录移动到local"></a>将目录移动到local</h3><pre><code>mv apache-maven-3.3.9 /usr/local/apache-maven
+</code></pre>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><pre><code>export M2_HOME=/usr/local/apache-maven
+export M2=$M2_HOME/bin 
+export PATH=$M2:$PATH
+source ~/.bashrc
+</code></pre>
+<h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>mvn -version
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -992,90 +1074,6 @@ antd-init --type plain-react
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/06/29/project-listen/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/06/29/project-listen/" class="post-title-link" itemprop="url">js获取script参数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-06-29 17:12:16" itemprop="dateCreated datePublished" datetime="2016-06-29T17:12:16+08:00">2016-06-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/project/" itemprop="url" rel="index"><span itemprop="name">project</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h1 id="Listen"><a href="#Listen" class="headerlink" title="Listen"></a>Listen</h1><h2 id="初心"><a href="#初心" class="headerlink" title="初心"></a>初心</h2><p>个人网站，会让朋友随便点点，试用一下，并提一些建议。如果通过聊天工具，比较麻烦，不方便整理。<br>打算开发一个意见反馈的js插件，加载到页面之中，可以让用户第一时间输入意见，并在页面中能看到意见列表，及解决状态。</p>
-<h2 id="设计"><a href="#设计" class="headerlink" title="设计"></a>设计</h2><p>由3部分构成</p>
-<ol>
-<li>前台输入页面</li>
-<li>数据中心</li>
-<li>意见解决页面</li>
-</ol>
-<h3 id="前台输入页面"><a href="#前台输入页面" class="headerlink" title="前台输入页面"></a>前台输入页面</h3><p>面向网站浏览用户，负责意见输入、采集工作。<br>采用js插件的形式，方便集成到不同的web页面中。<br>通过js控制HTML元素，设置样式，布局在页面的某个角落，不影响原页面。<br>通过json格式与数据中心进行通信，利用原生ajax形式，不依赖任何第三方库。</p>
-<h3 id="数据中心"><a href="#数据中心" class="headerlink" title="数据中心"></a>数据中心</h3><p>存储意见数据。<br>根据域名区分不同租户。<br>通过restful，以json格式传递数据。<br>可跨域访问。</p>
-<h3 id="意见解决页面"><a href="#意见解决页面" class="headerlink" title="意见解决页面"></a>意见解决页面</h3><p>可查看不同租户下意见。<br>解决或者输入不解决原因。<br>通过json格式与数据中心进行通信。</p>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="前台输入页面-1"><a href="#前台输入页面-1" class="headerlink" title="前台输入页面"></a>前台输入页面</h3><pre><code>var Listen = &#123;
-    submitUrl: &#39;&#39;,
-    listUrl: &#39;&#39;,
-    submit: function()&#123;&#125;,
-    list: function()&#123;&#125;
-&#125;
-</code></pre>
 
       
     </div>
