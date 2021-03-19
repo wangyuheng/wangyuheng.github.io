@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,92 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/02/linux-jdk-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/02/linux-jdk-starter/" class="post-title-link" itemprop="url">linux通过rpm安装jdk</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-02 09:29:14" itemprop="dateCreated datePublished" datetime="2016-09-02T09:29:14+08:00">2016-09-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>linux安装java环境，安装jdk1.8。</p>
+<h2 id="查看java程序是否存在"><a href="#查看java程序是否存在" class="headerlink" title="查看java程序是否存在"></a>查看java程序是否存在</h2><pre><code>java -version
+rpm -qa |grep java
+rpm -qa |grep jdk
+rpm -qa |grep gcj
+</code></pre>
+<p>如果java已存在，可以卸载已存在的版本</p>
+<pre><code>rpm -qa | grep java | xargs rpm -e --nodeps
+</code></pre>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="下载java仓库rpm"><a href="#下载java仓库rpm" class="headerlink" title="下载java仓库rpm"></a>下载java仓库rpm</h3><p>在oracle官网 <a target="_blank" rel="noopener" href="http://www.oracle.com/technetwork/java/javase/downloads">http://www.oracle.com/technetwork/java/javase/downloads</a> 找到rpm安装包下载地址，选择版本为jdk1.8 linux 64位。因为协议限制，不能通过wget直接下载，需要增加协议设置语句。<br>需要根据本机的操作系统版本，选择对应的jdk版本。如果32位系统，安装64位jdk会提示</p>
+<p><strong>package jdk1.8.0_102-2000:1.8.0_102-fcs.x86_64 is intended for a x86_64 architecture</strong></p>
+<pre><code>wget --no-check-certificate --no-cookie --header &quot;Cookie: oraclelicense=accept-securebackup-cookie;&quot;  http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-x64.rpm
+</code></pre>
+<h3 id="安装仓库"><a href="#安装仓库" class="headerlink" title="安装仓库"></a>安装仓库</h3><pre><code>sudo rpm -Uvh jdk-8u102-linux-x64.rpm
+</code></pre>
+<p>也可以手动配置repo，此时不需要下载rpm文件。</p>
+<h3 id="查看是否安装成功"><a href="#查看是否安装成功" class="headerlink" title="查看是否安装成功"></a>查看是否安装成功</h3><pre><code>java -version
+</code></pre>
+<p>rpm省掉了配置JAVA_HOME的过程。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -986,94 +1072,6 @@ antd-init --type plain-react
 <p>传统的表单提交方式，在提交之后，会跳转到一个新页面。<br>采用ajax的方式，可以在页面不发生跳转的前提条件下，与服务器进行数据通信（提交表单，并获取服务器端的返回数据），从而实现局部刷新。<br>不仅仅是提高了性能，更重要的是，提供了一种强大的灵活性。</p>
 <p>Asynchronous javascript and XML</p>
 <p>尽管名称中的x表示了xml，其实现在更通用的一种方式是通过json格式进行数据通信。<br>原因是json格式更加小巧，且支持更好。js自带。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/06/29/160629-skill-javascript-script-param/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/06/29/160629-skill-javascript-script-param/" class="post-title-link" itemprop="url">js获取script参数</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-06-29 17:12:16" itemprop="dateCreated datePublished" datetime="2016-06-29T17:12:16+08:00">2016-06-29</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/skill/" itemprop="url" rel="index"><span itemprop="name">skill</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>js插件挡住了页面元素，希望自定义js插件显示的布局位置。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>在<code>&lt;script&gt;</code>引入js插件时传递layout布局参数。</p>
-<h3 id="1-通过url参数方式获取"><a href="#1-通过url参数方式获取" class="headerlink" title="1. 通过url参数方式获取"></a>1. 通过url参数方式获取</h3><p>js可以获取url中的参数</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(location.href.indexOf(<span class="string">&quot;?&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> params = location.href.substr(location.href.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">		<span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">		<span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;key=&quot;</span>+key+<span class="string">&quot; value=&quot;</span>+value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>同理，可以先获取script标签中的src属性，再通过上面的方法，获取layout参数</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在js插件文件中通过如下代码获取</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> url = script.getAttribute(<span class="string">&quot;src&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> params = url.substr(url.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&quot;layout&quot;</span> == key) &#123;</span><br><span class="line">            	layout = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-通过自定义属性获取"><a href="#2-通过自定义属性获取" class="headerlink" title="2. 通过自定义属性获取"></a>2. 通过自定义属性获取</h3><p>通过上面的方法，可以想到既然能获取src属性，那么也可以自定义布局属性，并通过getAttribute()方法获取。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在js插件文件中通过如下代码获取</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span> &amp;&amp; script.getAttribute(<span class="string">&quot;layout&quot;</span>)) &#123;</span><br><span class="line">        layout = script.getAttribute(<span class="string">&quot;layout&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过从代码上来看，第二种方法更简单，而问过几个朋友，都更喜欢第二种配置方式，所以在这里推荐使用自定义属性获取属性。</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
 
       
     </div>

@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="以终为始，拆解任务">
+<meta property="og:type" content="article">
+<meta property="og:title" content="朋友，你听说过单元测试吗">
+<meta property="og:url" content="https://blog.yuheng.wang/2021/03/18/ut/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="以终为始，拆解任务">
+<meta property="og:locale">
+<meta property="og:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMzA1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo1MDFweDtoZWlnaHQ6MzA1cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MDEgMzA1IiB3aWR0aD0iNTAxcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFqMjdhYmZya21qcXkiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGVsbGlwc2UgY3g9IjM0My4xOTg1IiBjeT0iMTA1LjUyMzYiIGZpbGw9IiNGRjAwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSIzMi42OTg1IiByeT0iMTQuNTIzNiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzAiIHg9IjMyOC4xNzA5IiB5PSIxMDguMzgxIj5SRUQ8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNi4xMjk5IiBjeT0iMTk1LjY1NjIiIGZpbGw9IiMwMDgwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI0Ni42Mjk5IiByeT0iMTQuNjU2MiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDkiIHg9IjM4OC42Mjk5IiB5PSIxOTkuNDAzOCI+R1JFRU48L3RleHQ+PGVsbGlwc2UgY3g9IjI2OS44OTYzIiBjeT0iMTk1LjI3OTMiIGZpbGw9IiM4MDAwODAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI2NC4zOTYzIiByeT0iMTUuMjc5MyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNzciIHg9IjIyOC4zOTYzIiB5PSIxOTkuMDI2OCI+UkVGQUNUT1I8L3RleHQ+PHBhdGggZD0iTTI2Myw2IEwyNjMsMzEuMTMyOCBBMCwwIDAgMCAwIDI2MywzMS4xMzI4IEwzMzksMzEuMTMyOCBMMzQzLDkwLjgxNCBMMzQ3LDMxLjEzMjggTDQyMywzMS4xMzI4IEEwLDAgMCAwIDAgNDIzLDMxLjEzMjggTDQyMywxNiBMNDEzLDYgTDI2Myw2IEEwLDAgMCAwIDAgMjYzLDYgIiBmaWxsPSIjRkJGQjc3IiBmaWx0ZXI9InVybCgjZjFqMjdhYmZya21qcXkpIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNDEzLDYgTDQxMywxNiBMNDIzLDE2IEw0MTMsNiAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzOSIgeD0iMjY5IiB5PSIyMy4wNjY5Ij5Xcml0ZSBhIHRlc3QgdGhhdCBmYWlscy48L3RleHQ+PHBhdGggZD0iTTMzOS41LDI3MSBMMzM5LjUsMjk2LjEzMjggQTAsMCAwIDAgMCAzMzkuNSwyOTYuMTMyOCBMNDkyLjUsMjk2LjEzMjggQTAsMCAwIDAgMCA0OTIuNSwyOTYuMTMyOCBMNDkyLjUsMjgxIEw0ODIuNSwyNzEgTDQyMCwyNzEgTDQxNiwyMTAuMzE3NCBMNDEyLDI3MSBMMzM5LjUsMjcxIEEwLDAgMCAwIDAgMzM5LjUsMjcxICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQ4Mi41LDI3MSBMNDgyLjUsMjgxIEw0OTIuNSwyODEgTDQ4Mi41LDI3MSAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzMiIgeD0iMzQ1LjUiIHk9IjI4OC4wNjY5Ij5NYWtlIHRoZSBjb2RlIHdvcmsuPC90ZXh0PjxwYXRoIGQ9Ik02LDE4MyBMNiwyMDguMTMyOCBBMCwwIDAgMCAwIDYsMjA4LjEzMjggTDE3MCwyMDguMTMyOCBBMCwwIDAgMCAwIDE3MCwyMDguMTMyOCBMMTcwLDIwMSBMMjA1LjIzLDE5NS41IEwxNzAsMTkzIEwxNzAsMTkzIEwxNjAsMTgzIEw2LDE4MyBBMCwwIDAgMCAwIDYsMTgzICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTE2MCwxODMgTDE2MCwxOTMgTDE3MCwxOTMgTDE2MCwxODMgIiBmaWxsPSIjRkJGQjc3IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDMiIHg9IjEyIiB5PSIyMDAuMDY2OSI+RWxpbWluYXRlIHJlZHVuZGFuY3kuPC90ZXh0PjwhLS1NRDU9WzVlMmVlYzYyYTUwYjI2YjZiMGRiNmMxMmU0ZWUyODljXQpsaW5rIEEgdG8gQi0tPjxwYXRoIGQ9Ik0zNTMuNzcxLDExOS40ODUgQzM2Ni40MjIsMTM0LjczNSAzODcuNDYyLDE2MC4wOTggNDAxLjUyOCwxNzcuMDU1ICIgZmlsbD0ibm9uZSIgaWQ9IkEtdG8tQiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI0MDQuOTQ1LDE4MS4xNzQsNDAyLjI3NywxNzEuNjkzNCw0MDEuNzUyNSwxNzcuMzI1OSwzOTYuMTIsMTc2LjgwMTQsNDA0Ljk0NSwxODEuMTc0IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVtmNzUwNGVlYzdmYWM4ZWNhYTMxN2U4OTgxZjQ2OGM0N10KcmV2ZXJzZSBsaW5rIEMgdG8gQi0tPjxwYXRoIGQ9Ik0zMzkuODY3LDE5NS41IEMzNDkuNjg5LDE5NS41IDM1OS41MTEsMTk1LjUgMzY5LjMzNCwxOTUuNSAiIGZpbGw9Im5vbmUiIGlkPSJDLWJhY2t0by1CIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzNC43MywxOTUuNSwzNDMuNzMsMTk5LjUsMzM5LjczLDE5NS41LDM0My43MywxOTEuNSwzMzQuNzMsMTk1LjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzUxODM2N2MxZTdmYmFhMjE1ZmFkNzE1MDRhOTliZDRmXQpyZXZlcnNlIGxpbmsgQSB0byBDLS0+PHBhdGggZD0iTTMyOC45MjMsMTIzLjQ3IEMzMTUuMzExLDEzOS44NzkgMjk0LjkwNiwxNjQuNDc2IDI4Mi4wMzEsMTc5Ljk5NiAiIGZpbGw9Im5vbmUiIGlkPSJBLWJhY2t0by1DIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzMi4yMjksMTE5LjQ4NSwzMjMuNDA1LDEyMy44NTk2LDMyOS4wMzc0LDEyMy4zMzM4LDMyOS41NjMxLDEyOC45NjYyLDMzMi4yMjksMTE5LjQ4NSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bODUyODM1YjNhMjE3MDllNWM4YzZiZTI1YjY2MWU2YjNdCkBzdGFydHVtbA0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVEIiBhcyBBICNyZWQNCnVzZWNhc2UgIjxmb250IGNvbG9yPXdoaXRlPkdSRUVOIiBhcyBCICNncmVlbg0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVGQUNUT1IiIGFzIEMgI3B1cnBsZQ0KDQpub3RlIHRvcCBvZiBBIDogV3JpdGUgYSB0ZXN0IHRoYXQgZmFpbHMuDQpub3RlIGJvdHRvbSBvZiBCIDogTWFrZSB0aGUgY29kZSB3b3JrLg0Kbm90ZSBsZWZ0IG9mIEMgOiBFbGltaW5hdGUgcmVkdW5kYW5jeS4NCg0KDQpBIC1kb3duLT4gQg0KQiAtbGVmdC0+IEMNCkMgLXVwLT4gQQ0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNyhVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4=">
+<meta property="article:published_time" content="2021-03-18T11:49:22.000Z">
+<meta property="article:modified_time" content="2021-03-18T12:51:02.439Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="知识点">
+<meta property="article:tag" content="测试">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMzA1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo1MDFweDtoZWlnaHQ6MzA1cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MDEgMzA1IiB3aWR0aD0iNTAxcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFqMjdhYmZya21qcXkiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGVsbGlwc2UgY3g9IjM0My4xOTg1IiBjeT0iMTA1LjUyMzYiIGZpbGw9IiNGRjAwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSIzMi42OTg1IiByeT0iMTQuNTIzNiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzAiIHg9IjMyOC4xNzA5IiB5PSIxMDguMzgxIj5SRUQ8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNi4xMjk5IiBjeT0iMTk1LjY1NjIiIGZpbGw9IiMwMDgwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI0Ni42Mjk5IiByeT0iMTQuNjU2MiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDkiIHg9IjM4OC42Mjk5IiB5PSIxOTkuNDAzOCI+R1JFRU48L3RleHQ+PGVsbGlwc2UgY3g9IjI2OS44OTYzIiBjeT0iMTk1LjI3OTMiIGZpbGw9IiM4MDAwODAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI2NC4zOTYzIiByeT0iMTUuMjc5MyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNzciIHg9IjIyOC4zOTYzIiB5PSIxOTkuMDI2OCI+UkVGQUNUT1I8L3RleHQ+PHBhdGggZD0iTTI2Myw2IEwyNjMsMzEuMTMyOCBBMCwwIDAgMCAwIDI2MywzMS4xMzI4IEwzMzksMzEuMTMyOCBMMzQzLDkwLjgxNCBMMzQ3LDMxLjEzMjggTDQyMywzMS4xMzI4IEEwLDAgMCAwIDAgNDIzLDMxLjEzMjggTDQyMywxNiBMNDEzLDYgTDI2Myw2IEEwLDAgMCAwIDAgMjYzLDYgIiBmaWxsPSIjRkJGQjc3IiBmaWx0ZXI9InVybCgjZjFqMjdhYmZya21qcXkpIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNDEzLDYgTDQxMywxNiBMNDIzLDE2IEw0MTMsNiAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzOSIgeD0iMjY5IiB5PSIyMy4wNjY5Ij5Xcml0ZSBhIHRlc3QgdGhhdCBmYWlscy48L3RleHQ+PHBhdGggZD0iTTMzOS41LDI3MSBMMzM5LjUsMjk2LjEzMjggQTAsMCAwIDAgMCAzMzkuNSwyOTYuMTMyOCBMNDkyLjUsMjk2LjEzMjggQTAsMCAwIDAgMCA0OTIuNSwyOTYuMTMyOCBMNDkyLjUsMjgxIEw0ODIuNSwyNzEgTDQyMCwyNzEgTDQxNiwyMTAuMzE3NCBMNDEyLDI3MSBMMzM5LjUsMjcxIEEwLDAgMCAwIDAgMzM5LjUsMjcxICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQ4Mi41LDI3MSBMNDgyLjUsMjgxIEw0OTIuNSwyODEgTDQ4Mi41LDI3MSAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzMiIgeD0iMzQ1LjUiIHk9IjI4OC4wNjY5Ij5NYWtlIHRoZSBjb2RlIHdvcmsuPC90ZXh0PjxwYXRoIGQ9Ik02LDE4MyBMNiwyMDguMTMyOCBBMCwwIDAgMCAwIDYsMjA4LjEzMjggTDE3MCwyMDguMTMyOCBBMCwwIDAgMCAwIDE3MCwyMDguMTMyOCBMMTcwLDIwMSBMMjA1LjIzLDE5NS41IEwxNzAsMTkzIEwxNzAsMTkzIEwxNjAsMTgzIEw2LDE4MyBBMCwwIDAgMCAwIDYsMTgzICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTE2MCwxODMgTDE2MCwxOTMgTDE3MCwxOTMgTDE2MCwxODMgIiBmaWxsPSIjRkJGQjc3IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDMiIHg9IjEyIiB5PSIyMDAuMDY2OSI+RWxpbWluYXRlIHJlZHVuZGFuY3kuPC90ZXh0PjwhLS1NRDU9WzVlMmVlYzYyYTUwYjI2YjZiMGRiNmMxMmU0ZWUyODljXQpsaW5rIEEgdG8gQi0tPjxwYXRoIGQ9Ik0zNTMuNzcxLDExOS40ODUgQzM2Ni40MjIsMTM0LjczNSAzODcuNDYyLDE2MC4wOTggNDAxLjUyOCwxNzcuMDU1ICIgZmlsbD0ibm9uZSIgaWQ9IkEtdG8tQiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI0MDQuOTQ1LDE4MS4xNzQsNDAyLjI3NywxNzEuNjkzNCw0MDEuNzUyNSwxNzcuMzI1OSwzOTYuMTIsMTc2LjgwMTQsNDA0Ljk0NSwxODEuMTc0IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVtmNzUwNGVlYzdmYWM4ZWNhYTMxN2U4OTgxZjQ2OGM0N10KcmV2ZXJzZSBsaW5rIEMgdG8gQi0tPjxwYXRoIGQ9Ik0zMzkuODY3LDE5NS41IEMzNDkuNjg5LDE5NS41IDM1OS41MTEsMTk1LjUgMzY5LjMzNCwxOTUuNSAiIGZpbGw9Im5vbmUiIGlkPSJDLWJhY2t0by1CIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzNC43MywxOTUuNSwzNDMuNzMsMTk5LjUsMzM5LjczLDE5NS41LDM0My43MywxOTEuNSwzMzQuNzMsMTk1LjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzUxODM2N2MxZTdmYmFhMjE1ZmFkNzE1MDRhOTliZDRmXQpyZXZlcnNlIGxpbmsgQSB0byBDLS0+PHBhdGggZD0iTTMyOC45MjMsMTIzLjQ3IEMzMTUuMzExLDEzOS44NzkgMjk0LjkwNiwxNjQuNDc2IDI4Mi4wMzEsMTc5Ljk5NiAiIGZpbGw9Im5vbmUiIGlkPSJBLWJhY2t0by1DIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzMi4yMjksMTE5LjQ4NSwzMjMuNDA1LDEyMy44NTk2LDMyOS4wMzc0LDEyMy4zMzM4LDMyOS41NjMxLDEyOC45NjYyLDMzMi4yMjksMTE5LjQ4NSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bODUyODM1YjNhMjE3MDllNWM4YzZiZTI1YjY2MWU2YjNdCkBzdGFydHVtbA0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVEIiBhcyBBICNyZWQNCnVzZWNhc2UgIjxmb250IGNvbG9yPXdoaXRlPkdSRUVOIiBhcyBCICNncmVlbg0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVGQUNUT1IiIGFzIEMgI3B1cnBsZQ0KDQpub3RlIHRvcCBvZiBBIDogV3JpdGUgYSB0ZXN0IHRoYXQgZmFpbHMuDQpub3RlIGJvdHRvbSBvZiBCIDogTWFrZSB0aGUgY29kZSB3b3JrLg0Kbm90ZSBsZWZ0IG9mIEMgOiBFbGltaW5hdGUgcmVkdW5kYW5jeS4NCg0KDQpBIC1kb3duLT4gQg0KQiAtbGVmdC0+IEMNCkMgLXVwLT4gQQ0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNyhVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4=">
+
+<link rel="canonical" href="https://blog.yuheng.wang/2021/03/18/ut/">
+
+
+<script data-pjax id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-Hans'
+  };
+</script>
+
+  <title>朋友，你听说过单元测试吗 | wangyuheng's Blog</title>
+  
+
+
+  <script data-pjax>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <main class="main">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line toggle-line-first"></span>
+        <span class="toggle-line toggle-line-middle"></span>
+        <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">wangyuheng's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <section class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AF%AF%E5%8C%BA"><span class="nav-number">1.</span> <span class="nav-text">误区</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Q"><span class="nav-number">1.1.</span> <span class="nav-text">Q</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A"><span class="nav-number">1.2.</span> <span class="nav-text">A</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">目标</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Manual"><span class="nav-number">3.</span> <span class="nav-text">Manual</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%98%AF%E5%90%A6%E9%9C%80%E8%A6%81%E9%92%88%E5%AF%B9%E5%A4%96%E9%83%A8%E7%B3%BB%E7%BB%9F%E8%B0%83%E7%94%A8%E7%BC%96%E5%86%99%E5%8D%95%E6%B5%8B"><span class="nav-number">3.1.</span> <span class="nav-text">1. 是否需要针对外部系统调用编写单测?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E4%BE%9D%E8%B5%96%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F"><span class="nav-number">3.2.</span> <span class="nav-text">2. 依赖方法执行顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E7%94%A8%E4%BE%8B%E6%96%B9%E6%B3%95%E6%89%A7%E8%A1%8CN%E6%AC%A1"><span class="nav-number">3.3.</span> <span class="nav-text">3. 用例方法执行N次</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-%E7%94%A8%E4%BE%8B%E6%96%B9%E6%B3%95%E6%8A%9B%E5%87%BA%E6%9F%90%E4%B8%AA%E5%BC%82%E5%B8%B8"><span class="nav-number">3.4.</span> <span class="nav-text">4. 用例方法抛出某个异常</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-N%E4%B8%AA%E6%96%AD%E8%A8%80%E6%94%BE%E5%9C%A8%E4%B8%80%E7%BB%84"><span class="nav-number">3.5.</span> <span class="nav-text">5. N个断言放在一组</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-%E6%96%B9%E6%B3%95%E8%B6%85%E6%97%B6%E6%96%AD%E8%A8%80"><span class="nav-number">3.6.</span> <span class="nav-text">6. 方法超时断言</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-%E9%80%BB%E8%BE%91%E7%9B%B8%E5%90%8C%EF%BC%8C%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%90%8C"><span class="nav-number">3.7.</span> <span class="nav-text">7. 逻辑相同，数据不同</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-%E6%B5%8B%E8%AF%95servlet"><span class="nav-number">3.8.</span> <span class="nav-text">8. 测试servlet</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-%E4%BF%AE%E6%94%B9%E7%A7%81%E6%9C%89%E5%8F%98%E9%87%8F"><span class="nav-number">3.9.</span> <span class="nav-text">9. 修改私有变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-%E7%BB%93%E6%9E%9C%E5%8F%AF%E8%83%BD%E6%98%AFA%E6%88%96%E8%80%85B"><span class="nav-number">3.10.</span> <span class="nav-text">10. 结果可能是A或者B</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%81%E6%B4%BE"><span class="nav-number">4.</span> <span class="nav-text">流派</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-Spring"><span class="nav-number">4.1.</span> <span class="nav-text">0. Spring</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="nav-number">4.2.</span> <span class="nav-text">1. 持久化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Mock"><span class="nav-number">4.3.</span> <span class="nav-text">2. Mock</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">5.</span> <span class="nav-text">其他</span></a></li></ol></div>
+      </section>
+      <!--/noindex-->
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </section>
+        <div class="back-to-top motion-element">
+          <i class="fa fa-arrow-up"></i>
+          <span>0%</span>
+        </div>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </header>
+
+      
+  <div class="reading-progress-bar"></div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+      <div class="main-inner">
+        
+
+        <div class="content post posts-expand">
+          
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2021/03/18/ut/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          朋友，你听说过单元测试吗
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2021-03-18 19:49:22" itemprop="dateCreated datePublished" datetime="2021-03-18T19:49:22+08:00">2021-03-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86%E7%82%B9/" itemprop="url" rel="index"><span itemprop="name">知识点</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <blockquote>
+<p>以终为始，拆解任务</p>
+</blockquote>
+<span id="more"></span>
+
+<p>在软件研发过程中，小到一个函数，大到一个平台，都是为了达成某个目标。<br>在达成目标的过程中，分治思想可以帮助我们完成任务的拆解，以终为始则引导我们先确定验收标准，以便明确任务发布者和实施者的理解是一致的，并且保障整体进度可感知。<br>当然，这些只是思想，面对知易行难的困境，<strong>单元测试</strong>可以作为我们落地实践的一个<strong>抓手</strong>。</p>
+<p><strong>抓手: 一口锅，如果没有抓手，就会扣在那里。有了抓手，就可以甩出去。</strong></p>
+<h2 id="误区"><a href="#误区" class="headerlink" title="误区"></a>误区</h2><h3 id="Q"><a href="#Q" class="headerlink" title="Q"></a>Q</h3><ol>
+<li>谁来测试</li>
+<li>单测是额外的工作量</li>
+<li>代码不好测试</li>
+<li>先写代码还是先测试?</li>
+</ol>
+<h3 id="A"><a href="#A" class="headerlink" title="A"></a>A</h3><ul>
+<li>1&amp;2: 测试其实已经在潜移默化的进行了，贯穿整个开发过程。完成的功能一定是测试(运行)过的</li>
+<li>3&amp;4: 写好的代码不好补充单测，在编码之前先通过单测明确目标及完成任务拆解</li>
+</ul>
+<h2 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h2><p><strong>编写可测试的代码。</strong></p>
+<p>理想情况下，我们将任务拆分为独立验收的测试用例，此时运行一次，可以看到所有用例均为RED(Fail)。<br>完成任务的过程就是通过我们的代码实现，一个个将这些用例变绿(Success)。<br>同时，通过红绿比例，可以大致评估任务完成进度。<br>最重要的是，当我们完成一个base版本之后，因为有用例存在，我们可以放心的进行重构，只要保障所有用例都是GREEN即可。</p>
+<p>先完成base版本也是另一种任务拆解方式，通过小步快跑来降低复杂性。</p>
+<img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U2NyaXB0VHlwZT0iYXBwbGljYXRpb24vZWNtYXNjcmlwdCIgY29udGVudFN0eWxlVHlwZT0idGV4dC9jc3MiIGhlaWdodD0iMzA1cHgiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiIHN0eWxlPSJ3aWR0aDo1MDFweDtoZWlnaHQ6MzA1cHg7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA1MDEgMzA1IiB3aWR0aD0iNTAxcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzPjxmaWx0ZXIgaGVpZ2h0PSIzMDAlIiBpZD0iZjFqMjdhYmZya21qcXkiIHdpZHRoPSIzMDAlIiB4PSItMSIgeT0iLTEiPjxmZUdhdXNzaWFuQmx1ciByZXN1bHQ9ImJsdXJPdXQiIHN0ZERldmlhdGlvbj0iMi4wIi8+PGZlQ29sb3JNYXRyaXggaW49ImJsdXJPdXQiIHJlc3VsdD0iYmx1ck91dDIiIHR5cGU9Im1hdHJpeCIgdmFsdWVzPSIwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAwIDAgMCAuNCAwIi8+PGZlT2Zmc2V0IGR4PSI0LjAiIGR5PSI0LjAiIGluPSJibHVyT3V0MiIgcmVzdWx0PSJibHVyT3V0MyIvPjxmZUJsZW5kIGluPSJTb3VyY2VHcmFwaGljIiBpbjI9ImJsdXJPdXQzIiBtb2RlPSJub3JtYWwiLz48L2ZpbHRlcj48L2RlZnM+PGc+PGVsbGlwc2UgY3g9IjM0My4xOTg1IiBjeT0iMTA1LjUyMzYiIGZpbGw9IiNGRjAwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSIzMi42OTg1IiByeT0iMTQuNTIzNiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMzAiIHg9IjMyOC4xNzA5IiB5PSIxMDguMzgxIj5SRUQ8L3RleHQ+PGVsbGlwc2UgY3g9IjQxNi4xMjk5IiBjeT0iMTk1LjY1NjIiIGZpbGw9IiMwMDgwMDAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI0Ni42Mjk5IiByeT0iMTQuNjU2MiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDkiIHg9IjM4OC42Mjk5IiB5PSIxOTkuNDAzOCI+R1JFRU48L3RleHQ+PGVsbGlwc2UgY3g9IjI2OS44OTYzIiBjeT0iMTk1LjI3OTMiIGZpbGw9IiM4MDAwODAiIGZpbHRlcj0idXJsKCNmMWoyN2FiZnJrbWpxeSkiIHJ4PSI2NC4zOTYzIiByeT0iMTUuMjc5MyIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjU7Ii8+PHRleHQgZmlsbD0iI0ZGRkZGRiIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNzciIHg9IjIyOC4zOTYzIiB5PSIxOTkuMDI2OCI+UkVGQUNUT1I8L3RleHQ+PHBhdGggZD0iTTI2Myw2IEwyNjMsMzEuMTMyOCBBMCwwIDAgMCAwIDI2MywzMS4xMzI4IEwzMzksMzEuMTMyOCBMMzQzLDkwLjgxNCBMMzQ3LDMxLjEzMjggTDQyMywzMS4xMzI4IEEwLDAgMCAwIDAgNDIzLDMxLjEzMjggTDQyMywxNiBMNDEzLDYgTDI2Myw2IEEwLDAgMCAwIDAgMjYzLDYgIiBmaWxsPSIjRkJGQjc3IiBmaWx0ZXI9InVybCgjZjFqMjdhYmZya21qcXkpIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNDEzLDYgTDQxMywxNiBMNDIzLDE2IEw0MTMsNiAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzOSIgeD0iMjY5IiB5PSIyMy4wNjY5Ij5Xcml0ZSBhIHRlc3QgdGhhdCBmYWlscy48L3RleHQ+PHBhdGggZD0iTTMzOS41LDI3MSBMMzM5LjUsMjk2LjEzMjggQTAsMCAwIDAgMCAzMzkuNSwyOTYuMTMyOCBMNDkyLjUsMjk2LjEzMjggQTAsMCAwIDAgMCA0OTIuNSwyOTYuMTMyOCBMNDkyLjUsMjgxIEw0ODIuNSwyNzEgTDQyMCwyNzEgTDQxNiwyMTAuMzE3NCBMNDEyLDI3MSBMMzM5LjUsMjcxIEEwLDAgMCAwIDAgMzM5LjUsMjcxICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTQ4Mi41LDI3MSBMNDgyLjUsMjgxIEw0OTIuNSwyODEgTDQ4Mi41LDI3MSAiIGZpbGw9IiNGQkZCNzciIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzMiIgeD0iMzQ1LjUiIHk9IjI4OC4wNjY5Ij5NYWtlIHRoZSBjb2RlIHdvcmsuPC90ZXh0PjxwYXRoIGQ9Ik02LDE4MyBMNiwyMDguMTMyOCBBMCwwIDAgMCAwIDYsMjA4LjEzMjggTDE3MCwyMDguMTMyOCBBMCwwIDAgMCAwIDE3MCwyMDguMTMyOCBMMTcwLDIwMSBMMjA1LjIzLDE5NS41IEwxNzAsMTkzIEwxNzAsMTkzIEwxNjAsMTgzIEw2LDE4MyBBMCwwIDAgMCAwIDYsMTgzICIgZmlsbD0iI0ZCRkI3NyIgZmlsdGVyPSJ1cmwoI2YxajI3YWJmcmttanF5KSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBhdGggZD0iTTE2MCwxODMgTDE2MCwxOTMgTDE3MCwxOTMgTDE2MCwxODMgIiBmaWxsPSIjRkJGQjc3IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNDMiIHg9IjEyIiB5PSIyMDAuMDY2OSI+RWxpbWluYXRlIHJlZHVuZGFuY3kuPC90ZXh0PjwhLS1NRDU9WzVlMmVlYzYyYTUwYjI2YjZiMGRiNmMxMmU0ZWUyODljXQpsaW5rIEEgdG8gQi0tPjxwYXRoIGQ9Ik0zNTMuNzcxLDExOS40ODUgQzM2Ni40MjIsMTM0LjczNSAzODcuNDYyLDE2MC4wOTggNDAxLjUyOCwxNzcuMDU1ICIgZmlsbD0ibm9uZSIgaWQ9IkEtdG8tQiIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iI0E4MDAzNiIgcG9pbnRzPSI0MDQuOTQ1LDE4MS4xNzQsNDAyLjI3NywxNzEuNjkzNCw0MDEuNzUyNSwxNzcuMzI1OSwzOTYuMTIsMTc2LjgwMTQsNDA0Ljk0NSwxODEuMTc0IiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48IS0tTUQ1PVtmNzUwNGVlYzdmYWM4ZWNhYTMxN2U4OTgxZjQ2OGM0N10KcmV2ZXJzZSBsaW5rIEMgdG8gQi0tPjxwYXRoIGQ9Ik0zMzkuODY3LDE5NS41IEMzNDkuNjg5LDE5NS41IDM1OS41MTEsMTk1LjUgMzY5LjMzNCwxOTUuNSAiIGZpbGw9Im5vbmUiIGlkPSJDLWJhY2t0by1CIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzNC43MywxOTUuNSwzNDMuNzMsMTk5LjUsMzM5LjczLDE5NS41LDM0My43MywxOTEuNSwzMzQuNzMsMTk1LjUiIHN0eWxlPSJzdHJva2U6I0E4MDAzNjtzdHJva2Utd2lkdGg6MS4wOyIvPjwhLS1NRDU9WzUxODM2N2MxZTdmYmFhMjE1ZmFkNzE1MDRhOTliZDRmXQpyZXZlcnNlIGxpbmsgQSB0byBDLS0+PHBhdGggZD0iTTMyOC45MjMsMTIzLjQ3IEMzMTUuMzExLDEzOS44NzkgMjk0LjkwNiwxNjQuNDc2IDI4Mi4wMzEsMTc5Ljk5NiAiIGZpbGw9Im5vbmUiIGlkPSJBLWJhY2t0by1DIiBzdHlsZT0ic3Ryb2tlOiNBODAwMzY7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjQTgwMDM2IiBwb2ludHM9IjMzMi4yMjksMTE5LjQ4NSwzMjMuNDA1LDEyMy44NTk2LDMyOS4wMzc0LDEyMy4zMzM4LDMyOS41NjMxLDEyOC45NjYyLDMzMi4yMjksMTE5LjQ4NSIgc3R5bGU9InN0cm9rZTojQTgwMDM2O3N0cm9rZS13aWR0aDoxLjA7Ii8+PCEtLU1ENT1bODUyODM1YjNhMjE3MDllNWM4YzZiZTI1YjY2MWU2YjNdCkBzdGFydHVtbA0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVEIiBhcyBBICNyZWQNCnVzZWNhc2UgIjxmb250IGNvbG9yPXdoaXRlPkdSRUVOIiBhcyBCICNncmVlbg0KdXNlY2FzZSAiPGZvbnQgY29sb3I9d2hpdGU+UkVGQUNUT1IiIGFzIEMgI3B1cnBsZQ0KDQpub3RlIHRvcCBvZiBBIDogV3JpdGUgYSB0ZXN0IHRoYXQgZmFpbHMuDQpub3RlIGJvdHRvbSBvZiBCIDogTWFrZSB0aGUgY29kZSB3b3JrLg0Kbm90ZSBsZWZ0IG9mIEMgOiBFbGltaW5hdGUgcmVkdW5kYW5jeS4NCg0KDQpBIC1kb3duLT4gQg0KQiAtbGVmdC0+IEMNCkMgLXVwLT4gQQ0KQGVuZHVtbA0KClBsYW50VU1MIHZlcnNpb24gMS4yMDIxLjNiZXRhNyhVbmtub3duIGNvbXBpbGUgdGltZSkKKEdQTCBzb3VyY2UgZGlzdHJpYnV0aW9uKQpKYXZhIFJ1bnRpbWU6IEphdmEoVE0pIFNFIFJ1bnRpbWUgRW52aXJvbm1lbnQKSlZNOiBKYXZhIEhvdFNwb3QoVE0pIDY0LUJpdCBTZXJ2ZXIgVk0KRGVmYXVsdCBFbmNvZGluZzogVVRGLTgKTGFuZ3VhZ2U6IGVuCkNvdW50cnk6IFVTCi0tPjwvZz48L3N2Zz4='>
+
+<h2 id="Manual"><a href="#Manual" class="headerlink" title="Manual"></a>Manual</h2><p>测试用例需要一些经验技巧，列举下列非主流场景代码作为参考。</p>
+<h3 id="1-是否需要针对外部系统调用编写单测"><a href="#1-是否需要针对外部系统调用编写单测" class="headerlink" title="1. 是否需要针对外部系统调用编写单测?"></a>1. 是否需要针对外部系统调用编写单测?</h3><p>不需要。各系统内部保障鲁棒性，调用方依照接口约定进行mock。<br>开发调试阶段，可以编写 debug 代码。 通过<code>@Ignore</code> ｜ <code>@Disabled</code> 忽略执行。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Ignore</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OuterAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">request_for_debug</span><span class="params">()</span></span>&#123;</span><br><span class="line">        String result = <span class="keyword">new</span> RestTemplate().getForObject(<span class="string">&quot;http://www.baidu.com&quot;</span>, String.class);</span><br><span class="line">        assertNull(result);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-依赖方法执行顺序"><a href="#2-依赖方法执行顺序" class="headerlink" title="2. 依赖方法执行顺序"></a>2. 依赖方法执行顺序</h3><p><strong>破坏了独立测试原则！</strong>每个测试case应该彼此独立运行测试，不应该存在顺序依赖。</p>
+<p>junit5提供<code>@TestMethodOrder</code>用于控制测试方法执行顺序。包括</p>
+<ol>
+<li><code>OrderAnnotation</code>: 通过<code>Order</code>指定方法顺序</li>
+<li><code>MethodName</code>: 方法名称字母顺序</li>
+<li><code>Random</code>: 随机。可能每次运行不一致，不可预期</li>
+<li><code>DisplayName</code>: <code>@DisplayName</code>指定显示名称字母顺序</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.TestMethodOrder(org.junit.jupiter.api.MethodOrderer.OrderAnnotation.class)</span><br><span class="line"><span class="comment">//@org.junit.jupiter.api.TestMethodOrder(MethodOrderer.Random.class)</span></span><br><span class="line"><span class="comment">//@org.junit.jupiter.api.TestMethodOrder(MethodOrderer.MethodName.class)</span></span><br><span class="line"><span class="comment">//@org.junit.jupiter.api.TestMethodOrder(MethodOrderer.DisplayName.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestCaseRequireOrder</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.DisplayName(<span class="string">&quot;a&quot;</span>)</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Order(<span class="number">3</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">b</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;b&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.DisplayName(<span class="string">&quot;b&quot;</span>)</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Order(<span class="number">1</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">c</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;c&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.DisplayName(<span class="string">&quot;c&quot;</span>)</span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Order(<span class="number">2</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">a</span><span class="params">()</span></span>&#123;</span><br><span class="line">        System.out.println(<span class="string">&quot;a&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>junit4中为 <code>@FixMethodOrder(MethodSorters.NAME_ASCENDING)</code></p>
+<h3 id="3-用例方法执行N次"><a href="#3-用例方法执行N次" class="headerlink" title="3. 用例方法执行N次"></a>3. 用例方法执行N次</h3><p><strong>破坏了可重复性原则！</strong></p>
+<p><code>@RepeatedTest</code>可以指定方法执行次数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.RepeatedTest(value = <span class="number">3</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">repeat_print</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    System.out.println(<span class="keyword">new</span> java.util.Random().nextInt());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-用例方法抛出某个异常"><a href="#4-用例方法抛出某个异常" class="headerlink" title="4. 用例方法抛出某个异常"></a>4. 用例方法抛出某个异常</h3><p>junit5中<code>Assertions</code>提供了异常断言</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_throw_exception</span><span class="params">()</span></span>&#123;</span><br><span class="line">    Assertions.assertDoesNotThrow(()-&gt;&#123;Arrays.asList(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>).get(<span class="number">1</span>);&#125;);</span><br><span class="line">    Assertions.assertThrows(IndexOutOfBoundsException.class, ()-&gt;&#123;Arrays.asList(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>).get(<span class="number">10</span>);&#125;, <span class="string">&quot;should over bounds&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>junit4中通过<code>@Rule</code>配合<code>@ExpectedException</code>完成异常断言</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.Rule</span><br><span class="line"><span class="keyword">public</span> org.junit.rules.ExpectedException thrown = org.junit.rules.ExpectedException.none();</span><br><span class="line"></span><br><span class="line"><span class="meta">@org</span>.junit.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_throw_exception</span><span class="params">()</span></span>&#123;</span><br><span class="line">    thrown.expect(IndexOutOfBoundsException.class);</span><br><span class="line">    Arrays.asList(<span class="string">&quot;a&quot;</span>,<span class="string">&quot;b&quot;</span>).get(<span class="number">10</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-N个断言放在一组"><a href="#5-N个断言放在一组" class="headerlink" title="5. N个断言放在一组"></a>5. N个断言放在一组</h3><p>通过<code>Assertions.assertAll</code>将语义相同的多个断言聚合成一组，并指定heading。因为<code>assertAll</code>也是一种<code>Assertions</code>，所以可以嵌套判断</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">assert_collect</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    List&lt;String&gt; fields = Arrays.asList(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>);</span><br><span class="line">    Assertions.assertAll(<span class="string">&quot;field check&quot;</span>,</span><br><span class="line">            () -&gt; Assertions.assertTrue(fields.size() &gt; <span class="number">1</span>),</span><br><span class="line">            () -&gt; Assertions.assertAll(<span class="string">&quot;id check&quot;</span>,</span><br><span class="line">                    () -&gt; Assertions.assertTrue(fields.contains(<span class="string">&quot;id&quot;</span>)),</span><br><span class="line">                    () -&gt; Assertions.assertEquals(<span class="string">&quot;id&quot;</span>, fields.get(<span class="number">1</span>))</span><br><span class="line">            )</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一种聚合方式则是通过内嵌测试类 <code>Nested</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> List&lt;String&gt; fields = Arrays.asList(<span class="string">&quot;id&quot;</span>, <span class="string">&quot;name&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_not_empty</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Assertions.assertTrue(fields.size() &gt; <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Nested</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IdChecker</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_contains_id</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Assertions.assertTrue(fields.contains(<span class="string">&quot;id&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">id_by_first</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Assertions.assertEquals(<span class="string">&quot;id&quot;</span>, fields.get(<span class="number">0</span>));</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-方法超时断言"><a href="#6-方法超时断言" class="headerlink" title="6. 方法超时断言"></a>6. 方法超时断言</h3><p><code>assertTimeout</code>和<code>assertTimeoutPreemptively</code>的区别是：<code>assertTimeout</code>会等待方法执行运行结束，而<code>assertTimeoutPreemptively</code>会在超过预期运行时长后立即结束。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_timeout</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    Assertions.assertTimeout(Duration.ofSeconds(<span class="number">1</span>), () -&gt; Thread.sleep(<span class="number">2000</span>), <span class="string">&quot;method execute time over 2 seconds&quot;</span>);</span><br><span class="line">    Assertions.assertTimeoutPreemptively(Duration.ofSeconds(<span class="number">1</span>), () -&gt; Thread.sleep(<span class="number">20000</span>), <span class="string">&quot;method execute time over 2 seconds&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-逻辑相同，数据不同"><a href="#7-逻辑相同，数据不同" class="headerlink" title="7. 逻辑相同，数据不同"></a>7. 逻辑相同，数据不同</h3><p><code>@ParameterizedTest</code> 配合 <code>xxxSource</code> 完成参数化测试。Source包括</p>
+<ol>
+<li>CsvSource: csv格式数据</li>
+<li>CsvFileSource: 远程csv文件</li>
+<li>ValueSource: 基本类型</li>
+<li>EnumSource: 枚举</li>
+<li>MethodSource: 反射调用静态方法，需要满足<ol>
+<li>static 方法</li>
+<li>无入参</li>
+<li>返回值可迭代</li>
+</ol>
+</li>
+<li>ArgumentSource: 自定义参数扩展</li>
+</ol>
+<p>CsvSource 使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.params.ParameterizedTest</span><br><span class="line"><span class="meta">@org</span>.junit.jupiter.params.provider.CsvSource(&#123;<span class="string">&quot;1,1,2&quot;</span>, <span class="string">&quot;2,4,6&quot;</span>, <span class="string">&quot;3,3,6&quot;</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sum</span><span class="params">(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> total)</span> </span>&#123;</span><br><span class="line">    Assertions.assertEquals(a + b, total);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>MethodSource 使用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.params.ParameterizedTest</span><br><span class="line"><span class="meta">@org</span>.junit.jupiter.params.provider.MethodSource(&#123;<span class="string">&quot;a&quot;</span>, <span class="string">&quot;b&quot;</span>, <span class="string">&quot;c&quot;</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">even_check</span><span class="params">(<span class="keyword">int</span> a)</span> </span>&#123;</span><br><span class="line">    Assertions.assertEquals(<span class="number">0</span>, a % <span class="number">2</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> Stream&lt;Integer&gt; <span class="title">a</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Stream.of(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> List&lt;Integer&gt; <span class="title">b</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> Arrays.asList(<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span>[] c() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>&#125;;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>ArgumentSource 使用。背景为测试graphql生成多个java文件的代码生成器。</p>
+<p>需要实现 <code>ArgumentsProvider</code> 并提供相关Anno及Bean作为信息载体</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CodeGenResourceProvider</span> <span class="keyword">implements</span> <span class="title">ArgumentsProvider</span>, <span class="title">AnnotationConsumer</span>&lt;<span class="title">CodeGenResources</span>&gt; </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> List&lt;CodeGenResourceArgument&gt; arguments = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">accept</span><span class="params">(CodeGenResources codeGenResources)</span> </span>&#123;</span><br><span class="line">        Arrays.stream(codeGenResources.value())</span><br><span class="line">                .map(it -&gt; <span class="keyword">new</span> CodeGenResourceArgument(it.basePackage(),</span><br><span class="line">                        it.generatorClazz(),</span><br><span class="line">                        it.sourceGraphqlSchemaPath(),</span><br><span class="line">                        it.generatedJavaCodePaths()))</span><br><span class="line">                .forEach(it -&gt; arguments.add(it));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> Stream&lt;? extends Arguments&gt; provideArguments(ExtensionContext context) <span class="keyword">throws</span> Exception &#123;</span><br><span class="line">        <span class="keyword">return</span> arguments.stream().map(Arguments::of);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>效果</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@ParameterizedTest</span></span><br><span class="line"><span class="meta">@CodeGenResources(&#123;</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = DataFetcherGenerator.class, sourceGraphqlSchemaPath = &quot;data_fetcher_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;data_fetcher_test_ProjectDataFetcher.java&quot;, &quot;data_fetcher_test_MutationDataFetcher.java&quot;, &quot;data_fetcher_test_QueryDataFetcher.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = DictionaryGenerator.class, sourceGraphqlSchemaPath = &quot;dictionary_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;dictionary_test_E1.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = InputGenerator.class, sourceGraphqlSchemaPath = &quot;input_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;input_test_I1.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = RepositoryGenerator.class, sourceGraphqlSchemaPath = &quot;repository_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;repository_test_ProjectRepository.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = TypeGenerator.class, sourceGraphqlSchemaPath = &quot;type_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;type_test_Milestone.java&quot;, &quot;type_test_Mutation.java&quot;, &quot;type_test_Project.java&quot;, &quot;type_test_Query.java&quot;, &quot;type_test_User.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = TypeGenerator.class, sourceGraphqlSchemaPath = &quot;type_union_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;type_union_test_Milestone.java&quot;, &quot;type_union_test_Entity.java&quot;, &quot;type_union_test_Project.java&quot;&#125;),</span></span><br><span class="line"><span class="meta">        @CodeGenResource(generatorClazz = TypeGenerator.class, sourceGraphqlSchemaPath = &quot;type_interface_test.graphqls&quot;, generatedJavaCodePaths = &#123;&quot;type_interface_test_Milestone.java&quot;, &quot;type_interface_test_Entity.java&quot;, &quot;type_interface_test_Project.java&quot;&#125;)</span></span><br><span class="line"><span class="meta">&#125;)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">gen_e2e_test</span><span class="params">(CodeGenResourceArgument argument)</span> <span class="keyword">throws</span> NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException, IOException </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-测试servlet"><a href="#8-测试servlet" class="headerlink" title="8. 测试servlet"></a>8. 测试servlet</h3><p>spring-test提供了相关mock类，包括request、response、cookie、MockMultipartFile等，可以查看<code>org.springframework.mock.web</code>包下的class</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Test</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">should_return_true_when_not_enable_and_header_auth_existed</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    MockHttpServletRequest request = <span class="keyword">new</span> MockHttpServletRequest();</span><br><span class="line">    MockHttpServletResponse response = <span class="keyword">new</span> MockHttpServletResponse();</span><br><span class="line">    request.addHeader(<span class="string">&quot;Authorization&quot;</span>, <span class="string">&quot;xxxx&quot;</span>);</span><br><span class="line">    assertTrue(loginInterceptor.preHandle(request, response, <span class="keyword">null</span>));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="9-修改私有变量"><a href="#9-修改私有变量" class="headerlink" title="9. 修改私有变量"></a>9. 修改私有变量</h3><p>可以通过反射完成。spring-test提供了相关封装工具类<code>ReflectionTestUtils</code></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set_private_field</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        A a = <span class="keyword">new</span> A();</span><br><span class="line">org.springframework.test.util.ReflectionTestUtils.setField(a,<span class="string">&quot;b&quot;</span>, <span class="string">&quot;123&quot;</span>);</span><br><span class="line">        Assertions.assertEquals(<span class="string">&quot;123&quot;</span>,a.getB());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">A</span> </span>&#123;</span><br><span class="line">        <span class="keyword">private</span> String b;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> String <span class="title">getB</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            <span class="keyword">return</span> b;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-结果可能是A或者B"><a href="#10-结果可能是A或者B" class="headerlink" title="10. 结果可能是A或者B"></a>10. 结果可能是A或者B</h3><p>借助<code>hamcrest</code>提供的<code>anyOf</code>or<code>oneOf</code>完成断言。<br>除此之外，<code>hamcrest</code>还提供了大量声明式的<code>Matchers</code>，提升用例的阅读性。比如: <code>hasProperty</code>、<code>greaterThanOrEqualTo</code>、<code>equalToIgnoringWhiteSpace</code> 等</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@org</span>.junit.jupiter.api.Test</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">set_private_field</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    A a = <span class="keyword">new</span> A();</span><br><span class="line">    ReflectionTestUtils.setField(a,<span class="string">&quot;b&quot;</span>, <span class="string">&quot;123&quot;</span>);</span><br><span class="line">    org.hamcrest.MatcherAssert.assertThat(a.getB(), isOneOf(<span class="string">&quot;123&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>));</span><br><span class="line">    org.hamcrest.MatcherAssert.assertThat(a.getB(), is(oneOf(<span class="string">&quot;123&quot;</span>, <span class="string">&quot;2&quot;</span>, <span class="string">&quot;3&quot;</span>)));</span><br><span class="line">    org.hamcrest.MatcherAssert.assertThat(a.getB(), anyOf(equalTo(<span class="string">&quot;123&quot;</span>), equalTo(<span class="string">&quot;2&quot;</span>), equalTo(<span class="string">&quot;3&quot;</span>)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="流派"><a href="#流派" class="headerlink" title="流派"></a>流派</h2><p>框架体系复杂，但是文档完善。不展开描述，可以直接查阅相关使用。</p>
+<h3 id="0-Spring"><a href="#0-Spring" class="headerlink" title="0. Spring"></a>0. Spring</h3><p>通过<code>@SpringBootTest</code>启动Spring容器、完成组件注册</p>
+<h3 id="1-持久化"><a href="#1-持久化" class="headerlink" title="1. 持久化"></a>1. 持久化</h3><p>也是反原则的需求。一般通过embedded数据库完成。</p>
+<ol>
+<li>redis -&gt; it.ozimov.embedded-redis</li>
+<li>mysql -&gt; com.h2database.h2</li>
+<li>mongodb -&gt; de.flapdoodle.embed.mongo</li>
+<li>http -&gt; com.github.dreamhead.moco-core 启动一个http服务，基于json配置response body &amp; header 等。作为非<code>RestTemplate</code> client无法使用<code>MockRestServiceServer</code>的补充</li>
+</ol>
+<h3 id="2-Mock"><a href="#2-Mock" class="headerlink" title="2. Mock"></a>2. Mock</h3><p>推荐使用的方案。对方法及返回值进行mock，避免对要测试的方法逻辑产生干扰。</p>
+<ol>
+<li>mockito</li>
+<li>PowerMock</li>
+</ol>
+<p>PowerMock 对 static、private方法进行了增强。 如：统计私有方法被调用次数</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(PowerMockRunner.class)</span></span><br><span class="line"><span class="meta">@PrepareForTest(BizService.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> 私有方法调用 </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">count_handle_private_method_times</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        BizService bizService = PowerMockito.spy(<span class="keyword">new</span> BizService(PowerMockito.mock(CommonRepo.class)));</span><br><span class="line">        bizService.biz(<span class="number">10</span>);</span><br><span class="line">        PowerMockito.verifyPrivate(bizService, <span class="keyword">new</span> Times(<span class="number">10</span>)).invoke(<span class="string">&quot;secret&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">BizService</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">private</span> CommonRepo commonRepo;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="title">BizService</span><span class="params">(CommonRepo commonRepo)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">this</span>.commonRepo = commonRepo;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">biz</span><span class="params">(<span class="keyword">int</span> times)</span> </span>&#123;</span><br><span class="line">            <span class="keyword">while</span> (times-- &gt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">this</span>.secret();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">secret</span><span class="params">()</span> </span>&#123;</span><br><span class="line">            System.out.println(<span class="string">&quot;do private&quot;</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">CommonRepo</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>有没有想在下次迭代中，尝试先写一个<code>@Test</code>？</p>
+
+    </div>
+
+    
+    
+    
+        
+
+  <div class="followme">
+    <p>Welcome to my other publishing channels</p>
+
+    <div class="social-list">
+
+        <div class="social-item">
+          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </a>
+        </div>
+    </div>
+  </div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tagcloud/%E7%9F%A5%E8%AF%86%E7%82%B9/" rel="tag"># 知识点</a>
+              <a href="/tagcloud/%E6%B5%8B%E8%AF%95/" rel="tag"># 测试</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2021/03/17/tech-design-review/" rel="prev" title="领导说做个设计评审吧。">
+      <i class="fa fa-chevron-left"></i> 领导说做个设计评审吧。
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+        </div>
+        
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
+  </div>
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.main-inner',
+    '.post-toc-wrap',
+    '.languages',
+    '#pjax'
+  ],
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+document.addEventListener('pjax:success', () => {
+  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.subMenu)
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  const hasTOC = document.querySelector('.post-toc');
+  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
+  if (hasTOC) {
+    document.querySelector('.sidebar-nav-toc').click();
+  } else {
+    document.querySelector('.sidebar-nav-overview').click();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <div id="pjax">
+  
+
+  
+  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
+  <script>
+      window.addEventListener('load', () => {
+      quicklink.listen({
+        timeout : 3000,
+        priority: true,
+        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2021/03/18/ut/',]
+      });
+      });
+  </script>
+
+    </div>
+</body>
+</html>

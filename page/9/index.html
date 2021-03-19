@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,94 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/06/29/160629-skill-javascript-script-param/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/06/29/160629-skill-javascript-script-param/" class="post-title-link" itemprop="url">js获取script参数</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-06-29 17:12:16" itemprop="dateCreated datePublished" datetime="2016-06-29T17:12:16+08:00">2016-06-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/skill/" itemprop="url" rel="index"><span itemprop="name">skill</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>js插件挡住了页面元素，希望自定义js插件显示的布局位置。</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>在<code>&lt;script&gt;</code>引入js插件时传递layout布局参数。</p>
+<h3 id="1-通过url参数方式获取"><a href="#1-通过url参数方式获取" class="headerlink" title="1. 通过url参数方式获取"></a>1. 通过url参数方式获取</h3><p>js可以获取url中的参数</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(location.href.indexOf(<span class="string">&quot;?&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> params = location.href.substr(location.href.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">		<span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">		<span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;key=&quot;</span>+key+<span class="string">&quot; value=&quot;</span>+value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理，可以先获取script标签中的src属性，再通过上面的方法，获取layout参数</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在js插件文件中通过如下代码获取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> url = script.getAttribute(<span class="string">&quot;src&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> params = url.substr(url.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&quot;layout&quot;</span> == key) &#123;</span><br><span class="line">            	layout = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过自定义属性获取"><a href="#2-通过自定义属性获取" class="headerlink" title="2. 通过自定义属性获取"></a>2. 通过自定义属性获取</h3><p>通过上面的方法，可以想到既然能获取src属性，那么也可以自定义布局属性，并通过getAttribute()方法获取。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在js插件文件中通过如下代码获取</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span> &amp;&amp; script.getAttribute(<span class="string">&quot;layout&quot;</span>)) &#123;</span><br><span class="line">        layout = script.getAttribute(<span class="string">&quot;layout&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过从代码上来看，第二种方法更简单，而问过几个朋友，都更喜欢第二种配置方式，所以在这里推荐使用自定义属性获取属性。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1338,96 +1426,6 @@ update user set Host = &#39;%&#39; where User=&#39;root&#39;;
         <h2 class="post-title" itemprop="name headline">
           
             <a href="/2016/05/19/centos-nginx/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装Nginx</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-05-19 13:21:49" itemprop="dateCreated datePublished" datetime="2016-05-19T13:21:49+08:00">2016-05-19</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
-<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
-</code></pre>
-<p>通过命令打开文档，输入如下内容</p>
-<blockquote>
-<p>[nginx]<br>name=nginx repo<br>baseurl=<a target="_blank" rel="noopener" href="http://nginx.org/packages/centos/7/$basearch/">http://nginx.org/packages/centos/7/$basearch/</a><br>gpgcheck=0<br>enabled=1</p>
-</blockquote>
-<p>其中centos表明当前系统，7表示系统版本。</p>
-<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
-</code></pre>
-<p>安装程序执行完毕后，可以通过</p>
-<pre><code>nginx -v
-</code></pre>
-<p>查看安装nginx版本，并确认程序安装成功。</p>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
-</code></pre>
-<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a target="_blank" rel="noopener" href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
-</code></pre>
-<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
-<pre><code>service nginx restart
-</code></pre>
-<p>刷新浏览器，可以看见修改以生效。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/19/linux-nginx/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/05/19/linux-nginx/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装Nginx</a>
         </h2>
 
         <div class="post-meta">

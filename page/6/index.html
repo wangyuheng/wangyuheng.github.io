@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,188 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/24/painter-6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/24/painter-6/" class="post-title-link" itemprop="url">绘画板 06——铅笔与自定义鼠标图标</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-24 17:59:04" itemprop="dateCreated datePublished" datetime="2016-09-24T17:59:04+08:00">2016-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="自定义鼠标图标"><a href="#自定义鼠标图标" class="headerlink" title="自定义鼠标图标"></a>自定义鼠标图标</h3><p>可以通过css设置cursor的方式指定鼠标图标样式</p>
+<p>| default | 默认光标（通常是一个箭头） |<br>| auto | 默认。浏览器设置的光标。 |<br>| crosshair | 光标呈现为十字线。 |<br>| pointer | 光标呈现为指示链接的指针（一只手） |<br>| move | 此光标指示某对象可被移动。 |<br>| e-resize | 此光标指示矩形框的边缘可被向右（东）移动。 |<br>| ne-resize | 此光标指示矩形框的边缘可被向上及向右移动（北/东）。 |<br>| nw-resize | 此光标指示矩形框的边缘可被向上及向左移动（北/西）。 |<br>| n-resize | 此光标指示矩形框的边缘可被向上（北）移动。 |<br>| se-resize | 此光标指示矩形框的边缘可被向下及向右移动（南/东）。 |<br>| sw-resize | 此光标指示矩形框的边缘可被向下及向左移动（南/西）。 |<br>| s-resize | 此光标指示矩形框的边缘可被向下移动（南）。 |<br>| w-resize | 此光标指示矩形框的边缘可被向左移动（西）。 |<br>| text | 此光标指示文本。 |<br>| wait | 此光标指示程序正忙（通常是一只表或沙漏）。 |<br>| help | 此光标指示可用的帮助（通常是一个问号或一个气球）。 |</p>
+<p>也可以通过url指定自定义的图标样式，通常为.cur文件。</p>
+<pre><code>$(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+</code></pre>
+<p>auto为指定图标不存在时，鼠标显示的样式。</p>
+<h3 id="铅笔"><a href="#铅笔" class="headerlink" title="铅笔"></a>铅笔</h3><p>通过svg的path属性，可以绘制出鼠标移动轨迹，实现铅笔画图效果。svgjs提供了path()函数，值为</p>
+<ul>
+<li>  M = moveto</li>
+<li>  L = lineto</li>
+<li>  H = horizontal lineto</li>
+<li>  V = vertical lineto</li>
+<li>  C = curveto</li>
+<li>  S = smooth curveto</li>
+<li>  Q = quadratic Belzier curve</li>
+<li>  T = smooth quadratic Belzier curveto</li>
+<li>  A = elliptical Arc</li>
+<li>  Z = closepath</li>
+</ul>
+<p>所以mousedown时做 M+坐标点，mousemove时，为L+坐标点，可以指定不同的路径数据以达到不同的绘制效果，所以在构造函数中增加了一个prefix字段。</p>
+<p>pencil.js 代码如下</p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    var plot = null;
+    var plotPrefix = null;
+    var defaultPlotPrefix = &#39;L&#39;;
+
+    function mousedown(event) &#123;
+        console.log(&#39;pencil mousedown&#39;);
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        plot = &#39;M&#39; + startPoint.x + &#39; &#39; + startPoint.y;
+        element = parent.path(plot).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+            width: GlobalStatus.getLineSize(),
+            color: GlobalStatus.getFontColor()
+        &#125;);
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;pencil mousemove&#39;);
+        if (drawing) &#123;
+            var startPoint = svgDoc.transformPoint(event);
+            console.log(plot);
+            plot += plotPrefix + startPoint.x + &#39; &#39; + startPoint.y;
+            element.plot(plot);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;pencil mouseup &#39; + element);
+        drawing = false;
+        if (element.attr(&quot;d&quot;).split(plotPrefix).length &gt; 2) &#123;
+            element.pickable();
+        &#125;
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Pencil = function(parentEle, prefix) &#123;
+        parent = parentEle;
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        plotPrefix = prefix || defaultPlotPrefix;
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Pencil = Pencil;
+
+&#125;)();
+</code></pre>
+<p>在首页监听铅笔的点击事件，并在页面加载完成后默认调用 $(“#tool_pencil”).click();</p>
+<pre><code>    $(&quot;#tool_pencil&quot;).on(&quot;click&quot;, function() &#123;
+        resetCurrentDrawTool();
+        currentDrawTool = new DrawTool.Pencil(svgDoc);
+        $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+    &#125;);
+    
+</code></pre>
+<p>加了一个彩蛋，监听铅笔按钮的双击事件，可以绘制映射线。</p>
+<pre><code>    $(&quot;#tool_pencil&quot;).on(&quot;dblclick&quot;, function() &#123;
+        resetCurrentDrawTool();
+        currentDrawTool = new DrawTool.Pencil(svgDoc, &#39;T&#39;);
+        $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;url(style/img/cur/tool_pencil.cur), auto&quot;);
+    &#125;);
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>在Tools的listener方法中，都加了一个return false; 避免事件向上传递。</p>
+<p>在模拟的下拉列表lizeSize中，通过属性data-line-size记录width值，在GlobalStatus.getLineSize()中调用。</p>
+<p>将已选择元素抽象到在GlobalStatus中，并提供管理方法。</p>
+<pre><code>pickedElementList: [],
+pushPicked: function(o)&#123;
+    return this.pickedElementList.push(o);
+&#125;,
+removePicked: function(o) &#123;
+    return this.pickedElementList.remove(o);
+&#125;,
+getPickeds: function()&#123;
+    return this.pickedElementList;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1431,90 +1613,6 @@ Tool.Rect(svgDraw);
 <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>通过rpm安装jdk时提示<br><strong>package package_name is intended for different architec</strong></p>
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>安装包和当前操作系统不符，常见在x86 32位系统安装64位软件包</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>下载安装对应软件包</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/07/bug-linux-outgoing-access/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/07/bug-linux-outgoing-access/" class="post-title-link" itemprop="url">CentOS7 tomcat启动后外网无法访问</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-07 09:16:43" itemprop="dateCreated datePublished" datetime="2016-09-07T09:16:43+08:00">2016-09-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>CentOS7 tomcat启动后外网无法访问</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>网络防火墙</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>关闭防火墙</p>
-<p>centos 7</p>
-<p>停止</p>
-<pre><code>systemctl stop firewalld.service 
-</code></pre>
-<p>禁用</p>
-<pre><code>systemctl disable firewalld.service 
-</code></pre>
-<p>之前的版本</p>
-<p>停止</p>
-<pre><code>service iptables stop
-</code></pre>
-<p>禁用</p>
-<pre><code>chkconfig iptables off
-</code></pre>
 
       
     </div>

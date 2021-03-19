@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">104</span>
+          <span class="site-state-item-count">105</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">94</span>
+        <span class="site-state-item-count">96</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,101 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/15/js-encode-html-tags/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/12/15/js-encode-html-tags/" class="post-title-link" itemprop="url">JS实现HTML标签转义及反转义</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-15 13:54:38" itemprop="dateCreated datePublished" datetime="2015-12-15T13:54:38+08:00">2015-12-15</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>简单说一下业务场景，前台用户通过input输入内容，在离开焦点时，将内容在div中显示。<br>这时遇到一个问题，如果用户输入了html标签，则在div显示中，标签被解析。<br>由于是纯前端操作，不涉及后端，因此需要通过js对输入内容进行转义。</p>
+<p>这里提供一个非常简单有效的转义方案，利用了<strong>innerHTML</strong>和<strong>innerText</strong><br><em>注：火狐不支持innerText，需要使用</em> <strong>textContent</strong> <em>属性，而IE早期版本不支持此属性，为了同时兼容IE及火狐，需要进行判断操作.</em></p>
+<p>因为<strong>innerText（textContent）</strong>会获取纯文本内容，忽略html节点标签，而<strong>innerHTML</strong>会显示标签内容，<br>所以我们先将需转义的内容赋值给<strong>innerText（textContent）</strong>，再获取它的<strong>innerHTML</strong>属性，这时获取到的就是转义后文本内容。<br>代码如下：</p>
+<pre><code>function HTMLEncode(html) &#123;
+    var temp = document.createElement(&quot;div&quot;);
+    (temp.textContent != null) ? (temp.textContent = html) : (temp.innerText = html);
+    var output = temp.innerHTML;
+    temp = null;
+    return output;
+&#125;
+
+var tagText = &quot;&lt;p&gt;&lt;b&gt;123&amp;456&lt;/b&gt;&lt;/p&gt;&quot;;
+console.log(HTMLEncode(tagText));//&amp;lt;p&amp;gt;&amp;lt;b&amp;gt;123&amp;amp;456&amp;lt;/b&amp;gt;&amp;lt;/p&amp;gt; 
+</code></pre>
+<p>通过测试结果，可以看到html标签及&amp;符都被转义后保存。<br>同理，反转义的方法为先将转义文本赋值给<strong>innerHTML</strong>，然后通过<strong>innerText（textContent）</strong>获取转义前的文本内容</p>
+<pre><code>function HTMLDecode(text) &#123; 
+    var temp = document.createElement(&quot;div&quot;); 
+    temp.innerHTML = text; 
+    var output = temp.innerText || temp.textContent; 
+    temp = null; 
+    return output; 
+&#125; 
+var tagText = &quot;&lt;p&gt;&lt;b&gt;123&amp;456&lt;/b&gt;&lt;/p&gt;&quot;;
+var encodeText = HTMLEncode(tagText);
+console.log(encodeText);//&amp;lt;p&amp;gt;&amp;lt;b&amp;gt;123&amp;amp;456&amp;lt;/b&amp;gt;&amp;lt;/p&amp;gt;
+console.log(HTMLDecode(encodeText)); //&lt;p&gt;&lt;b&gt;123&amp;456&lt;/b&gt;&lt;/p&gt; 
+</code></pre>
+<p><strong>Best regards</strong><br><strong>Wang Yuheng</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
