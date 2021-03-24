@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">98</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,103 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2017/10/28/springboot-swagger/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2017/10/28/springboot-swagger/" class="post-title-link" itemprop="url">springboot+swagger 自动生成 restful 文档及在线调试</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2017-10-28 21:33:24" itemprop="dateCreated datePublished" datetime="2017-10-28T21:33:24+08:00">2017-10-28</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="spring-boot-swagger-starter"><a href="#spring-boot-swagger-starter" class="headerlink" title="spring-boot-swagger-starter"></a>spring-boot-swagger-starter</h3><p>本文项目已发布到github，欢迎fork点赞。<br><a target="_blank" rel="noopener" href="https://github.com/wangyuheng/spring-boot-swagger-starter">https://github.com/wangyuheng/spring-boot-swagger-starter</a><br>已发布maven中央仓库，欢迎使用。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.wangyuheng<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h3><p>swagger可以快速生成restful接口文档，并提供在线调试功能。通过springboot开发微服务时，swagger文档可以极大的提高协作效率。</p>
+<h3 id="springfox"><a href="#springfox" class="headerlink" title="springfox"></a>springfox</h3><p><strong><a target="_blank" rel="noopener" href="https://github.com/springfox/springfox">springfox</a></strong> 将swagger整合到spring</p>
+<h2 id="定制starter"><a href="#定制starter" class="headerlink" title="定制starter"></a>定制starter</h2><h3 id="1-定义swagger属性"><a href="#1-定义swagger属性" class="headerlink" title="1. 定义swagger属性"></a>1. 定义swagger属性</h3><p>用于文档页面显示及接口扫描路径，并使用@ConfigurationProperties读取属性</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">swagger:</span></span><br><span class="line">  <span class="attr">groupName:</span> <span class="string">分类(groupName)</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">标题(title)</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">介绍(description)</span></span><br><span class="line">  <span class="attr">termsOfServiceUrl:</span> <span class="string">服务URL(termsOfServiceUrl)</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">版本(version)</span></span><br><span class="line">  <span class="attr">contactName:</span> <span class="string">作者名(contactName)</span></span><br><span class="line">  <span class="attr">contactUrl:</span> <span class="string">作者主页(contactUrl)</span></span><br><span class="line">  <span class="attr">contactEmail:</span> <span class="string">作者邮箱(contactEmail)</span></span><br><span class="line">  <span class="attr">paths:</span> <span class="string">/upload.*,/category.*</span></span><br><span class="line">  <span class="attr">license:</span></span><br><span class="line">  <span class="attr">licenseUrl:</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;swagger&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerProperty</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String groupName;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String description;</span><br><span class="line">    <span class="keyword">private</span> String termsOfServiceUrl;</span><br><span class="line">    <span class="keyword">private</span> String version;</span><br><span class="line">    <span class="keyword">private</span> String license;</span><br><span class="line">    <span class="keyword">private</span> String licenseUrl;</span><br><span class="line">    <span class="comment">//Contact</span></span><br><span class="line">    <span class="keyword">private</span> String contactName;</span><br><span class="line">    <span class="keyword">private</span> String contactUrl;</span><br><span class="line">    <span class="keyword">private</span> String contactEmail;</span><br><span class="line">    <span class="keyword">private</span> String[] paths;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-设置swagger自动配置类"><a href="#2-设置swagger自动配置类" class="headerlink" title="2.设置swagger自动配置类"></a>2.设置swagger自动配置类</h3><p>重点在于**@EnableSwagger2<strong>及声明</strong>Docket**</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.google.common.base.Predicate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> pro.hemo.swagger.config.SwaggerProperty;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.ApiInfoBuilder;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.ApiInfo;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.Contact;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.google.common.base.Predicates.or;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> springfox.documentation.builders.PathSelectors.regex;</span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(SwaggerProperty.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerAutoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SwaggerProperty swaggerProperty;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        checkValid(swaggerProperty);</span><br><span class="line">        Predicate&lt;String&gt;[] selector = <span class="keyword">new</span> Predicate[]&#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != swaggerProperty.getPaths() &amp;&amp; swaggerProperty.getPaths().length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            selector = <span class="keyword">new</span> Predicate[swaggerProperty.getPaths().length];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; selector.length; i++) &#123;</span><br><span class="line">                selector[i] = regex(swaggerProperty.getPaths()[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .groupName(swaggerProperty.getGroupName())</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .paths(or(selector))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkValid</span><span class="params">(SwaggerProperty swaggerProperty)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(swaggerProperty.getTitle())</span><br><span class="line">                .description(swaggerProperty.getDescription())</span><br><span class="line">                .termsOfServiceUrl(swaggerProperty.getTermsOfServiceUrl())</span><br><span class="line">                .contact(<span class="keyword">new</span> Contact(swaggerProperty.getContactName(), swaggerProperty.getContactUrl(), swaggerProperty.getContactEmail()))</span><br><span class="line">                .license(swaggerProperty.getLicense())</span><br><span class="line">                .licenseUrl(swaggerProperty.getLicenseUrl())</span><br><span class="line">                .version(swaggerProperty.getVersion())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-创建spring-factories"><a href="#3-创建spring-factories" class="headerlink" title="3. 创建spring.factories"></a>3. 创建spring.factories</h3><p>用于指定springboot自动配置文件路径，目录为<strong>src/main/resources/META-INF/spring.factories</strong></p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=<span class="string">\</span></span><br><span class="line"><span class="attr">pro.hemo.swagger.SwaggerAutoApplication</span></span><br></pre></td></tr></table></figure>
+<h2 id="使用starter"><a href="#使用starter" class="headerlink" title="使用starter"></a>使用starter</h2><h3 id="1-添加依赖"><a href="#1-添加依赖" class="headerlink" title="1. 添加依赖"></a>1. 添加依赖</h3><p>通过maven添加starter</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>pro.hemo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>因为没有发布到仓库，需要先将starter项目发布到本地仓库<br>在<strong>SwaggerStarter</strong>目录执行</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install </span><br></pre></td></tr></table></figure>
+
+<h3 id="2-编写Restful接口"><a href="#2-编写Restful接口" class="headerlink" title="2. 编写Restful接口"></a>2. 编写Restful接口</h3><p>Spring可以很方便的编写Restful接口，可以添加**@Api**等注解，用于生成文档。注解在io.swagger.annotations包下，后续会介绍常用注解。</p>
+<h3 id="3-添加配置文件"><a href="#3-添加配置文件" class="headerlink" title="3. 添加配置文件"></a>3. 添加配置文件</h3><p>通过<strong>path</strong>指定接口扫描目录</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">swagger:</span></span><br><span class="line">  <span class="attr">groupName:</span></span><br><span class="line">  <span class="attr">title:</span></span><br><span class="line">  <span class="attr">description:</span></span><br><span class="line">  <span class="attr">termsOfServiceUrl:</span></span><br><span class="line">  <span class="attr">version:</span></span><br><span class="line">  <span class="attr">contactName:</span></span><br><span class="line">  <span class="attr">contactUrl:</span></span><br><span class="line">  <span class="attr">contactEmail:</span></span><br><span class="line">  <span class="attr">paths:</span> <span class="string">/upload.*,</span> <span class="string">/category.*</span></span><br><span class="line">  <span class="attr">license:</span></span><br><span class="line">  <span class="attr">licenseUrl:</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="4-启动项目"><a href="#4-启动项目" class="headerlink" title="4. 启动项目"></a>4. 启动项目</h3><p>启动springboot项目，访问<a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a> 可以看到接口列表。<br><img src="/uploads/springboot-swagger-00.png" alt="springboot-swagger-00.png"> </p>
+<p>这里有几点需要注意</p>
+<ol>
+<li>swagger-ui.html 为自动生成映射</li>
+<li>注意静态资源不要被拦截</li>
+<li>swagger-ui.html为页面，接口以json格式通过加载并渲染。json地址为<a target="_blank" rel="noopener" href="http://localhost:8080/v2/api-docs?group">http://localhost:8080/v2/api-docs?group</a></li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -2000,178 +2097,6 @@ getAllElements: function()&#123;
             this.remove();
         &#125;);
     &#125;);
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/24/painter-7/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/24/painter-7/" class="post-title-link" itemprop="url">绘画板 07——图层移动</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-24 18:30:07" itemprop="dateCreated datePublished" datetime="2016-09-24T18:30:07+08:00">2016-09-24</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
-<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
-<h3 id="图层移动"><a href="#图层移动" class="headerlink" title="图层移动"></a>图层移动</h3><p>svgjs提供了图层移动的方法，实现方式如下</p>
-<pre><code>, forward: function() &#123;
-    var i = this.position() + 1
-  , p = this.parent()
-
-    // move node one step forward
-  p.removeElement(this).add(this, i)
-
-    // make sure defs node is always at the top
-  if (p instanceof SVG.Doc)
-      p.node.appendChild(p.defs().node)
-
-    return this
-  &#125;
-  // Send given element one step backward
-, backward: function() &#123;
-    var i = this.position()
-
-    if (i &gt; 0)
-      this.parent().removeElement(this).add(this, i - 1)
-
-    return this
-  &#125;
-  // Send given element all the way to the front
-, front: function() &#123;
-    var p = this.parent()
-
-    // Move node forward
-  p.node.appendChild(this.node)
-
-    // Make sure defs node is always at the top
-  if (p instanceof SVG.Doc)
-      p.node.appendChild(p.defs().node)
-
-    return this
-  &#125;
-  // Send given element all the way to the back
-, back: function() &#123;
-    if (this.position() &gt; 0)
-      this.parent().removeElement(this).add(this, 0)
-
-    return this
-  &#125;
- 
-</code></pre>
-<p>在按钮上绑定对应函数，并结合已选中元素，即可实现图层移动效果。此时需要注意，避免g元素，并且判断是否为最上(下)层元素，因为源码种只是执行+1 -1操作，如果最上层继续向上移动多次后，需要向下移动多次，才可以实现图层的切换效果。g元素的判断为偷懒方法，需要考虑是否考虑白名单的数组，以及改用迭代的方式进行</p>
-<pre><code>    $(&quot;#tool_layer_front&quot;).on(&quot;click&quot;, function() &#123;
-        var elements = GlobalStatus.getPickeds();
-        if (elements.length &gt; 0) &#123;
-            $(elements).each(function()&#123;
-                this
-                this.front();
-            &#125;);
-        &#125;
-    &#125;);
-    $(&quot;#tool_layer_back&quot;).on(&quot;click&quot;, function() &#123;
-        var elements = GlobalStatus.getPickeds();
-        if (elements.length &gt; 0) &#123;
-            $(elements).each(function()&#123;
-                this.back();
-            &#125;);
-        &#125;
-    &#125;);
-    $(&quot;#tool_layer_backward&quot;).on(&quot;click&quot;, function() &#123;
-        var elements = GlobalStatus.getPickeds();
-        if (elements.length &gt; 0) &#123;
-            $(elements).each(function()&#123;
-                if (this.previous()) &#123;
-                    //TODO 迭代 且使用白名单数组
-                    if (this.previous().type == &quot;g&quot;) &#123;
-                        this.backward();
-                    &#125;
-                    this.backward();
-                &#125;
-            &#125;);
-        &#125;
-    &#125;);
-    $(&quot;#tool_layer_forward&quot;).on(&quot;click&quot;, function() &#123;
-        var elements = GlobalStatus.getPickeds();
-        if (elements.length &gt; 0) &#123;
-            $(elements).each(function()&#123;
-                if (this.next()) &#123;
-                    if (this.next().type == &quot;g&quot;) &#123;
-                        this.forward();
-                    &#125;
-                    this.forward();
-                &#125;
-            &#125;);
-        &#125;
-    &#125;);
-    
-</code></pre>
-<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>这里发现了一个bug。在图层移动的时候，单步移动有时会失效。排查后发现，是因为mousedown时，已经生成了一个element，但在页面中看不出来。为了解决此bug，在mouseup时，增加了一个判断，如果页面不可见，则将此element在parent中移除。parent为svgDoc</p>
-<pre><code>function mouseup(event) &#123;
-    console.log(&#39;rect mouseup &#39; + element);
-    drawing = false;
-    if (element.attr(&quot;width&quot;) &gt; 0) &#123;
-        element.pickable();
-    &#125; else &#123;
-        parent.removeElement(element);
-    &#125;
-    return false;
-&#125;
 </code></pre>
 
       

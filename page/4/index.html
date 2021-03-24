@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">98</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,138 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/04/22/haro-cms/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2018/04/22/haro-cms/" class="post-title-link" itemprop="url">翻新第一个私活 CMS 项目</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2018-04-22 09:32:57" itemprop="dateCreated datePublished" datetime="2018-04-22T09:32:57+08:00">2018-04-22</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="1-项目背景"><a href="#1-项目背景" class="headerlink" title="1. 项目背景"></a>1. 项目背景</h2><p>项目地址: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/Haro-CMS">https://github.com/wangyuheng/Haro-CMS</a></p>
+<p>最近因为换电脑整理资料的过程中，发现了自己之前写过的一些项目，现在准备拿出来升级一下，构建自己的技术体系。看着三个月前的代码，已经似曾相识了，那三年前的呢？<br>这个项目是用来做企业展示的简易CMS系统，后台管理员可以编辑展示内容，发布新闻；访问用户可以查看企业信息，并反馈建议。这个系统当时应该熬了几个通宵，因为5000大洋实在太吸引人。。而且还是三个人分。。。人的时间好像是越往后越值钱，现在看可能觉得不值，但还是很感谢熬夜编码的自己。<br>项目当时考虑了很多：分布式，前后端分离，甚至是saas化，希望根据用户反馈，或者再接到类似的项目，可以进一步完善，但是并没有什么后续。所以项目历史就是一个基于web.xml配置的spring单机应用。</p>
+<h3 id="1-1-依赖项目"><a href="#1-1-依赖项目" class="headerlink" title="1.1 依赖项目"></a>1.1 依赖项目</h3><ol>
+<li>spring-boot</li>
+<li>h2</li>
+<li>gson</li>
+</ol>
+<p>目前将其升级为spring-boot应用，并且为了开发演示方便，开发环境使用了H2数据库。一直觉得，项目不需要修改任何配置就能跑起来很重要。</p>
+<h2 id="2-项目code"><a href="#2-项目code" class="headerlink" title="2. 项目code"></a>2. 项目code</h2><p>企业信息展示，分为3个module</p>
+<ol>
+<li><strong>admin</strong> 管理人员编辑展示内容</li>
+<li><strong>view</strong> 展示企业信息及新闻</li>
+<li><strong>core</strong> 业务数据层</li>
+</ol>
+<p><img src="https://img.hacpai.com/file/2018/04/cfa23976ccd54d3a8dbd95011cfc3e5d_haro_design.png" alt="haro_designpng"></p>
+<p>新版spring boot已不推荐使用jsp，带来很多不便，如： 不能直接运行java， 需要使用maven spring boot 插件运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run</span><br></pre></td></tr></table></figure>
+
+<p>admin 和 view 只负责业务渲染与鉴权，业务操作放在core中，方便后期进行前后端分离。<br>生产环境数据库使用mysql，为了方便演示，开发环境使用H2内嵌数据库。</p>
+<h3 id="2-1-admin"><a href="#2-1-admin" class="headerlink" title="2.1 admin"></a>2.1 admin</h3><p><img src="https://img.hacpai.com/file/2018/04/93c438b9541c4ae58a739f11150fe1db_haro_admin.png" alt="haro_adminpng"></p>
+<h3 id="2-2-view"><a href="#2-2-view" class="headerlink" title="2.2 view"></a>2.2 view</h3><p><img src="https://img.hacpai.com/file/2018/04/5cd50b4aff8d456aa1d2eb9bc6b31021_haro_view.png" alt="haro_viewpng"></p>
+<h2 id="3-问题"><a href="#3-问题" class="headerlink" title="3 问题"></a>3 问题</h2><p>之前的项目基于spring开发，采用web.xml配置。spring-boot通过约定大于配置，极大的简化了这部分工作，但是有时候又会因为不熟悉带来迷茫。明明我没有这个配置，怎么就生效了。。而且jsp又不推荐使用，所以虽然大部分是在删代码，单还是遇到了很多问题。</p>
+<h3 id="3-1-设置视图解析器InternalResourceViewResolver"><a href="#3-1-设置视图解析器InternalResourceViewResolver" class="headerlink" title="3.1 设置视图解析器InternalResourceViewResolver"></a>3.1 设置视图解析器InternalResourceViewResolver</h3><p>原项目在mvc-dispatcher-servlet.xml文件中配置 </p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;prefix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;/WEB-INF/pages/&quot;</span>/&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">&quot;suffix&quot;</span> <span class="attr">value</span>=<span class="string">&quot;.jsp&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>spring-boot提供了默认配置prefix = “spring.mvc”，详情可以参看org.springframework.boot.autoconfigure.web.servlet.WebMvcProperties类， 并在org.springframework.boot.autoconfigure.web.servlet.WebMvcAutoConfiguration类中自动注入。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnWebApplication(type = Type.SERVLET)</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123; Servlet.class, DispatcherServlet.class, WebMvcConfigurer.class &#125;)</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(WebMvcConfigurationSupport.class)</span></span><br><span class="line"><span class="meta">@AutoConfigureOrder(Ordered.HIGHEST_PRECEDENCE + 10)</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(&#123; DispatcherServletAutoConfiguration.class,</span></span><br><span class="line"><span class="meta">		ValidationAutoConfiguration.class &#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">WebMvcAutoConfiguration</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">		<span class="meta">@Bean</span></span><br><span class="line">		<span class="meta">@ConditionalOnMissingBean</span></span><br><span class="line">		<span class="function"><span class="keyword">public</span> InternalResourceViewResolver <span class="title">defaultViewResolver</span><span class="params">()</span> </span>&#123;</span><br><span class="line">			InternalResourceViewResolver resolver = <span class="keyword">new</span> InternalResourceViewResolver();</span><br><span class="line">			resolver.setPrefix(<span class="keyword">this</span>.mvcProperties.getView().getPrefix());</span><br><span class="line">			resolver.setSuffix(<span class="keyword">this</span>.mvcProperties.getView().getSuffix());</span><br><span class="line">			<span class="keyword">return</span> resolver;</span><br><span class="line">		&#125;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>所以只需在application.properties中添加配置项</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.view.prefix</span>=<span class="string">/WEB-INF/pages/</span></span><br><span class="line"><span class="meta">spring.mvc.view.suffix</span>=<span class="string">.jsp</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-静态资源请求"><a href="#3-2-静态资源请求" class="headerlink" title="3.2 静态资源请求"></a>3.2 静态资源请求</h3><p>未实现前后端分离的项目，css、js等静态资源仍保存在项目中。spring-boot建议保存在resource/static目录下，并通过spring.resources.static-locations属性设置目录位置，并且需要制定mapping规则。</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.static-path-pattern</span>=<span class="string">/static/**</span></span><br><span class="line"><span class="meta">spring.resources.static-locations</span>=<span class="string">classpath:/static/</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-spring-boot-运行war项目"><a href="#3-3-spring-boot-运行war项目" class="headerlink" title="3.3 spring-boot 运行war项目"></a>3.3 spring-boot 运行war项目</h3><p>需要添加tomcat-embed依赖，并且设置servlet初始化。如果使用jsp标签，一般也需要添加jstl依赖。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependencies</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>jstl<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">version</span>&gt;</span>1.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="comment">&lt;!-- Provided --&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.apache.tomcat.embed<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>tomcat-embed-jasper<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">scope</span>&gt;</span>provided<span class="tag">&lt;/<span class="name">scope</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependencies</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">build</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">plugins</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">plugin</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-maven-plugin<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">executions</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">execution</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;<span class="name">goals</span>&gt;</span></span><br><span class="line">                        <span class="tag">&lt;<span class="name">goal</span>&gt;</span>repackage<span class="tag">&lt;/<span class="name">goal</span>&gt;</span></span><br><span class="line">                    <span class="tag">&lt;/<span class="name">goals</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;/<span class="name">execution</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">executions</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">plugin</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">plugins</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">build</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="meta">@ComponentScan(basePackages=&#123;&quot;wang.crick.business.haro&quot;&#125;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewAPP</span> <span class="keyword">extends</span> <span class="title">SpringBootServletInitializer</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> SpringApplicationBuilder <span class="title">configure</span><span class="params">(SpringApplicationBuilder application)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> application.sources(ViewAPP.class);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(ViewAPP.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>需要通过spring-boot maven插件运行。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn spring-boot:run</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-自定义请求后缀匹配"><a href="#3-4-自定义请求后缀匹配" class="headerlink" title="3.4 自定义请求后缀匹配"></a>3.4 自定义请求后缀匹配</h3><p>旧项目中为了提高seo通过servlet-mapping指定请求路径为.html</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="name">servlet</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-class</span>&gt;</span>org.springframework.web.servlet.DispatcherServlet<span class="tag">&lt;/<span class="name">servlet-class</span>&gt;</span></span><br><span class="line">       <span class="tag">&lt;<span class="name">load-on-startup</span>&gt;</span>1<span class="tag">&lt;/<span class="name">load-on-startup</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">servlet-mapping</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">servlet-name</span>&gt;</span>mvc-dispatcher<span class="tag">&lt;/<span class="name">servlet-name</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">url-pattern</span>&gt;</span>*.html<span class="tag">&lt;/<span class="name">url-pattern</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">servlet-mapping</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>spring-boot在org.springframework.boot.autoconfigure.web.ServerProperties提供了servlet相关配置，可以通过application.properties配置</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">server.servlet.path</span>=<span class="string">*.html</span></span><br></pre></td></tr></table></figure>
+
+<p>但是目前希望忽略后缀，即请求index和index.html都可以路由到对应的页面，此时可以通过设置pathmatch属性实现</p>
+<blockquote>
+<pre><code>   /**
+     * Whether to use suffix pattern match (&quot;.*&quot;) when matching patterns to requests.
+     * If enabled a method mapped to &quot;/users&quot; also matches to &quot;/users.*&quot;.
+     */
+</code></pre>
+</blockquote>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.mvc.pathmatch.use-suffix-pattern</span>=<span class="string">true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="3-5-使用内存数据库H2"><a href="#3-5-使用内存数据库H2" class="headerlink" title="3.5 使用内存数据库H2"></a>3.5 使用内存数据库H2</h3><p>为了让程序可以“无痛”运行，在代码中使用了基于内存的H2数据库，生产环境可以考虑mysql等关系型数据库，只需修改对应的配置即可。</p>
+<p>需要添加H2依赖，引入驱动。</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.h2database<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>h2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在配置文件application.properties中直接配置路径、驱动、以及账户信息</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">spring.datasource.url</span>=<span class="string">jdbc:h2:mem:~/.h2/haro</span></span><br><span class="line"><span class="meta">spring.datasource.schema</span>=<span class="string">classpath:db/schema.sql</span></span><br><span class="line"><span class="meta">spring.datasource.driver-class-name</span>=<span class="string">org.h2.Driver</span></span><br><span class="line"><span class="meta">spring.datasource.username</span>=<span class="string">root</span></span><br><span class="line"><span class="meta">spring.datasource.password</span>=<span class="string">123456</span></span><br></pre></td></tr></table></figure>
+
+<p>db/schema.sql放置在resource目录下，保存了DDL以及开发环境所需数据。DDL支持情况为标准sql语句，部分工具导出的脚本需要简单修改。在程序启动过程中，会初始化执行，如果有异常，会在控制台中有详细提示。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1108,103 +1240,6 @@
 
 <h3 id="2-Resource转换为byte"><a href="#2-Resource转换为byte" class="headerlink" title="2. Resource转换为byte[]"></a>2. Resource转换为byte[]</h3><p>Resource有getFile()接口，InputStreamSource有getInputStream()接口，ClassPathResource作为子类，可以通过这两个接口方法，然后再进行转换。还有一个更简便的方法，通过Files工具读取path<br><strong>注：Files读取的path不是ClassPathResource#getPath()的返回值，而是ClassPathResource#getURL()#getPath()的值</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">byte</span>[] bytes = Files.readAllBytes(Paths.get(resource.getURL().getPath()));</span><br></pre></td></tr></table></figure>
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2017/10/28/springboot-swagger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/28/springboot-swagger/" class="post-title-link" itemprop="url">springboot+swagger 自动生成 restful 文档及在线调试</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2017-10-28 21:33:24" itemprop="dateCreated datePublished" datetime="2017-10-28T21:33:24+08:00">2017-10-28</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h3 id="spring-boot-swagger-starter"><a href="#spring-boot-swagger-starter" class="headerlink" title="spring-boot-swagger-starter"></a>spring-boot-swagger-starter</h3><p>本文项目已发布到github，欢迎fork点赞。<br><a target="_blank" rel="noopener" href="https://github.com/wangyuheng/spring-boot-swagger-starter">https://github.com/wangyuheng/spring-boot-swagger-starter</a><br>已发布maven中央仓库，欢迎使用。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>com.github.wangyuheng<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h3><p>swagger可以快速生成restful接口文档，并提供在线调试功能。通过springboot开发微服务时，swagger文档可以极大的提高协作效率。</p>
-<h3 id="springfox"><a href="#springfox" class="headerlink" title="springfox"></a>springfox</h3><p><strong><a target="_blank" rel="noopener" href="https://github.com/springfox/springfox">springfox</a></strong> 将swagger整合到spring</p>
-<h2 id="定制starter"><a href="#定制starter" class="headerlink" title="定制starter"></a>定制starter</h2><h3 id="1-定义swagger属性"><a href="#1-定义swagger属性" class="headerlink" title="1. 定义swagger属性"></a>1. 定义swagger属性</h3><p>用于文档页面显示及接口扫描路径，并使用@ConfigurationProperties读取属性</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">swagger:</span></span><br><span class="line">  <span class="attr">groupName:</span> <span class="string">分类(groupName)</span></span><br><span class="line">  <span class="attr">title:</span> <span class="string">标题(title)</span></span><br><span class="line">  <span class="attr">description:</span> <span class="string">介绍(description)</span></span><br><span class="line">  <span class="attr">termsOfServiceUrl:</span> <span class="string">服务URL(termsOfServiceUrl)</span></span><br><span class="line">  <span class="attr">version:</span> <span class="string">版本(version)</span></span><br><span class="line">  <span class="attr">contactName:</span> <span class="string">作者名(contactName)</span></span><br><span class="line">  <span class="attr">contactUrl:</span> <span class="string">作者主页(contactUrl)</span></span><br><span class="line">  <span class="attr">contactEmail:</span> <span class="string">作者邮箱(contactEmail)</span></span><br><span class="line">  <span class="attr">paths:</span> <span class="string">/upload.*,/category.*</span></span><br><span class="line">  <span class="attr">license:</span></span><br><span class="line">  <span class="attr">licenseUrl:</span></span><br></pre></td></tr></table></figure>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.ConfigurationProperties;</span><br><span class="line"></span><br><span class="line"><span class="meta">@ConfigurationProperties(prefix = &quot;swagger&quot;)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerProperty</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String groupName;</span><br><span class="line">    <span class="keyword">private</span> String title;</span><br><span class="line">    <span class="keyword">private</span> String description;</span><br><span class="line">    <span class="keyword">private</span> String termsOfServiceUrl;</span><br><span class="line">    <span class="keyword">private</span> String version;</span><br><span class="line">    <span class="keyword">private</span> String license;</span><br><span class="line">    <span class="keyword">private</span> String licenseUrl;</span><br><span class="line">    <span class="comment">//Contact</span></span><br><span class="line">    <span class="keyword">private</span> String contactName;</span><br><span class="line">    <span class="keyword">private</span> String contactUrl;</span><br><span class="line">    <span class="keyword">private</span> String contactEmail;</span><br><span class="line">    <span class="keyword">private</span> String[] paths;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-设置swagger自动配置类"><a href="#2-设置swagger自动配置类" class="headerlink" title="2.设置swagger自动配置类"></a>2.设置swagger自动配置类</h3><p>重点在于**@EnableSwagger2<strong>及声明</strong>Docket**</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.google.common.base.Predicate;</span><br><span class="line"><span class="keyword">import</span> org.springframework.beans.factory.annotation.Autowired;</span><br><span class="line"><span class="keyword">import</span> org.springframework.boot.context.properties.EnableConfigurationProperties;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> pro.hemo.swagger.config.SwaggerProperty;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.builders.ApiInfoBuilder;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.ApiInfo;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.service.Contact;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spi.DocumentationType;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.spring.web.plugins.Docket;</span><br><span class="line"><span class="keyword">import</span> springfox.documentation.swagger2.annotations.EnableSwagger2;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.google.common.base.Predicates.or;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> springfox.documentation.builders.PathSelectors.regex;</span><br><span class="line"></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(SwaggerProperty.class)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerAutoApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="keyword">private</span> SwaggerProperty swaggerProperty;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        checkValid(swaggerProperty);</span><br><span class="line">        Predicate&lt;String&gt;[] selector = <span class="keyword">new</span> Predicate[]&#123;&#125;;</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != swaggerProperty.getPaths() &amp;&amp; swaggerProperty.getPaths().length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">            selector = <span class="keyword">new</span> Predicate[swaggerProperty.getPaths().length];</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; selector.length; i++) &#123;</span><br><span class="line">                selector[i] = regex(swaggerProperty.getPaths()[i]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .groupName(swaggerProperty.getGroupName())</span><br><span class="line">                .apiInfo(apiInfo())</span><br><span class="line">                .select()</span><br><span class="line">                .paths(or(selector))</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">checkValid</span><span class="params">(SwaggerProperty swaggerProperty)</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfoBuilder()</span><br><span class="line">                .title(swaggerProperty.getTitle())</span><br><span class="line">                .description(swaggerProperty.getDescription())</span><br><span class="line">                .termsOfServiceUrl(swaggerProperty.getTermsOfServiceUrl())</span><br><span class="line">                .contact(<span class="keyword">new</span> Contact(swaggerProperty.getContactName(), swaggerProperty.getContactUrl(), swaggerProperty.getContactEmail()))</span><br><span class="line">                .license(swaggerProperty.getLicense())</span><br><span class="line">                .licenseUrl(swaggerProperty.getLicenseUrl())</span><br><span class="line">                .version(swaggerProperty.getVersion())</span><br><span class="line">                .build();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-创建spring-factories"><a href="#3-创建spring-factories" class="headerlink" title="3. 创建spring.factories"></a>3. 创建spring.factories</h3><p>用于指定springboot自动配置文件路径，目录为<strong>src/main/resources/META-INF/spring.factories</strong></p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=<span class="string">\</span></span><br><span class="line"><span class="attr">pro.hemo.swagger.SwaggerAutoApplication</span></span><br></pre></td></tr></table></figure>
-<h2 id="使用starter"><a href="#使用starter" class="headerlink" title="使用starter"></a>使用starter</h2><h3 id="1-添加依赖"><a href="#1-添加依赖" class="headerlink" title="1. 添加依赖"></a>1. 添加依赖</h3><p>通过maven添加starter</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>pro.hemo<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>swagger-starter<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">version</span>&gt;</span>0.0.1-SNAPSHOT<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>因为没有发布到仓库，需要先将starter项目发布到本地仓库<br>在<strong>SwaggerStarter</strong>目录执行</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn clean install </span><br></pre></td></tr></table></figure>
-
-<h3 id="2-编写Restful接口"><a href="#2-编写Restful接口" class="headerlink" title="2. 编写Restful接口"></a>2. 编写Restful接口</h3><p>Spring可以很方便的编写Restful接口，可以添加**@Api**等注解，用于生成文档。注解在io.swagger.annotations包下，后续会介绍常用注解。</p>
-<h3 id="3-添加配置文件"><a href="#3-添加配置文件" class="headerlink" title="3. 添加配置文件"></a>3. 添加配置文件</h3><p>通过<strong>path</strong>指定接口扫描目录</p>
-<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">swagger:</span></span><br><span class="line">  <span class="attr">groupName:</span></span><br><span class="line">  <span class="attr">title:</span></span><br><span class="line">  <span class="attr">description:</span></span><br><span class="line">  <span class="attr">termsOfServiceUrl:</span></span><br><span class="line">  <span class="attr">version:</span></span><br><span class="line">  <span class="attr">contactName:</span></span><br><span class="line">  <span class="attr">contactUrl:</span></span><br><span class="line">  <span class="attr">contactEmail:</span></span><br><span class="line">  <span class="attr">paths:</span> <span class="string">/upload.*,</span> <span class="string">/category.*</span></span><br><span class="line">  <span class="attr">license:</span></span><br><span class="line">  <span class="attr">licenseUrl:</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="4-启动项目"><a href="#4-启动项目" class="headerlink" title="4. 启动项目"></a>4. 启动项目</h3><p>启动springboot项目，访问<a target="_blank" rel="noopener" href="http://localhost:8080/swagger-ui.html">http://localhost:8080/swagger-ui.html</a> 可以看到接口列表。<br><img src="/uploads/springboot-swagger-00.png" alt="springboot-swagger-00.png"> </p>
-<p>这里有几点需要注意</p>
-<ol>
-<li>swagger-ui.html 为自动生成映射</li>
-<li>注意静态资源不要被拦截</li>
-<li>swagger-ui.html为页面，接口以json格式通过加载并渲染。json地址为<a target="_blank" rel="noopener" href="http://localhost:8080/v2/api-docs?group">http://localhost:8080/v2/api-docs?group</a></li>
-</ol>
-
       
     </div>
 

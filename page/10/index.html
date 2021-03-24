@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">98</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,96 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/19/centos-nginx/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/05/19/centos-nginx/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装Nginx</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-05-19 13:21:49" itemprop="dateCreated datePublished" datetime="2016-05-19T13:21:49+08:00">2016-05-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Nginx/" itemprop="url" rel="index"><span itemprop="name">Nginx</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
+</code></pre>
+<p>通过命令打开文档，输入如下内容</p>
+<blockquote>
+<p>[nginx]<br>name=nginx repo<br>baseurl=<a target="_blank" rel="noopener" href="http://nginx.org/packages/centos/7/$basearch/">http://nginx.org/packages/centos/7/$basearch/</a><br>gpgcheck=0<br>enabled=1</p>
+</blockquote>
+<p>其中centos表明当前系统，7表示系统版本。</p>
+<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
+</code></pre>
+<p>安装程序执行完毕后，可以通过</p>
+<pre><code>nginx -v
+</code></pre>
+<p>查看安装nginx版本，并确认程序安装成功。</p>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
+</code></pre>
+<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a target="_blank" rel="noopener" href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
+</code></pre>
+<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
+<pre><code>service nginx restart
+</code></pre>
+<p>刷新浏览器，可以看见修改以生效。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1591,117 +1681,6 @@ calendar.ctor(new Date(2015, 10)).cal();
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>本例中的ctor并非构造函数，而是针对一个对象进行变更，重新执行ctor后会替换calendar的属性值。<br>未对之前和之后的日期进行获取，如需相关功能，可在ctor中设置prevMonth 和 nextMonth的值，需要注意跨年度问题，时间和需求问题，暂未实现。</p>
 <h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>是否采用构造函数的方式生成多个对象？ （如果是工具类的话，不需要构造函数）<br>方法中采用this.param 还是获取外部参数 如何界定？</p>
 <h2 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h2><p>用面向对象的方式编写js，思路清晰，语感更好。</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/16/java-thumbnail-watermark/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2015/12/16/java-thumbnail-watermark/" class="post-title-link" itemprop="url">java压缩图片生成缩略图，并添加水印</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2015-12-16 09:15:48" itemprop="dateCreated datePublished" datetime="2015-12-16T09:15:48+08:00">2015-12-16</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>在编写的cms系统中，提供了图片上传功能，但是用户经常(或者说从不)按照推荐的比例上传图片，当然这不是主要问题，关键点在于，经常会上传一些超大分辨率的图片，严重影响整个网站的加载速度。<br>面对这个问题，除了限制上传图片的大小外，是否还有更自动化的解决方案？</p>
-<h2 id="待解决问题："><a href="#待解决问题：" class="headerlink" title="待解决问题："></a>待解决问题：</h2><ol>
-<li>图片长宽比</li>
-<li>图片大小</li>
-<li>图片格式</li>
-<li>水印(用户要求)<br>关于添加水印的问题，其实用户希望制作一款不能被下载图片的网站，但个人能力有限，实在不能胜任。于是用户提出水印要求，本身可能会觉得水印是本地图片操作的职责，但为了体验系统的自动化，决定增加自动添加水印功能。</li>
-</ol>
-<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><p>java 的io操作一直是我较为困扰的部分。原因无它，因为可以实现的方式实在是太多了，在数十个工具类和数个知名类库中该如何选择？而java在图像处理方面，私以为并不占有优势。<br>经过多方比较，适用，最终采用了<a target="_blank" rel="noopener" href="https://github.com/coobird/thumbnailator">thumbnailator</a>这一开源解决方案</p>
-<h2 id="thumbnailator"><a href="#thumbnailator" class="headerlink" title="thumbnailator"></a>thumbnailator</h2><blockquote>
-<p>thumbnailator是一个开源的java生成缩略图类库，没有依赖其他外部库，不需要自己去学习Image I/O API, Java 2D API, image processing, image scaling techniques， BufferedImages，Graphics2D 等技术，可以简单方便的实现这些功能。</p>
-</blockquote>
-<h3 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h3><p>thumbnailator是一个简单的jar文件，也支持通过maven进行依赖管理</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;net.coobird&lt;/groupId&gt;
-    &lt;artifactId&gt;thumbnailator&lt;/artifactId&gt;
-    &lt;version&gt;0.4.8&lt;/version&gt;
-&lt;/dependency&gt;
-</code></pre>
-<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>thumbnailator提供的功能简单、强大，且API规则良好，可以容易的理解接口含义。下面针对上面的问题，介绍一下thumbnailator的主要功能。</p>
-<h4 id="重置图片大小"><a href="#重置图片大小" class="headerlink" title="重置图片大小"></a>重置图片大小</h4><pre><code>Thumbnails.of(new File(&quot;original.jpg&quot;))
-    .size(640, 480)
-    .outputFormat(&quot;jpg&quot;)
-    .toFiles(Rename.NO_CHANGE);
-</code></pre>
-<p>new File(“original.jpg”) 可以是listFiles()来实现对目录下所有文件的操作，也可以直接输入String类型”original.jpg”<br>toFiles表示文件输出位置，单个文件可以自定义指定文件路径。<br>在处理多文件时，可以根据Rename提供的方法Rename.NO_CHANGE表示变更当前图片文件，还有Rename.PREFIX_DOT_THUMBNAIL等增加前缀、后缀等方式，此时会保留原文件和生成后的图片文件。<br>outputFormat现支持ImageIO.getWriterFormatNames();提供的格式类型，本测试环境为jdk1.6.0_38，提供的类型有<em>BMP bmp jpg JPG wbmp jpeg png PNG JPEG WBMP GIF gif</em></p>
-<h4 id="生成一个旋转90°带水印的缩略图"><a href="#生成一个旋转90°带水印的缩略图" class="headerlink" title="生成一个旋转90°带水印的缩略图"></a>生成一个旋转90°带水印的缩略图</h4><pre><code>Thumbnails.of(new File(&quot;original.jpg&quot;))
-        .size(160, 160)
-        .rotate(70)
-        .watermark(Positions.BOTTOM_RIGHT, ImageIO.read(new File(&quot;watermark.png&quot;)), 0.5f)
-        .outputQuality(0.8)
-        .toFile(new File(&quot;image-with-watermark.jpg&quot;));
-        
-</code></pre>
-<p>rotate表示图片旋转角度，如果不是进行直角(n*90°)旋转的话，图片的size会发生变化。<br>watermark指定了水印，通过Positions指定水印位置，BufferedImage指定水印图片，第三个参数指定了水印的不透明性，范围为(0<del>1.0f),1.0f为不透明。<br>outputQuality 指定输出图片的质量，范围同样为(0</del>1.0f)。</p>
-<p>除了<strong>toFile</strong>，Thumbnails还可以将图片输出为OutputStream(<strong>toOutputStream</strong>)和BufferedImage(<strong>asBufferedImage</strong>)，或者是指定的输出目录(<strong>toFiles</strong>)。</p>
-<h4 id="按比例缩略图片"><a href="#按比例缩略图片" class="headerlink" title="按比例缩略图片"></a>按比例缩略图片</h4><pre><code>Thumbnails.of(new File(&quot;original.jpg&quot;))
-    .scale(0.2)
-    .outputFormat(&quot;jpg&quot;)
-    .toFiles(Rename.NO_CHANGE);
-</code></pre>
-<p>scale提供了按照比例缩略图片的方法，也可以通过大于1的数字扩大图片。</p>
-<h3 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h3><p>在测试环境中，发现水印图片过大导致显示不全和旋转图片后的图片比例变更等问题，都是因为使用不当。<br>在生产环境中，暂时未遇到使用问题。如果有问题，会在这里指出，并提供解决方案。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>thumbnailator是难得的让我通过java简单的使用io和图像处理的工具类，很喜欢它提供api方式，正在学习源码。</p>
-<p><strong>Best regards</strong><br><strong>Wang Yuheng</strong></p>
 
       
     </div>

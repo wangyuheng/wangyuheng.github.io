@@ -227,20 +227,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">105</span>
+          <span class="site-state-item-count">106</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">35</span>
+        <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">96</span>
+        <span class="site-state-item-count">98</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,178 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/24/painter-7/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/24/painter-7/" class="post-title-link" itemprop="url">绘画板 07——图层移动</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-24 18:30:07" itemprop="dateCreated datePublished" datetime="2016-09-24T18:30:07+08:00">2016-09-24</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="图层移动"><a href="#图层移动" class="headerlink" title="图层移动"></a>图层移动</h3><p>svgjs提供了图层移动的方法，实现方式如下</p>
+<pre><code>, forward: function() &#123;
+    var i = this.position() + 1
+  , p = this.parent()
+
+    // move node one step forward
+  p.removeElement(this).add(this, i)
+
+    // make sure defs node is always at the top
+  if (p instanceof SVG.Doc)
+      p.node.appendChild(p.defs().node)
+
+    return this
+  &#125;
+  // Send given element one step backward
+, backward: function() &#123;
+    var i = this.position()
+
+    if (i &gt; 0)
+      this.parent().removeElement(this).add(this, i - 1)
+
+    return this
+  &#125;
+  // Send given element all the way to the front
+, front: function() &#123;
+    var p = this.parent()
+
+    // Move node forward
+  p.node.appendChild(this.node)
+
+    // Make sure defs node is always at the top
+  if (p instanceof SVG.Doc)
+      p.node.appendChild(p.defs().node)
+
+    return this
+  &#125;
+  // Send given element all the way to the back
+, back: function() &#123;
+    if (this.position() &gt; 0)
+      this.parent().removeElement(this).add(this, 0)
+
+    return this
+  &#125;
+ 
+</code></pre>
+<p>在按钮上绑定对应函数，并结合已选中元素，即可实现图层移动效果。此时需要注意，避免g元素，并且判断是否为最上(下)层元素，因为源码种只是执行+1 -1操作，如果最上层继续向上移动多次后，需要向下移动多次，才可以实现图层的切换效果。g元素的判断为偷懒方法，需要考虑是否考虑白名单的数组，以及改用迭代的方式进行</p>
+<pre><code>    $(&quot;#tool_layer_front&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                this
+                this.front();
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_back&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                this.back();
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_backward&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                if (this.previous()) &#123;
+                    //TODO 迭代 且使用白名单数组
+                    if (this.previous().type == &quot;g&quot;) &#123;
+                        this.backward();
+                    &#125;
+                    this.backward();
+                &#125;
+            &#125;);
+        &#125;
+    &#125;);
+    $(&quot;#tool_layer_forward&quot;).on(&quot;click&quot;, function() &#123;
+        var elements = GlobalStatus.getPickeds();
+        if (elements.length &gt; 0) &#123;
+            $(elements).each(function()&#123;
+                if (this.next()) &#123;
+                    if (this.next().type == &quot;g&quot;) &#123;
+                        this.forward();
+                    &#125;
+                    this.forward();
+                &#125;
+            &#125;);
+        &#125;
+    &#125;);
+    
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>这里发现了一个bug。在图层移动的时候，单步移动有时会失效。排查后发现，是因为mousedown时，已经生成了一个element，但在页面中看不出来。为了解决此bug，在mouseup时，增加了一个判断，如果页面不可见，则将此element在parent中移除。parent为svgDoc</p>
+<pre><code>function mouseup(event) &#123;
+    console.log(&#39;rect mouseup &#39; + element);
+    drawing = false;
+    if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+        element.pickable();
+    &#125; else &#123;
+        parent.removeElement(element);
+    &#125;
+    return false;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -1543,76 +1715,6 @@ Tool.Rect(svgDraw);
 <li>去掉xml文件中的中文注释</li>
 <li>随意在xml文件中加一个空格或者空行然后保存</li>
 </ol>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/07/bug-linux-package-is-intended-for-different-architec/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/07/bug-linux-package-is-intended-for-different-architec/" class="post-title-link" itemprop="url">package package_name is intended for different architec</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-07 09:18:09" itemprop="dateCreated datePublished" datetime="2016-09-07T09:18:09+08:00">2016-09-07</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>通过rpm安装jdk时提示<br><strong>package package_name is intended for different architec</strong></p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>安装包和当前操作系统不符，常见在x86 32位系统安装64位软件包</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>下载安装对应软件包</p>
 
       
     </div>
