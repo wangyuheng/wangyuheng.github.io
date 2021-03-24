@@ -22,7 +22,7 @@
 
   <meta name="description" content="情景: 听说AI很火，DeepLearning很厉害，想来了解一下。于是满怀热情地打开一片文章。。。5分钟后，很快啊，就被各种概念、数学公式劝退了。想尝试运行一下代码，又被各种python、C++折磨。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java训练一个手写数字识别的DeepLearning模型">
+<meta property="og:title" content="Java训练一个手写数字识别的DeepLearning模型">
 <meta property="og:url" content="https://blog.yuheng.wang/2021/03/24/first/index.html">
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="情景: 听说AI很火，DeepLearning很厉害，想来了解一下。于是满怀热情地打开一片文章。。。5分钟后，很快啊，就被各种概念、数学公式劝退了。想尝试运行一下代码，又被各种python、C++折磨。">
@@ -33,9 +33,9 @@
 <meta property="og:image" content="https://image.crick.wang/mweb/first_03.png">
 <meta property="og:image" content="https://image.crick.wang/mweb/first_06.png">
 <meta property="og:image" content="https://image.crick.wang/mweb/first_07.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/first_4.png">
+<meta property="og:image" content="https://image.crick.wang/mweb/first_09.png">
 <meta property="article:published_time" content="2021-03-24T03:39:09.000Z">
-<meta property="article:modified_time" content="2021-03-24T03:43:32.700Z">
+<meta property="article:modified_time" content="2021-03-24T06:39:13.755Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="DeepLearning">
@@ -55,7 +55,7 @@
   };
 </script>
 
-  <title>java训练一个手写数字识别的DeepLearning模型 | wangyuheng's Blog</title>
+  <title>Java训练一个手写数字识别的DeepLearning模型 | wangyuheng's Blog</title>
   
 
 
@@ -313,7 +313,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          java训练一个手写数字识别的DeepLearning模型
+          Java训练一个手写数字识别的DeepLearning模型
         </h1>
 
         <div class="post-meta">
@@ -350,7 +350,7 @@
 <span id="more"></span>
 
 <p>工程思维习惯先跑起来再慢慢调试了解。为了顺利迈出第一步，接下来尝试用java &amp; 小学概念来训练一个手写数字识别的DeepLearning模型。</p>
-<p>完整代码: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/wangyuheng.github.io">https://github.com/wangyuheng/wangyuheng.github.io</a></p>
+<p>完整代码: <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/my-first-deep-learning-model-by-java">https://github.com/wangyuheng/my-first-deep-learning-model-by-java</a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>程序开发过程，其实是对现实的一种抽象，并翻译成电脑可以理解的语言，让电脑运行。<br>但是有些事物并不是那么确定且容易描述的，比如：如何向电脑描述图片中的数字？</p>
 <p><img src="https://image.crick.wang/mweb/first_00.png" alt="first_00"></p>
 <p>我们可以一眼就识别出这个数字，但是没办法反推并描述这个过程。走一步算一步吧，先把代码写起来。<br>从程序开发角度，我们会定义一个接口函数，明确这个函数的输入、输出。</p>
@@ -396,7 +396,7 @@
 <h3 id="inference"><a href="#inference" class="headerlink" title="inference"></a>inference</h3><p>使用模型时，需要设定同样的Block，图像经过映射后会得到一个结果，但是并不会得到唯一解，而是获取多个结果及可能性比例。可以选择获取best</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Integer <span class="title">recognition</span><span class="params">(Image img)</span> <span class="keyword">throws</span> IOException, TranslateException, MalformedModelException </span>&#123;</span><br><span class="line">    Model model = Model.newInstance(<span class="string">&quot;first&quot;</span>);</span><br><span class="line">    Path modelDir = Paths.get(<span class="string">&quot;build/model&quot;</span>);</span><br><span class="line">    Predictor&lt;Image, Classifications&gt; predictor = <span class="keyword">null</span>;</span><br><span class="line">    Block block = <span class="keyword">new</span> Mlp(<span class="number">28</span> * <span class="number">28</span>, <span class="number">10</span>, <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;<span class="number">128</span>, <span class="number">64</span>&#125;);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        model.setBlock(block);</span><br><span class="line">        model.load(modelDir);</span><br><span class="line"></span><br><span class="line">        List&lt;String&gt; classes = IntStream.range(<span class="number">0</span>, <span class="number">10</span>).mapToObj(String::valueOf).collect(Collectors.toList());</span><br><span class="line">        Pipeline pipeline = <span class="keyword">new</span> Pipeline();</span><br><span class="line">        pipeline.add(<span class="keyword">new</span> Resize(<span class="number">28</span>, <span class="number">28</span>))</span><br><span class="line">                .add(<span class="keyword">new</span> ToTensor());</span><br><span class="line"></span><br><span class="line">        Translator&lt;Image, Classifications&gt; translator =</span><br><span class="line">                ImageClassificationTranslator.builder()</span><br><span class="line">                        .setPipeline(pipeline)</span><br><span class="line">                        .optSynset(classes)</span><br><span class="line">                        .build();</span><br><span class="line">        predictor = model.newPredictor(translator);</span><br><span class="line">        Classifications classifications = predictor.predict(img);</span><br><span class="line">        <span class="keyword">return</span> Integer.parseInt(classifications.best().getClassName());</span><br><span class="line">    &#125; <span class="keyword">catch</span> (MalformedModelException e) &#123;</span><br><span class="line">        log.error(<span class="string">&quot;model inference error! image:&#123;&#125;&quot;</span>, img, e);</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">catch</span> (TranslateException e) &#123;</span><br><span class="line">        log.error(<span class="string">&quot;translate error! image:&#123;&#125;&quot;</span>, img, e);</span><br><span class="line">        <span class="keyword">throw</span> e;</span><br><span class="line">    &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">        model.close();</span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">null</span> != predictor) &#123;</span><br><span class="line">            predictor.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><img src="https://image.crick.wang/mweb/first_4.png" alt="first_4"></p>
+<p><img src="https://image.crick.wang/mweb/first_09.png" alt="first_09"></p>
 <h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>模型学习的是知识，data和label之间要具备因果关系。比如：名字和是否能上清华之间存在关系吗？显然不，你不能训练一个模型来预测某个名字的人能否上清华。你还要加入生辰八字。。等等，我好像已经发现了一条致富之路，不说了，我要带着模型去摆摊了</p>
 
     </div>
