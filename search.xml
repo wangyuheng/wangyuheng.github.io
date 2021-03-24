@@ -8025,6 +8025,7 @@ gpgkey=https://www.mongodb.org/static/pgp/server-3.2.asc
 <span id="more"></span>
 
 <p>工程思维习惯先跑起来再慢慢调试了解。为了顺利迈出第一步，接下来尝试用java &amp; 小学概念来训练一个手写数字识别的DeepLearning模型。</p>
+<p>完整代码: <a href="https://github.com/wangyuheng/wangyuheng.github.io">https://github.com/wangyuheng/wangyuheng.github.io</a></p>
 <h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>程序开发过程，其实是对现实的一种抽象，并翻译成电脑可以理解的语言，让电脑运行。<br>但是有些事物并不是那么确定且容易描述的，比如：如何向电脑描述图片中的数字？</p>
 <p><img src="https://image.crick.wang/mweb/first_00.png" alt="first_00"></p>
 <p>我们可以一眼就识别出这个数字，但是没办法反推并描述这个过程。走一步算一步吧，先把代码写起来。<br>从程序开发角度，我们会定义一个接口函数，明确这个函数的输入、输出。</p>
