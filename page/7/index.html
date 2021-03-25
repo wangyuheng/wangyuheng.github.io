@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">107</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">98</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,85 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/08/bug-mybatis-invalid-bound-statement/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2016/09/08/bug-mybatis-invalid-bound-statement/" class="post-title-link" itemprop="url">mybatis绑定错误</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2016-09-08 14:42:27" itemprop="dateCreated datePublished" datetime="2016-09-08T14:42:27+08:00">2016-09-08</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>java程序报错 </p>
+<pre><code>org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>未扫描xml所在包路径</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>一般的原因是Mapper interface和xml文件的定义对应不上，需要检查包名，namespace，函数名称等能否对应上，需要比较细致的对比。</p>
+<p>按以下步骤一一执行</p>
+<ol>
+<li>检查xml文件所在的package名称是否和interface对应的package名称一一对应</li>
+<li>检查xml文件的namespace是否和xml文件的package名称一一对应</li>
+<li>检查函数名称能否对应上</li>
+<li>去掉xml文件中的中文注释</li>
+<li>随意在xml文件中加一个空格或者空行然后保存</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -972,78 +1051,6 @@
 <p>  // 在弹出对话框上点击时, 不进行任何页面操作, 并阻止冒泡<br>  document.getElementByIdx_x(‘dialog’).onclick = function(ev) {<br>      event.cancelBubble = false;<br>  };</p>
 <h4 id="return-false"><a href="#return-false" class="headerlink" title="return false;"></a>return false;</h4><p>事件处理过程中，阻止了事件冒泡，也阻止了默认行为（包括超链接的跳转）</p>
 <h4 id="event-preventDefault"><a href="#event-preventDefault" class="headerlink" title="event.preventDefault();"></a>event.preventDefault();</h4><p>事件处理过程中，不阻击事件冒泡，但会阻止默认行为（它会执行所有事件，却不执行超链接跳转）</p>
-
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/03/bug-javascript-attr-error/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2016/09/03/bug-javascript-attr-error/" class="post-title-link" itemprop="url">js对象调用属性时报错</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              <time title="Created: 2016-09-03 09:48:55" itemprop="dateCreated datePublished" datetime="2016-09-03T09:48:55+08:00">2016-09-03</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>js对象调用属性时报错 </p>
-<pre><code>missing name after . operator
-</code></pre>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>用关键字 保留字 作为属性名，如 obj.static </p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>可以修改属性获取方式为 obj[‘static’]</p>
 
       
     </div>

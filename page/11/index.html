@@ -227,7 +227,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">106</span>
+          <span class="site-state-item-count">107</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -240,7 +240,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">98</span>
+        <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -283,6 +283,227 @@
 
         <div class="content index posts-expand">
           
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/18/javascript-calendar/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2015/12/18/javascript-calendar/" class="post-title-link" itemprop="url">javascript开发日历</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2015-12-18 19:47:55" itemprop="dateCreated datePublished" datetime="2015-12-18T19:47:55+08:00">2015-12-18</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/javascript/" itemprop="url" rel="index"><span itemprop="name">javascript</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>需要实现一个日历功能，网上找了几个示例，都是根据各种库和插件，居然没有纯净的js完成的日历插件，不免有些诧异，正好有时间，准备通过js编写一个简单的日历demo基础，可自由根据使用的插件进行显示层的定制。</p>
+<h2 id="效果图"><a href="#效果图" class="headerlink" title="效果图"></a>效果图</h2><p><img src="https://image.crick.wang/mweb/javascript-calendar-01.png" alt="javascript-calendar-01"><br><img src="https://image.crick.wang/mweb/javascript-calendar-02.png" alt="javascript-calendar-02"></p>
+<h1 id="前提"><a href="#前提" class="headerlink" title="前提"></a>前提</h1><h2 id="算法"><a href="#算法" class="headerlink" title="算法"></a>算法</h2><p>说一下日历的算法</p>
+<ol>
+<li>(本月第一天的星期数+本月的天数)/7 可以知道本月需要占据几行。</li>
+<li>将日历看为二维数组，第一级遍历条件为本月行数，第二级为0~7（直观形象为一个日历table，自左向右，自上而下循环）。</li>
+<li>n为0~7循环参数， 计算当前日历方格显示数值为当前日期： 行数*7 + n - 本月第一天 + 1。</li>
+<li>二月的天数根据闰年会有不同，闰年的计算方式： 当前年份能被400整除，或者当前的年份能被4整除且不能被100整除。</li>
+</ol>
+<h2 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h2><p>日历功能实现必须通过js的Date对象提供的基础数值。介绍一下用到的方法功能</p>
+<pre><code>new Date().getFullYear(); //当前年份 2015
+new Date().getMonth(); //当前月份 0~11 
+new Date().getDate(); //当前月中的某一天 1~31
+new Date().getDay(); //一周中的某一天 0~6
+new Date(year, month, day); //根据构造函数返回Date对象
+</code></pre>
+<h1 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h1><p><em>这里写出来编写代码思路分析的过程，可以跳过直接看下方的完整代码。</em><br>先抽象出二维数组模型，7列已经确定，需要先根据<strong>算法1</strong>算出本月的日历行数，但是二月的天数不一致，所以先要根据是否为闰年算出二月的天数。</p>
+<pre><code>var calendar = &#123;
+    isLeap: function(vYear) &#123;
+        return vYear % 400 == 0 || (vYear % 4 == 0 &amp;&amp; vYear % 100 != 0);
+    &#125;,
+    getFebruaryDays: function(vYear) &#123;
+        return this.isLeap(vYear) ? 29 : 28;
+    &#125;
+&#125;
+</code></pre>
+<p>本月第一天的星期数可以根据new Date(currentYear, currentMonth, 1).getDay()得出。<br>monthFirstDay为本月第一天的星期数，monthDays为12月的天数组成的数组。根据构造函数计算赋值，并返回this对象方便链式调用。</p>
+<pre><code>var calendar = &#123;
+    year: null,
+    month: null,
+    date: null,
+    day: null,
+    monthDays: null,
+    monthFirstDay: null,
+    ctor: function(vNow) &#123;
+        var now = vNow || new Date(); //如果为指定date对象，则为当前日期对象
+        this.year = now.getFullYear();
+        this.month = now.getMonth();
+        this.date = now.getDate();
+        this.day = now.getDay();
+        this.monthFirstDay = new Date(this.year, this.month, 1).getDay();
+        this.monthDays = [
+            31, this.getFebruaryDays(this.year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        ];
+        return this;
+    &#125;,
+    isLeap: function(vYear) &#123;
+        return vYear % 400 == 0 || (vYear % 4 == 0 &amp;&amp; vYear % 100 != 0);
+    &#125;,
+    getFebruaryDays: function(vYear) &#123;
+        return this.isLeap(vYear) ? 29 : 28;
+    &#125;
+&#125;
+</code></pre>
+<p>计算日历行数</p>
+<pre><code>getMonthDay: function() &#123;
+    return this.monthDays[this.month];
+&#125;,
+getCalTr: function() &#123;
+    return (this.monthFirstDay + this.getMonthDay()) / 7;
+&#125;,
+</code></pre>
+<p>循环二维数组得到日历, *console.log(n);*可结合使用的框架进行输出展示。</p>
+<pre><code>cal: function() &#123;
+    var that = this;
+    for (var i = 0; i &lt; this.getCalTr(); i++) &#123;
+        for (var j = 0; j &lt; 7; j++) &#123;
+            var n = (i * 7 + j) - that.monthFirstDay + 1;
+            
+            if (n &gt; 0 &amp;&amp; n &lt;= that.getMonthDay()) &#123;
+                console.log(n);
+            &#125;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h2 id="完整代码，在控制台查看输出的日历"><a href="#完整代码，在控制台查看输出的日历" class="headerlink" title="完整代码，在控制台查看输出的日历"></a>完整代码，在控制台查看输出的日历</h2><pre><code>var calendar = &#123;
+    year: null,
+    month: null,
+    date: null,
+    day: null,
+    monthDays: null,
+    monthFirstDay: null,
+    days: [
+        &quot;星期一&quot;,
+        &quot;星期二&quot;,
+        &quot;星期三&quot;,
+        &quot;星期四&quot;,
+        &quot;星期五&quot;,
+        &quot;星期六&quot;,
+        &quot;星期日&quot;
+    ],
+
+    ctor: function(vNow) &#123;
+        var now = vNow || new Date(); //如果为指定date对象，则为当前日期对象
+        this.year = now.getFullYear();
+        this.month = now.getMonth();
+        this.date = now.getDate();
+        this.day = now.getDay();
+        this.monthFirstDay = new Date(this.year, this.month, 1).getDay();
+        this.monthDays = [
+            31, this.getFebruaryDays(this.year), 31, 30, 31, 30, 31, 31, 30, 31, 30, 31
+        ];
+        return this;
+    &#125;,
+    isLeap: function(vYear) &#123;
+        return vYear % 400 == 0 || (vYear % 4 == 0 &amp;&amp; vYear % 100 != 0);
+    &#125;,
+    getFebruaryDays: function(vYear) &#123;
+        return this.isLeap(vYear) ? 29 : 28;
+    &#125;,
+    format: function() &#123;
+        return (this.month + 1) + &quot;/&quot; + this.date + &quot;/&quot; + this.year + &quot;  &quot; + this.dayMap[this.day];
+    &#125;,
+    getDay: function() &#123;
+        return this.days[this.day - 1]
+    &#125;,
+    getMonthDay: function() &#123;
+        return this.monthDays[this.month];
+    &#125;,
+    getCalTr: function() &#123;
+        return (this.monthFirstDay + this.getMonthDay()) / 7;
+    &#125;,
+    cal: function() &#123;
+        var that = this;
+        console.log(&quot;%c   日   一   二   三   四   五   六   &quot;,&#39;background: #222; color: #bada55&#39;);
+        console.log(&quot;-----------------------------------&quot;);
+        for (var i = 0; i &lt; this.getCalTr(); i++) &#123;
+            var temp = &quot;&quot;;
+            for (var j = 0; j &lt; 7; j++) &#123;
+                var tempData = (i * 7 + j) - that.monthFirstDay + 1
+                if (tempData &lt; 1) &#123;
+                    temp = temp + &quot;prev &quot;;
+                &#125; else if (tempData &gt; that.getMonthDay()) &#123;
+                    temp = temp + &quot; next&quot;;
+                &#125; else &#123;
+                    if (tempData &gt; 9) &#123;
+                        temp = temp + &quot;  &quot; + tempData + &quot; &quot;;
+                    &#125; else &#123;
+                        temp = temp + &quot;   &quot; + tempData + &quot; &quot;;
+                    &#125;
+                &#125;
+            &#125;
+            console.log(temp);
+            console.log(&quot;-----------------------------------&quot;);
+        &#125;
+    &#125;
+&#125;
+calendar.ctor().cal();
+calendar.ctor(new Date(2015, 10)).cal();
+</code></pre>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h2><p>本例中的ctor并非构造函数，而是针对一个对象进行变更，重新执行ctor后会替换calendar的属性值。<br>未对之前和之后的日期进行获取，如需相关功能，可在ctor中设置prevMonth 和 nextMonth的值，需要注意跨年度问题，时间和需求问题，暂未实现。</p>
+<h2 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h2><p>是否采用构造函数的方式生成多个对象？ （如果是工具类的话，不需要构造函数）<br>方法中采用this.param 还是获取外部参数 如何界定？</p>
+<h2 id="收获"><a href="#收获" class="headerlink" title="收获"></a>收获</h2><p>用面向对象的方式编写js，思路清晰，语感更好。</p>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
