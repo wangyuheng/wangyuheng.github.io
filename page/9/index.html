@@ -155,18 +155,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -191,6 +191,102 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/08/30/bug-sql-update-lock/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/30/bug-sql-update-lock/" class="post-title-link" itemprop="url">update事务死锁</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-30 20:24:31" itemprop="dateCreated datePublished" datetime="2016-08-30T20:24:31+08:00">2016-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>java程序报错 </p>
+<pre><code>java.sql.SQLException: Lock wait timeout exceeded; try restarting transaction
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>业务中update语句需要通过子查询where条件，子查询的select中需要调用外部表的参数作为条件。<br>随着数据量的增加，sql语句执行过慢，请求过于频繁，导致死锁。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><ul>
+<li>不建议增加线程锁，可通过适当的增加索引，优化sql语句执行速度。</li>
+<li>尽量避免子查询，exists替代in</li>
+<li>亦可先执行select查询，保存在结果集中，再进行批量update操作。</li>
+<li>将两个操作增加事务标签。</li>
+<li>如果sql语句无法优化，可能是由错误的业务逻辑导致。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1415,129 +1511,6 @@ public class Main &#123;
 <p><img src="https://img.yuheng.wang/mweb/mybatis-starter-00.png" alt="mybatis-starter-00"></p>
 <h3 id="Mapper-XML-文件"><a href="#Mapper-XML-文件" class="headerlink" title="Mapper XML 文件"></a>Mapper XML 文件</h3><p>xml中的映射sql文件，是mybatis最强大的功能，但不是本篇文章的重点。所以会在另一篇文章中详细介绍一些技巧、已经容易遇到的问题。</p>
 <p>至此，一个集成了mybatis的java项目已经搭建完成，可以在此基础上编写业务逻辑代码。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/19/centos-mysql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/05/19/centos-mysql/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装mysql5.7</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-05-19 15:29:29" itemprop="dateCreated datePublished" datetime="2016-05-19T15:29:29+08:00">2016-05-19</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<p>在CentOS7环境下搭建mysql5.7数据库服务，强调一下版本号，因为安装过程中需要指定。</p>
-<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="下载mysql仓库rpm"><a href="#下载mysql仓库rpm" class="headerlink" title="下载mysql仓库rpm"></a>下载mysql仓库rpm</h3><pre><code>wget http://repo.mysql.com//mysql57-community-release-el7-8.noarch.rpm
-</code></pre>
-<h3 id="安装仓库"><a href="#安装仓库" class="headerlink" title="安装仓库"></a>安装仓库</h3><pre><code>sudo rpm -Uvh /mysql57-community-release-el7-8.noarch.rpm
-</code></pre>
-<p>也可以手动配置repo，此时不需要下载rpm文件。</p>
-<h3 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a>配置仓库</h3><pre><code>vi /etc/yum.repos.d/mysql-community.repo 
-</code></pre>
-<p>通过命令打开文档，输入如下内容</p>
-<blockquote>
-<p>[mysql57-community]<br>name=MySQL 5.7 Community Server<br>baseurl=<a target="_blank" rel="noopener" href="http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/">http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/</a><br>enabled=1<br>gpgcheck=1<br>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</p>
-</blockquote>
-<p>注意baseurl中的版本号需要与当前系统环境一致。如/el/7中的7与系统centOS7版本一致。</p>
-<h3 id="查看可用软件源"><a href="#查看可用软件源" class="headerlink" title="查看可用软件源"></a>查看可用软件源</h3><pre><code>yum repolist enabled | grep mysql
-</code></pre>
-<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>yum install mysql-community-server 
-</code></pre>
-<h3 id="启动mysql服务"><a href="#启动mysql服务" class="headerlink" title="启动mysql服务"></a>启动mysql服务</h3><pre><code>service mysqld start
-</code></pre>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="查询root密码"><a href="#查询root密码" class="headerlink" title="查询root密码"></a>查询root密码</h3><p>密码由mysql自动生成，可以在log文件中查看。</p>
-<pre><code>sudo grep &#39;temporary password&#39; /var/log/mysqld.log
-</code></pre>
-<h3 id="登陆mysql"><a href="#登陆mysql" class="headerlink" title="登陆mysql"></a>登陆mysql</h3><pre><code>mysql -uroot -p上步获取的密码
-</code></pre>
-<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre><code>登陆成功后，不能执行操作，需要先修改密码。犹豫安全策略，新设置的密码必须包含大小写字母，数字以及符号。
-
-ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;MyNewPass4!&#39;; 
-</code></pre>
-<h3 id="修改访问权限"><a href="#修改访问权限" class="headerlink" title="修改访问权限"></a>修改访问权限</h3><p>此时的数据库只能本机访问，通过修改表的方式将权限开放给全部用户。</p>
-<pre><code>mysql -uroot -pMyNewPass4!
-
-use mysql;
-
-update user set Host = &#39;%&#39; where User=&#39;root&#39;;
-</code></pre>
-<p>注意，修改表后，必须重启mysql服务，修改才能生效。</p>
-<pre><code>service mysqld restart;
-</code></pre>
 
       
     </div>

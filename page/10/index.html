@@ -155,18 +155,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">107</span>
+          <span class="site-state-item-count">108</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">36</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">99</span>
+        <span class="site-state-item-count">101</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -191,6 +191,129 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/19/centos-mysql/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/19/centos-mysql/" class="post-title-link" itemprop="url">CentOS7 通过yum方式安装mysql5.7</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-19 15:29:29" itemprop="dateCreated datePublished" datetime="2016-05-19T15:29:29+08:00">2016-05-19</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/mysql/" itemprop="url" rel="index"><span itemprop="name">mysql</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>在CentOS7环境下搭建mysql5.7数据库服务，强调一下版本号，因为安装过程中需要指定。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="下载mysql仓库rpm"><a href="#下载mysql仓库rpm" class="headerlink" title="下载mysql仓库rpm"></a>下载mysql仓库rpm</h3><pre><code>wget http://repo.mysql.com//mysql57-community-release-el7-8.noarch.rpm
+</code></pre>
+<h3 id="安装仓库"><a href="#安装仓库" class="headerlink" title="安装仓库"></a>安装仓库</h3><pre><code>sudo rpm -Uvh /mysql57-community-release-el7-8.noarch.rpm
+</code></pre>
+<p>也可以手动配置repo，此时不需要下载rpm文件。</p>
+<h3 id="配置仓库"><a href="#配置仓库" class="headerlink" title="配置仓库"></a>配置仓库</h3><pre><code>vi /etc/yum.repos.d/mysql-community.repo 
+</code></pre>
+<p>通过命令打开文档，输入如下内容</p>
+<blockquote>
+<p>[mysql57-community]<br>name=MySQL 5.7 Community Server<br>baseurl=<a target="_blank" rel="noopener" href="http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/">http://repo.mysql.com/yum/mysql-5.7-community/el/7/$basearch/</a><br>enabled=1<br>gpgcheck=1<br>gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-mysql</p>
+</blockquote>
+<p>注意baseurl中的版本号需要与当前系统环境一致。如/el/7中的7与系统centOS7版本一致。</p>
+<h3 id="查看可用软件源"><a href="#查看可用软件源" class="headerlink" title="查看可用软件源"></a>查看可用软件源</h3><pre><code>yum repolist enabled | grep mysql
+</code></pre>
+<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>yum install mysql-community-server 
+</code></pre>
+<h3 id="启动mysql服务"><a href="#启动mysql服务" class="headerlink" title="启动mysql服务"></a>启动mysql服务</h3><pre><code>service mysqld start
+</code></pre>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="查询root密码"><a href="#查询root密码" class="headerlink" title="查询root密码"></a>查询root密码</h3><p>密码由mysql自动生成，可以在log文件中查看。</p>
+<pre><code>sudo grep &#39;temporary password&#39; /var/log/mysqld.log
+</code></pre>
+<h3 id="登陆mysql"><a href="#登陆mysql" class="headerlink" title="登陆mysql"></a>登陆mysql</h3><pre><code>mysql -uroot -p上步获取的密码
+</code></pre>
+<h3 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h3><pre><code>登陆成功后，不能执行操作，需要先修改密码。犹豫安全策略，新设置的密码必须包含大小写字母，数字以及符号。
+
+ALTER USER &#39;root&#39;@&#39;localhost&#39; IDENTIFIED BY &#39;MyNewPass4!&#39;; 
+</code></pre>
+<h3 id="修改访问权限"><a href="#修改访问权限" class="headerlink" title="修改访问权限"></a>修改访问权限</h3><p>此时的数据库只能本机访问，通过修改表的方式将权限开放给全部用户。</p>
+<pre><code>mysql -uroot -pMyNewPass4!
+
+use mysql;
+
+update user set Host = &#39;%&#39; where User=&#39;root&#39;;
+</code></pre>
+<p>注意，修改表后，必须重启mysql服务，修改才能生效。</p>
+<pre><code>service mysqld restart;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1500,157 +1623,6 @@ public class XmlParser &#123;
 </code></pre>
 <p>再次输出，可以去掉standalone属性。</p>
 <h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>理解xml的结构之后，和dom的树形结构后，无论是使用原生支持还是通过第三方类库去操作xml文件，都可以很容易的上手。<br>and <strong>我喜欢用json</strong></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/21/html-auto-submit/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/21/html-auto-submit/" class="post-title-link" itemprop="url">关于表单回车自动提交的种种</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-21 16:48:59" itemprop="dateCreated datePublished" datetime="2015-12-21T16:48:59+08:00">2015-12-21</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/HTML/" itemprop="url" rel="index"><span itemprop="name">HTML</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h1 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h1><p>业务场景为一个<em>type=text</em>的表单元素，通过ajax进行搜索。但是遇到一个bug，就是在输入之后按回车，就会自动提交表单。查找之后发现了浏览器的表单提交特性</p>
-<p><strong>如果只有一个text表单元素，回车会自动提交表单！！</strong></p>
-<p>为了避免这种bug，将表单回车后提交的场景都测试了一遍。</p>
-<h1 id="场景一：只有一个type-text表单元素"><a href="#场景一：只有一个type-text表单元素" class="headerlink" title="场景一：只有一个type=text表单元素"></a>场景一：只有一个type=text表单元素</h1><pre><code>&lt;form action=&quot;http://blog.crick.wang&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
-<p>在此场景下，只要在input中按下回车键，就会自动提交表单。<br>为了避免自动提交，可以设置一个隐藏的text元素，如</p>
-<pre><code>&lt;form action=&quot;http://blog.crick.wang&quot;&gt;
-    &lt;input type=&quot;text&quot; style=&quot;display:none&quot; /&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
-<h1 id="场景二：有n个type-text和一个type-submit表单元素"><a href="#场景二：有n个type-text和一个type-submit表单元素" class="headerlink" title="场景二：有n个type=text和一个type=submit表单元素"></a>场景二：有n个type=text和一个type=submit表单元素</h1><pre><code>&lt;form action=&quot;http://blog.crick.wang&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-    &lt;input type=&quot;text&quot; name=&quot;password&quot; /&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Submit!&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
-<p>在此场景下，只要在input中按下回车键，就会自动提交表单。<br>为了避免自动提交，网上常见的例子是在form表单中监听<em>onkeydown</em>事件，如果是回车输入，则返回false，阻止表单提交。</p>
-<pre><code>&lt;form action=&quot;http://blog.crick.wang&quot; onkeydown=&quot;if(event.keyCode==13)&#123;return false;&#125;&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-    &lt;input type=&quot;text&quot; name=&quot;password&quot; /&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Submit!&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
-<p>但是这种写法存在1个问题：<em>如果是textarea，可能会需要回车操作。</em></p>
-<p>为了解决上述问题，需要增加针对textarea的判断条件，而且还要注意兼容ie。</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-document.onkeydown = function(event) &#123;
-    event = event || window.event;
-    var param = event.target || event.srcElement;
-    // if (param.name==&quot;username&quot;)&#123;return true;&#125;
-    if (event.keyCode == 13) &#123;
-        if (&quot;INPUT&quot; == param.tagName) &#123;
-            return false;
-        &#125;
-    &#125;
-&#125;;
-&lt;/script&gt;
-&lt;form action=&quot;http://blog.crick.wang&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-    &lt;input type=&quot;text&quot; name=&quot;password&quot; /&gt;
-    &lt;textarea name=&quot;introduction&quot;&gt;&lt;/textarea&gt;
-    &lt;input type=&quot;submit&quot; value=&quot;Submit!&quot; /&gt;
-&lt;/form&gt;
-</code></pre>
-<p>根据*if (param.name==”username”){return true;}*就可以自定义在某个表单元素中，点击回车键，就可以提交表单。</p>
-<h1 id="场景三：有n个type-text，没有type-submit元素"><a href="#场景三：有n个type-text，没有type-submit元素" class="headerlink" title="场景三：有n个type=text，没有type=submit元素"></a>场景三：有n个type=text，没有type=submit元素</h1><p>此时点击回车键时，表单不会提交。可以通过监听onkeydown事件，利用submit()方法，根据keyCode和tagName或者表单元素的name来自定义提交规则</p>
-<pre><code>&lt;script type=&quot;text/javascript&quot;&gt;
-document.onkeydown = function(event) &#123;
-    event = event || window.event;
-    var param = event.target || event.srcElement;
-    if (event.keyCode == 13 &amp;&amp; param.name==&quot;password&quot;)&#123;
-        document.getElementById(&quot;entityForm&quot;).submit();
-    &#125;
-&#125;;
-&lt;/script&gt;
-&lt;form action=&quot;http://blog.crick.wang&quot; id=&quot;entityForm&quot;&gt;
-    &lt;input type=&quot;text&quot; name=&quot;username&quot; /&gt;
-    &lt;input type=&quot;text&quot; name=&quot;password&quot; /&gt;
-    &lt;textarea name=&quot;introduction&quot;&gt;&lt;/textarea&gt;
-&lt;/form&gt;
-</code></pre>
-<h1 id="场景四：有n个type-text和一个button标签元素"><a href="#场景四：有n个type-text和一个button标签元素" class="headerlink" title="场景四：有n个type=text和一个button标签元素"></a>场景四：有n个type=text和一个button标签元素</h1><p>button标签，如果未指定type，则在ie6和ie7下为type=”button”， 在ie8及chrome和火狐下为type=”submit”，为了避免这种混乱，button标签一定要指定type。<br>如果指定为type=”button”，则和场景三的处理方式一致，<br>如果是type=”submit”，则同场景二。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>ie的特性让web开发者抓狂，本来很多浏览器自身属性可以方便解决的问题，都需要重新造一个轮子，达到浏览器兼容。<br>制造轮子和规则，为了规避约定或者隐藏特性带来的不可预知的麻烦。</p>
 
       
     </div>
