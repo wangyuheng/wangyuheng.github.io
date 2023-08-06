@@ -2,9 +2,10 @@
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,14 +14,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
-  </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-  <meta name="description" content="作为开发人员，你一定被老板要求过“做个设计评审吧”。那么问题来了，要怎么做设计评审呢？答案非常简单：问你的老板。因为公司风格不同、个人喜好差异，因此一定要先明确预期，不要自己猜测这种“一句话需求”。可以先咨询是否有相关的文档和模版，或者他人做的参考。新人往往惧怕沟通，担心这是能力不足的体现。其实，追根刨底才是一种专业性的体现。">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yuheng.wang","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="作为开发人员，你一定被老板要求过“做个设计评审吧”。那么问题来了，要怎么做设计评审呢？答案非常简单：问你的老板。因为公司风格不同、个人喜好差异，因此一定要先明确预期，不要自己猜测这种“一句话需求”。可以先咨询是否有相关的文档和模版，或者他人做的参考。新人往往惧怕沟通，担心这是能力不足的体现。其实，追根刨底才是一种专业性的体现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="领导说做个设计评审吧。">
 <meta property="og:url" content="https://blog.yuheng.wang/2021/03/17/tech-design-review/index.html">
@@ -40,82 +40,42 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSI2ODFweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjczOXB4O2hlaWdodDo2ODFweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA3MzkgNjgxIiB3aWR0aD0iNzM5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2x1c3RlciBtcy0tPjxnIGlkPSJjbHVzdGVyX21zIj48cGF0aCBkPSJNOC41LDI0My41IEw1NC41LDI0My41IEEzLjc1LDMuNzUgMCAwIDEgNTcsMjQ2IEw2NCwyNjUuNzk2OSBMMzA4LjUsMjY1Ljc5NjkgQTIuNSwyLjUgMCAwIDEgMzExLDI2OC4yOTY5IEwzMTEsNTIyIEEyLjUsMi41IDAgMCAxIDMwOC41LDUyNC41IEw4LjUsNTI0LjUgQTIuNSwyLjUgMCAwIDEgNiw1MjIgTDYsMjQ2IEEyLjUsMi41IDAgMCAxIDguNSwyNDMuNSAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzAwMDAwMDtzdHJva2Utd2lkdGg6MS41OyIgeDE9IjYiIHgyPSI2NCIgeTE9IjI2NS43OTY5IiB5Mj0iMjY1Ljc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgZm9udC13ZWlnaHQ9ImJvbGQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDUiIHg9IjEwIiB5PSIyNTguNDk1MSI+JiMyNDQ5NDsmIzI2MzgxOyYjMjExNTM7PC90ZXh0PjwvZz48IS0tY2x1c3RlciB1Yy0tPjxnIGlkPSJjbHVzdGVyX3VjIj48cGF0aCBkPSJNNDQ4LjcxNjIsNDEzLjIzNzYgQzQ1NC41NzE2LDQwNC41NDg2IDQ2My42MTQsNDAzLjE3OTUgNDY4LjY4NDksNDE0LjAzODkgQzQ3Mi42NDUxLDQwNS4xMTEyIDQ3OC41MDQ5LDQwNC4zNDgyIDQ4NS4zNzMyLDQxMC45MDQ2IEM0OTEuOTc3Nyw0MDIuOTk5IDQ5OC41NTQ2LDQwNC4wNTYzIDUwNC4xNjQ2LDQxMi4wNzc4IEM1MDguMTg0MSw0MDIuNTA5NyA1MTguNjcyOCw0MDEuMTIwOCA1MjUuMjM1MSw0MDkuMDA4NCBDNTI5Ljk0MDYsNDAwLjYwOTMgNTM3LjY4MTIsNDAxLjQ0NjggNTQyLjY2NjUsNDA4LjY5NjYgQzU0OC44MTU3LDM5OS4yOTM3IDU1Ny45NzksNDAwLjExOTcgNTYyLjMzNjIsNDEwLjQ4IEM1NjUuNTc2Myw0MDEuMTM4OCA1NzQuNDAyMiwzOTkuNTAyOSA1ODAuNDg3OSw0MDcuNTAxMSBDNTg2LjYwNjgsMzk4LjcyOTIgNTkzLjAyMzksMzk5Ljg0MjIgNTk5LjE1Niw0MDcuNDg2IEM2MDYuMTc4OSwzOTguMjUzNyA2MTQuMjA4LDQwMC4xNjY5IDYxOC4zOTQ5LDQxMC4zMDMxIEM2MjIuNzU5OSw0MDAuNzU1MiA2MzIuNjMwNiwzOTkuNTI1OCA2MzguMjc0NCw0MDguOTY0MSBDNjQ0LjgzNzksNDAyLjAzOTkgNjUyLjMxMTksNDAzLjc5MzkgNjU2LjAxOTcsNDEyLjI1NzQgQzY2MC45OTk4LDQwMy4xMzQzIDY3MC45MzA4LDQwMy4xMTc1IDY3Ni4wMzM1LDQxMi4xMjIxIEM2ODEuOTMyNyw0MDMuNTQ2NSA2ODkuMTg3NSw0MDUuNzE5NSA2OTMuNDE2Nyw0MTMuODU4OCBDNzAyLjYxOTIsNDAyLjExOTMgNzEzLjIxMDQsNDA2Ljg2NTkgNzE4LDQxOC41IEM3MTkuMzQ4Nyw0MTguOTE0NyA3MTkuOTEzMyw0MjAuMTEyOCA3MTguODUwNSw0MjEuMjY4MyBDNzI3LjUzMTYsNDI1Ljg0OTYgNzMwLjc1MSw0MzIuNzk3IDcyMS45ODUxLDQ0MC4yNTgyIEM3MjkuMjk4LDQ0NS45NzE1IDcyNy45NjQyLDQ1NC44NTgyIDcxOS44NDIyLDQ1OC43ODYzIEM3MjkuODkxMyw0NjMuNzg5MyA3MjguNTk5NSw0NzAuMzg0NiA3MjEuNzAxLDQ3Ny4xMDcyIEM3MzEuNDQ1MSw0ODEuNzQ0NCA3MzIuODk3Miw0OTEuNjA4IDcyMi43NzA0LDQ5Ny4yOTc3IEM3MzEuMDY4Niw1MDUuNzQwNCA3MzAuNDEyLDUxMi4xNDQ5IDcyMC4zOTY1LDUxOC41NDExIEM3MjkuNzUyNyw1MjIuMjI1MyA3MzAuNjMxOSw1MjkuOTE3IDcyMi41NDA5LDUzNS43NzI2IEM3MzIuMjY3Niw1NDIuMjQzNiA3MzEuNTQyMiw1NDkuNjg2NSA3MjEuODIxMSw1NTUuNDQ2IEM3MzIuNTM1Miw1NjAuNjc3MyA3MzEuNTE4Nyw1NzAuNTM1OSA3MjIuNjIzNiw1NzYuNTE0MiBDNzMxLjgzOTEsNTgxLjkyOTMgNzMwLjYyNTIsNTkwLjg4NzMgNzIxLjE2MzIsNTk0LjgxMTcgQzczMC45NDM1LDYwMi4xNDc1IDcyOS4zNjI4LDYwOS42MDQ4IDcxOS4yNDYxLDYxNS4wNTYzIEM3MjguOTQ3Miw2MTkuMDY5NCA3MjcuNjcyLDYyNy43NzQ5IDcyMC4xNjMsNjMyLjY4MzIgQzcyOS41MzYzLDY0NS42NTU2IDcyNS40NDQzLDY1My4zMjE3IDcxMSw2NTcuNSBDNzEyLjc0MzYsNjU2LjM5NzcgNzE0LjAzMjcsNjU3LjIxNDQgNzEzLjk2NDEsNjU5LjIyNTQgQzcwOC4yMzM3LDY2OC41NDU5IDcwMC4zNDE0LDY2OS4yMzYgNjkzLjQwMTgsNjYwLjYxMDkgQzY4OC42MjIsNjY4LjUyMTggNjgyLjExNDQsNjY5LjQwNDYgNjc1LjkyOTIsNjYyLjIzOTcgQzY2OC42MjY5LDY3My4yMTc3IDY2Mi4zMDQ1LDY3MS42NjE1IDY1NS4xODQ4LDY2Mi4wNTU2IEM2NTAuNjY4OSw2NzEuNzYyNSA2NDMuMzQ1Niw2NzEuNzc3MyA2MzcuMjU5Nyw2NjMuNjMyMSBDNjMyLjM2LDY3Mi42NTYxIDYyMy40NDQxLDY3Mi44OTQzIDYxNy41NDc3LDY2NC43Nzg0IEM2MTEuMzg4LDY3MS4xMDU5IDYwNC44NjI3LDY3MC40MjUyIDYwMC45MTg2LDY2Mi4yMzk4IEM1OTUuODczNSw2NzMuNzU5NCA1ODcuNTcxOSw2NzQuODQzMyA1NzkuMjY5OCw2NjUuNjQyOCBDNTc0LjIxMTUsNjcyLjE4MzIgNTY2LjUxODIsNjcyLjU0ODYgNTYyLjMzODQsNjY0LjYxNTIgQzU1Ny4zNDU3LDY3My4wNjIyIDU0OC4yNTE3LDY3My44NzE1IDU0My4xMzEzLDY2NC43NTQ4IEM1MzYuMTg2Nyw2NzEuNDk5NSA1MjkuMTc1NSw2NjkuMTcxMiA1MjUuNzQ4OSw2NjAuNzI4NCBDNTE5LjQ4MDksNjY5LjczNzcgNTA5LjU5OTksNjcwLjk3MDggNTA0LjEwNzgsNjU5Ljg5MjQgQzQ5OS45NDE3LDY2Ny40ODY0IDQ5Mi42OTM4LDY2OC4zMDY1IDQ4Ny44NDY1LDY2MC42MTcyIEM0ODIuMjMxNSw2NzAuMzY0MSA0NzQuNjc0NSw2NzEuMjYgNDY4LjIxNzEsNjYxLjQ2MzIgQzQ1NS40NjI3LDY3MS4yNzA5IDQ0Mi4yNzM5LDY2Ny42NjcgNDQwLDY1MC41IEM0NDAuNjQwNSw2NDkuNTIxNCA0NDEuMzU3Myw2NDkuNzM0NSA0NDEuODk0Nyw2NTAuNjA1NiBDNDMzLjI4NDMsNjQ1LjA2NDggNDMxLjY2MTcsNjM4LjgwNTIgNDM5LjY5NjQsNjMxLjM2MjkgQzQzMC43OTM1LDYyNS41NjUxIDQzMC44Nzc4LDYxNi44NTE2IDQ0MC44MzM0LDYxMi4xNzExIEM0MjkuODY2OCw2MDguNjM1MyA0MjguMzQ0Myw2MDAuMTQyNiA0MzcuMzc0MSw1OTIuOTk4OSBDNDI4Ljk1NDEsNTg3LjU4MjIgNDI5LjU2MTEsNTc4LjM2MzkgNDM4LjIxMTIsNTczLjY4NzIgQzQyNy44OTM0LDU2OS4yMTk5IDQyOS41NDI0LDU1OS42ODU5IDQzNy41NjUsNTU0LjU5NzcgQzQyOC4xNTk3LDU1MS40NjQ5IDQyNS4zMTEsNTQyLjY3MDQgNDM0LjQ2Miw1MzYuMzc3NCBDNDI1LjI3NTYsNTI5LjI5NjUgNDI1LjMyNjksNTE5LjgyMTkgNDM3LjM4ODMsNTE1Ljc1NjMgQzQyOS44MjU1LDUxMC40NDA2IDQzMC4wNzIsNTAyLjgzNTcgNDM5LjEwMiw0OTkuMjQxOCBDNDI4LjE2MzYsNDkxLjYxODQgNDMwLjE5NjQsNDg0LjQ5NDUgNDQwLjA3ODUsNDc3LjgyMDMgQzQzMC44OTMzLDQ3MS44NDgzIDQzMC41Mzk3LDQ2Ni4yMTI4IDQzOS45MjE3LDQ2MC4wNzY4IEM0MzAuNDg2NCw0NTQuMTQ5MyA0MzAuMjI5Niw0NDYuMzczNSA0MzkuODU1NCw0NDAuMzgxOCBDNDI2LjQxNjEsNDI4Ljg2ODUgNDMyLjY0NTYsNDE2LjEzNzkgNDQ3LDQxMS41IEM0NDguMjk0LDQxMS4wOTMzIDQ0OC45OTgzLDQxMi4wODc1IDQ0OC43MTYyLDQxMy4yMzc2ICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjYwIiB4PSI1NDkiIHk9IjQyOS40OTUxIj4mIzI5OTkyOyYjMjUxNDM7JiMyMDAxMzsmIzI0NTE1OzwvdGV4dD48L2c+PCEtLWVudGl0eSBzMS0tPjxnIGlkPSJlbGVtX3MxIj48cG9seWdvbiBmaWxsPSIjRjFGMUYxIiBwb2ludHM9IjIxMiwyOTYuNSwyMjIsMjg2LjUsMjY4LDI4Ni41LDI2OCwzMjIuNzk2OSwyNTgsMzMyLjc5NjksMjEyLDMzMi43OTY5LDIxMiwyOTYuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjU4IiB4Mj0iMjY4IiB5MT0iMjk2LjUiIHkyPSIyODYuNSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjIxMiIgeDI9IjI1OCIgeTE9IjI5Ni41IiB5Mj0iMjk2LjUiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyNTgiIHgyPSIyNTgiIHkxPSIyOTYuNSIgeTI9IjMzMi43OTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTYiIHg9IjIyNyIgeT0iMzE5LjQ5NTEiPnMxPC90ZXh0PjwvZz48IS0tZW50aXR5IHMyLS0+PGcgaWQ9ImVsZW1fczIiPjxwb2x5Z29uIGZpbGw9IiNGMUYxRjEiIHBvaW50cz0iMTIxLjUsMjk2LjUsMTMxLjUsMjg2LjUsMTc2LjUsMjg2LjUsMTc2LjUsMzIyLjc5NjksMTY2LjUsMzMyLjc5NjksMTIxLjUsMzMyLjc5NjksMTIxLjUsMjk2LjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjE2Ni41IiB4Mj0iMTc2LjUiIHkxPSIyOTYuNSIgeTI9IjI4Ni41Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTIxLjUiIHgyPSIxNjYuNSIgeTE9IjI5Ni41IiB5Mj0iMjk2LjUiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxNjYuNSIgeDI9IjE2Ni41IiB5MT0iMjk2LjUiIHkyPSIzMzIuNzk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE1IiB4PSIxMzYuNSIgeT0iMzE5LjQ5NTEiPnMyPC90ZXh0PjwvZz48IS0tZW50aXR5IHMzLS0+PGcgaWQ9ImVsZW1fczMiPjxwb2x5Z29uIGZpbGw9IiNGMUYxRjEiIHBvaW50cz0iMzAsMjk2LjUsNDAsMjg2LjUsODYsMjg2LjUsODYsMzIyLjc5NjksNzYsMzMyLjc5NjksMzAsMzMyLjc5NjksMzAsMjk2LjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9Ijc2IiB4Mj0iODYiIHkxPSIyOTYuNSIgeTI9IjI4Ni41Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzAiIHgyPSI3NiIgeTE9IjI5Ni41IiB5Mj0iMjk2LjUiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI3NiIgeDI9Ijc2IiB5MT0iMjk2LjUiIHkyPSIzMzIuNzk2OSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE2IiB4PSI0NSIgeT0iMzE5LjQ5NTEiPnMzPC90ZXh0PjwvZz48IS0tZW50aXR5IGRiMS0tPjxnIGlkPSJlbGVtX2RiMSI+PHBhdGggZD0iTTEwOSw0NDguNSBDMTA5LDQzOC41IDE0OSw0MzguNSAxNDksNDM4LjUgQzE0OSw0MzguNSAxODksNDM4LjUgMTg5LDQ0OC41IEwxODksNDkwLjA5MzggQzE4OSw1MDAuMDkzOCAxNDksNTAwLjA5MzggMTQ5LDUwMC4wOTM4IEMxNDksNTAwLjA5MzggMTA5LDUwMC4wOTM4IDEwOSw0OTAuMDkzOCBMMTA5LDQ0OC41ICIgZmlsbD0iI0YxRjFGMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTEwOSw0NDguNSBDMTA5LDQ1OC41IDE0OSw0NTguNSAxNDksNDU4LjUgQzE0OSw0NTguNSAxODksNDU4LjUgMTg5LDQ0OC41ICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI2MCIgeD0iMTE5IiB5PSI0NzUuNDk1MSI+JiMxNzE7bXlzcWwmIzE4Nzs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjgiIHg9IjEzNSIgeT0iNDkxLjc5MiI+ZGIxPC90ZXh0PjwvZz48IS0tZW50aXR5IHVzZXItLT48ZyBpZD0iZWxlbV91c2VyIj48cmVjdCBmaWxsPSIjQUREOEU2IiBoZWlnaHQ9IjQ2LjI5NjkiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9Ijk2IiB4PSI2MDYiIHk9IjQ0Ni41Ii8+PHJlY3QgZmlsbD0iI0FERDhFNiIgaGVpZ2h0PSIxMCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMTUiIHg9IjY4MiIgeT0iNDUxLjUiLz48cmVjdCBmaWxsPSIjQUREOEU2IiBoZWlnaHQ9IjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQiIHg9IjY4MCIgeT0iNDUzLjUiLz48cmVjdCBmaWxsPSIjQUREOEU2IiBoZWlnaHQ9IjIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQiIHg9IjY4MCIgeT0iNDU3LjUiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iNjIxIiB5PSI0NzkuNDk1MSI+JiMyOTk5MjsmIzI1MTQzOyYjMzE2NDk7JiMyOTcwMjs8L3RleHQ+PC9nPjwhLS1lbnRpdHkgcm9sZS0tPjxnIGlkPSJlbGVtX3JvbGUiPjxyZWN0IGZpbGw9IiNBREQ4RTYiIGhlaWdodD0iNDYuMjk2OSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iOTYiIHg9IjQ3NSIgeT0iNDQ2LjUiLz48cmVjdCBmaWxsPSIjQUREOEU2IiBoZWlnaHQ9IjEwIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHdpZHRoPSIxNSIgeD0iNTUxIiB5PSI0NTEuNSIvPjxyZWN0IGZpbGw9IiNBREQ4RTYiIGhlaWdodD0iMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNCIgeD0iNTQ5IiB5PSI0NTMuNSIvPjxyZWN0IGZpbGw9IiNBREQ4RTYiIGhlaWdodD0iMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNCIgeD0iNTQ5IiB5PSI0NTcuNSIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjU2IiB4PSI0OTAiIHk9IjQ3OS40OTUxIj4mIzM1MjgyOyYjMzMzOTQ7JiMzMTY0OTsmIzI5NzAyOzwvdGV4dD48L2c+PCEtLWVudGl0eSBkYjItLT48ZyBpZD0iZWxlbV9kYjIiPjxwYXRoIGQ9Ik01NTEuNSw1ODkuNSBDNTUxLjUsNTc5LjUgNTg4LDU3OS41IDU4OCw1NzkuNSBDNTg4LDU3OS41IDYyNC41LDU3OS41IDYyNC41LDU4OS41IEw2MjQuNSw2MzEuMDkzOCBDNjI0LjUsNjQxLjA5MzggNTg4LDY0MS4wOTM4IDU4OCw2NDEuMDkzOCBDNTg4LDY0MS4wOTM4IDU1MS41LDY0MS4wOTM4IDU1MS41LDYzMS4wOTM4IEw1NTEuNSw1ODkuNSAiIGZpbGw9IiM5MEVFOTAiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik01NTEuNSw1ODkuNSBDNTUxLjUsNTk5LjUgNTg4LDU5OS41IDU4OCw1OTkuNSBDNTg4LDU5OS41IDYyNC41LDU5OS41IDYyNC41LDU4OS41ICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGZvbnQtc3R5bGU9Iml0YWxpYyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1MyIgeD0iNTYxLjUiIHk9IjYxNi40OTUxIj4mIzE3MTtyZWRpcyYjMTg3OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNyIgeD0iNTc0LjUiIHk9IjYzMi43OTIiPmRiMjwvdGV4dD48L2c+PCEtLWVudGl0eSBBUFAtLT48ZyBpZD0iZWxlbV9BUFAiPjxlbGxpcHNlIGN4PSI0MjYiIGN5PSIxNCIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNNDI2LDIyIEw0MjYsNDkgTTQxMywzMCBMNDM5LDMwIE00MjYsNDkgTDQxMyw2NCBNNDI2LDQ5IEw0MzksNjQgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyOCIgeD0iNDEyIiB5PSI3OC40OTUxIj5BUFA8L3RleHQ+PC9nPjwhLS1lbnRpdHkgSDUtLT48ZyBpZD0iZWxlbV9INSI+PGVsbGlwc2UgY3g9IjQ4OSIgY3k9IjE0IiBmaWxsPSIjRjFGMUYxIiByeD0iOCIgcnk9IjgiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxwYXRoIGQ9Ik00ODksMjIgTDQ4OSw0OSBNNDc2LDMwIEw1MDIsMzAgTTQ4OSw0OSBMNDc2LDY0IE00ODksNDkgTDUwMiw2NCAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjE5IiB4PSI0NzkuNSIgeT0iNzguNDk1MSI+SDU8L3RleHQ+PC9nPjwhLS1lbnRpdHkgZmpzLS0+PGcgaWQ9ImVsZW1fZmpzIj48cG9seWdvbiBmaWxsPSIjRjFGMUYxIiBwb2ludHM9IjM5OS41LDE1Mi41LDQwOS41LDE0Mi41LDUxNC41LDE0Mi41LDUxNC41LDE3OC43OTY5LDUwNC41LDE4OC43OTY5LDM5OS41LDE4OC43OTY5LDM5OS41LDE1Mi41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI1MDQuNSIgeDI9IjUxNC41IiB5MT0iMTUyLjUiIHkyPSIxNDIuNSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjM5OS41IiB4Mj0iNTA0LjUiIHkxPSIxNTIuNSIgeTI9IjE1Mi41Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iNTA0LjUiIHgyPSI1MDQuNSIgeTE9IjE1Mi41IiB5Mj0iMTg4Ljc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI3NSIgeD0iNDE0LjUiIHk9IjE3NS40OTUxIj4mIzIxMDY5OyYjMjE0ODg7bm9kZWpzPC90ZXh0PjwvZz48IS0tbGluayBBUFAgdG8gZmpzLS0+PGcgaWQ9ImxpbmtfQVBQX2ZqcyI+PHBhdGggZD0iTTQzNS42MzksODEuODExIEM0NDAuNzU3LDEwMS42MjYgNDQ1LjM3NTEsMTE5LjUwMjggNDQ5Ljc1MDEsMTM2LjQzNTggIiBmaWxsPSJub25lIiBpZD0iQVBQLXRvLWZqcyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0NTEuMjUxLDE0Mi4yNDUsNDUyLjg3MjQsMTMyLjUzMDUsNDUwLjAwMDIsMTM3LjQwNCw0NDUuMTI2OCwxMzQuNTMxOCw0NTEuMjUxLDE0Mi4yNDUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBINSB0byBmanMtLT48ZyBpZD0ibGlua19INV9manMiPjxwYXRoIGQ9Ik00NzkuMDUsODEuODExIEM0NzMuNzY2LDEwMS42MjYgNDY4Ljk5NTgsMTE5LjUxNDYgNDY0LjQ4MDgsMTM2LjQ0NzYgIiBmaWxsPSJub25lIiBpZD0iSDUtdG8tZmpzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ2Mi45MzUsMTQyLjI0NSw0NjkuMTE4NywxMzQuNTc5NCw0NjQuMjIzMiwxMzcuNDEzOCw0NjEuMzg4OCwxMzIuNTE4Myw0NjIuOTM1LDE0Mi4yNDUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBzMSB0byBkYjEtLT48ZyBpZD0ibGlua19zMV9kYjEiPjxwYXRoIGQ9Ik0yMjcuMTU1LDMzMi44MDIgQzIxMS4yMzIsMzYwLjQ0OCAxODcuMDI3NSw0MDIuNDczNyAxNjkuMjgzNSw0MzMuMjgyNyAiIGZpbGw9Im5vbmUiIGlkPSJzMS10by1kYjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTY2LjI4OSw0MzguNDgyLDE3NC4yNDY5LDQzMi42NzkzLDE2OC43ODQ0LDQzNC4xNDkyLDE2Ny4zMTQ1LDQyOC42ODY3LDE2Ni4yODksNDM4LjQ4MiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHMyIHRvIGRiMS0tPjxnIGlkPSJsaW5rX3MyX2RiMSI+PHBhdGggZD0iTTE0OSwzMzIuODAyIEMxNDksMzYwLjQ0OCAxNDksNDAxLjY3MyAxNDksNDMyLjQ4MiAiIGZpbGw9Im5vbmUiIGlkPSJzMi10by1kYjEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTQ5LDQzOC40ODIsMTUzLDQyOS40ODIsMTQ5LDQzMy40ODIsMTQ1LDQyOS40ODIsMTQ5LDQzOC40ODIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBzMyB0byBkYjEtLT48ZyBpZD0ibGlua19zM19kYjEiPjxwYXRoIGQ9Ik03MC44NDUxLDMzMi44MDIgQzg2Ljc2OCwzNjAuNDQ4IDExMC45NzI1LDQwMi40NzM3IDEyOC43MTY1LDQzMy4yODI3ICIgZmlsbD0ibm9uZSIgaWQ9InMzLXRvLWRiMSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxMzEuNzExLDQzOC40ODIsMTMwLjY4NTUsNDI4LjY4NjcsMTI5LjIxNTYsNDM0LjE0OTIsMTIzLjc1MzEsNDMyLjY3OTMsMTMxLjcxMSw0MzguNDgyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLWxpbmsgZmpzIHRvIG1zLS0+PGcgaWQ9ImxpbmtfZmpzX21zIj48cGF0aCBkPSJNNDMyLjkzOCwxODguNjg4IEM0MTEuNjIsMjA4LjM0NDUgMzc5LjgwOTUsMjM3LjY3NiAzNTIuOTk5NCwyNjIuMzk2OSBDMzM5LjU5NDMsMjc0Ljc1NzMgMzI3LjQzOTMsMjg1Ljk2NTEgMzE4LjQ3MTEsMjk0LjIzNDUgQzMxNi4yMjksMjk2LjMwMTkgMzE0LjE4NjEsMjk4LjE4NTYgMzEyLjM3MjYsMjk5Ljg1NzcgQzMxMS45MTkzLDMwMC4yNzU4IDMxNS44OTEzLDI5Ni42MTMzIDMxNS40NjcxLDI5Ny4wMDQ1ICIgZmlsbD0ibm9uZSIgaWQ9ImZqcy10by1tcyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIzMTEuMDU2LDMwMS4wNzE4LDMyMC4zODQxLDI5Ny45MTE1LDMxNC43MzE5LDI5Ny42ODIzLDMxNC45NjEsMjkyLjAzMDEsMzExLjA1NiwzMDEuMDcxOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHVzZXIgdG8gZGIyLS0+PGcgaWQ9ImxpbmtfdXNlcl9kYjIiPjxwYXRoIGQ9Ik02NDMuNTQyLDQ5Mi41MjUgQzYzMi40Miw1MTUuOTUgNjE3LjMyNjUsNTQ3LjczNyA2MDQuOTEwNSw1NzMuODg2ICIgZmlsbD0ibm9uZSIgaWQ9InVzZXItdG8tZGIyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjYwMi4zMzcsNTc5LjMwNiw2MDkuODEwNyw1NzIuODkxNiw2MDQuNDgxNiw1NzQuNzg5Myw2MDIuNTgzOSw1NjkuNDYwMiw2MDIuMzM3LDU3OS4zMDYiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayByb2xlIHRvIGRiMi0tPjxnIGlkPSJsaW5rX3JvbGVfZGIyIj48cGF0aCBkPSJNNTMzLjI5OSw0OTIuNTI1IEM1NDQuMjUzLDUxNS45NSA1NTkuMTExNiw1NDcuNzIxOCA1NzEuMzM4Niw1NzMuODcwOCAiIGZpbGw9Im5vbmUiIGlkPSJyb2xlLXRvLWRiMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI1NzMuODgsNTc5LjMwNiw1NzMuNjkxMyw1NjkuNDU5LDU3MS43NjIxLDU3NC43NzY3LDU2Ni40NDQ0LDU3Mi44NDc1LDU3My44OCw1NzkuMzA2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLWxpbmsgZmpzIHRvIHVjLS0+PGcgaWQ9ImxpbmtfZmpzX3VjIj48cGF0aCBkPSJNNDcxLjk0MSwxODguNjQgQzQ5OC4zNDQsMjMwLjc3NiA1NDYuMjkzLDMyMy4zMDIgNTAwLDM3OS41IEM0ODguMTk2LDM5My44MyA0NzIuMzczLDM3NC42MjIgNDU5LDM4Ny41IEM0NTUuNzc0NiwzOTAuNjA2IDQ1My4wNTE4LDM5NC4xNDc1IDQ1MC43NTcxLDM5Ny45NzM2IEM0NTAuMTgzNCwzOTguOTMwMSA0NDkuNjM2NSwzOTkuOTA0NCA0NDkuMTE1MSw0MDAuODk0MSBDNDQ4Ljg1NDUsNDAxLjM4ODkgNDQ4LjYwMDIsNDAxLjg4NzYgNDQ4LjM1MjIsNDAyLjM4OTkgQzQ0OC4yMjgyLDQwMi42NDExIDQ1MC42OTM3LDM5Ny40Nzk5IDQ1MC41NzI4LDM5Ny43MzI4ICIgZmlsbD0ibm9uZSIgaWQ9ImZqcy10by11YyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0NDcuOTg0OCw0MDMuMTQ2LDQ1NS40NzU2LDM5Ni43NTE1LDQ1MC4xNDE1LDM5OC42MzUsNDQ4LjI1OCwzOTMuMzAwOSw0NDcuOTg0OCw0MDMuMTQ2IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMzgiIHg9IjUyMCIgeT0iMzE0LjA2NjkiPmdldCB1c2VyIGJhc2ljIGluZm8gYnk8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjM0IiB4PSI2NjIiIHk9IjMxNC4wNjY5Ij5odHRwPC90ZXh0PjwvZz48IS0tbGluayBtcyB0byB1Yy0tPjxnIGlkPSJsaW5rX21zX3VjIj48cGF0aCBkPSJNMzExLjEwNSwzNTIuMDIzNyBDMzExLjE3OTYsMzUyLjI1NjggMzExLjI1NDksMzUyLjQ4OTkgMzExLjMzMDgsMzUyLjcyMzEgQzMxMS45MzgzLDM1NC41ODkgMzEyLjU4ODYsMzU2LjQ2MDUgMzEzLjI4NDMsMzU4LjMyNDUgQzMxNi4wNjczLDM2NS43ODA5IDMxOS41Nzg4LDM3My4xMTg1IDMyNCwzNzkuNSBDMzQyLjIxNDUsNDA1Ljc5IDM3MC42LDQyNy43NjEgMzk0LjczMiw0NDMuMjk1OCBDNDA2Ljc5OCw0NTEuMDYzMSA0MTcuODAwNiw0NTcuMjIxNCA0MjUuOTM2OCw0NjEuNTA2IEM0MjcuOTcwOSw0NjIuNTc3MiA0MjkuODI1OCw0NjMuNTMxMiA0MzEuNDczMyw0NjQuMzY0IEM0MzEuNTc2Myw0NjQuNDE2MSA0MjYuMzIxLDQ2MS43NjYzIDQyNi40MjIzLDQ2MS44MTc0ICIgZmlsbD0ibm9uZSIgaWQ9Im1zLXRvLXVjIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQzMS43Nzk4LDQ2NC41MTg3LDQyNS41NDQ1LDQ1Ni44OTUsNDI3LjMxNTIsNDYyLjI2NzYsNDIxLjk0MjcsNDY0LjAzODMsNDMxLjc3OTgsNDY0LjUxODciIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyMCIgeD0iMzI1IiB5PSIzNzUuNTY2OSI+Z2V0IHVzZXIgaW5mbyBkZXRhaWw8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGZvbnQtd2VpZ2h0PSJib2xkIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjQ2IiB4PSI0NDkiIHk9IjM3NS41NjY5Ij5kdWJibzwvdGV4dD48L2c+PCEtLVNSQz1bVFAwekl5RDA3Q1J0LW5IX3dibWFBTHFhNzdKaE1GMEp0NWxKcjJHTlNuVWFZOUNXTFlZQUVCZnFxaUtZQlpoUEJzRVFWV25wYnNaSlkzU3p6enBsLVJ5U09MZ2NDMVlENEI1Z3M0U2ViYm4wOXZ5bHlqak5ld1VnMHFKMVVBZTBlSEE1QmZUZFNIU1IxbXR4VXJVSzQ3UDJWMDd2dnNocGtDWGxiWU9RQUpYN0sxdlJNWmFEeEpQcXBzZkVEQTU0MlUzS3lSbmVmYXYzWkVzQlNkdnhiTS1MdlZ3clVkbE0xSzljeVh5aEFjVGFlU211NTBfRmMtbHRodS1OVjdyZlhpbk9GSUlKS0k5WjRVaVFBTFJCdWt1QTFpVUdBUDcyR0hadTRxdDNKQkpleFRGelRsd3NlckNQWVpSVE1DeHJsNUptRzY1U0d0dWdINm1mc3NVdEhGTDdqYnBKUjZzTWlJRm1YUXgyUE8tMEdIMkY5VDBQVTFIRmo0d3lHdWZIejRfMmlibmU0ZUk2dm5jYnFXSS0wRzAwXS0tPjwvZz48L3N2Zz4=">
 
+
 <link rel="canonical" href="https://blog.yuheng.wang/2021/03/17/tech-design-review/">
 
 
-<script data-pjax id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-Hans'
-  };
-</script>
 
-  <title>领导说做个设计评审吧。 | wangyuheng's Blog</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://blog.yuheng.wang/2021/03/17/tech-design-review/","path":"2021/03/17/tech-design-review/","title":"领导说做个设计评审吧。"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>领导说做个设计评审吧。 | wangyuheng's Blog</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8"></script>
 
-  <script data-pjax>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+
+
 
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line toggle-line-first"></span>
-        <span class="toggle-line toggle-line-middle"></span>
-        <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -123,14 +83,14 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">wangyuheng's Blog</h1>
+      <p class="site-title">wangyuheng's Blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">time for change</p>
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -139,32 +99,7 @@
 
 
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
-
-  </li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -175,38 +110,31 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
            placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
 
     </div>
   </div>
 
-</div>
-          
+</header>
+        
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -219,121 +147,120 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">为什么要做设计评审</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E8%AE%A4%E4%B8%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">我认为的设计评审流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-%E7%BB%84%E7%BB%87%E4%BC%9A%E8%AE%AE"><span class="nav-number">2.1.</span> <span class="nav-text">0. 组织会议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">1. 需求背景介绍。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%BB%E8%BE%91%E8%A7%86%E5%9B%BE-%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">2.3.</span> <span class="nav-text">2. 逻辑视图(依赖关系)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BF%87%E7%A8%8B%E8%A7%86%E5%9B%BE"><span class="nav-number">2.4.</span> <span class="nav-text">3. 过程视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-DB%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.5.</span> <span class="nav-text">4. DB设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E6%8E%A8%E6%BC%94"><span class="nav-number">2.6.</span> <span class="nav-text">5. 数据推演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-api%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.7.</span> <span class="nav-text">6. api设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9B%BE"><span class="nav-number">2.8.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88"><span class="nav-number">2.9.</span> <span class="nav-text">部署方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%8E%E9%99%A9%E9%A1%B9"><span class="nav-number">2.10.</span> <span class="nav-text">风险项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.11.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">2.12.</span> <span class="nav-text">感想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%81%9A%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1"><span class="nav-number">1.</span> <span class="nav-text">为什么要做设计评审</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E8%AE%A4%E4%B8%BA%E7%9A%84%E8%AE%BE%E8%AE%A1%E8%AF%84%E5%AE%A1%E6%B5%81%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">我认为的设计评审流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#0-%E7%BB%84%E7%BB%87%E4%BC%9A%E8%AE%AE"><span class="nav-number">2.1.</span> <span class="nav-text">0. 组织会议</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF%E4%BB%8B%E7%BB%8D%E3%80%82"><span class="nav-number">2.2.</span> <span class="nav-text">1. 需求背景介绍。</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%BB%E8%BE%91%E8%A7%86%E5%9B%BE-%E4%BE%9D%E8%B5%96%E5%85%B3%E7%B3%BB"><span class="nav-number">2.3.</span> <span class="nav-text">2. 逻辑视图(依赖关系)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E8%BF%87%E7%A8%8B%E8%A7%86%E5%9B%BE"><span class="nav-number">2.4.</span> <span class="nav-text">3. 过程视图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-DB%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.5.</span> <span class="nav-text">4. DB设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-%E6%95%B0%E6%8D%AE%E6%8E%A8%E6%BC%94"><span class="nav-number">2.6.</span> <span class="nav-text">5. 数据推演</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-api%E8%AE%BE%E8%AE%A1"><span class="nav-number">2.7.</span> <span class="nav-text">6. api设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%B1%BB%E5%9B%BE"><span class="nav-number">2.8.</span> <span class="nav-text">类图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%83%A8%E7%BD%B2%E6%96%B9%E6%A1%88"><span class="nav-number">2.9.</span> <span class="nav-text">部署方案</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%A3%8E%E9%99%A9%E9%A1%B9"><span class="nav-number">2.10.</span> <span class="nav-text">风险项</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">2.11.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%84%9F%E6%83%B3"><span class="nav-number">2.12.</span> <span class="nav-text">感想</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E4%BB%96"><span class="nav-number">3.</span> <span class="nav-text">其他</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="wangyuheng"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">wangyuheng</p>
   <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">107</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
-
-
-      </section>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
         </div>
+      </div>
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </header>
-
-      
-  <div class="reading-progress-bar"></div>
-
-  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-<noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-      <div class="main-inner">
-        
-
-        <div class="content post posts-expand">
-          
 
     
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2021/03/17/tech-design-review/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="领导说做个设计评审吧。 | wangyuheng's Blog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           领导说做个设计评审吧。
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2021-03-17 00:46:25" itemprop="dateCreated datePublished" datetime="2021-03-17T00:46:25+08:00">2021-03-17</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%A0%87%E5%87%86%E5%8A%A8%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">标准动作</span></a>
-                </span>
-            </span>
+      <time title="Created: 2021-03-17 00:46:25" itemprop="dateCreated datePublished" datetime="2021-03-17T00:46:25+08:00">2021-03-17</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-06 09:38:38" itemprop="dateModified" datetime="2023-08-06T09:38:38+08:00">2023-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E6%A0%87%E5%87%86%E5%8A%A8%E4%BD%9C/" itemprop="url" rel="index"><span itemprop="name">标准动作</span></a>
+        </span>
+    </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -341,10 +268,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>作为开发人员，你一定被老板要求过“做个设计评审吧”。那么问题来了，要怎么做设计评审呢？<br>答案非常简单：<strong>问你的老板。</strong><br>因为公司风格不同、个人喜好差异，因此一定要先明确预期，不要自己猜测这种“一句话需求”。可以先咨询是否有相关的文档和模版，或者他人做的参考。<br>新人往往惧怕沟通，担心这是能力不足的体现。其实，追根刨底才是一种专业性的体现。</p>
+    <div class="post-body" itemprop="articleBody"><p>作为开发人员，你一定被老板要求过“做个设计评审吧”。那么问题来了，要怎么做设计评审呢？<br>答案非常简单：<strong>问你的老板。</strong><br>因为公司风格不同、个人喜好差异，因此一定要先明确预期，不要自己猜测这种“一句话需求”。可以先咨询是否有相关的文档和模版，或者他人做的参考。<br>新人往往惧怕沟通，担心这是能力不足的体现。其实，追根刨底才是一种专业性的体现。</p>
 <span id="more"></span>
 
 <h2 id="为什么要做设计评审"><a href="#为什么要做设计评审" class="headerlink" title="为什么要做设计评审"></a>为什么要做设计评审</h2><p>客观来说，因为不信任。<br>当你作为一个新手时，领导需要确认你理解了需求并采用合适的设计思路，保障质量与扩展性的同时还需要确认安全性、可维护性等方面没有缺陷。<br>而资深人员，也需要确认了解现有团队整体架构规范。<br>当团队结果一段时间的配合后，会达到一些默契，就可以简化相关流程。<br>同时，涉及多方合作时，也可以在设计评审时，说明配合方式，以及为什么要这样配合。<br>作为干饭人，每一次发声都是一次个人的分享展示。</p>
@@ -401,202 +325,108 @@
     
     
     
-        
 
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
 
-    <div class="social-list">
+  <div class="social-list">
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+      <div class="social-item">
+          <span class="social-link">
             <span class="icon">
               <i class="fab fa-weixin"></i>
             </span>
 
             <span class="label">WeChat</span>
-          </a>
-        </div>
-    </div>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_qrcode.jpg">
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tagcloud/%E8%A7%84%E8%8C%83/" rel="tag"># 规范</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2021/03/16/cors/" rel="prev" title="朋友，你听说过跨域吗">
-      <i class="fa fa-chevron-left"></i> 朋友，你听说过跨域吗
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2021/03/18/ut/" rel="next" title="朋友，你听说过单元测试吗">
-      朋友，你听说过单元测试吗 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-        </div>
-        
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
-      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
-  </div>
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/03/16/cors/" rel="prev" title="朋友，你听说过跨域吗">
+                  <i class="fa fa-angle-left"></i> 朋友，你听说过跨域吗
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/03/18/ut/" rel="next" title="朋友，你听说过单元测试吗">
+                  朋友，你听说过单元测试吗 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" alt="">
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  if (hasTOC) {
-    document.querySelector('.sidebar-nav-toc').click();
-  } else {
-    document.querySelector('.sidebar-nav-overview').click();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-  
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="pjax">
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2021/03/17/tech-design-review/',]
-      });
-      });
-  </script>
-
     </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>

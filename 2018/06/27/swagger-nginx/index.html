@@ -2,9 +2,10 @@
 <html lang="zh-Hans">
 <head>
   <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.4.0">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
@@ -13,14 +14,13 @@
 <link rel="stylesheet" href="/css/main.css">
 
 
-<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 
-<script id="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"blog.yuheng.wang","root":"/","scheme":"Gemini","version":"8.0.0-rc.4","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"prism":false,"path":"search.xml"};
-  </script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-  <meta name="description" content="“swagger接口服务是我本机，如果我下班关机回家，对方如何进行联调？”  如果你有类似的疑问，这篇文章可以帮助你。 项目源码地址: github">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yuheng.wang","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="“swagger接口服务是我本机，如果我下班关机回家，对方如何进行联调？”  如果你有类似的疑问，这篇文章可以帮助你。 项目源码地址: github">
 <meta property="og:type" content="article">
 <meta property="og:title" content="稳定的静态swagger接口服务">
 <meta property="og:url" content="https://blog.yuheng.wang/2018/06/27/swagger-nginx/index.html">
@@ -39,82 +39,42 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSI0NTlweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjM2MHB4O2hlaWdodDo0NTlweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAzNjAgNDU5IiB3aWR0aD0iMzYwcHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48ZyBpZD0iY2x1c3Rlcl8jIzUiPjxwYXRoIGQ9Ik0xMTQuMDAyNywxMzguMDM5MiBDMTE4LjA2MjQsMTMwLjY0MjUgMTIyLjc2MjUsMTI5Ljg2MDIgMTI5LjA1ODIsMTM1LjQ0NjEgQzEzNC43MzgsMTI2LjU4MjEgMTM5LjY0ODIsMTI3LjQ2MDQgMTQ1LjM4NTIsMTM1LjM5MDUgQzE0OS41MjIsMTI3Ljg3MzggMTU1LjYwOTMsMTI3LjMwMjggMTYxLjA2MzcsMTMzLjkyOTkgQzE2Ni44MTQ3LDEyNS4zMjk0IDE3My45MTc5LDEyNC41MDA5IDE3OS45MjIxLDEzMy42NjEgQzE4NC4yNjk1LDEyNy4wODU2IDE5MC41NzUzLDEyNi45MTQxIDE5NS40Nzg3LDEzMi45NzY1IEMxOTkuNDMyOCwxMjQuNzcyIDIwNi4zNTg3LDEyNC4xNTEgMjExLjMwMTMsMTMyLjAwMjMgQzIxNS43MTAxLDEyNS42NzEyIDIyMS44NTQ3LDEyNC4zMjY5IDIyNi4xNDgzLDEzMi4xMjMzIEMyMzEuNTI3NCwxMjUuNjA0OSAyMzguNTQyMSwxMjQuNDY0MyAyNDMuMTEwMywxMzMuMDM0OSBDMjQ4Ljc0MjIsMTI2LjI4NTEgMjU1Ljg1ODEsMTI2LjM2MzMgMjYwLjYyMTMsMTM0LjA4NTkgQzI2NS4wMDM4LDEyNy40MDU3IDI3Mi41Mzg1LDEyNi4zMDQ0IDI3Ni4zNTg0LDEzNC42NzQyIEMyODEuNjUyMywxMjYuNTYwNyAyODcuMzM4LDEyNy42MjkgMjkxLjczMzQsMTM1LjUzNjUgQzMwMS45MzQzLDEyNi44OTE1IDMxMC43ODUxLDEzMS42ODM0IDMxMy41LDE0My41IEMzMTMuNzYwNywxNDMuNTM0MiAzMTMuODgwNywxNDMuNjQ3MSAzMTMuNzQyMiwxNDMuOTE0NiBDMzIzLjcxNSwxNDguMjg4NiAzMjIuMjk0NywxNTMuNjc2OCAzMTYuMzg4NSwxNjAuNTczMiBDMzI1LjA0NDQsMTY0LjMxNjcgMzIzLjk3MTIsMTcwLjY1MTkgMzE3Ljc4NDksMTc1Ljc2MDIgQzMyNS43Njg5LDE3OS42OTM1IDMyNC4yMTgsMTg2LjA5NiAzMTguNDAyNSwxOTAuNjAzNCBDMzI2LjQ5NDYsMTk1LjQ5MTYgMzI2LjM3MDEsMjAxLjcyNDQgMzE5Ljg1ODcsMjA3Ljg0NTggQzMyOS4xNzc4LDIxMi4zMDkzIDMyOS40NjM1LDIxNy45MjIgMzIyLjE3MjIsMjI0LjY2OTcgQzMyOC44ODYxLDIzMS4zMzI0IDMyOC4wMzU1LDIzNi44OTM2IDMxOC42OTQ3LDIzOS44ODc2IEMzMjYuMDI5MSwyNDQuOTM2NyAzMjUuODc3LDI1MC40NTIxIDMxOS4xNjgxLDI1NS45MTYgQzMyNS4wNzEzLDI2MS40OTIyIDMyMy43ODM1LDI2Ni4xMjM2IDMxNy40MTg2LDI3MC4xOTcgQzMyNC44ODczLDI3NS43MDQ2IDMyMy43NjA4LDI4MS44OTU3IDMxNS44OTU2LDI4NS45MTc4IEMzMjMuMjU0MywyOTYuOTk1NCAzMjAuNDk1NiwzMDUuNzE4OCAzMDYuNSwzMDcuNSBDMzA2LjcyNTMsMzA3LjU0NzQgMzA2LjgxMzcsMzA3LjcxMDEgMzA2LjY0MTIsMzA3Ljg5ODUgQzMwNC44MzUyLDMxNi4xMTIyIDI5OC43NDk1LDMxOC4wMTgyIDI5Mi44MjY4LDMxMS44NTM4IEMyODcuMzU4NCwzMTkuMTE2IDI4Mi4yNTI1LDMyMC4zODU5IDI3Ni41MTMsMzEyLjEzODkgQzI3Mi45MzYyLDMyMS4xNDQ5IDI2NC41NDk0LDMyMS42OTQ2IDI1OS4xODc2LDMxMy45ODk2IEMyNTUuNTY5NywzMjMuMjI1NSAyNDguODAzOCwzMjQuNDYyOSAyNDIuMTc4OCwzMTcuMDY0NCBDMjM4LjE1NzgsMzI0LjM0ODMgMjMwLjY0MTEsMzIzLjY2MzIgMjI2LjgxNDIsMzE2Ljg1MjkgQzIyMy42ODEzLDMyNC44MDcgMjE3LjYxOTgsMzI2LjgzNzEgMjEwLjk0NjYsMzIwLjg5NTcgQzIwNC4xNjQxLDMyOC45MzkgMTk4LjcwNjUsMzI3LjY2MDUgMTkzLjQzNjUsMzE5LjI4MjggQzE4OC4wMTQ5LDMyNC4yMzc3IDE4MS44MDY4LDMyMy40MzM1IDE3OC45NjU5LDMxNi4yMTUgQzE3My4zMTQ4LDMyNC4wNjUyIDE2Ny41NTk2LDMyMy40MTY5IDE2Mi40ODUsMzE1LjYwODIgQzE1Ni4wODQyLDMyMy4zNTMgMTUwLjI2MzksMzIxLjI2ODEgMTQ1LjYyMDMsMzEzLjY3NiBDMTM5LjIxOTMsMzE5LjYxMjggMTMzLjkzODYsMzE4LjUxMzYgMTMwLjg0NzIsMzEwLjIzNjMgQzExNy4xNDU5LDMxOS42MDczIDEwOS4xNjEyLDMxNy4yNjczIDEwNS41LDMwMC41IEMxMDUuNzcwMSwzMDAuNTU4NiAxMDUuODU1NSwzMDAuNjgzNSAxMDUuNjgxNiwzMDAuOTI5NyBDOTcuMzExMywyOTUuMTgyMiA5Ny40MjgzLDI4OS45MTQ0IDEwNi4zNDU0LDI4NC44ODIgQzk4LjU1NDUsMjgyLjI5NTIgOTcuNDIxOCwyNzUuNDQwNSAxMDQuMTIzMiwyNzAuNTk4OSBDOTYuNzI0NywyNjYuNzY5NSA5NC41ODY2LDI2MC44MDEyIDEwMi4yNDM2LDI1NS4xNDExIEM5NC40ODUxLDI1Mi4wOTAzIDkzLjQ0NjYsMjQ1LjIyMjUgOTkuMjIxMSwyMzkuNTQ4NCBDOTEuMzIyNiwyMzUuNzAyIDkwLjE5MywyMjkuMDc5OCA5Ny42NzQxLDIyMy43MjkzIEM5MS4wMTgxLDIxNy42MzkgOTMuMTE5OCwyMTAuNzk2MyAxMDEuNzAxOSwyMDguODIzNyBDOTQuMDIwNSwyMDQuMjQ5IDkzLjg3NDYsMTk3LjE4MzMgMTAyLjM0NzgsMTkzLjI3OTggQzk0LjUwMjUsMTg4LjEzODYgOTYuNTI2MywxNzkuOTc0NiAxMDQuMDIxMiwxNzYuMzQ5NyBDOTUuMzgwOCwxNzAuNTY1MyA5Ni42NzM0LDE2NC44Njk0IDEwNC42MTczLDE1OS42NzggQzk2LjQwMjIsMTQ4LjU3MSA5Ny40MjIsMTM5LjY4NTEgMTEyLjUsMTM2LjUgQzExMy42NDQ1LDEzNi40MDg3IDExNC4zMDQ3LDEzNi43MTgzIDExNC4wMDI3LDEzOC4wMzkyICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1lbnRpdHkgbmdpbngtLT48ZyBpZD0iZWxlbV9uZ2lueCI+PGVsbGlwc2UgY3g9IjI4NS41IiBjeT0iMTYwLjUiIGZpbGw9IiNGMUYxRjEiIHJ4PSIxMiIgcnk9IjEyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI4MS41LDE0OC41LDI4Ny41LDE0My41LDI4NS41LDE0OC41LDI4Ny41LDE1My41LDI4MS41LDE0OC41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIzOSIgeD0iMjY2IiB5PSIxODkuNDk1MSI+bmdpbng8L3RleHQ+PC9nPjwhLS1lbnRpdHkgc3dhZ2dlci0tPjxnIGlkPSJlbGVtX3N3YWdnZXIiPjxwb2x5Z29uIGZpbGw9IiMwMDgwMDAiIHBvaW50cz0iMTE0LDE1NS41LDEyNCwxNDUuNSwyMzEsMTQ1LjUsMjMxLDE4MS43OTY5LDIyMSwxOTEuNzk2OSwxMTQsMTkxLjc5NjksMTE0LDE1NS41IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyMjEiIHgyPSIyMzEiIHkxPSIxNTUuNSIgeTI9IjE0NS41Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMTE0IiB4Mj0iMjIxIiB5MT0iMTU1LjUiIHkyPSIxNTUuNSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjIyMSIgeDI9IjIyMSIgeTE9IjE1NS41IiB5Mj0iMTkxLjc5NjkiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI3NyIgeD0iMTI5IiB5PSIxNzguNDk1MSI+c3dhZ2dlci11aTwvdGV4dD48L2c+PCEtLWVudGl0eSBqc29uLS0+PGcgaWQ9ImVsZW1fanNvbiI+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSIxNzEuNSwyNjMuNSwxODEuNSwyNTMuNSwzMDUuNSwyNTMuNSwzMDUuNSwyODkuNzk2OSwyOTUuNSwyOTkuNzk2OSwxNzEuNSwyOTkuNzk2OSwxNzEuNSwyNjMuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMjk1LjUiIHgyPSIzMDUuNSIgeTE9IjI2My41IiB5Mj0iMjUzLjUiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxNzEuNSIgeDI9IjI5NS41IiB5MT0iMjYzLjUiIHkyPSIyNjMuNSIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjI5NS41IiB4Mj0iMjk1LjUiIHkxPSIyNjMuNSIgeTI9IjI5OS43OTY5Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTQiIHg9IjE4Ni41IiB5PSIyODYuNDk1MSI+c3dhZ2dlci1qc29uPC90ZXh0PjwvZz48IS0tZW50aXR5IGphdmFfcHJvZHVjZXJfY29kZXItLT48ZyBpZD0iZWxlbV9qYXZhX3Byb2R1Y2VyX2NvZGVyIj48ZWxsaXBzZSBjeD0iMjM4LjUiIGN5PSIzODciIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTIzOC41LDM5NSBMMjM4LjUsNDIyIE0yMjUuNSw0MDMgTDI1MS41LDQwMyBNMjM4LjUsNDIyIEwyMjUuNSw0MzcgTTIzOC41LDQyMiBMMjUxLjUsNDM3ICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTQ4IiB4PSIxNjQuNSIgeT0iNDUxLjQ5NTEiPmphdmFfcHJvZHVjZXJfY29kZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkgamF2YV9jb25zdW1lcl9jb2Rlci0tPjxnIGlkPSJlbGVtX2phdmFfY29uc3VtZXJfY29kZXIiPjxlbGxpcHNlIGN4PSI4Mi41IiBjeT0iMTQiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTgyLjUsMjIgTDgyLjUsNDkgTTY5LjUsMzAgTDk1LjUsMzAgTTgyLjUsNDkgTDY5LjUsNjQgTTgyLjUsNDkgTDk1LjUsNjQgIiBmaWxsPSJub25lIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTMiIHg9IjYiIHk9Ijc4LjQ5NTEiPmphdmFfY29uc3VtZXJfY29kZXI8L3RleHQ+PC9nPjwhLS1lbnRpdHkganNfY29uc3VtZXJfY29kZXItLT48ZyBpZD0iZWxlbV9qc19jb25zdW1lcl9jb2RlciI+PGVsbGlwc2UgY3g9IjI2Mi41IiBjeT0iMTQiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTI2Mi41LDIyIEwyNjIuNSw0OSBNMjQ5LjUsMzAgTDI3NS41LDMwIE0yNjIuNSw0OSBMMjQ5LjUsNjQgTTI2Mi41LDQ5IEwyNzUuNSw2NCAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEzNiIgeD0iMTk0LjUiIHk9Ijc4LjQ5NTEiPmpzX2NvbnN1bWVyX2NvZGVyPC90ZXh0PjwvZz48IS0tbGluayBqYXZhX2NvbnN1bWVyX2NvZGVyIHRvIHN3YWdnZXItLT48ZyBpZD0ibGlua19qYXZhX2NvbnN1bWVyX2NvZGVyX3N3YWdnZXIiPjxwYXRoIGQ9Ik0xMDkuNzQ3LDgxLjczOCBDMTI0Ljk1OCwxMDIuNTI2IDEzOS44NDc5LDEyMi44NzU5IDE1Mi43ODc5LDE0MC41NTk5ICIgZmlsbD0ibm9uZSIgaWQ9ImphdmFfY29uc3VtZXJfY29kZXItdG8tc3dhZ2dlciIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIxNTYuMzMxLDE0NS40MDIsMTU0LjI0NDQsMTM1Ljc3NjcsMTUzLjM3ODQsMTQxLjM2NjksMTQ3Ljc4ODIsMTQwLjUwMDksMTU2LjMzMSwxNDUuNDAyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLWxpbmsganNfY29uc3VtZXJfY29kZXIgdG8gc3dhZ2dlci0tPjxnIGlkPSJsaW5rX2pzX2NvbnN1bWVyX2NvZGVyX3N3YWdnZXIiPjxwYXRoIGQ9Ik0yMzUuMjUzLDgxLjczOCBDMjIwLjA0MiwxMDIuNTI2IDIwNS4xNTIxLDEyMi44NzU5IDE5Mi4yMTIxLDE0MC41NTk5ICIgZmlsbD0ibm9uZSIgaWQ9ImpzX2NvbnN1bWVyX2NvZGVyLXRvLXN3YWdnZXIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMTg4LjY2OSwxNDUuNDAyLDE5Ny4yMTE4LDE0MC41MDA5LDE5MS42MjE2LDE0MS4zNjY5LDE5MC43NTU2LDEzNS43NzY3LDE4OC42NjksMTQ1LjQwMiIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHN3YWdnZXIgdG8gbmdpbngtLT48ZyBpZD0ibGlua19zd2FnZ2VyX25naW54Ij48cGF0aCBkPSJNMjMxLjIwNywxNjguNSBDMjQyLjgwMSwxNjguNSAyNDguMzk1LDE2OC41IDI1OS45ODgsMTY4LjUgIiBmaWxsPSJub25lIiBpZD0ic3dhZ2dlci10by1uZ2lueCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSIyNjUuOTg4LDE2OC41LDI1Ni45ODgsMTY0LjUsMjYwLjk4OCwxNjguNSwyNTYuOTg4LDE3Mi41LDI2NS45ODgsMTY4LjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBuZ2lueCB0byBqc29uLS0+PGcgaWQ9ImxpbmtfbmdpbnhfanNvbiI+PHBhdGggZD0iTTI3NS4zMDIsMTkyLjUgQzI2Ny4zMSwyMTAuNTI0IDI1OC42OTExLDIyOS45NjMgMjUwLjc4ODEsMjQ3Ljc4NiAiIGZpbGw9Im5vbmUiIGlkPSJuZ2lueC10by1qc29uIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjI0OC4zNTYsMjUzLjI3MSwyNTUuNjYwOCwyNDYuNjY1LDI1MC4zODI4LDI0OC43MDAyLDI0OC4zNDc1LDI0My40MjIxLDI0OC4zNTYsMjUzLjI3MSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1yZXZlcnNlIGxpbmsganNvbiB0byBqYXZhX3Byb2R1Y2VyX2NvZGVyLS0+PGcgaWQ9ImxpbmtfanNvbl9qYXZhX3Byb2R1Y2VyX2NvZGVyIj48cGF0aCBkPSJNMjM4LjUsMzA1LjY3MiBDMjM4LjUsMzI2Ljg1MyAyMzguNSwzNTMuMTgxIDIzOC41LDM3OC4zMDU4ICIgZmlsbD0ibm9uZSIgaWQ9Impzb24tYmFja3RvLWphdmFfcHJvZHVjZXJfY29kZXIiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjM4LjUsMjk5LjY3MiwyMzQuNSwzMDguNjcyLDIzOC41LDMwNC42NzIsMjQyLjUsMzA4LjY3MiwyMzguNSwyOTkuNjcyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTMiIHg9IjIzOS41IiB5PSIzNDQuNTY2OSI+cHVzaCAmIzI1NTA5OyYjMjE0NzU7anNvbiYjMjU5OTE7JiMyMDIxNDs8L3RleHQ+PC9nPjwhLS1TUkM9W0lxbWtvSXpJbzRlaUl1bWxBQ2ZGQUtyRUJPZkZwYXo5QlU5QUhDV2F2LVNMYi1RWW9uSVpZdENidi1JTmZZWEtTb2EwMEwya2YyV19IbzRsRkpFbDBZb0kxcklhZTVIU2RmWVVkYmdhTXZnZmZFME9oMDNiQVlZZDV3TWN2YzVIYnJNU2RtVE0yTTltck45bk9ONkhXZ3drN1NtYUJXbnRlU1oyeERDam9hcEZBMDVBR0RtNzlYTHFLX0JCeXUxWU9Ba21YOGMyUmNhMUxEZkFlUTJxRTRGWE1UX0lmX3NCR0dCRmZoS19zUnFEMDAwMF0tLT48L2c+PC9zdmc+">
 
+
 <link rel="canonical" href="https://blog.yuheng.wang/2018/06/27/swagger-nginx/">
 
 
-<script data-pjax id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'zh-Hans'
-  };
-</script>
 
-  <title>稳定的静态swagger接口服务 | wangyuheng's Blog</title>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://blog.yuheng.wang/2018/06/27/swagger-nginx/","path":"2018/06/27/swagger-nginx/","title":"稳定的静态swagger接口服务"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>稳定的静态swagger接口服务 | wangyuheng's Blog</title>
   
 
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8"></script>
 
-  <script data-pjax>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+
+
 
 
 
 
   <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
-    <main class="main">
-      <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-        <div class="header-inner"><div class="site-brand-container">
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line toggle-line-first"></span>
-        <span class="toggle-line toggle-line-middle"></span>
-        <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
@@ -122,14 +82,14 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <h1 class="site-title">wangyuheng's Blog</h1>
+      <p class="site-title">wangyuheng's Blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">time for change</p>
   </div>
 
   <div class="site-nav-right">
-    <div class="toggle popup-trigger">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
         <i class="fa fa-search fa-fw fa-lg"></i>
     </div>
   </div>
@@ -138,32 +98,7 @@
 
 
 <nav class="site-nav">
-  <ul id="menu" class="main-menu menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="home fa-fw"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a>
-
-  </li>
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
         </a>
@@ -174,38 +109,31 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off"
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
            placeholder="Searching..." spellcheck="false"
            type="search" class="search-input">
   </div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div id="search-result">
-  <div id="no-result">
-    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
   </div>
 </div>
 
     </div>
   </div>
 
-</div>
-          
+</header>
+        
   
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
   <aside class="sidebar">
 
     <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
@@ -218,121 +146,120 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <section class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E6%90%AD%E5%BB%BAswagger-ui%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.1.</span> <span class="nav-text">docker搭建swagger-ui服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E6%90%AD%E5%BB%BAswagger-json%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">docker搭建swagger-json服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.3.</span> <span class="nav-text">发布接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AEswagger"><span class="nav-number">3.4.</span> <span class="nav-text">访问swagger</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">5.</span> <span class="nav-text">缺陷</span></a></li></ol></div>
-      </section>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88"><span class="nav-number">2.</span> <span class="nav-text">方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E6%90%AD%E5%BB%BAswagger-ui%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.1.</span> <span class="nav-text">docker搭建swagger-ui服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#docker%E6%90%AD%E5%BB%BAswagger-json%E6%9C%8D%E5%8A%A1"><span class="nav-number">3.2.</span> <span class="nav-text">docker搭建swagger-json服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%91%E5%B8%83%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.3.</span> <span class="nav-text">发布接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%BF%E9%97%AEswagger"><span class="nav-number">3.4.</span> <span class="nav-text">访问swagger</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%BA%E9%99%B7"><span class="nav-number">5.</span> <span class="nav-text">缺陷</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <section class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="wangyuheng"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">wangyuheng</p>
   <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
+        <a href="/archives/">
           <span class="site-state-item-count">107</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
+          <a href="/categories/">
         <span class="site-state-item-count">36</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
+          <a href="/tags/">
         <span class="site-state-item-count">99</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
 
-
-
-      </section>
-        <div class="back-to-top motion-element">
-          <i class="fa fa-arrow-up"></i>
-          <span>0%</span>
         </div>
+      </div>
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </header>
-
-      
-  <div class="reading-progress-bar"></div>
-
-  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
-
-<noscript>
-  <div id="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-      <div class="main-inner">
-        
-
-        <div class="content post posts-expand">
-          
 
     
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-Hans">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2018/06/27/swagger-nginx/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="wangyuheng">
-      <meta itemprop="description" content="天行健 男儿当立志！">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="稳定的静态swagger接口服务 | wangyuheng's Blog">
+      <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
           稳定的静态swagger接口服务
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
 
-              <time title="Created: 2018-06-27 12:59:49" itemprop="dateCreated datePublished" datetime="2018-06-27T12:59:49+08:00">2018-06-27</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-                </span>
-            </span>
+      <time title="Created: 2018-06-27 12:59:49" itemprop="dateCreated datePublished" datetime="2018-06-27T12:59:49+08:00">2018-06-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-06 09:38:38" itemprop="dateModified" datetime="2023-08-06T09:38:38+08:00">2023-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
 
-          
+  
+</div>
 
         </div>
       </header>
@@ -340,10 +267,7 @@
     
     
     
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <blockquote>
+    <div class="post-body" itemprop="articleBody"><blockquote>
 <p>“swagger接口服务是我本机，如果我下班关机回家，对方如何进行联调？”</p>
 </blockquote>
 <p>如果你有类似的疑问，这篇文章可以帮助你。</p>
@@ -409,27 +333,27 @@
     
     
     
-        
 
-  <div class="followme">
-    <p>Welcome to my other publishing channels</p>
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
 
-    <div class="social-list">
+  <div class="social-list">
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_qrcode.jpg">
+      <div class="social-item">
+          <span class="social-link">
             <span class="icon">
               <i class="fab fa-weixin"></i>
             </span>
 
             <span class="label">WeChat</span>
-          </a>
-        </div>
-    </div>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_qrcode.jpg">
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tagcloud/java/" rel="tag"># java</a>
               <a href="/tagcloud/springboot/" rel="tag"># springboot</a>
@@ -438,175 +362,81 @@
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2018/06/26/monitor/" rel="prev" title="浅入浅出监控系统">
-      <i class="fa fa-chevron-left"></i> 浅入浅出监控系统
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2018/06/28/docker-kafka-broker/" rel="next" title="docker单点kafka扩容">
-      docker单点kafka扩容 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
-        </div>
-        
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
-  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
-      <img src="http://www.beian.gov.cn/portal/download" style="display: inline-block;">
-  </div>
-
-<div class="copyright">
-  
-  &copy; 
-  <span itemprop="copyrightYear">2023</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">wangyuheng</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
-  </div>
-
-        
-
-
-
-
-
-
-
-
-      </div>
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/06/26/monitor/" rel="prev" title="浅入浅出监控系统">
+                  <i class="fa fa-angle-left"></i> 浅入浅出监控系统
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/06/28/docker-kafka-broker/" rel="next" title="docker单点kafka扩容">
+                  docker单点kafka扩容 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
     </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" alt="">
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
   </div>
 
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/next-theme/pjax@0/pjax.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.main-inner',
-    '.post-toc-wrap',
-    '.languages',
-    '#pjax'
-  ],
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-document.addEventListener('pjax:success', () => {
-  pjax.executeScripts(document.querySelectorAll('script[data-pjax], #pjax script'));
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.subMenu)
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  const hasTOC = document.querySelector('.post-toc');
-  document.querySelector('.sidebar-inner').classList.toggle('sidebar-nav-active', hasTOC);
-  if (hasTOC) {
-    document.querySelector('.sidebar-nav-toc').click();
-  } else {
-    document.querySelector('.sidebar-nav-overview').click();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-  
-
-
-
-
-  
-<script src="/js/local-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <div id="pjax">
-  
-
-  
-  <script src="//cdn.jsdelivr.net/npm/quicklink@2/dist/quicklink.umd.js"></script>
-  <script>
-      window.addEventListener('load', () => {
-      quicklink.listen({
-        timeout : 3000,
-        priority: true,
-        ignores : [uri => uri.includes('#'),uri => uri === 'https://blog.yuheng.wang/2018/06/27/swagger-nginx/',]
-      });
-      });
-  </script>
-
     </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/wangyuheng" class="github-corner" title="Follow me on GitHub" aria-label="Follow me on GitHub" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+
+
+  
+
+
+
+
+
 </body>
 </html>

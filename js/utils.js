@@ -6,46 +6,26 @@ HTMLElement.prototype.wrap = function(wrapper) {
   wrapper.appendChild(this);
 };
 
+(function() {
+  const onPageLoaded = () => document.dispatchEvent(
+    new Event('page:loaded', {
+      bubbles: true
+    })
+  );
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('readystatechange', onPageLoaded, { once: true });
+  } else {
+    onPageLoaded();
+  }
+  document.addEventListener('pjax:success', onPageLoaded);
+})();
+
 NexT.utils = {
-
-  /**
-   * Wrap images with fancybox.
-   */
-  wrapImageWithFancyBox: function() {
-    document.querySelectorAll('.post-body :not(a) > img, .post-body > img').forEach(element => {
-      const $image = $(element);
-      const imageLink = $image.attr('data-src') || $image.attr('src');
-      const $imageWrapLink = $image.wrap(`<a class="fancybox fancybox.image" href="${imageLink}" itemscope itemtype="http://schema.org/ImageObject" itemprop="url"></a>`).parent('a');
-      if ($image.is('.post-gallery img')) {
-        $imageWrapLink.attr('data-fancybox', 'gallery').attr('rel', 'gallery');
-      } else if ($image.is('.group-picture img')) {
-        $imageWrapLink.attr('data-fancybox', 'group').attr('rel', 'group');
-      } else {
-        $imageWrapLink.attr('data-fancybox', 'default').attr('rel', 'default');
-      }
-
-      const imageTitle = $image.attr('title') || $image.attr('alt');
-      if (imageTitle) {
-        $imageWrapLink.append(`<p class="image-caption">${imageTitle}</p>`);
-        // Make sure img title tag will show correctly in fancybox
-        $imageWrapLink.attr('title', imageTitle).attr('data-caption', imageTitle);
-      }
-    });
-
-    $.fancybox.defaults.hash = false;
-    $('.fancybox').fancybox({
-      loop   : true,
-      helpers: {
-        overlay: {
-          locked: false
-        }
-      }
-    });
-  },
 
   registerExtURL: function() {
     document.querySelectorAll('span.exturl').forEach(element => {
-      let link = document.createElement('a');
+      const link = document.createElement('a');
       // https://stackoverflow.com/questions/30106476/using-javascripts-atob-to-decode-base64-doesnt-properly-decode-utf-8-strings
       link.href = decodeURIComponent(atob(element.dataset.url).split('').map(c => {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
@@ -59,42 +39,81 @@ NexT.utils = {
     });
   },
 
-  /**
-   * One-click copy code support.
-   */
-  registerCopyCode: function() {
-    document.querySelectorAll('figure.highlight').forEach(element => {
-      element.querySelectorAll('.code .line span').forEach(span => {
-        span.classList.forEach(name => {
-          span.classList.remove(name);
-          span.classList.add(`hljs-${name}`);
+  registerCodeblock: function() {
+    let figure = document.querySelectorAll('figure.highlight');
+    let isHljsWithWrap = true;
+    if (figure.length === 0) {
+      figure = document.querySelectorAll('pre:not(.mermaid)');
+      isHljsWithWrap = false;
+    }
+    figure.forEach(element => {
+      let span = element.querySelectorAll('.code .line span');
+      if (span.length === 0) {
+        // Hljs without line_number and wrap
+        span = element.querySelectorAll('code.highlight span');
+      }
+      span.forEach(s => {
+        s.classList.forEach(name => {
+          s.classList.replace(name, `hljs-${name}`);
         });
       });
-      if (!CONFIG.copycode) return;
-      element.insertAdjacentHTML('beforeend', '<div class="copy-btn"><i class="fa fa-clipboard fa-fw"></i></div>');
-      const button = element.querySelector('.copy-btn');
-      button.addEventListener('click', event => {
-        const target = event.currentTarget;
-        const code = [...target.parentNode.querySelectorAll('.code .line')].map(line => line.innerText).join('\n');
-        const ta = document.createElement('textarea');
-        ta.style.top = window.scrollY + 'px'; // Prevent page scrolling
-        ta.style.position = 'absolute';
-        ta.style.opacity = '0';
-        ta.readOnly = true;
-        ta.value = code;
-        document.body.append(ta);
-        ta.select();
-        ta.setSelectionRange(0, code.length);
-        ta.readOnly = false;
-        const result = document.execCommand('copy');
-        target.querySelector('i').className = result ? 'fa fa-check-circle fa-fw' : 'fa fa-times-circle fa-fw';
-        ta.blur(); // For iOS
-        target.blur();
-        document.body.removeChild(ta);
+      const height = parseInt(window.getComputedStyle(element).height.replace('px', ''), 10);
+      const needFold = CONFIG.fold.enable && (height > CONFIG.fold.height);
+      if (!needFold && !CONFIG.copycode.enable) return;
+      let target;
+      if (isHljsWithWrap && CONFIG.copycode.style === 'mac') {
+        target = element;
+      } else {
+        // https://github.com/next-theme/hexo-theme-next/issues/98
+        // https://github.com/next-theme/hexo-theme-next/pull/508
+        const container = element.querySelector('.table-container') || element;
+        const box = document.createElement('div');
+        box.className = 'code-container';
+        container.wrap(box);
+        target = box;
+      }
+      if (needFold) {
+        target.classList.add('highlight-fold');
+        target.insertAdjacentHTML('beforeend', '<div class="fold-cover"></div><div class="expand-btn"><i class="fa fa-angle-down fa-fw"></i></div>');
+        target.querySelector('.expand-btn').addEventListener('click', () => {
+          target.classList.remove('highlight-fold');
+        });
+      }
+      if (!CONFIG.copycode.enable) return;
+      // One-click copy code support.
+      target.insertAdjacentHTML('beforeend', '<div class="copy-btn"><i class="fa fa-copy fa-fw"></i></div>');
+      const button = target.querySelector('.copy-btn');
+      button.addEventListener('click', () => {
+        const lines = element.querySelector('.code') || element.querySelector('code');
+        const code = lines.innerText;
+        if (navigator.clipboard) {
+          // https://caniuse.com/mdn-api_clipboard_writetext
+          navigator.clipboard.writeText(code).then(() => {
+            button.querySelector('i').className = 'fa fa-check-circle fa-fw';
+          }, () => {
+            button.querySelector('i').className = 'fa fa-times-circle fa-fw';
+          });
+        } else {
+          const ta = document.createElement('textarea');
+          ta.style.top = window.scrollY + 'px'; // Prevent page scrolling
+          ta.style.position = 'absolute';
+          ta.style.opacity = '0';
+          ta.readOnly = true;
+          ta.value = code;
+          document.body.append(ta);
+          ta.select();
+          ta.setSelectionRange(0, code.length);
+          ta.readOnly = false;
+          const result = document.execCommand('copy');
+          button.querySelector('i').className = result ? 'fa fa-check-circle fa-fw' : 'fa fa-times-circle fa-fw';
+          ta.blur(); // For iOS
+          button.blur();
+          document.body.removeChild(ta);
+        }
       });
       element.addEventListener('mouseleave', () => {
         setTimeout(() => {
-          button.querySelector('i').className = 'fa fa-clipboard fa-fw';
+          button.querySelector('i').className = 'fa fa-copy fa-fw';
         }, 300);
       });
     });
@@ -121,13 +140,26 @@ NexT.utils = {
         const box = document.createElement('div');
         box.className = 'video-container';
         element.wrap(box);
-        let width = Number(element.width);
-        let height = Number(element.height);
+        const width = Number(element.width);
+        const height = Number(element.height);
         if (width && height) {
           box.style.paddingTop = (height / width * 100) + '%';
         }
       }
     });
+  },
+
+  updateActiveNav: function() {
+    if (!Array.isArray(NexT.utils.sections)) return;
+    let index = NexT.utils.sections.findIndex(element => {
+      return element && element.getBoundingClientRect().top > 10;
+    });
+    if (index === -1) {
+      index = NexT.utils.sections.length - 1;
+    } else if (index > 0) {
+      index--;
+    }
+    this.activateNavByIndex(index);
   },
 
   registerScrollPercent: function() {
@@ -136,29 +168,18 @@ NexT.utils = {
     // For init back to top in sidebar if page was scrolled after page refresh.
     window.addEventListener('scroll', () => {
       if (backToTop || readingProgressBar) {
-        const docHeight = document.querySelector('.container').offsetHeight;
-        const winHeight = window.innerHeight;
-        const contentVisibilityHeight = docHeight > winHeight ? docHeight - winHeight : document.body.scrollHeight - winHeight;
-        const scrollPercent = Math.min(100 * window.scrollY / contentVisibilityHeight, 100);
+        const contentHeight = document.body.scrollHeight - window.innerHeight;
+        const scrollPercent = contentHeight > 0 ? Math.min(100 * window.scrollY / contentHeight, 100) : 0;
         if (backToTop) {
           backToTop.classList.toggle('back-to-top-on', Math.round(scrollPercent) >= 5);
           backToTop.querySelector('span').innerText = Math.round(scrollPercent) + '%';
         }
         if (readingProgressBar) {
-          readingProgressBar.style.width = scrollPercent.toFixed(2) + '%';
+          readingProgressBar.style.setProperty('--progress', scrollPercent.toFixed(2) + '%');
         }
       }
-      if (!Array.isArray(NexT.utils.sections)) return;
-      let index = NexT.utils.sections.findIndex(element => {
-        return element && element.getBoundingClientRect().top > 0;
-      });
-      if (index === -1) {
-        index = NexT.utils.sections.length - 1;
-      } else if (index > 0) {
-        index--;
-      }
-      this.activateNavByIndex(index);
-    });
+      this.updateActiveNav();
+    }, { passive: true });
 
     backToTop && backToTop.addEventListener('click', () => {
       window.anime({
@@ -178,23 +199,60 @@ NexT.utils = {
     document.querySelectorAll('.tabs ul.nav-tabs .tab').forEach(element => {
       element.addEventListener('click', event => {
         event.preventDefault();
-        const target = event.currentTarget;
         // Prevent selected tab to select again.
-        if (!target.classList.contains('active')) {
-          // Add & Remove active class on `nav-tabs` & `tab-content`.
-          [...target.parentNode.children].forEach(element => {
-            element.classList.toggle('active', element === target);
-          });
-          // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
-          const tActive = document.getElementById(target.querySelector('a').getAttribute('href').replace('#', ''));
-          [...tActive.parentNode.children].forEach(element => {
-            element.classList.toggle('active', element === tActive);
-          });
-          // Trigger event
-          tActive.dispatchEvent(new Event('tabs:click', {
-            bubbles: true
-          }));
-        }
+        if (element.classList.contains('active')) return;
+        const nav = element.parentNode;
+        // Get the height of `tab-pane` which is activated before, and set it as the height of `tab-content` with extra margin / paddings.
+        const tabContent = nav.nextElementSibling;
+        tabContent.style.overflow = 'hidden';
+        tabContent.style.transition = 'height 1s';
+        // Comment system selection tab does not contain .active class.
+        const activeTab = tabContent.querySelector('.active') || tabContent.firstElementChild;
+        // Hight might be `auto`.
+        const prevHeight = parseInt(window.getComputedStyle(activeTab).height.replace('px', ''), 10) || 0;
+        const paddingTop = parseInt(window.getComputedStyle(activeTab).paddingTop.replace('px', ''), 10);
+        const marginBottom = parseInt(window.getComputedStyle(activeTab.firstElementChild).marginBottom.replace('px', ''), 10);
+        tabContent.style.height = prevHeight + paddingTop + marginBottom + 'px';
+        // Add & Remove active class on `nav-tabs` & `tab-content`.
+        [...nav.children].forEach(target => {
+          target.classList.toggle('active', target === element);
+        });
+        // https://stackoverflow.com/questions/20306204/using-queryselector-with-ids-that-are-numbers
+        const tActive = document.getElementById(element.querySelector('a').getAttribute('href').replace('#', ''));
+        [...tActive.parentNode.children].forEach(target => {
+          target.classList.toggle('active', target === tActive);
+        });
+        // Trigger event
+        tActive.dispatchEvent(new Event('tabs:click', {
+          bubbles: true
+        }));
+        // Get the height of `tab-pane` which is activated now.
+        const hasScrollBar = document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight);
+        const currHeight = parseInt(window.getComputedStyle(tabContent.querySelector('.active')).height.replace('px', ''), 10);
+        // Reset the height of `tab-content` and see the animation.
+        tabContent.style.height = currHeight + paddingTop + marginBottom + 'px';
+        // Change the height of `tab-content` may cause scrollbar show / disappear, which may result in the change of the `tab-pane`'s height
+        setTimeout(() => {
+          if ((document.body.scrollHeight > (window.innerHeight || document.documentElement.clientHeight)) !== hasScrollBar) {
+            tabContent.style.transition = 'height 0.3s linear';
+            // After the animation, we need reset the height of `tab-content` again.
+            const currHeightAfterScrollBarChange = parseInt(window.getComputedStyle(tabContent.querySelector('.active')).height.replace('px', ''), 10);
+            tabContent.style.height = currHeightAfterScrollBarChange + paddingTop + marginBottom + 'px';
+          }
+          // Remove all the inline styles, and let the height be adaptive again.
+          setTimeout(() => {
+            tabContent.style.transition = '';
+            tabContent.style.height = '';
+          }, 250);
+        }, 1000);
+        if (!CONFIG.stickytabs) return;
+        const offset = nav.parentNode.getBoundingClientRect().top + window.scrollY + 10;
+        window.anime({
+          targets  : document.scrollingElement,
+          duration : 500,
+          easing   : 'linear',
+          scrollTop: offset
+        });
       });
     });
 
@@ -221,19 +279,22 @@ NexT.utils = {
   },
 
   registerLangSelect: function() {
-    let sel = document.querySelector('.lang-select');
-    if (!sel) return;
-    sel.value = CONFIG.page.lang;
-    sel.addEventListener('change', () => {
-      let target = sel.options[sel.selectedIndex];
-      document.querySelector('.lang-select-label span').innerText = target.text;
-      let url = target.dataset.href;
-      window.pjax ? window.pjax.loadUrl(url) : window.location.href = url;
+    const selects = document.querySelectorAll('.lang-select');
+    selects.forEach(sel => {
+      sel.value = CONFIG.page.lang;
+      sel.addEventListener('change', () => {
+        const target = sel.options[sel.selectedIndex];
+        document.querySelectorAll('.lang-select-label span').forEach(span => {
+          span.innerText = target.text;
+        });
+        // Disable Pjax to force refresh translation of menu item
+        window.location.href = target.dataset.href;
+      });
     });
   },
 
   registerSidebarTOC: function() {
-    this.sections = [...document.querySelectorAll('.post-toc li a.nav-link')].map(element => {
+    this.sections = [...document.querySelectorAll('.post-toc:not(.placeholder-toc) li a.nav-link')].map(element => {
       const target = document.getElementById(decodeURI(element.getAttribute('href')).replace('#', ''));
       // TOC item animation navigate.
       element.addEventListener('click', event => {
@@ -243,28 +304,58 @@ NexT.utils = {
           targets  : document.scrollingElement,
           duration : 500,
           easing   : 'linear',
-          scrollTop: offset + 10
+          scrollTop: offset,
+          complete : () => {
+            history.pushState(null, document.title, element.href);
+          }
         });
       });
       return target;
     });
+    this.updateActiveNav();
+  },
+
+  registerPostReward: function() {
+    const button = document.querySelector('.reward-container button');
+    if (!button) return;
+    button.addEventListener('click', () => {
+      document.querySelector('.post-reward').classList.toggle('active');
+    });
   },
 
   activateNavByIndex: function(index) {
-    const target = document.querySelectorAll('.post-toc li a.nav-link')[index];
+    const nav = document.querySelector('.post-toc:not(.placeholder-toc) .nav');
+    if (!nav) return;
+
+    const navItemList = nav.querySelectorAll('.nav-item');
+    const target = navItemList[index];
     if (!target || target.classList.contains('active-current')) return;
 
-    document.querySelectorAll('.post-toc .active').forEach(element => {
-      element.classList.remove('active', 'active-current');
+    const singleHeight = navItemList[navItemList.length - 1].offsetHeight;
+
+    nav.querySelectorAll('.active').forEach(navItem => {
+      navItem.classList.remove('active', 'active-current');
     });
     target.classList.add('active', 'active-current');
-    let parent = target.parentNode;
-    while (!parent.matches('.post-toc')) {
-      if (parent.matches('li')) parent.classList.add('active');
-      parent = parent.parentNode;
+
+    let activateEle = target.querySelector('.nav-child') || target.parentElement;
+    let navChildHeight = 0;
+
+    while (nav.contains(activateEle)) {
+      if (activateEle.classList.contains('nav-item')) {
+        activateEle.classList.add('active');
+      } else { // .nav-child or .nav
+        // scrollHeight isn't reliable for transitioning child items.
+        // The last nav-item in a list has a margin-bottom of 5px.
+        navChildHeight += (singleHeight * activateEle.childElementCount) + 5;
+        activateEle.style.setProperty('--height', `${navChildHeight}px`);
+      }
+      activateEle = activateEle.parentElement;
     }
+
     // Scrolling to center active TOC element if TOC content is taller then viewport.
-    const tocElement = document.querySelector('.post-toc-wrap');
+    const tocElement = document.querySelector(CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini' ? '.sidebar-panel-container' : '.sidebar');
+    if (!document.querySelector('.sidebar-toc-active')) return;
     window.anime({
       targets  : tocElement,
       duration : 200,
@@ -273,35 +364,10 @@ NexT.utils = {
     });
   },
 
-  supportsPDFs: function() {
-    let ua = navigator.userAgent;
-    let isFirefoxWithPDFJS = ua.includes('irefox') && parseInt(ua.split('rv:')[1].split('.')[0], 10) > 18;
-    let supportsPdfMimeType = typeof navigator.mimeTypes['application/pdf'] !== 'undefined';
-    let isIOS = /iphone|ipad|ipod/i.test(ua.toLowerCase());
-    return isFirefoxWithPDFJS || (supportsPdfMimeType && !isIOS);
-  },
-
-  /**
-   * Init Sidebar & TOC inner dimensions on all pages and for all schemes.
-   * Need for Sidebar/TOC inner scrolling if content taller then viewport.
-   */
-  initSidebarDimension: function() {
-    const sidebarNav = document.querySelector('.sidebar-nav');
-    const sidebarb2t = document.querySelector('.sidebar-inner .back-to-top');
-    const sidebarb2tHeight = sidebarb2t ? sidebarb2t.offsetHeight : 0;
-    const sidebarOffset = CONFIG.sidebar.offset || 12;
-    let sidebarSchemePadding = (CONFIG.sidebar.padding * 2) + sidebarNav.offsetHeight + sidebarb2tHeight;
-    if (CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') sidebarSchemePadding += sidebarOffset * 2;
-    // Initialize Sidebar & TOC Height.
-    const sidebarWrapperHeight = document.body.offsetHeight - sidebarSchemePadding + 'px';
-    document.documentElement.style.setProperty('--sidebar-wrapper-height', sidebarWrapperHeight);
-  },
-
   updateSidebarPosition: function() {
-    NexT.utils.initSidebarDimension();
-    if (window.screen.width < 992 || CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') return;
+    if (window.innerWidth < 1200 || CONFIG.scheme === 'Pisces' || CONFIG.scheme === 'Gemini') return;
     // Expand sidebar on post detail page by default, when post has a toc.
-    const hasTOC = document.querySelector('.post-toc');
+    const hasTOC = document.querySelector('.post-toc:not(.placeholder-toc)');
     let display = CONFIG.page.sidebar;
     if (typeof display !== 'boolean') {
       // There's no definition sidebar in the page front-matter.
@@ -312,36 +378,102 @@ NexT.utils = {
     }
   },
 
-  getScript: function(url, callback, condition) {
-    if (condition) {
-      callback();
-    } else {
-      let script = document.createElement('script');
-      script.onload = script.onreadystatechange = function(_, isAbort) {
-        if (isAbort || !script.readyState || /loaded|complete/.test(script.readyState)) {
-          script.onload = script.onreadystatechange = null;
-          script = undefined;
-          if (!isAbort && callback) setTimeout(callback, 0);
-        }
-      };
-      script.src = url;
-      document.head.appendChild(script);
+  activateSidebarPanel: function(index) {
+    const sidebar = document.querySelector('.sidebar-inner');
+    const activeClassNames = ['sidebar-toc-active', 'sidebar-overview-active'];
+    if (sidebar.classList.contains(activeClassNames[index])) return;
+
+    const panelContainer = sidebar.querySelector('.sidebar-panel-container');
+    const tocPanel = panelContainer.firstElementChild;
+    const overviewPanel = panelContainer.lastElementChild;
+
+    let postTOCHeight = tocPanel.scrollHeight;
+    // For TOC activation, try to use the animated TOC height
+    if (index === 0) {
+      const nav = tocPanel.querySelector('.nav');
+      if (nav) {
+        postTOCHeight = parseInt(nav.style.getPropertyValue('--height'), 10);
+      }
     }
+    const panelHeights = [
+      postTOCHeight,
+      overviewPanel.scrollHeight
+    ];
+    panelContainer.style.setProperty('--inactive-panel-height', `${panelHeights[1 - index]}px`);
+    panelContainer.style.setProperty('--active-panel-height', `${panelHeights[index]}px`);
+
+    sidebar.classList.replace(activeClassNames[1 - index], activeClassNames[index]);
   },
 
-  loadComments: function(element, callback) {
-    if (!CONFIG.comments.lazyload || !element) {
-      callback();
-      return;
+  getScript: function(src, options = {}, legacyCondition) {
+    if (typeof options === 'function') {
+      return this.getScript(src, {
+        condition: legacyCondition
+      }).then(options);
     }
-    let intersectionObserver = new IntersectionObserver((entries, observer) => {
-      let entry = entries[0];
-      if (entry.isIntersecting) {
-        callback();
-        observer.disconnect();
+    const {
+      condition = false,
+      attributes: {
+        id = '',
+        async = false,
+        defer = false,
+        crossOrigin = '',
+        dataset = {},
+        ...otherAttributes
+      } = {},
+      parentNode = null
+    } = options;
+    return new Promise((resolve, reject) => {
+      if (condition) {
+        resolve();
+      } else {
+        const script = document.createElement('script');
+
+        if (id) script.id = id;
+        if (crossOrigin) script.crossOrigin = crossOrigin;
+        script.async = async;
+        script.defer = defer;
+        Object.assign(script.dataset, dataset);
+        Object.entries(otherAttributes).forEach(([name, value]) => {
+          script.setAttribute(name, String(value));
+        });
+
+        script.onload = resolve;
+        script.onerror = reject;
+
+        if (typeof src === 'object') {
+          const { url, integrity } = src;
+          script.src = url;
+          if (integrity) {
+            script.integrity = integrity;
+            script.crossOrigin = 'anonymous';
+          }
+        } else {
+          script.src = src;
+        }
+        (parentNode || document.head).appendChild(script);
       }
     });
-    intersectionObserver.observe(element);
-    return intersectionObserver;
+  },
+
+  loadComments: function(selector, legacyCallback) {
+    if (legacyCallback) {
+      return this.loadComments(selector).then(legacyCallback);
+    }
+    return new Promise(resolve => {
+      const element = document.querySelector(selector);
+      if (!CONFIG.comments.lazyload || !element) {
+        resolve();
+        return;
+      }
+      const intersectionObserver = new IntersectionObserver((entries, observer) => {
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+
+        resolve();
+        observer.disconnect();
+      });
+      intersectionObserver.observe(element);
+    });
   }
 };
