@@ -1,41 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>js获取script参数</title>
-    <url>/2016/06/29/160629-skill-javascript-script-param/</url>
-    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>js插件挡住了页面元素，希望自定义js插件显示的布局位置。</p>
-<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>在<code>&lt;script&gt;</code>引入js插件时传递layout布局参数。</p>
-<h3 id="1-通过url参数方式获取"><a href="#1-通过url参数方式获取" class="headerlink" title="1. 通过url参数方式获取"></a>1. 通过url参数方式获取</h3><p>js可以获取url中的参数</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(location.href.indexOf(<span class="string">&quot;?&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> params = location.href.substr(location.href.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">		<span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">		<span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;key=&quot;</span>+key+<span class="string">&quot; value=&quot;</span>+value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>同理，可以先获取script标签中的src属性，再通过上面的方法，获取layout参数</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在js插件文件中通过如下代码获取</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> url = script.getAttribute(<span class="string">&quot;src&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> params = url.substr(url.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&quot;layout&quot;</span> == key) &#123;</span><br><span class="line">            	layout = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
-
-<h3 id="2-通过自定义属性获取"><a href="#2-通过自定义属性获取" class="headerlink" title="2. 通过自定义属性获取"></a>2. 通过自定义属性获取</h3><p>通过上面的方法，可以想到既然能获取src属性，那么也可以自定义布局属性，并通过getAttribute()方法获取。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>在js插件文件中通过如下代码获取</p>
-<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span> &amp;&amp; script.getAttribute(<span class="string">&quot;layout&quot;</span>)) &#123;</span><br><span class="line">        layout = script.getAttribute(<span class="string">&quot;layout&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
-
-<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过从代码上来看，第二种方法更简单，而问过几个朋友，都更喜欢第二种配置方式，所以在这里推荐使用自定义属性获取属性。</p>
-<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-]]></content>
-      <categories>
-        <category>skill</category>
-      </categories>
-      <tags>
-        <tag>skill</tag>
-        <tag>javascript</tag>
-        <tag>listen</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>2017年终总结</title>
     <url>/2018/02/24/2017/</url>
     <content><![CDATA[<p>keyword <code>变</code></p>
@@ -110,30 +75,38 @@
       </tags>
   </entry>
   <entry>
-    <title>eclipse报错Resource is out of sync with the file system</title>
-    <url>/2016/08/30/bug-eclipse-resource-is-out-of-sync-with-the-file-system/</url>
+    <title>js获取script参数</title>
+    <url>/2016/06/29/160629-skill-javascript-script-param/</url>
     <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>在eclipse中搜索时，搜索完之后有时候会弹出错误对话框，错误摘录如下</p>
-<pre><code>Resource is out of sync with the file system......
-</code></pre>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>由于eclipse中文件不同步引起的。</p>
-<p>在eclipse中，工程文件是由eclipse自动扫描添加的，如果在外部修改了工程目录中的文件但又关闭了自动刷新功能，则会引起文件不同步，从而搜索时出现Resource is out of sync with the file system问题（其它功能可能也会如此）。此外，在外部没有修改eclipse工程中的文件也有可能引起该问题。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>有两种解决方法</p>
-<ol>
-<li>手动刷新。即在eclipse的工程目录中，右键refresh（或者按下F5）。</li>
-<li>配置eclipse的选项<ul>
-<li>eclipse启动时，刷新workspace，即勾选         window—&gt;preferences—&gt;general—&gt;startup and shutdown—&gt;refresh workspace on startup</li>
-<li>window—&gt;preferences—&gt;general—&gt;workspace中：勾选选项：refresh using native hooks or polling和refresh on access；</li>
-</ul>
-</li>
-</ol>
+<h2 id="问题描述"><a href="#问题描述" class="headerlink" title="问题描述"></a>问题描述</h2><p>js插件挡住了页面元素，希望自定义js插件显示的布局位置。</p>
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><p>在<code>&lt;script&gt;</code>引入js插件时传递layout布局参数。</p>
+<h3 id="1-通过url参数方式获取"><a href="#1-通过url参数方式获取" class="headerlink" title="1. 通过url参数方式获取"></a>1. 通过url参数方式获取</h3><p>js可以获取url中的参数</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">if</span>(location.href.indexOf(<span class="string">&quot;?&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">	<span class="keyword">var</span> params = location.href.substr(location.href.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">	<span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">		<span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">		<span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">		<span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">&quot;key=&quot;</span>+key+<span class="string">&quot; value=&quot;</span>+value);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>同理，可以先获取script标签中的src属性，再通过上面的方法，获取layout参数</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在js插件文件中通过如下代码获取</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">var</span> url = script.getAttribute(<span class="string">&quot;src&quot;</span>);</span><br><span class="line">        <span class="keyword">var</span> params = url.substr(url.indexOf(<span class="string">&quot;?&quot;</span>)+<span class="number">1</span>).split(<span class="string">&quot;&amp;&quot;</span>);</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;params.length;i++)&#123;</span><br><span class="line">            <span class="keyword">var</span> kv = params[i].split(<span class="string">&quot;=&quot;</span>);</span><br><span class="line">            <span class="keyword">var</span> key = kv[<span class="number">0</span>];</span><br><span class="line">            <span class="keyword">var</span> value = kv[<span class="number">1</span>];</span><br><span class="line">            <span class="keyword">if</span>(<span class="string">&quot;layout&quot;</span> == key) &#123;</span><br><span class="line">            	layout = value;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过自定义属性获取"><a href="#2-通过自定义属性获取" class="headerlink" title="2. 通过自定义属性获取"></a>2. 通过自定义属性获取</h3><p>通过上面的方法，可以想到既然能获取src属性，那么也可以自定义布局属性，并通过getAttribute()方法获取。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在js插件文件中通过如下代码获取</p>
+<figure class="highlight javascript"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> layout=<span class="string">&quot;right&quot;</span>;</span><br><span class="line"><span class="keyword">var</span> scripts = <span class="built_in">document</span>.getElementsByTagName(<span class="string">&quot;script&quot;</span>);</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i=<span class="number">0</span>; i&lt; scripts.length;i++) &#123;</span><br><span class="line">    <span class="keyword">var</span> script = scripts[i];</span><br><span class="line">    <span class="keyword">if</span> (script &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>) &amp;&amp; script.getAttribute(<span class="string">&quot;src&quot;</span>).indexOf(<span class="string">&quot;listen.js&quot;</span>)&gt;-<span class="number">1</span> &amp;&amp; script.getAttribute(<span class="string">&quot;layout&quot;</span>)) &#123;</span><br><span class="line">        layout = script.getAttribute(<span class="string">&quot;layout&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(layout);</span><br></pre></td></tr></table></figure>
+
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>通过从代码上来看，第二种方法更简单，而问过几个朋友，都更喜欢第二种配置方式，所以在这里推荐使用自定义属性获取属性。</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js?layout=right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">&quot;listen.js&quot;</span> <span class="attr">layout</span>=<span class="string">&quot;right&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 ]]></content>
       <categories>
-        <category>bug</category>
+        <category>skill</category>
       </categories>
       <tags>
-        <tag>bug</tag>
-        <tag>eclipse</tag>
+        <tag>skill</tag>
+        <tag>javascript</tag>
+        <tag>listen</tag>
       </tags>
   </entry>
   <entry>
@@ -248,6 +221,33 @@
       </tags>
   </entry>
   <entry>
+    <title>eclipse报错Resource is out of sync with the file system</title>
+    <url>/2016/08/30/bug-eclipse-resource-is-out-of-sync-with-the-file-system/</url>
+    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>在eclipse中搜索时，搜索完之后有时候会弹出错误对话框，错误摘录如下</p>
+<pre><code>Resource is out of sync with the file system......
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>由于eclipse中文件不同步引起的。</p>
+<p>在eclipse中，工程文件是由eclipse自动扫描添加的，如果在外部修改了工程目录中的文件但又关闭了自动刷新功能，则会引起文件不同步，从而搜索时出现Resource is out of sync with the file system问题（其它功能可能也会如此）。此外，在外部没有修改eclipse工程中的文件也有可能引起该问题。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>有两种解决方法</p>
+<ol>
+<li>手动刷新。即在eclipse的工程目录中，右键refresh（或者按下F5）。</li>
+<li>配置eclipse的选项<ul>
+<li>eclipse启动时，刷新workspace，即勾选         window—&gt;preferences—&gt;general—&gt;startup and shutdown—&gt;refresh workspace on startup</li>
+<li>window—&gt;preferences—&gt;general—&gt;workspace中：勾选选项：refresh using native hooks or polling和refresh on access；</li>
+</ul>
+</li>
+</ol>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>eclipse</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>git clone http 失败 401</title>
     <url>/2016/08/31/bug-git-clone-401/</url>
     <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
@@ -352,8 +352,8 @@ void remove();
         <category>bug</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>java</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -368,8 +368,8 @@ void remove();
         <category>bug</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>java</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -384,8 +384,8 @@ void remove();
         <category>bug</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>java</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -546,76 +546,8 @@ void remove();
         <category>bug</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>java</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>mybatis绑定错误</title>
-    <url>/2016/09/08/bug-mybatis-invalid-bound-statement/</url>
-    <content><![CDATA[<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>java程序报错 </p>
-<pre><code>org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)
-</code></pre>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>未扫描xml所在包路径</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>一般的原因是Mapper interface和xml文件的定义对应不上，需要检查包名，namespace，函数名称等能否对应上，需要比较细致的对比。</p>
-<p>按以下步骤一一执行</p>
-<ol>
-<li>检查xml文件所在的package名称是否和interface对应的package名称一一对应</li>
-<li>检查xml文件的namespace是否和xml文件的package名称一一对应</li>
-<li>检查函数名称能否对应上</li>
-<li>去掉xml文件中的中文注释</li>
-<li>随意在xml文件中加一个空格或者空行然后保存</li>
-</ol>
-]]></content>
-      <categories>
-        <category>bug</category>
-      </categories>
-      <tags>
         <tag>bug</tag>
-        <tag>mybatis</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>package package_name is intended for different architec</title>
-    <url>/2016/09/07/bug-linux-package-is-intended-for-different-architec/</url>
-    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>通过rpm安装jdk时提示<br><strong>package package_name is intended for different architec</strong></p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>安装包和当前操作系统不符，常见在x86 32位系统安装64位软件包</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>下载安装对应软件包</p>
-]]></content>
-      <categories>
-        <category>bug</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>linux</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>idea创建的spring4允许单元测试时报错</title>
-    <url>/2016/09/09/bug-spring-javax-servlet-sessioncoo/</url>
-    <content><![CDATA[<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>idea创建的spring4允许单元测试时报错 </p>
-<pre><code>java.lang.NoClassDefFoundError: javax/servlet/SessionCoo
-</code></pre>
-<p>servlet为2.5，Spring版本为4.1.1，tomcat 6</p>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>Spring Reference中提到，虽然Spring4仍然支持2.5，但它的主要目标是Servlet3.0及以上版本。如果你用Spring MVC Test Framework进行测试，则必须添加<br>兼容Servlet3.0的jar包(即3.0以上的servlet的jar包)，</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在pom.xml中添加依赖</p>
-<pre><code>&lt;dependency&gt;
-    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
-    &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
-    &lt;version&gt;3.0.1&lt;/version&gt;
-    &lt;scope&gt;test&lt;/scope&gt;
-&lt;/dependency&gt;
-</code></pre>
-<p>限制scope为test即可。</p>
-<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://jira.spring.io/browse/SPR-11292">https://jira.spring.io/browse/SPR-11292</a></p>
-]]></content>
-      <categories>
-        <category>bug</category>
-      </categories>
-      <tags>
-        <tag>bug</tag>
-        <tag>spring</tag>
       </tags>
   </entry>
   <entry>
@@ -646,6 +578,74 @@ void remove();
       <tags>
         <tag>bug</tag>
         <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>package package_name is intended for different architec</title>
+    <url>/2016/09/07/bug-linux-package-is-intended-for-different-architec/</url>
+    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>通过rpm安装jdk时提示<br><strong>package package_name is intended for different architec</strong></p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>安装包和当前操作系统不符，常见在x86 32位系统安装64位软件包</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>下载安装对应软件包</p>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>mybatis绑定错误</title>
+    <url>/2016/09/08/bug-mybatis-invalid-bound-statement/</url>
+    <content><![CDATA[<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>java程序报错 </p>
+<pre><code>org.apache.ibatis.binding.BindingException: Invalid bound statement (not found)
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>未扫描xml所在包路径</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>一般的原因是Mapper interface和xml文件的定义对应不上，需要检查包名，namespace，函数名称等能否对应上，需要比较细致的对比。</p>
+<p>按以下步骤一一执行</p>
+<ol>
+<li>检查xml文件所在的package名称是否和interface对应的package名称一一对应</li>
+<li>检查xml文件的namespace是否和xml文件的package名称一一对应</li>
+<li>检查函数名称能否对应上</li>
+<li>去掉xml文件中的中文注释</li>
+<li>随意在xml文件中加一个空格或者空行然后保存</li>
+</ol>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>bug</tag>
+        <tag>mybatis</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>idea创建的spring4允许单元测试时报错</title>
+    <url>/2016/09/09/bug-spring-javax-servlet-sessioncoo/</url>
+    <content><![CDATA[<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>idea创建的spring4允许单元测试时报错 </p>
+<pre><code>java.lang.NoClassDefFoundError: javax/servlet/SessionCoo
+</code></pre>
+<p>servlet为2.5，Spring版本为4.1.1，tomcat 6</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>Spring Reference中提到，虽然Spring4仍然支持2.5，但它的主要目标是Servlet3.0及以上版本。如果你用Spring MVC Test Framework进行测试，则必须添加<br>兼容Servlet3.0的jar包(即3.0以上的servlet的jar包)，</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在pom.xml中添加依赖</p>
+<pre><code>&lt;dependency&gt;
+    &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+    &lt;artifactId&gt;javax.servlet-api&lt;/artifactId&gt;
+    &lt;version&gt;3.0.1&lt;/version&gt;
+    &lt;scope&gt;test&lt;/scope&gt;
+&lt;/dependency&gt;
+</code></pre>
+<p>限制scope为test即可。</p>
+<h3 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h3><p><a href="https://jira.spring.io/browse/SPR-11292">https://jira.spring.io/browse/SPR-11292</a></p>
+]]></content>
+      <categories>
+        <category>bug</category>
+      </categories>
+      <tags>
+        <tag>spring</tag>
+        <tag>bug</tag>
       </tags>
   </entry>
   <entry>
@@ -739,6 +739,42 @@ update user set Host = &#39;%&#39; where User=&#39;root&#39;;
       <tags>
         <tag>mysql</tag>
         <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>CentOS7 通过yum方式安装Nginx</title>
+    <url>/2016/05/19/centos-nginx/</url>
+    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
+<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
+</code></pre>
+<p>通过命令打开文档，输入如下内容</p>
+<blockquote>
+<p>[nginx]<br>name=nginx repo<br>baseurl=<a href="http://nginx.org/packages/centos/7/$basearch/">http://nginx.org/packages/centos/7/$basearch/</a><br>gpgcheck=0<br>enabled=1</p>
+</blockquote>
+<p>其中centos表明当前系统，7表示系统版本。</p>
+<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
+</code></pre>
+<p>安装程序执行完毕后，可以通过</p>
+<pre><code>nginx -v
+</code></pre>
+<p>查看安装nginx版本，并确认程序安装成功。</p>
+<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
+</code></pre>
+<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
+<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
+</code></pre>
+<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
+<pre><code>service nginx restart
+</code></pre>
+<p>刷新浏览器，可以看见修改以生效。</p>
+]]></content>
+      <categories>
+        <category>Nginx</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -870,42 +906,6 @@ SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
       <tags>
         <tag>知识点</tag>
         <tag>跨域</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>CentOS7 通过yum方式安装Nginx</title>
-    <url>/2016/05/19/centos-nginx/</url>
-    <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<p>在CentOS环境下搭建一个nginx的服务器，安装过程比较简单，做一个简单的记录。</p>
-<h2 id="安装过程"><a href="#安装过程" class="headerlink" title="安装过程"></a>安装过程</h2><h3 id="配置repo"><a href="#配置repo" class="headerlink" title="配置repo"></a>配置repo</h3><pre><code>vi /etc/yum.repos.d/nginx.repo 
-</code></pre>
-<p>通过命令打开文档，输入如下内容</p>
-<blockquote>
-<p>[nginx]<br>name=nginx repo<br>baseurl=<a href="http://nginx.org/packages/centos/7/$basearch/">http://nginx.org/packages/centos/7/$basearch/</a><br>gpgcheck=0<br>enabled=1</p>
-</blockquote>
-<p>其中centos表明当前系统，7表示系统版本。</p>
-<h3 id="执行yum安装"><a href="#执行yum安装" class="headerlink" title="执行yum安装"></a>执行yum安装</h3><pre><code>sudo yum install -y nginx
-</code></pre>
-<p>安装程序执行完毕后，可以通过</p>
-<pre><code>nginx -v
-</code></pre>
-<p>查看安装nginx版本，并确认程序安装成功。</p>
-<h3 id="启动服务"><a href="#启动服务" class="headerlink" title="启动服务"></a>启动服务</h3><pre><code>service nginx start 
-</code></pre>
-<p>此时会提示 Redirecting to /bin/systemctl start  nginx.service<br>因为在centos7中将service 和 chkconfig 命令合并到systemctl中，但仍可通过service启动nginx服务。<br>此时通过浏览器访问<a href="http://localhost,可以看到nginx启动成功的提示./">http://localhost，可以看到nginx启动成功的提示。</a></p>
-<h2 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h2><h3 id="修改服务目录"><a href="#修改服务目录" class="headerlink" title="修改服务目录"></a>修改服务目录</h3><pre><code>vi /etc/nginx/conf.d/default.conf
-</code></pre>
-<p>listen 80; 表示监听80端口<br>server_name localhost;表示域名或ip，可以以此搭建反向代理服务器，实现负载均衡。这个后续会有文档单独写。<br>location / {} root表示指向的静态文件目录路径，index表示首页文件，可以自定义修改root目录， 或者直接修改默认目录下的首页文件 /usr/share/nginx/www/index.html<br>重启nginx服务</p>
-<pre><code>service nginx restart
-</code></pre>
-<p>刷新浏览器，可以看见修改以生效。</p>
-]]></content>
-      <categories>
-        <category>Nginx</category>
-      </categories>
-      <tags>
-        <tag>Linux</tag>
-        <tag>Nginx</tag>
       </tags>
   </entry>
   <entry>
@@ -1201,37 +1201,6 @@ SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
       </tags>
   </entry>
   <entry>
-    <title>DDL转plantuml格式ER图</title>
-    <url>/2018/06/28/ddl2plantuml/</url>
-    <content><![CDATA[<p>项目源码地址: <a href="https://github.com/wangyuheng/ddl2plantuml">github</a></p>
-<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>通过plantuml绘制数据库ER图，手写字段信息成本太大。需要一套DDL转换plantuml的工具。</p>
-<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyMTJweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjg0MnB4O2hlaWdodDoyMTJweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NDIgMjEyIiB3aWR0aD0iODQycHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48ZyBpZD0iY2x1c3Rlcl8jIzQiPjxwYXRoIGQ9Ik0zNzIuMzEzOSwxNS4xMjg1IEMzNzUuNDk3Miw5LjY0NTUgMzgxLjk3NjgsOC41MzAxIDM4NS41MDgsMTQuNzM1NyBDMzg3LjgwNzUsOS4xODEzIDM5My41NDM1LDguOTIzMiAzOTcuMDU1OCwxMy4zMjk2IEMzOTkuNzk2NSw2LjgxNTEgNDAzLjg3ODcsNi4yODk5IDQwOC4yMjc3LDExLjg0MDQgQzQxMS44ODgzLDYuMTk0NSA0MTcuMjE2Niw3LjYxODIgNDIwLjEyNDYsMTIuNjc2OCBDNDI0LjUzMDEsNiA0MjkuODE0Nyw2Ljk0MjIgNDMzLjMwMTIsMTMuNTg1OCBDNDM3LjQ4MjYsNy44MjY2IDQ0Mi4yMTY2LDkuMDk2NCA0NDUuNzA1MiwxNC4zNjUxIEM0NTUuMTE2MSwxOS4wODE2IDQ1NS42MjEzLDIzLjk4MzcgNDQ3LjM0NTYsMzAuNDk4NiBDNDU1LjM3NzgsMzQuMjUzNSA0NTcuMTk2Myw0MC43MDA2IDQ1MS4xNjkxLDQ3LjU5OTEgQzQ1Ni42NDQ0LDUzLjg5ODcgNDU2LjM4MTgsNTkuMDU4OCA0NDcuNTk0OSw2MS43NTgxIEM0NTMuOTU4NSw2OC40NjY2IDQ1NC44NzA4LDc0LjM3MjMgNDQ0Ljk2NjMsNzguNTMxNCBDNDQyLjE1NDIsODMuODQ1MiA0MzcuNzI3Nyw4My43MjIzIDQzNC4wMzk5LDc5LjUzODkgQzQzMS4xNjk1LDg1Ljc4MDcgNDI2LjQxMTcsODYuOTk3MyA0MjEuOTkyNiw4MS4wNzIzIEM0MTguNzcwNyw4OC4yMDI0IDQxNC40NTMsODkuOTgzOCA0MDguNDA1OSw4My45OTkyIEM0MDQuMTM0OCw4OC4xMzA1IDQwMC41NTAxLDg4Ljg0ODkgMzk3LjU5NDksODIuNjI1NCBDMzkyLjE3MTQsODguMzI1NyAzODguMTkwNyw4Ni4wNzYzIDM4NS40OTcsNzkuODU1MiBDMzgxLjExMzUsODYuMzczMiAzNzYuNzk4Miw4NC44ODM3IDM3Mi42MTkyLDc5LjYzMTUgQzM2NC40OTc4LDc0Ljk3ODYgMzYzLjQ0MDMsNjguNTEwNyAzNzEuMDIzMiw2Mi40MDMgQzM2My4wMzM3LDU4LjgzMyAzNjMuNzg0Miw1MS4zNzA4IDM2OS45MzAyLDQ2LjgwOTkgQzM2Mi4zNDIxLDQxLjE0MzYgMzYxLjk5MjIsMzMuNTA3MiAzNzEuODI2NCwyOS43ODA5IEMzNjQuMTk4NCwyNS4zODI2IDM2NS45OTMzLDE5LjA2MjYgMzcyLjMxMzksMTUuMTI4NSAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48ZyBpZD0iY2x1c3Rlcl8jIzciPjxwYXRoIGQ9Ik04LjUsMTI3LjYwNjMgTDIxMC43NSwxMjcuNjA2MyBBMy43NSwzLjc1IDAgMCAxIDIxMy4yNSwxMzAuMTA2MyBMMjIwLjI1LDEzNy42MDYzIEw4MzIuNSwxMzcuNjA2MyBBMi41LDIuNSAwIDAgMSA4MzUsMTQwLjEwNjMgTDgzNSwyMDMuMTA2MyBBMi41LDIuNSAwIDAgMSA4MzIuNSwyMDUuNjA2MyBMOC41LDIwNS42MDYzIEEyLjUsMi41IDAgMCAxIDYsMjAzLjEwNjMgTDYsMTMwLjEwNjMgQTIuNSwyLjUgMCAwIDEgOC41LDEyNy42MDYzICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iNiIgeDI9IjIyMC4yNSIgeTE9IjEzNy42MDYzIiB5Mj0iMTM3LjYwNjMiLz48L2c+PCEtLWVudGl0eSBjb252ZXJ0LS0+PGcgaWQ9ImVsZW1fY29udmVydCI+PGVsbGlwc2UgY3g9IjQwOCIgY3k9IjM3LjYwNjMiIGZpbGw9IiMwMDgwMDAiIHJ4PSIxMiIgcnk9IjEyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQwNCwyNS42MDYzLDQxMCwyMC42MDYzLDQwOCwyNS42MDYzLDQxMCwzMC42MDYzLDQwNCwyNS42MDYzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMzgwIiB5PSI2Ni42MDE0Ij5jb252ZXJ0PC90ZXh0PjwvZz48IS0tZW50aXR5IHN0ZXAxLS0+PGcgaWQ9ImVsZW1fc3RlcDEiPjxwb2x5Z29uIGZpbGw9IiNGMUYxRjEiIHBvaW50cz0iMjIsMTUzLjYwNjMsMzIsMTQzLjYwNjMsMTIwLDE0My42MDYzLDEyMCwxNzkuOTAzMSwxMTAsMTg5LjkwMzEsMjIsMTg5LjkwMzEsMjIsMTUzLjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjExMCIgeDI9IjEyMCIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyMiIgeDI9IjExMCIgeTE9IjE1My42MDYzIiB5Mj0iMTUzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxMTAiIHgyPSIxMTAiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTgiIHg9IjM3IiB5PSIxNzYuNjAxNCI+cmVhZCBkZGw8L3RleHQ+PC9nPjwhLS1lbnRpdHkgc3RlcDItLT48ZyBpZD0iZWxlbV9zdGVwMiI+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSIxNTUuNSwxNTMuNjA2MywxNjUuNSwxNDMuNjA2MywzMjIuNSwxNDMuNjA2MywzMjIuNSwxNzkuOTAzMSwzMTIuNSwxODkuOTAzMSwxNTUuNSwxODkuOTAzMSwxNTUuNSwxNTMuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzEyLjUiIHgyPSIzMjIuNSIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxNTUuNSIgeDI9IjMxMi41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNTMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjMxMi41IiB4Mj0iMzEyLjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTI3IiB4PSIxNzAuNSIgeT0iMTc2LjYwMTQiPmV4dHJhY3QgdGFibGUgaW5mbzwvdGV4dD48L2c+PCEtLWVudGl0eSBzdGVwMy0tPjxnIGlkPSJlbGVtX3N0ZXAzIj48cG9seWdvbiBmaWxsPSIjRjFGMUYxIiBwb2ludHM9IjM1Ny41LDE1My42MDYzLDM2Ny41LDE0My42MDYzLDYzOC41LDE0My42MDYzLDYzOC41LDE3OS45MDMxLDYyOC41LDE4OS45MDMxLDM1Ny41LDE4OS45MDMxLDM1Ny41LDE1My42MDYzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI2MjguNSIgeDI9IjYzOC41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNDMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjM1Ny41IiB4Mj0iNjI4LjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE1My42MDYzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iNjI4LjUiIHgyPSI2MjguNSIgeTE9IjE1My42MDYzIiB5Mj0iMTg5LjkwMzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNDEiIHg9IjM3Mi41IiB5PSIxNzYuNjAxNCI+cmVwbGFjZSBieSB0ZW1wbGF0ZSBmb3IgcGxhbnR1bWw8L3RleHQ+PC9nPjwhLS1lbnRpdHkgc3RlcDQtLT48ZyBpZD0iZWxlbV9zdGVwNCI+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSI2NzMuNSwxNTMuNjA2Myw2ODMuNSwxNDMuNjA2Myw4MTguNSwxNDMuNjA2Myw4MTguNSwxNzkuOTAzMSw4MDguNSwxODkuOTAzMSw2NzMuNSwxODkuOTAzMSw2NzMuNSwxNTMuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iODA4LjUiIHgyPSI4MTguNSIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI2NzMuNSIgeDI9IjgwOC41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNTMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgwOC41IiB4Mj0iODA4LjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA1IiB4PSI2ODguNSIgeT0iMTc2LjYwMTQiPndyaXRlIHBsYW50dW1sPC90ZXh0PjwvZz48IS0tZW50aXR5IERETC0tPjxnIGlkPSJlbGVtX0RETCI+PGVsbGlwc2UgY3g9IjMzMCIgY3k9IjE2LjEwNjMiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTMzMCwyNC4xMDYzIEwzMzAsNTEuMTA2MyBNMzE3LDMyLjEwNjMgTDM0MywzMi4xMDYzIE0zMzAsNTEuMTA2MyBMMzE3LDY2LjEwNjMgTTMzMCw1MS4xMDYzIEwzNDMsNjYuMTA2MyAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwIiB4PSIzMTUiIHk9IjgwLjYwMTQiPkRETDwvdGV4dD48L2c+PCEtLWVudGl0eSBwbGFudFVtbC0tPjxnIGlkPSJlbGVtX3BsYW50VW1sIj48ZWxsaXBzZSBjeD0iNTA0IiBjeT0iMTYuMTA2MyIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNNTA0LDI0LjEwNjMgTDUwNCw1MS4xMDYzIE00OTEsMzIuMTA2MyBMNTE3LDMyLjEwNjMgTTUwNCw1MS4xMDYzIEw0OTEsNjYuMTA2MyBNNTA0LDUxLjEwNjMgTDUxNyw2Ni4xMDYzICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjUiIHg9IjQ3MS41IiB5PSI4MC42MDE0Ij5wbGFudFVtbDwvdGV4dD48L2c+PCEtLWxpbmsgRERMIHRvIGNvbnZlcnQtLT48ZyBpZD0ibGlua19ERExfY29udmVydCI+PHBhdGggZD0iTTM0NS4yMzQsNDUuNjA2MyBDMzU2LjY3Niw0NS42MDYzIDM2Mi4xMTgsNDUuNjA2MyAzNzMuNTU5LDQ1LjYwNjMgIiBmaWxsPSJub25lIiBpZD0iRERMLXRvLWNvbnZlcnQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzc5LjU1OSw0NS42MDYzLDM3MC41NTksNDEuNjA2MywzNzQuNTU5LDQ1LjYwNjMsMzcwLjU1OSw0OS42MDYzLDM3OS41NTksNDUuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIGNvbnZlcnQgdG8gcGxhbnRVbWwtLT48ZyBpZD0ibGlua19jb252ZXJ0X3BsYW50VW1sIj48cGF0aCBkPSJNNDM2LjEyNSw0NS42MDYzIEM0NDcuODc5LDQ1LjYwNjMgNDUzLjYzNCw0NS42MDYzIDQ2NS4zODgsNDUuNjA2MyAiIGZpbGw9Im5vbmUiIGlkPSJjb252ZXJ0LXRvLXBsYW50VW1sIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ3MS4zODgsNDUuNjA2Myw0NjIuMzg4LDQxLjYwNjMsNDY2LjM4OCw0NS42MDYzLDQ2Mi4zODgsNDkuNjA2Myw0NzEuMzg4LDQ1LjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBjb252ZXJ0IHRvIHN0ZXAxLS0+PGcgaWQ9ImxpbmtfY29udmVydF9zdGVwMSI+PHBhdGggZD0iTTM5MS42NDQsNjkuNjM2MyBDMzg0LjAwMiw3OC42MjIzIDM3NC4xMjksODguMDc3MyAzNjMsOTMuNjA2MyBDMjcyLjg0NywxMzguMzk0OCAyMzIuMjcxLDg0LjMwMDMgMTM4LDExOS42MDYzIEMxMjMuMjAxLDEyNS4xNDg4IDExMy4zMTUsMTMxLjAzMDQgMTAxLjQ4OSwxMzkuOTYxNCAiIGZpbGw9Im5vbmUiIGlkPSJjb252ZXJ0LXRvLXN0ZXAxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9Ijk2LjcwMSwxNDMuNTc3MywxMDYuMjkzNiwxNDEuMzQ1NCwxMDAuNjkxLDE0MC41NjQsMTAxLjQ3MjQsMTM0Ljk2MTQsOTYuNzAxLDE0My41NzczIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLWxpbmsgc3RlcDEgdG8gc3RlcDItLT48ZyBpZD0ibGlua19zdGVwMV9zdGVwMiI+PHBhdGggZD0iTTEyMC4yMTksMTY2LjYwNjMgQzEzMS45NzMsMTY2LjYwNjMgMTM3LjcyOCwxNjYuNjA2MyAxNDkuNDgyLDE2Ni42MDYzICIgZmlsbD0ibm9uZSIgaWQ9InN0ZXAxLXRvLXN0ZXAyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE1NS40ODIsMTY2LjYwNjMsMTQ2LjQ4MiwxNjIuNjA2MywxNTAuNDgyLDE2Ni42MDYzLDE0Ni40ODIsMTcwLjYwNjMsMTU1LjQ4MiwxNjYuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHN0ZXAyIHRvIHN0ZXAzLS0+PGcgaWQ9Imxpbmtfc3RlcDJfc3RlcDMiPjxwYXRoIGQ9Ik0zMjIuNzIsMTY2LjYwNjMgQzMzNC4yNDUsMTY2LjYwNjMgMzM5Ljc3MSwxNjYuNjA2MyAzNTEuMjk2LDE2Ni42MDYzICIgZmlsbD0ibm9uZSIgaWQ9InN0ZXAyLXRvLXN0ZXAzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjM1Ny4yOTYsMTY2LjYwNjMsMzQ4LjI5NiwxNjIuNjA2MywzNTIuMjk2LDE2Ni42MDYzLDM0OC4yOTYsMTcwLjYwNjMsMzU3LjI5NiwxNjYuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHN0ZXAzIHRvIHN0ZXA0LS0+PGcgaWQ9Imxpbmtfc3RlcDNfc3RlcDQiPjxwYXRoIGQ9Ik02MzguOTUzLDE2Ni42MDYzIEM2NTAuMzgzLDE2Ni42MDYzIDY1NS44MTIsMTY2LjYwNjMgNjY3LjI0MiwxNjYuNjA2MyAiIGZpbGw9Im5vbmUiIGlkPSJzdGVwMy10by1zdGVwNCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI2NzMuMjQyLDE2Ni42MDYzLDY2NC4yNDIsMTYyLjYwNjMsNjY4LjI0MiwxNjYuNjA2Myw2NjQuMjQyLDE3MC42MDYzLDY3My4yNDIsMTY2LjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIGNvbnZlcnQgdG8gc3RlcDQtLT48ZyBpZD0ibGlua19jb252ZXJ0X3N0ZXA0Ij48cGF0aCBkPSJNNDI5LjI0MzcsNzQuNTYwNyBDNDM3LjAxNTcsODMuMzg4NyA0NDIuOTYyLDg4LjEwOTMgNDU0LDkzLjYwNjMgQzUzNS4wMjUsMTMzLjk2MDQgNTY5LjUzMSw5Mi44MzQzIDY1NiwxMTkuNjA2MyBDNjc0LjYwNiwxMjUuMzY3MSA2OTMuOTk4LDEzNC43ODA0IDcwOS45OTYsMTQzLjU5NTcgIiBmaWxsPSJub25lIiBpZD0iY29udmVydC1iYWNrdG8tc3RlcDQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNDI1LjI3OSw3MC4wNTczLDQyOC4yMjM4LDc5LjQ1NTYsNDI4LjU4MjksNzMuODEwMSw0MzQuMjI4NCw3NC4xNjkzLDQyNS4yNzksNzAuMDU3MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1TUkM9W1BLXzEzZThtM0J0dEFuZXpTcjB1Y3ZYbXo2UnlXQjRMOTh3RHAyOFF1eHl4WGkyOEZSSkRVc19UVXFBb1RQWmQ5bjFYUXhLbVY2YXFXRElzS19XNnoyTWpPTVZyQzFfYTZCVUw4cEJtME1ZNWw4Y0FWWmZaNVU3NmFMMmViRHhXeU9udGZkT05hVkhhdnh6MjVlS2NoNHJmUHpiLVRTQ3hhT0o1MnZhUWxwRFhFVmRoY2tMczZadGdOVXJiVnY5aUNFZVpPa0Jnd2loOU9TZTFLdndQWUU5RmJCQXp5U29POF9INTdibVpaNkU1Zlc1Q3JzME1tMG1KSk1MYXVtaTBdLS0+PC9nPjwvc3ZnPg=='>
-
-<ol>
-<li>读取同目录下<strong>ddl.sql</strong>文件</li>
-<li>基于 <code>;</code> 分割建表语句</li>
-<li>依赖 <a href="https://github.com/alibaba/druid">druid</a> 进行sql解析</li>
-<li>定义plantuml模版</li>
-<li><code>replaceAll</code>替换模版内容</li>
-</ol>
-<span id="more"></span>
-
-<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -jar ddl2plantuml-1.0.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
-
-<p>程序会读取同目录的<strong>ddl.sql</strong>文件，并转换生成<strong>er.puml</strong>文件。</p>
-<h3 id="ER图效果"><a href="#ER图效果" class="headerlink" title="ER图效果"></a>ER图效果</h3><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSI0NTJweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjg1OXB4O2hlaWdodDo0NTJweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NTkgNDUyIiB3aWR0aD0iODU5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgdGFibGVfMS0tPjxnIGlkPSJlbGVtX3RhYmxlXzEiPjxyZWN0IGNvZGVMaW5lPSI3IiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjIxMy41NjI1IiBpZD0idGFibGVfMSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMzQ1IiB4PSIyNTciIHk9IjciLz48ZWxsaXBzZSBjeD0iMzcwLjc1IiBjeT0iMjguMjk2OSIgZmlsbD0iI0ZGQUFBQSIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0zNzEuMTg3NSwyNS44MjgxIEwzNzMuMDMxMywyNS44MjgxIEwzNzMuMDMxMywyNy40MjE5IEMzNzMuMDMxMywyNy44MTI1IDM3My4wNjI1LDI3Ljk4NDQgMzczLjE1NjMsMjguMTI1IEMzNzMuMzEyNSwyOC4zNzUgMzczLjU5MzgsMjguNTMxMyAzNzMuODkwNiwyOC41MzEzIEMzNzQuMTU2MywyOC41MzEzIDM3NC40MDYzLDI4LjQwNjMgMzc0LjU3ODEsMjguMTg3NSBDMzc0LjcxODgsMjguMDE1NiAzNzQuNzM0NCwyNy44OTA2IDM3NC43MzQ0LDI3LjQyMTkgTDM3NC43MzQ0LDI0LjE0MDYgTDM2NS45Njg4LDI0LjE0MDYgTDM2NS45Njg4LDI3LjQyMTkgQzM2NS45Njg4LDI3LjgxMjUgMzY2LDI3Ljk4NDQgMzY2LjA3ODEsMjguMTI1IEMzNjYuMjM0NCwyOC4zOTA2IDM2Ni41MzEzLDI4LjUzMTMgMzY2LjgxMjUsMjguNTMxMyBDMzY3LjA5MzgsMjguNTMxMyAzNjcuMzQzOCwyOC40MDYzIDM2Ny41MTU2LDI4LjE4NzUgQzM2Ny42MjUsMjguMDE1NiAzNjcuNjU2MywyNy44NzUgMzY3LjY1NjMsMjcuNDIxOSBMMzY3LjY1NjMsMjUuODI4MSBMMzY5LjQ4NDQsMjUuODI4MSBMMzY5LjQ4NDQsMzIuMzQzOCBMMzY4LjM3NSwzMi4zNDM4IEMzNjcuOTM3NSwzMi4zNDM4IDM2Ny44MTI1LDMyLjM1OTQgMzY3LjY1NjMsMzIuNDY4OCBDMzY3LjQwNjMsMzIuNjI1IDM2Ny4yNSwzMi45MDYzIDM2Ny4yNSwzMy4yMDMxIEMzNjcuMjUsMzMuNDUzMSAzNjcuMzkwNiwzMy43MTg4IDM2Ny42MDk0LDMzLjg3NSBDMzY3Ljc2NTYsMzQgMzY3Ljk4NDQsMzQuMDQ2OSAzNjguMzc1LDM0LjA0NjkgTDM3Mi4zMTI1LDM0LjA0NjkgQzM3Mi42NDA2LDM0LjA0NjkgMzcyLjkwNjMsMzQgMzczLjAxNTYsMzMuOTIxOSBDMzczLjI4MTMsMzMuNzgxMyAzNzMuNDIxOSwzMy40ODQ0IDM3My40MjE5LDMzLjIwMzEgQzM3My40MjE5LDMyLjkyMTkgMzczLjI5NjksMzIuNjcxOSAzNzMuMDYyNSwzMi41IEMzNzIuOTA2MywzMi4zNzUgMzcyLjc2NTYsMzIuMzQzOCAzNzIuMzEyNSwzMi4zNDM4IEwzNzEuMTg3NSwzMi4zNDM4IEwzNzEuMTg3NSwyNS44MjgxIFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTQiIHg9IjQxOC43NSIgeT0iMjQuOTk1MSI+dGFibGVfMTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDkiIHg9IjM5MS4yNSIgeT0iNDEuMjkyIj4oVGhpcyBpcyB0YWJsZSAxKTwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyNTgiIHgyPSI2MDEiIHkxPSI0OS41OTM4IiB5Mj0iNDkuNTkzOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMyIgeD0iMjYzIiB5PSI2Ni41ODg5Ij5pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTkiIHg9IjI4MCIgeT0iNjYuNTg4OSI+YmlnaW50ICBjb2x1bW5fMTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iODEiIHg9IjI2MyIgeT0iODIuODg1NyI+cHJvZF9uYW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyOCIgeD0iMzQ4IiB5PSI4Mi44ODU3Ij52YXJjaGFyICBjb2x1bW5fMjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNzUiIHg9IjI2MyIgeT0iOTkuMTgyNiI+cHJvZF90eXBlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzMyIgeD0iMzQyIiB5PSI5OS4xODI2Ij50aW55aW50ICcwJyBjb2x1bW5fMyAwOiYjMjc5NjM7JiMyNjM5OTsgMTomIzIzNDUwOyYjMjYzOTk7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI3NiIgeD0iMjYzIiB5PSIxMTUuNDc5NSI+c3RhcnRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQiIHg9IjM0MyIgeT0iMTE1LjQ3OTUiPnRpbWUgICYjMjA1NzI7JiMyNzQ5MDsmIzIwMTMyOyYjMjYxMzE7JiMyNDMyMDsmIzIyOTg3OyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjY4IiB4PSIyNjMiIHk9IjEzMS43NzY0Ij5lbmRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQiIHg9IjMzNSIgeT0iMTMxLjc3NjQiPnRpbWUgICYjMjA1NzI7JiMyNzQ5MDsmIzIwMTMyOyYjMjYxMzE7JiMzMjQ2NzsmIzI2NDYzOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijg1IiB4PSIyNjMiIHk9IjE0OC4wNzMyIj5vbmxpbmVfdHlwZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNzUiIHg9IjM1MiIgeT0iMTQ4LjA3MzIiPnRpbnlpbnQgJzAnIDA6JiMxOTk3ODsmIzMyNDQ3OyAxOiYjMjY0MTA7JiMxOTk3ODsmIzMyNDQ3OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNjkiIHg9IjI2MyIgeT0iMTY0LjM3MDEiPnByb2RfaW5mbzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjMzNiIgeT0iMTY0LjM3MDEiPnZhcmNoYXIgJycgJiMyMDEzNTsmIzIxNjk3OyYjMjAxNzE7JiMzMjQ2MTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjcyIiB4PSIyNjMiIHk9IjE4MC42NjciPm92ZXJfbGltaXQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjM1IiB4PSIzMzkiIHk9IjE4MC42NjciPnRpbnlpbnQgJzAnICYjMzYyMjk7JiMzOTA2OTsmIzM4NDgwOyYjMjEwNDY7IDA6JiMzODQ4MDsmIzIxMDQ2OyAxOiYjMTk5ODE7JiMzODQ4MDsmIzIxMDQ2OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iOTciIHg9IjI2MyIgeT0iMTk2Ljk2MzkiPmNyZWF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMjgiIHg9IjM2NCIgeT0iMTk2Ljk2MzkiPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMDEiIHg9IjI2MyIgeT0iMjEzLjI2MDciPnVwZGF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMjgiIHg9IjM2OCIgeT0iMjEzLjI2MDciPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QPC90ZXh0PjwvZz48IS0tY2xhc3MgdGFibGVfMi0tPjxnIGlkPSJlbGVtX3RhYmxlXzIiPjxyZWN0IGNvZGVMaW5lPSIyMCIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxNjQuNjcxOSIgaWQ9InRhYmxlXzIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQwNSIgeD0iNDQ3IiB5PSIyODEiLz48ZWxsaXBzZSBjeD0iNTkxLjI1IiBjeT0iMzAyLjI5NjkiIGZpbGw9IiNGRkFBQUEiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNTkxLjY4NzUsMjk5LjgyODEgTDU5My41MzEzLDI5OS44MjgxIEw1OTMuNTMxMywzMDEuNDIxOSBDNTkzLjUzMTMsMzAxLjgxMjUgNTkzLjU2MjUsMzAxLjk4NDQgNTkzLjY1NjMsMzAyLjEyNSBDNTkzLjgxMjUsMzAyLjM3NSA1OTQuMDkzOCwzMDIuNTMxMyA1OTQuMzkwNiwzMDIuNTMxMyBDNTk0LjY1NjMsMzAyLjUzMTMgNTk0LjkwNjMsMzAyLjQwNjMgNTk1LjA3ODEsMzAyLjE4NzUgQzU5NS4yMTg4LDMwMi4wMTU2IDU5NS4yMzQ0LDMwMS44OTA2IDU5NS4yMzQ0LDMwMS40MjE5IEw1OTUuMjM0NCwyOTguMTQwNiBMNTg2LjQ2ODgsMjk4LjE0MDYgTDU4Ni40Njg4LDMwMS40MjE5IEM1ODYuNDY4OCwzMDEuODEyNSA1ODYuNSwzMDEuOTg0NCA1ODYuNTc4MSwzMDIuMTI1IEM1ODYuNzM0NCwzMDIuMzkwNiA1ODcuMDMxMywzMDIuNTMxMyA1ODcuMzEyNSwzMDIuNTMxMyBDNTg3LjU5MzgsMzAyLjUzMTMgNTg3Ljg0MzgsMzAyLjQwNjMgNTg4LjAxNTYsMzAyLjE4NzUgQzU4OC4xMjUsMzAyLjAxNTYgNTg4LjE1NjMsMzAxLjg3NSA1ODguMTU2MywzMDEuNDIxOSBMNTg4LjE1NjMsMjk5LjgyODEgTDU4OS45ODQ0LDI5OS44MjgxIEw1ODkuOTg0NCwzMDYuMzQzOCBMNTg4Ljg3NSwzMDYuMzQzOCBDNTg4LjQzNzUsMzA2LjM0MzggNTg4LjMxMjUsMzA2LjM1OTQgNTg4LjE1NjMsMzA2LjQ2ODggQzU4Ny45MDYzLDMwNi42MjUgNTg3Ljc1LDMwNi45MDYzIDU4Ny43NSwzMDcuMjAzMSBDNTg3Ljc1LDMwNy40NTMxIDU4Ny44OTA2LDMwNy43MTg4IDU4OC4xMDk0LDMwNy44NzUgQzU4OC4yNjU2LDMwOCA1ODguNDg0NCwzMDguMDQ2OSA1ODguODc1LDMwOC4wNDY5IEw1OTIuODEyNSwzMDguMDQ2OSBDNTkzLjE0MDYsMzA4LjA0NjkgNTkzLjQwNjMsMzA4IDU5My41MTU2LDMwNy45MjE5IEM1OTMuNzgxMywzMDcuNzgxMyA1OTMuOTIxOSwzMDcuNDg0NCA1OTMuOTIxOSwzMDcuMjAzMSBDNTkzLjkyMTksMzA2LjkyMTkgNTkzLjc5NjksMzA2LjY3MTkgNTkzLjU2MjUsMzA2LjUgQzU5My40MDYzLDMwNi4zNzUgNTkzLjI2NTYsMzA2LjM0MzggNTkyLjgxMjUsMzA2LjM0MzggTDU5MS42ODc1LDMwNi4zNDM4IEw1OTEuNjg3NSwyOTkuODI4MSBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUzIiB4PSI2MzkuMjUiIHk9IjI5OC45OTUxIj50YWJsZV8yPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwOCIgeD0iNjExLjc1IiB5PSIzMTUuMjkyIj4oVGhpcyBpcyB0YWJsZSAyKTwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI0NDgiIHgyPSI4NTEiIHkxPSIzMjMuNTkzOCIgeTI9IjMyMy41OTM4Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjEzIiB4PSI0NTMiIHk9IjM0MC41ODg5Ij5pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0MyIgeD0iNDcwIiB5PSIzNDAuNTg4OSI+YmlnaW50PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1MCIgeD0iNDUzIiB5PSIzNTYuODg1NyI+dXNlcl9pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5MiIgeD0iNTA3IiB5PSIzNTYuODg1NyI+YmlnaW50ICAmIzI5OTkyOyYjMjUxNDM7aWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijc3IiB4PSI0NTMiIHk9IjM3My4xODI2Ij51c2VyX25hbWU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTE3IiB4PSI1MzQiIHk9IjM3My4xODI2Ij52YXJjaGFyICAmIzI5OTkyOyYjMjUxNDM7JiMyMTUxNzsmIzMxMjE2OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNTQiIHg9IjQ1MyIgeT0iMzg5LjQ3OTUiPnByb2RfaWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTIiIHg9IjUxMSIgeT0iMzg5LjQ3OTUiPmJpZ2ludCAgJiMyMDEzNTsmIzIxNjk3O2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyNiIgeD0iNDUzIiB5PSI0MDUuNzc2NCI+aW50ZXJlc3RfZGF0ZSBkYXRlTlVMTCYjMzU3NDU7JiMyNDY4NzsmIzI2MDg1OyYjMjYzOTk7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI5NyIgeD0iNDUzIiB5PSI0MjIuMDczMiI+Y3JlYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iNTU0IiB5PSI0MjIuMDczMiI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyMTAxOTsmIzI0MzE0OyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjEwMSIgeD0iNDUzIiB5PSI0MzguMzcwMSI+dXBkYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iNTU4IiB5PSI0MzguMzcwMSI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyNjM1NjsmIzI2MDMyOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PC9nPjwhLS1jbGFzcyB0YWJsZV8zLS0+PGcgaWQ9ImVsZW1fdGFibGVfMyI+PHJlY3QgY29kZUxpbmU9IjMxIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjE2NC42NzE5IiBpZD0idGFibGVfMyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNDA1IiB4PSI3IiB5PSIyODEiLz48ZWxsaXBzZSBjeD0iMTUwLjc1IiBjeT0iMzAyLjI5NjkiIGZpbGw9IiNGRkFBQUEiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMTUxLjE4NzUsMjk5LjgyODEgTDE1My4wMzEzLDI5OS44MjgxIEwxNTMuMDMxMywzMDEuNDIxOSBDMTUzLjAzMTMsMzAxLjgxMjUgMTUzLjA2MjUsMzAxLjk4NDQgMTUzLjE1NjMsMzAyLjEyNSBDMTUzLjMxMjUsMzAyLjM3NSAxNTMuNTkzOCwzMDIuNTMxMyAxNTMuODkwNiwzMDIuNTMxMyBDMTU0LjE1NjMsMzAyLjUzMTMgMTU0LjQwNjMsMzAyLjQwNjMgMTU0LjU3ODEsMzAyLjE4NzUgQzE1NC43MTg4LDMwMi4wMTU2IDE1NC43MzQ0LDMwMS44OTA2IDE1NC43MzQ0LDMwMS40MjE5IEwxNTQuNzM0NCwyOTguMTQwNiBMMTQ1Ljk2ODgsMjk4LjE0MDYgTDE0NS45Njg4LDMwMS40MjE5IEMxNDUuOTY4OCwzMDEuODEyNSAxNDYsMzAxLjk4NDQgMTQ2LjA3ODEsMzAyLjEyNSBDMTQ2LjIzNDQsMzAyLjM5MDYgMTQ2LjUzMTMsMzAyLjUzMTMgMTQ2LjgxMjUsMzAyLjUzMTMgQzE0Ny4wOTM4LDMwMi41MzEzIDE0Ny4zNDM4LDMwMi40MDYzIDE0Ny41MTU2LDMwMi4xODc1IEMxNDcuNjI1LDMwMi4wMTU2IDE0Ny42NTYzLDMwMS44NzUgMTQ3LjY1NjMsMzAxLjQyMTkgTDE0Ny42NTYzLDI5OS44MjgxIEwxNDkuNDg0NCwyOTkuODI4MSBMMTQ5LjQ4NDQsMzA2LjM0MzggTDE0OC4zNzUsMzA2LjM0MzggQzE0Ny45Mzc1LDMwNi4zNDM4IDE0Ny44MTI1LDMwNi4zNTk0IDE0Ny42NTYzLDMwNi40Njg4IEMxNDcuNDA2MywzMDYuNjI1IDE0Ny4yNSwzMDYuOTA2MyAxNDcuMjUsMzA3LjIwMzEgQzE0Ny4yNSwzMDcuNDUzMSAxNDcuMzkwNiwzMDcuNzE4OCAxNDcuNjA5NCwzMDcuODc1IEMxNDcuNzY1NiwzMDggMTQ3Ljk4NDQsMzA4LjA0NjkgMTQ4LjM3NSwzMDguMDQ2OSBMMTUyLjMxMjUsMzA4LjA0NjkgQzE1Mi42NDA2LDMwOC4wNDY5IDE1Mi45MDYzLDMwOCAxNTMuMDE1NiwzMDcuOTIxOSBDMTUzLjI4MTMsMzA3Ljc4MTMgMTUzLjQyMTksMzA3LjQ4NDQgMTUzLjQyMTksMzA3LjIwMzEgQzE1My40MjE5LDMwNi45MjE5IDE1My4yOTY5LDMwNi42NzE5IDE1My4wNjI1LDMwNi41IEMxNTIuOTA2MywzMDYuMzc1IDE1Mi43NjU2LDMwNi4zNDM4IDE1Mi4zMTI1LDMwNi4zNDM4IEwxNTEuMTg3NSwzMDYuMzQzOCBMMTUxLjE4NzUsMjk5LjgyODEgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTk4Ljc1IiB5PSIyOTguOTk1MSI+dGFibGVfMzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDkiIHg9IjE3MS4yNSIgeT0iMzE1LjI5MiI+KFRoaXMgaXMgdGFibGUgMyk8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjQxMSIgeTE9IjMyMy41OTM4IiB5Mj0iMzIzLjU5MzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iMTMiIHg9IjEzIiB5PSIzNDAuNTg4OSI+aWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDMiIHg9IjMwIiB5PSIzNDAuNTg4OSI+YmlnaW50PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1MCIgeD0iMTMiIHk9IjM1Ni44ODU3Ij51c2VyX2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyIiB4PSI2NyIgeT0iMzU2Ljg4NTciPmJpZ2ludCAgJiMyOTk5MjsmIzI1MTQzO2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI3NyIgeD0iMTMiIHk9IjM3My4xODI2Ij51c2VyX25hbWU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTE3IiB4PSI5NCIgeT0iMzczLjE4MjYiPnZhcmNoYXIgICYjMjk5OTI7JiMyNTE0MzsmIzIxNTE3OyYjMzEyMTY7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTMiIHk9IjM4OS40Nzk1Ij5wcm9kX2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyIiB4PSI3MSIgeT0iMzg5LjQ3OTUiPmJpZ2ludCAgJiMyMDEzNTsmIzIxNjk3O2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyNiIgeD0iMTMiIHk9IjQwNS43NzY0Ij5pbnRlcmVzdF9kYXRlIGRhdGVOVUxMJiMzNTc0NTsmIzI0Njg3OyYjMjYwODU7JiMyNjM5OTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijk3IiB4PSIxMyIgeT0iNDIyLjA3MzIiPmNyZWF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyODgiIHg9IjExNCIgeT0iNDIyLjA3MzIiPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QICYjMjEwMTk7JiMyNDMxNDsmIzI2MTAyOyYjMzgzODg7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMDEiIHg9IjEzIiB5PSI0MzguMzcwMSI+dXBkYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iMTE4IiB5PSI0MzguMzcwMSI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyNjM1NjsmIzI2MDMyOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PC9nPjwhLS1saW5rIHRhYmxlXzEgdG8gdGFibGVfMi0tPjxnIGlkPSJsaW5rX3RhYmxlXzFfdGFibGVfMiI+PHBhdGggY29kZUxpbmU9IjQxIiBkPSJNNTIzLjc1NywyMjEuMDM5IEM1NDEuNjAxLDI0MS4xMTMgNTU2LjAyMjksMjU3LjMzNzUgNTczLjA2MzksMjc2LjUwOTUgIiBmaWxsPSJub25lIiBpZD0idGFibGVfMS10by10YWJsZV8yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjU3Ny4wNSwyODAuOTk0LDU3NC4wNjA2LDI3MS42MDk4LDU3My43MjgzLDI3Ny4yNTY5LDU2OC4wODEyLDI3Ni45MjQ2LDU3Ny4wNSwyODAuOTk0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4IiB4PSI1MjEuNTM5MSIgeT0iMjQwLjQ2MTgiPjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjUiIHg9IjU0NC40ODQxIiB5PSIyNzAuMDY1MyI+MC4uTjwvdGV4dD48L2c+PCEtLWxpbmsgdGFibGVfMSB0byB0YWJsZV8zLS0+PGcgaWQ9ImxpbmtfdGFibGVfMV90YWJsZV8zIj48cGF0aCBjb2RlTGluZT0iNDIiIGQ9Ik0zMzUuMjQzLDIyMS4wMzkgQzMxNy4zOTksMjQxLjExMyAzMDIuOTc3MSwyNTcuMzM3NSAyODUuOTM2MSwyNzYuNTA5NSAiIGZpbGw9Im5vbmUiIGlkPSJ0YWJsZV8xLXRvLXRhYmxlXzMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjgxLjk1LDI4MC45OTQsMjkwLjkxODgsMjc2LjkyNDYsMjg1LjI3MTcsMjc3LjI1NjksMjg0LjkzOTQsMjcxLjYwOTgsMjgxLjk1LDI4MC45OTQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjgiIHg9IjMyMC45NDg0IiB5PSIyNDAuNDYxOCI+MTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNSIgeD0iMjYyLjI4OTMiIHk9IjI3MC4wNjUzIj4wLi5OPC90ZXh0PjwvZz48IS0tbGluayB0YWJsZV8zIHRvIHRhYmxlXzItLT48ZyBpZD0ibGlua190YWJsZV8zX3RhYmxlXzIiPjxwYXRoIGNvZGVMaW5lPSI0MyIgZD0iTTQxOC4zMTIsMzYzLjUgQzQyOS43NCwzNjMuNSA0MjkuMTY3LDM2My41IDQ0MC41OTQsMzYzLjUgIiBmaWxsPSJub25lIiBpZD0idGFibGVfMy10YWJsZV8yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQxMi4zMTIsMzYzLjUsNDIxLjMxMiwzNjcuNSw0MTcuMzEyLDM2My41LDQyMS4zMTIsMzU5LjUsNDEyLjMxMiwzNjMuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0NDYuNTk0LDM2My41LDQzNy41OTQsMzU5LjUsNDQxLjU5NCwzNjMuNSw0MzcuNTk0LDM2Ny41LDQ0Ni41OTQsMzYzLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjgiIHg9IjQxOS43NDQzIiB5PSIzNjAuMzA1NiI+MTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4IiB4PSI0MzEuMTU4MyIgeT0iMzYwLjMwNTYiPjE8L3RleHQ+PC9nPjwhLS1TUkM9W3hMSlZRemZHNTd4dGhwWkQ3WklXaFQ0dDJPNG9NWFlxQ1poeERXWkhORWpib09yQlJhZmIzRVIzZUFtODFTVlNMYWpQc04wQ3JsTDF0RDMxX1hhSnd0LW5jdlo2UUJPWXg3Tlg5Zm54cF9VVDdyekVpZ1FZQVlPOElhZlBHb2NZdzJZajhnbDJHcUxKQjBreTByMGl1Qm4zM2FHSEtnTnFsVXRqSk5Sbjg0YzlqTzFWRHg2a2MwdHYyTWdhWmRXR0F1UGNjMEtKZ1A5T2JleDRaUjhhUmxYZFN1ZkR5NUNSSFQwNzlhQjQwb3kxWUs1Yk9ja1EzeEt6VzJxYlFiWDVlMkRRQ3JIaGpoNGVDZjUxNnRMYTlNUmpLRXlmMnNkVzBraW5JUExnczBBc18xQ0dVOHZfMWVhbTByUHZBRUMzSjJXMGd5Qk1ZSW4wT2J2MXRKSEtzSEU1WHFGNWhER0tDeUpiT1pZbDUxdWU5V3FsTlpBUmw4TmM4TGptLW9FdFVtNTJtUmJ3eG5hSGlhS0xheWVLd3B3UmxHMW1jYnR0dy1MdS1ENXpzdFAtbGQxdzlzdmRDRXRxZW9uNHJCem85Z0VzVXR1SHZuWDRPbUJfZVQxaU9WcFpyTUp1WXpOZFRoeTR6ZDlfYzVJRGtHeDk5OG83RlFWVDc4ekU5Z0ZNR2ZmM1BDZVFyWjVUcDc4cFUzY3pGOS0gLUV0TUUxb25iTzBXaVRva204cTRnOWI4ZWtrckhQUlJWdl90emxSc2pPYWFrRlRaVFViSlF0N3E4S1A5VExyU2NGTVN0TXo3SG9PTVphdWtESmt3RXFMYWVtTUJESHZzSnJ2X1R1LXpPWk82TXZjZzZTcXZSYXp2ck5GajhtOWRpVmEyc1BuLTFITU1sTFJfVnVseEVwaXRMMXhWdnBVcnlNWGdxYklMclppLVNxSjAtRm9sQnd2eHJ0SlZOT0cwY1RLcGhWQVhyRmdQcl9oX01fd0hyeUZpM0prMG82T2RCaGd5TkVHVzYtb3ZkRmQzY0ZBVU9xTDJMQ2VHR2tkeTNdLS0+PC9nPjwvc3ZnPg=='>
-
-]]></content>
-      <categories>
-        <category>java</category>
-      </categories>
-      <tags>
-        <tag>java</tag>
-        <tag>er</tag>
-        <tag>plantuml</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>抽象思维实践——ddl2plantuml开发记录</title>
     <url>/2019/12/09/ddl2plantuml-ddd/</url>
     <content><![CDATA[<p>项目源码地址: <a href="https://github.com/wangyuheng/ddl2plantuml">github</a></p>
@@ -1278,6 +1247,37 @@ SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
       <tags>
         <tag>java</tag>
         <tag>ddd</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DDL转plantuml格式ER图</title>
+    <url>/2018/06/28/ddl2plantuml/</url>
+    <content><![CDATA[<p>项目源码地址: <a href="https://github.com/wangyuheng/ddl2plantuml">github</a></p>
+<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>通过plantuml绘制数据库ER图，手写字段信息成本太大。需要一套DDL转换plantuml的工具。</p>
+<h2 id="方案"><a href="#方案" class="headerlink" title="方案"></a>方案</h2><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSIyMTJweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjg0MnB4O2hlaWdodDoyMTJweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NDIgMjEyIiB3aWR0aD0iODQycHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48ZyBpZD0iY2x1c3Rlcl8jIzQiPjxwYXRoIGQ9Ik0zNzIuMzEzOSwxNS4xMjg1IEMzNzUuNDk3Miw5LjY0NTUgMzgxLjk3NjgsOC41MzAxIDM4NS41MDgsMTQuNzM1NyBDMzg3LjgwNzUsOS4xODEzIDM5My41NDM1LDguOTIzMiAzOTcuMDU1OCwxMy4zMjk2IEMzOTkuNzk2NSw2LjgxNTEgNDAzLjg3ODcsNi4yODk5IDQwOC4yMjc3LDExLjg0MDQgQzQxMS44ODgzLDYuMTk0NSA0MTcuMjE2Niw3LjYxODIgNDIwLjEyNDYsMTIuNjc2OCBDNDI0LjUzMDEsNiA0MjkuODE0Nyw2Ljk0MjIgNDMzLjMwMTIsMTMuNTg1OCBDNDM3LjQ4MjYsNy44MjY2IDQ0Mi4yMTY2LDkuMDk2NCA0NDUuNzA1MiwxNC4zNjUxIEM0NTUuMTE2MSwxOS4wODE2IDQ1NS42MjEzLDIzLjk4MzcgNDQ3LjM0NTYsMzAuNDk4NiBDNDU1LjM3NzgsMzQuMjUzNSA0NTcuMTk2Myw0MC43MDA2IDQ1MS4xNjkxLDQ3LjU5OTEgQzQ1Ni42NDQ0LDUzLjg5ODcgNDU2LjM4MTgsNTkuMDU4OCA0NDcuNTk0OSw2MS43NTgxIEM0NTMuOTU4NSw2OC40NjY2IDQ1NC44NzA4LDc0LjM3MjMgNDQ0Ljk2NjMsNzguNTMxNCBDNDQyLjE1NDIsODMuODQ1MiA0MzcuNzI3Nyw4My43MjIzIDQzNC4wMzk5LDc5LjUzODkgQzQzMS4xNjk1LDg1Ljc4MDcgNDI2LjQxMTcsODYuOTk3MyA0MjEuOTkyNiw4MS4wNzIzIEM0MTguNzcwNyw4OC4yMDI0IDQxNC40NTMsODkuOTgzOCA0MDguNDA1OSw4My45OTkyIEM0MDQuMTM0OCw4OC4xMzA1IDQwMC41NTAxLDg4Ljg0ODkgMzk3LjU5NDksODIuNjI1NCBDMzkyLjE3MTQsODguMzI1NyAzODguMTkwNyw4Ni4wNzYzIDM4NS40OTcsNzkuODU1MiBDMzgxLjExMzUsODYuMzczMiAzNzYuNzk4Miw4NC44ODM3IDM3Mi42MTkyLDc5LjYzMTUgQzM2NC40OTc4LDc0Ljk3ODYgMzYzLjQ0MDMsNjguNTEwNyAzNzEuMDIzMiw2Mi40MDMgQzM2My4wMzM3LDU4LjgzMyAzNjMuNzg0Miw1MS4zNzA4IDM2OS45MzAyLDQ2LjgwOTkgQzM2Mi4zNDIxLDQxLjE0MzYgMzYxLjk5MjIsMzMuNTA3MiAzNzEuODI2NCwyOS43ODA5IEMzNjQuMTk4NCwyNS4zODI2IDM2NS45OTMzLDE5LjA2MjYgMzcyLjMxMzksMTUuMTI4NSAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48ZyBpZD0iY2x1c3Rlcl8jIzciPjxwYXRoIGQ9Ik04LjUsMTI3LjYwNjMgTDIxMC43NSwxMjcuNjA2MyBBMy43NSwzLjc1IDAgMCAxIDIxMy4yNSwxMzAuMTA2MyBMMjIwLjI1LDEzNy42MDYzIEw4MzIuNSwxMzcuNjA2MyBBMi41LDIuNSAwIDAgMSA4MzUsMTQwLjEwNjMgTDgzNSwyMDMuMTA2MyBBMi41LDIuNSAwIDAgMSA4MzIuNSwyMDUuNjA2MyBMOC41LDIwNS42MDYzIEEyLjUsMi41IDAgMCAxIDYsMjAzLjEwNjMgTDYsMTMwLjEwNjMgQTIuNSwyLjUgMCAwIDEgOC41LDEyNy42MDYzICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMDAwMDAwO3N0cm9rZS13aWR0aDoxLjU7IiB4MT0iNiIgeDI9IjIyMC4yNSIgeTE9IjEzNy42MDYzIiB5Mj0iMTM3LjYwNjMiLz48L2c+PCEtLWVudGl0eSBjb252ZXJ0LS0+PGcgaWQ9ImVsZW1fY29udmVydCI+PGVsbGlwc2UgY3g9IjQwOCIgY3k9IjM3LjYwNjMiIGZpbGw9IiMwMDgwMDAiIHJ4PSIxMiIgcnk9IjEyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQwNCwyNS42MDYzLDQxMCwyMC42MDYzLDQwOCwyNS42MDYzLDQxMCwzMC42MDYzLDQwNCwyNS42MDYzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NiIgeD0iMzgwIiB5PSI2Ni42MDE0Ij5jb252ZXJ0PC90ZXh0PjwvZz48IS0tZW50aXR5IHN0ZXAxLS0+PGcgaWQ9ImVsZW1fc3RlcDEiPjxwb2x5Z29uIGZpbGw9IiNGMUYxRjEiIHBvaW50cz0iMjIsMTUzLjYwNjMsMzIsMTQzLjYwNjMsMTIwLDE0My42MDYzLDEyMCwxNzkuOTAzMSwxMTAsMTg5LjkwMzEsMjIsMTg5LjkwMzEsMjIsMTUzLjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjExMCIgeDI9IjEyMCIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyMiIgeDI9IjExMCIgeTE9IjE1My42MDYzIiB5Mj0iMTUzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxMTAiIHgyPSIxMTAiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTgiIHg9IjM3IiB5PSIxNzYuNjAxNCI+cmVhZCBkZGw8L3RleHQ+PC9nPjwhLS1lbnRpdHkgc3RlcDItLT48ZyBpZD0iZWxlbV9zdGVwMiI+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSIxNTUuNSwxNTMuNjA2MywxNjUuNSwxNDMuNjA2MywzMjIuNSwxNDMuNjA2MywzMjIuNSwxNzkuOTAzMSwzMTIuNSwxODkuOTAzMSwxNTUuNSwxODkuOTAzMSwxNTUuNSwxNTMuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iMzEyLjUiIHgyPSIzMjIuNSIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIxNTUuNSIgeDI9IjMxMi41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNTMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjMxMi41IiB4Mj0iMzEyLjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTI3IiB4PSIxNzAuNSIgeT0iMTc2LjYwMTQiPmV4dHJhY3QgdGFibGUgaW5mbzwvdGV4dD48L2c+PCEtLWVudGl0eSBzdGVwMy0tPjxnIGlkPSJlbGVtX3N0ZXAzIj48cG9seWdvbiBmaWxsPSIjRjFGMUYxIiBwb2ludHM9IjM1Ny41LDE1My42MDYzLDM2Ny41LDE0My42MDYzLDYzOC41LDE0My42MDYzLDYzOC41LDE3OS45MDMxLDYyOC41LDE4OS45MDMxLDM1Ny41LDE4OS45MDMxLDM1Ny41LDE1My42MDYzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI2MjguNSIgeDI9IjYzOC41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNDMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjM1Ny41IiB4Mj0iNjI4LjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE1My42MDYzIi8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iNjI4LjUiIHgyPSI2MjguNSIgeTE9IjE1My42MDYzIiB5Mj0iMTg5LjkwMzEiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNDEiIHg9IjM3Mi41IiB5PSIxNzYuNjAxNCI+cmVwbGFjZSBieSB0ZW1wbGF0ZSBmb3IgcGxhbnR1bWw8L3RleHQ+PC9nPjwhLS1lbnRpdHkgc3RlcDQtLT48ZyBpZD0iZWxlbV9zdGVwNCI+PHBvbHlnb24gZmlsbD0iI0YxRjFGMSIgcG9pbnRzPSI2NzMuNSwxNTMuNjA2Myw2ODMuNSwxNDMuNjA2Myw4MTguNSwxNDMuNjA2Myw4MTguNSwxNzkuOTAzMSw4MDguNSwxODkuOTAzMSw2NzMuNSwxODkuOTAzMSw2NzMuNSwxNTMuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iODA4LjUiIHgyPSI4MTguNSIgeTE9IjE1My42MDYzIiB5Mj0iMTQzLjYwNjMiLz48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI2NzMuNSIgeDI9IjgwOC41IiB5MT0iMTUzLjYwNjMiIHkyPSIxNTMuNjA2MyIvPjxsaW5lIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgeDE9IjgwOC41IiB4Mj0iODA4LjUiIHkxPSIxNTMuNjA2MyIgeTI9IjE4OS45MDMxIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTA1IiB4PSI2ODguNSIgeT0iMTc2LjYwMTQiPndyaXRlIHBsYW50dW1sPC90ZXh0PjwvZz48IS0tZW50aXR5IERETC0tPjxnIGlkPSJlbGVtX0RETCI+PGVsbGlwc2UgY3g9IjMzMCIgY3k9IjE2LjEwNjMiIGZpbGw9IiNGMUYxRjEiIHJ4PSI4IiByeT0iOCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHBhdGggZD0iTTMzMCwyNC4xMDYzIEwzMzAsNTEuMTA2MyBNMzE3LDMyLjEwNjMgTDM0MywzMi4xMDYzIE0zMzAsNTEuMTA2MyBMMzE3LDY2LjEwNjMgTTMzMCw1MS4xMDYzIEwzNDMsNjYuMTA2MyAiIGZpbGw9Im5vbmUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjMwIiB4PSIzMTUiIHk9IjgwLjYwMTQiPkRETDwvdGV4dD48L2c+PCEtLWVudGl0eSBwbGFudFVtbC0tPjxnIGlkPSJlbGVtX3BsYW50VW1sIj48ZWxsaXBzZSBjeD0iNTA0IiBjeT0iMTYuMTA2MyIgZmlsbD0iI0YxRjFGMSIgcng9IjgiIHJ5PSI4IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiLz48cGF0aCBkPSJNNTA0LDI0LjEwNjMgTDUwNCw1MS4xMDYzIE00OTEsMzIuMTA2MyBMNTE3LDMyLjEwNjMgTTUwNCw1MS4xMDYzIEw0OTEsNjYuMTA2MyBNNTA0LDUxLjEwNjMgTDUxNyw2Ni4xMDYzICIgZmlsbD0ibm9uZSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNjUiIHg9IjQ3MS41IiB5PSI4MC42MDE0Ij5wbGFudFVtbDwvdGV4dD48L2c+PCEtLWxpbmsgRERMIHRvIGNvbnZlcnQtLT48ZyBpZD0ibGlua19ERExfY29udmVydCI+PHBhdGggZD0iTTM0NS4yMzQsNDUuNjA2MyBDMzU2LjY3Niw0NS42MDYzIDM2Mi4xMTgsNDUuNjA2MyAzNzMuNTU5LDQ1LjYwNjMgIiBmaWxsPSJub25lIiBpZD0iRERMLXRvLWNvbnZlcnQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMzc5LjU1OSw0NS42MDYzLDM3MC41NTksNDEuNjA2MywzNzQuNTU5LDQ1LjYwNjMsMzcwLjU1OSw0OS42MDYzLDM3OS41NTksNDUuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIGNvbnZlcnQgdG8gcGxhbnRVbWwtLT48ZyBpZD0ibGlua19jb252ZXJ0X3BsYW50VW1sIj48cGF0aCBkPSJNNDM2LjEyNSw0NS42MDYzIEM0NDcuODc5LDQ1LjYwNjMgNDUzLjYzNCw0NS42MDYzIDQ2NS4zODgsNDUuNjA2MyAiIGZpbGw9Im5vbmUiIGlkPSJjb252ZXJ0LXRvLXBsYW50VW1sIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQ3MS4zODgsNDUuNjA2Myw0NjIuMzg4LDQxLjYwNjMsNDY2LjM4OCw0NS42MDYzLDQ2Mi4zODgsNDkuNjA2Myw0NzEuMzg4LDQ1LjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tbGluayBjb252ZXJ0IHRvIHN0ZXAxLS0+PGcgaWQ9ImxpbmtfY29udmVydF9zdGVwMSI+PHBhdGggZD0iTTM5MS42NDQsNjkuNjM2MyBDMzg0LjAwMiw3OC42MjIzIDM3NC4xMjksODguMDc3MyAzNjMsOTMuNjA2MyBDMjcyLjg0NywxMzguMzk0OCAyMzIuMjcxLDg0LjMwMDMgMTM4LDExOS42MDYzIEMxMjMuMjAxLDEyNS4xNDg4IDExMy4zMTUsMTMxLjAzMDQgMTAxLjQ4OSwxMzkuOTYxNCAiIGZpbGw9Im5vbmUiIGlkPSJjb252ZXJ0LXRvLXN0ZXAxIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9Ijk2LjcwMSwxNDMuNTc3MywxMDYuMjkzNiwxNDEuMzQ1NCwxMDAuNjkxLDE0MC41NjQsMTAxLjQ3MjQsMTM0Ljk2MTQsOTYuNzAxLDE0My41NzczIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48L2c+PCEtLWxpbmsgc3RlcDEgdG8gc3RlcDItLT48ZyBpZD0ibGlua19zdGVwMV9zdGVwMiI+PHBhdGggZD0iTTEyMC4yMTksMTY2LjYwNjMgQzEzMS45NzMsMTY2LjYwNjMgMTM3LjcyOCwxNjYuNjA2MyAxNDkuNDgyLDE2Ni42MDYzICIgZmlsbD0ibm9uZSIgaWQ9InN0ZXAxLXRvLXN0ZXAyIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjE1NS40ODIsMTY2LjYwNjMsMTQ2LjQ4MiwxNjIuNjA2MywxNTAuNDgyLDE2Ni42MDYzLDE0Ni40ODIsMTcwLjYwNjMsMTU1LjQ4MiwxNjYuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHN0ZXAyIHRvIHN0ZXAzLS0+PGcgaWQ9Imxpbmtfc3RlcDJfc3RlcDMiPjxwYXRoIGQ9Ik0zMjIuNzIsMTY2LjYwNjMgQzMzNC4yNDUsMTY2LjYwNjMgMzM5Ljc3MSwxNjYuNjA2MyAzNTEuMjk2LDE2Ni42MDYzICIgZmlsbD0ibm9uZSIgaWQ9InN0ZXAyLXRvLXN0ZXAzIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjM1Ny4yOTYsMTY2LjYwNjMsMzQ4LjI5NiwxNjIuNjA2MywzNTIuMjk2LDE2Ni42MDYzLDM0OC4yOTYsMTcwLjYwNjMsMzU3LjI5NiwxNjYuNjA2MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1saW5rIHN0ZXAzIHRvIHN0ZXA0LS0+PGcgaWQ9Imxpbmtfc3RlcDNfc3RlcDQiPjxwYXRoIGQ9Ik02MzguOTUzLDE2Ni42MDYzIEM2NTAuMzgzLDE2Ni42MDYzIDY1NS44MTIsMTY2LjYwNjMgNjY3LjI0MiwxNjYuNjA2MyAiIGZpbGw9Im5vbmUiIGlkPSJzdGVwMy10by1zdGVwNCIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI2NzMuMjQyLDE2Ni42MDYzLDY2NC4yNDIsMTYyLjYwNjMsNjY4LjI0MiwxNjYuNjA2Myw2NjQuMjQyLDE3MC42MDYzLDY3My4yNDIsMTY2LjYwNjMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjwvZz48IS0tcmV2ZXJzZSBsaW5rIGNvbnZlcnQgdG8gc3RlcDQtLT48ZyBpZD0ibGlua19jb252ZXJ0X3N0ZXA0Ij48cGF0aCBkPSJNNDI5LjI0MzcsNzQuNTYwNyBDNDM3LjAxNTcsODMuMzg4NyA0NDIuOTYyLDg4LjEwOTMgNDU0LDkzLjYwNjMgQzUzNS4wMjUsMTMzLjk2MDQgNTY5LjUzMSw5Mi44MzQzIDY1NiwxMTkuNjA2MyBDNjc0LjYwNiwxMjUuMzY3MSA2OTMuOTk4LDEzNC43ODA0IDcwOS45OTYsMTQzLjU5NTcgIiBmaWxsPSJub25lIiBpZD0iY29udmVydC1iYWNrdG8tc3RlcDQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iNDI1LjI3OSw3MC4wNTczLDQyOC4yMjM4LDc5LjQ1NTYsNDI4LjU4MjksNzMuODEwMSw0MzQuMjI4NCw3NC4xNjkzLDQyNS4yNzksNzAuMDU3MyIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PC9nPjwhLS1TUkM9W1BLXzEzZThtM0J0dEFuZXpTcjB1Y3ZYbXo2UnlXQjRMOTh3RHAyOFF1eHl4WGkyOEZSSkRVc19UVXFBb1RQWmQ5bjFYUXhLbVY2YXFXRElzS19XNnoyTWpPTVZyQzFfYTZCVUw4cEJtME1ZNWw4Y0FWWmZaNVU3NmFMMmViRHhXeU9udGZkT05hVkhhdnh6MjVlS2NoNHJmUHpiLVRTQ3hhT0o1MnZhUWxwRFhFVmRoY2tMczZadGdOVXJiVnY5aUNFZVpPa0Jnd2loOU9TZTFLdndQWUU5RmJCQXp5U29POF9INTdibVpaNkU1Zlc1Q3JzME1tMG1KSk1MYXVtaTBdLS0+PC9nPjwvc3ZnPg=='>
+
+<ol>
+<li>读取同目录下<strong>ddl.sql</strong>文件</li>
+<li>基于 <code>;</code> 分割建表语句</li>
+<li>依赖 <a href="https://github.com/alibaba/druid">druid</a> 进行sql解析</li>
+<li>定义plantuml模版</li>
+<li><code>replaceAll</code>替换模版内容</li>
+</ol>
+<span id="more"></span>
+
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">java -jar ddl2plantuml-1.0.0-SNAPSHOT.jar</span><br></pre></td></tr></table></figure>
+
+<p>程序会读取同目录的<strong>ddl.sql</strong>文件，并转换生成<strong>er.puml</strong>文件。</p>
+<h3 id="ER图效果"><a href="#ER图效果" class="headerlink" title="ER图效果"></a>ER图效果</h3><img src='data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXMtYXNjaWkiIHN0YW5kYWxvbmU9Im5vIj8+PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiBjb250ZW50U3R5bGVUeXBlPSJ0ZXh0L2NzcyIgaGVpZ2h0PSI0NTJweCIgcHJlc2VydmVBc3BlY3RSYXRpbz0ibm9uZSIgc3R5bGU9IndpZHRoOjg1OXB4O2hlaWdodDo0NTJweDtiYWNrZ3JvdW5kOiNGRkZGRkY7IiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCA4NTkgNDUyIiB3aWR0aD0iODU5cHgiIHpvb21BbmRQYW49Im1hZ25pZnkiPjxkZWZzLz48Zz48IS0tY2xhc3MgdGFibGVfMS0tPjxnIGlkPSJlbGVtX3RhYmxlXzEiPjxyZWN0IGNvZGVMaW5lPSI3IiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjIxMy41NjI1IiBpZD0idGFibGVfMSIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iMzQ1IiB4PSIyNTciIHk9IjciLz48ZWxsaXBzZSBjeD0iMzcwLjc1IiBjeT0iMjguMjk2OSIgZmlsbD0iI0ZGQUFBQSIgcng9IjExIiByeT0iMTEiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwYXRoIGQ9Ik0zNzEuMTg3NSwyNS44MjgxIEwzNzMuMDMxMywyNS44MjgxIEwzNzMuMDMxMywyNy40MjE5IEMzNzMuMDMxMywyNy44MTI1IDM3My4wNjI1LDI3Ljk4NDQgMzczLjE1NjMsMjguMTI1IEMzNzMuMzEyNSwyOC4zNzUgMzczLjU5MzgsMjguNTMxMyAzNzMuODkwNiwyOC41MzEzIEMzNzQuMTU2MywyOC41MzEzIDM3NC40MDYzLDI4LjQwNjMgMzc0LjU3ODEsMjguMTg3NSBDMzc0LjcxODgsMjguMDE1NiAzNzQuNzM0NCwyNy44OTA2IDM3NC43MzQ0LDI3LjQyMTkgTDM3NC43MzQ0LDI0LjE0MDYgTDM2NS45Njg4LDI0LjE0MDYgTDM2NS45Njg4LDI3LjQyMTkgQzM2NS45Njg4LDI3LjgxMjUgMzY2LDI3Ljk4NDQgMzY2LjA3ODEsMjguMTI1IEMzNjYuMjM0NCwyOC4zOTA2IDM2Ni41MzEzLDI4LjUzMTMgMzY2LjgxMjUsMjguNTMxMyBDMzY3LjA5MzgsMjguNTMxMyAzNjcuMzQzOCwyOC40MDYzIDM2Ny41MTU2LDI4LjE4NzUgQzM2Ny42MjUsMjguMDE1NiAzNjcuNjU2MywyNy44NzUgMzY3LjY1NjMsMjcuNDIxOSBMMzY3LjY1NjMsMjUuODI4MSBMMzY5LjQ4NDQsMjUuODI4MSBMMzY5LjQ4NDQsMzIuMzQzOCBMMzY4LjM3NSwzMi4zNDM4IEMzNjcuOTM3NSwzMi4zNDM4IDM2Ny44MTI1LDMyLjM1OTQgMzY3LjY1NjMsMzIuNDY4OCBDMzY3LjQwNjMsMzIuNjI1IDM2Ny4yNSwzMi45MDYzIDM2Ny4yNSwzMy4yMDMxIEMzNjcuMjUsMzMuNDUzMSAzNjcuMzkwNiwzMy43MTg4IDM2Ny42MDk0LDMzLjg3NSBDMzY3Ljc2NTYsMzQgMzY3Ljk4NDQsMzQuMDQ2OSAzNjguMzc1LDM0LjA0NjkgTDM3Mi4zMTI1LDM0LjA0NjkgQzM3Mi42NDA2LDM0LjA0NjkgMzcyLjkwNjMsMzQgMzczLjAxNTYsMzMuOTIxOSBDMzczLjI4MTMsMzMuNzgxMyAzNzMuNDIxOSwzMy40ODQ0IDM3My40MjE5LDMzLjIwMzEgQzM3My40MjE5LDMyLjkyMTkgMzczLjI5NjksMzIuNjcxOSAzNzMuMDYyNSwzMi41IEMzNzIuOTA2MywzMi4zNzUgMzcyLjc2NTYsMzIuMzQzOCAzNzIuMzEyNSwzMi4zNDM4IEwzNzEuMTg3NSwzMi4zNDM4IEwzNzEuMTg3NSwyNS44MjgxIFogIiBmaWxsPSIjMDAwMDAwIi8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNTQiIHg9IjQxOC43NSIgeT0iMjQuOTk1MSI+dGFibGVfMTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDkiIHg9IjM5MS4yNSIgeT0iNDEuMjkyIj4oVGhpcyBpcyB0YWJsZSAxKTwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSIyNTgiIHgyPSI2MDEiIHkxPSI0OS41OTM4IiB5Mj0iNDkuNTkzOCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMyIgeD0iMjYzIiB5PSI2Ni41ODg5Ij5pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMTkiIHg9IjI4MCIgeT0iNjYuNTg4OSI+YmlnaW50ICBjb2x1bW5fMTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iODEiIHg9IjI2MyIgeT0iODIuODg1NyI+cHJvZF9uYW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEyOCIgeD0iMzQ4IiB5PSI4Mi44ODU3Ij52YXJjaGFyICBjb2x1bW5fMjwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNzUiIHg9IjI2MyIgeT0iOTkuMTgyNiI+cHJvZF90eXBlPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIzMyIgeD0iMzQyIiB5PSI5OS4xODI2Ij50aW55aW50ICcwJyBjb2x1bW5fMyAwOiYjMjc5NjM7JiMyNjM5OTsgMTomIzIzNDUwOyYjMjYzOTk7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI3NiIgeD0iMjYzIiB5PSIxMTUuNDc5NSI+c3RhcnRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQiIHg9IjM0MyIgeT0iMTE1LjQ3OTUiPnRpbWUgICYjMjA1NzI7JiMyNzQ5MDsmIzIwMTMyOyYjMjYxMzE7JiMyNDMyMDsmIzIyOTg3OyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjY4IiB4PSIyNjMiIHk9IjEzMS43NzY0Ij5lbmRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNTQiIHg9IjMzNSIgeT0iMTMxLjc3NjQiPnRpbWUgICYjMjA1NzI7JiMyNzQ5MDsmIzIwMTMyOyYjMjYxMzE7JiMzMjQ2NzsmIzI2NDYzOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijg1IiB4PSIyNjMiIHk9IjE0OC4wNzMyIj5vbmxpbmVfdHlwZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxNzUiIHg9IjM1MiIgeT0iMTQ4LjA3MzIiPnRpbnlpbnQgJzAnIDA6JiMxOTk3ODsmIzMyNDQ3OyAxOiYjMjY0MTA7JiMxOTk3ODsmIzMyNDQ3OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNjkiIHg9IjI2MyIgeT0iMTY0LjM3MDEiPnByb2RfaW5mbzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMjUiIHg9IjMzNiIgeT0iMTY0LjM3MDEiPnZhcmNoYXIgJycgJiMyMDEzNTsmIzIxNjk3OyYjMjAxNzE7JiMzMjQ2MTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjcyIiB4PSIyNjMiIHk9IjE4MC42NjciPm92ZXJfbGltaXQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjM1IiB4PSIzMzkiIHk9IjE4MC42NjciPnRpbnlpbnQgJzAnICYjMzYyMjk7JiMzOTA2OTsmIzM4NDgwOyYjMjEwNDY7IDA6JiMzODQ4MDsmIzIxMDQ2OyAxOiYjMTk5ODE7JiMzODQ4MDsmIzIxMDQ2OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iOTciIHg9IjI2MyIgeT0iMTk2Ljk2MzkiPmNyZWF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMjgiIHg9IjM2NCIgeT0iMTk2Ljk2MzkiPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMDEiIHg9IjI2MyIgeT0iMjEzLjI2MDciPnVwZGF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyMjgiIHg9IjM2OCIgeT0iMjEzLjI2MDciPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QPC90ZXh0PjwvZz48IS0tY2xhc3MgdGFibGVfMi0tPjxnIGlkPSJlbGVtX3RhYmxlXzIiPjxyZWN0IGNvZGVMaW5lPSIyMCIgZmlsbD0iI0YxRjFGMSIgaGVpZ2h0PSIxNjQuNjcxOSIgaWQ9InRhYmxlXzIiIHJ4PSIyLjUiIHJ5PSIyLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MC41OyIgd2lkdGg9IjQwNSIgeD0iNDQ3IiB5PSIyODEiLz48ZWxsaXBzZSBjeD0iNTkxLjI1IiBjeT0iMzAyLjI5NjkiIGZpbGw9IiNGRkFBQUEiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNNTkxLjY4NzUsMjk5LjgyODEgTDU5My41MzEzLDI5OS44MjgxIEw1OTMuNTMxMywzMDEuNDIxOSBDNTkzLjUzMTMsMzAxLjgxMjUgNTkzLjU2MjUsMzAxLjk4NDQgNTkzLjY1NjMsMzAyLjEyNSBDNTkzLjgxMjUsMzAyLjM3NSA1OTQuMDkzOCwzMDIuNTMxMyA1OTQuMzkwNiwzMDIuNTMxMyBDNTk0LjY1NjMsMzAyLjUzMTMgNTk0LjkwNjMsMzAyLjQwNjMgNTk1LjA3ODEsMzAyLjE4NzUgQzU5NS4yMTg4LDMwMi4wMTU2IDU5NS4yMzQ0LDMwMS44OTA2IDU5NS4yMzQ0LDMwMS40MjE5IEw1OTUuMjM0NCwyOTguMTQwNiBMNTg2LjQ2ODgsMjk4LjE0MDYgTDU4Ni40Njg4LDMwMS40MjE5IEM1ODYuNDY4OCwzMDEuODEyNSA1ODYuNSwzMDEuOTg0NCA1ODYuNTc4MSwzMDIuMTI1IEM1ODYuNzM0NCwzMDIuMzkwNiA1ODcuMDMxMywzMDIuNTMxMyA1ODcuMzEyNSwzMDIuNTMxMyBDNTg3LjU5MzgsMzAyLjUzMTMgNTg3Ljg0MzgsMzAyLjQwNjMgNTg4LjAxNTYsMzAyLjE4NzUgQzU4OC4xMjUsMzAyLjAxNTYgNTg4LjE1NjMsMzAxLjg3NSA1ODguMTU2MywzMDEuNDIxOSBMNTg4LjE1NjMsMjk5LjgyODEgTDU4OS45ODQ0LDI5OS44MjgxIEw1ODkuOTg0NCwzMDYuMzQzOCBMNTg4Ljg3NSwzMDYuMzQzOCBDNTg4LjQzNzUsMzA2LjM0MzggNTg4LjMxMjUsMzA2LjM1OTQgNTg4LjE1NjMsMzA2LjQ2ODggQzU4Ny45MDYzLDMwNi42MjUgNTg3Ljc1LDMwNi45MDYzIDU4Ny43NSwzMDcuMjAzMSBDNTg3Ljc1LDMwNy40NTMxIDU4Ny44OTA2LDMwNy43MTg4IDU4OC4xMDk0LDMwNy44NzUgQzU4OC4yNjU2LDMwOCA1ODguNDg0NCwzMDguMDQ2OSA1ODguODc1LDMwOC4wNDY5IEw1OTIuODEyNSwzMDguMDQ2OSBDNTkzLjE0MDYsMzA4LjA0NjkgNTkzLjQwNjMsMzA4IDU5My41MTU2LDMwNy45MjE5IEM1OTMuNzgxMywzMDcuNzgxMyA1OTMuOTIxOSwzMDcuNDg0NCA1OTMuOTIxOSwzMDcuMjAzMSBDNTkzLjkyMTksMzA2LjkyMTkgNTkzLjc5NjksMzA2LjY3MTkgNTkzLjU2MjUsMzA2LjUgQzU5My40MDYzLDMwNi4zNzUgNTkzLjI2NTYsMzA2LjM0MzggNTkyLjgxMjUsMzA2LjM0MzggTDU5MS42ODc1LDMwNi4zNDM4IEw1OTEuNjg3NSwyOTkuODI4MSBaICIgZmlsbD0iIzAwMDAwMCIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjUzIiB4PSI2MzkuMjUiIHk9IjI5OC45OTUxIj50YWJsZV8yPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjEwOCIgeD0iNjExLjc1IiB5PSIzMTUuMjkyIj4oVGhpcyBpcyB0YWJsZSAyKTwvdGV4dD48bGluZSBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjAuNTsiIHgxPSI0NDgiIHgyPSI4NTEiIHkxPSIzMjMuNTkzOCIgeTI9IjMyMy41OTM4Ii8+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjEzIiB4PSI0NTMiIHk9IjM0MC41ODg5Ij5pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI0MyIgeD0iNDcwIiB5PSIzNDAuNTg4OSI+YmlnaW50PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1MCIgeD0iNDUzIiB5PSIzNTYuODg1NyI+dXNlcl9pZDwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI5MiIgeD0iNTA3IiB5PSIzNTYuODg1NyI+YmlnaW50ICAmIzI5OTkyOyYjMjUxNDM7aWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijc3IiB4PSI0NTMiIHk9IjM3My4xODI2Ij51c2VyX25hbWU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTE3IiB4PSI1MzQiIHk9IjM3My4xODI2Ij52YXJjaGFyICAmIzI5OTkyOyYjMjUxNDM7JiMyMTUxNzsmIzMxMjE2OzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iNTQiIHg9IjQ1MyIgeT0iMzg5LjQ3OTUiPnByb2RfaWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iOTIiIHg9IjUxMSIgeT0iMzg5LjQ3OTUiPmJpZ2ludCAgJiMyMDEzNTsmIzIxNjk3O2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyNiIgeD0iNDUzIiB5PSI0MDUuNzc2NCI+aW50ZXJlc3RfZGF0ZSBkYXRlTlVMTCYjMzU3NDU7JiMyNDY4NzsmIzI2MDg1OyYjMjYzOTk7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI5NyIgeD0iNDUzIiB5PSI0MjIuMDczMiI+Y3JlYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iNTU0IiB5PSI0MjIuMDczMiI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyMTAxOTsmIzI0MzE0OyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9IjEwMSIgeD0iNDUzIiB5PSI0MzguMzcwMSI+dXBkYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iNTU4IiB5PSI0MzguMzcwMSI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyNjM1NjsmIzI2MDMyOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PC9nPjwhLS1jbGFzcyB0YWJsZV8zLS0+PGcgaWQ9ImVsZW1fdGFibGVfMyI+PHJlY3QgY29kZUxpbmU9IjMxIiBmaWxsPSIjRjFGMUYxIiBoZWlnaHQ9IjE2NC42NzE5IiBpZD0idGFibGVfMyIgcng9IjIuNSIgcnk9IjIuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB3aWR0aD0iNDA1IiB4PSI3IiB5PSIyODEiLz48ZWxsaXBzZSBjeD0iMTUwLjc1IiBjeT0iMzAyLjI5NjkiIGZpbGw9IiNGRkFBQUEiIHJ4PSIxMSIgcnk9IjExIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cGF0aCBkPSJNMTUxLjE4NzUsMjk5LjgyODEgTDE1My4wMzEzLDI5OS44MjgxIEwxNTMuMDMxMywzMDEuNDIxOSBDMTUzLjAzMTMsMzAxLjgxMjUgMTUzLjA2MjUsMzAxLjk4NDQgMTUzLjE1NjMsMzAyLjEyNSBDMTUzLjMxMjUsMzAyLjM3NSAxNTMuNTkzOCwzMDIuNTMxMyAxNTMuODkwNiwzMDIuNTMxMyBDMTU0LjE1NjMsMzAyLjUzMTMgMTU0LjQwNjMsMzAyLjQwNjMgMTU0LjU3ODEsMzAyLjE4NzUgQzE1NC43MTg4LDMwMi4wMTU2IDE1NC43MzQ0LDMwMS44OTA2IDE1NC43MzQ0LDMwMS40MjE5IEwxNTQuNzM0NCwyOTguMTQwNiBMMTQ1Ljk2ODgsMjk4LjE0MDYgTDE0NS45Njg4LDMwMS40MjE5IEMxNDUuOTY4OCwzMDEuODEyNSAxNDYsMzAxLjk4NDQgMTQ2LjA3ODEsMzAyLjEyNSBDMTQ2LjIzNDQsMzAyLjM5MDYgMTQ2LjUzMTMsMzAyLjUzMTMgMTQ2LjgxMjUsMzAyLjUzMTMgQzE0Ny4wOTM4LDMwMi41MzEzIDE0Ny4zNDM4LDMwMi40MDYzIDE0Ny41MTU2LDMwMi4xODc1IEMxNDcuNjI1LDMwMi4wMTU2IDE0Ny42NTYzLDMwMS44NzUgMTQ3LjY1NjMsMzAxLjQyMTkgTDE0Ny42NTYzLDI5OS44MjgxIEwxNDkuNDg0NCwyOTkuODI4MSBMMTQ5LjQ4NDQsMzA2LjM0MzggTDE0OC4zNzUsMzA2LjM0MzggQzE0Ny45Mzc1LDMwNi4zNDM4IDE0Ny44MTI1LDMwNi4zNTk0IDE0Ny42NTYzLDMwNi40Njg4IEMxNDcuNDA2MywzMDYuNjI1IDE0Ny4yNSwzMDYuOTA2MyAxNDcuMjUsMzA3LjIwMzEgQzE0Ny4yNSwzMDcuNDUzMSAxNDcuMzkwNiwzMDcuNzE4OCAxNDcuNjA5NCwzMDcuODc1IEMxNDcuNzY1NiwzMDggMTQ3Ljk4NDQsMzA4LjA0NjkgMTQ4LjM3NSwzMDguMDQ2OSBMMTUyLjMxMjUsMzA4LjA0NjkgQzE1Mi42NDA2LDMwOC4wNDY5IDE1Mi45MDYzLDMwOCAxNTMuMDE1NiwzMDcuOTIxOSBDMTUzLjI4MTMsMzA3Ljc4MTMgMTUzLjQyMTksMzA3LjQ4NDQgMTUzLjQyMTksMzA3LjIwMzEgQzE1My40MjE5LDMwNi45MjE5IDE1My4yOTY5LDMwNi42NzE5IDE1My4wNjI1LDMwNi41IEMxNTIuOTA2MywzMDYuMzc1IDE1Mi43NjU2LDMwNi4zNDM4IDE1Mi4zMTI1LDMwNi4zNDM4IEwxNTEuMTg3NSwzMDYuMzQzOCBMMTUxLjE4NzUsMjk5LjgyODEgWiAiIGZpbGw9IiMwMDAwMDAiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTk4Ljc1IiB5PSIyOTguOTk1MSI+dGFibGVfMzwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIxMDkiIHg9IjE3MS4yNSIgeT0iMzE1LjI5MiI+KFRoaXMgaXMgdGFibGUgMyk8L3RleHQ+PGxpbmUgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDowLjU7IiB4MT0iOCIgeDI9IjQxMSIgeTE9IjMyMy41OTM4IiB5Mj0iMzIzLjU5MzgiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0LWRlY29yYXRpb249InVuZGVybGluZSIgdGV4dExlbmd0aD0iMTMiIHg9IjEzIiB5PSIzNDAuNTg4OSI+aWQ8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iNDMiIHg9IjMwIiB5PSIzNDAuNTg4OSI+YmlnaW50PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1MCIgeD0iMTMiIHk9IjM1Ni44ODU3Ij51c2VyX2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyIiB4PSI2NyIgeT0iMzU2Ljg4NTciPmJpZ2ludCAgJiMyOTk5MjsmIzI1MTQzO2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI3NyIgeD0iMTMiIHk9IjM3My4xODI2Ij51c2VyX25hbWU8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMTE3IiB4PSI5NCIgeT0iMzczLjE4MjYiPnZhcmNoYXIgICYjMjk5OTI7JiMyNTE0MzsmIzIxNTE3OyYjMzEyMTY7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSI1NCIgeD0iMTMiIHk9IjM4OS40Nzk1Ij5wcm9kX2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjkyIiB4PSI3MSIgeT0iMzg5LjQ3OTUiPmJpZ2ludCAgJiMyMDEzNTsmIzIxNjk3O2lkPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjIyNiIgeD0iMTMiIHk9IjQwNS43NzY0Ij5pbnRlcmVzdF9kYXRlIGRhdGVOVUxMJiMzNTc0NTsmIzI0Njg3OyYjMjYwODU7JiMyNjM5OTs8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTQiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dC1kZWNvcmF0aW9uPSJ1bmRlcmxpbmUiIHRleHRMZW5ndGg9Ijk3IiB4PSIxMyIgeT0iNDIyLjA3MzIiPmNyZWF0ZWRfdGltZTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxNCIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyODgiIHg9IjExNCIgeT0iNDIyLjA3MzIiPmRhdGV0aW1lIENVUlJFTlRfVElNRVNUQU1QICYjMjEwMTk7JiMyNDMxNDsmIzI2MTAyOyYjMzgzODg7PC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHQtZGVjb3JhdGlvbj0idW5kZXJsaW5lIiB0ZXh0TGVuZ3RoPSIxMDEiIHg9IjEzIiB5PSI0MzguMzcwMSI+dXBkYXRlZF90aW1lPC90ZXh0Pjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjE0IiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjI4OCIgeD0iMTE4IiB5PSI0MzguMzcwMSI+ZGF0ZXRpbWUgQ1VSUkVOVF9USU1FU1RBTVAgJiMyNjM1NjsmIzI2MDMyOyYjMjYxMDI7JiMzODM4ODs8L3RleHQ+PC9nPjwhLS1saW5rIHRhYmxlXzEgdG8gdGFibGVfMi0tPjxnIGlkPSJsaW5rX3RhYmxlXzFfdGFibGVfMiI+PHBhdGggY29kZUxpbmU9IjQxIiBkPSJNNTIzLjc1NywyMjEuMDM5IEM1NDEuNjAxLDI0MS4xMTMgNTU2LjAyMjksMjU3LjMzNzUgNTczLjA2MzksMjc2LjUwOTUgIiBmaWxsPSJub25lIiBpZD0idGFibGVfMS10by10YWJsZV8yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjU3Ny4wNSwyODAuOTk0LDU3NC4wNjA2LDI3MS42MDk4LDU3My43MjgzLDI3Ny4yNTY5LDU2OC4wODEyLDI3Ni45MjQ2LDU3Ny4wNSwyODAuOTk0IiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4IiB4PSI1MjEuNTM5MSIgeT0iMjQwLjQ2MTgiPjE8L3RleHQ+PHRleHQgZmlsbD0iIzAwMDAwMCIgZm9udC1mYW1pbHk9InNhbnMtc2VyaWYiIGZvbnQtc2l6ZT0iMTMiIGxlbmd0aEFkanVzdD0ic3BhY2luZyIgdGV4dExlbmd0aD0iMjUiIHg9IjU0NC40ODQxIiB5PSIyNzAuMDY1MyI+MC4uTjwvdGV4dD48L2c+PCEtLWxpbmsgdGFibGVfMSB0byB0YWJsZV8zLS0+PGcgaWQ9ImxpbmtfdGFibGVfMV90YWJsZV8zIj48cGF0aCBjb2RlTGluZT0iNDIiIGQ9Ik0zMzUuMjQzLDIyMS4wMzkgQzMxNy4zOTksMjQxLjExMyAzMDIuOTc3MSwyNTcuMzM3NSAyODUuOTM2MSwyNzYuNTA5NSAiIGZpbGw9Im5vbmUiIGlkPSJ0YWJsZV8xLXRvLXRhYmxlXzMiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjxwb2x5Z29uIGZpbGw9IiMxODE4MTgiIHBvaW50cz0iMjgxLjk1LDI4MC45OTQsMjkwLjkxODgsMjc2LjkyNDYsMjg1LjI3MTcsMjc3LjI1NjksMjg0LjkzOTQsMjcxLjYwOTgsMjgxLjk1LDI4MC45OTQiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjgiIHg9IjMyMC45NDg0IiB5PSIyNDAuNDYxOCI+MTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSIyNSIgeD0iMjYyLjI4OTMiIHk9IjI3MC4wNjUzIj4wLi5OPC90ZXh0PjwvZz48IS0tbGluayB0YWJsZV8zIHRvIHRhYmxlXzItLT48ZyBpZD0ibGlua190YWJsZV8zX3RhYmxlXzIiPjxwYXRoIGNvZGVMaW5lPSI0MyIgZD0iTTQxOC4zMTIsMzYzLjUgQzQyOS43NCwzNjMuNSA0MjkuMTY3LDM2My41IDQ0MC41OTQsMzYzLjUgIiBmaWxsPSJub25lIiBpZD0idGFibGVfMy10YWJsZV8yIiBzdHlsZT0ic3Ryb2tlOiMxODE4MTg7c3Ryb2tlLXdpZHRoOjEuMDsiLz48cG9seWdvbiBmaWxsPSIjMTgxODE4IiBwb2ludHM9IjQxMi4zMTIsMzYzLjUsNDIxLjMxMiwzNjcuNSw0MTcuMzEyLDM2My41LDQyMS4zMTIsMzU5LjUsNDEyLjMxMiwzNjMuNSIgc3R5bGU9InN0cm9rZTojMTgxODE4O3N0cm9rZS13aWR0aDoxLjA7Ii8+PHBvbHlnb24gZmlsbD0iIzE4MTgxOCIgcG9pbnRzPSI0NDYuNTk0LDM2My41LDQzNy41OTQsMzU5LjUsNDQxLjU5NCwzNjMuNSw0MzcuNTk0LDM2Ny41LDQ0Ni41OTQsMzYzLjUiIHN0eWxlPSJzdHJva2U6IzE4MTgxODtzdHJva2Utd2lkdGg6MS4wOyIvPjx0ZXh0IGZpbGw9IiMwMDAwMDAiIGZvbnQtZmFtaWx5PSJzYW5zLXNlcmlmIiBmb250LXNpemU9IjEzIiBsZW5ndGhBZGp1c3Q9InNwYWNpbmciIHRleHRMZW5ndGg9IjgiIHg9IjQxOS43NDQzIiB5PSIzNjAuMzA1NiI+MTwvdGV4dD48dGV4dCBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0ic2Fucy1zZXJpZiIgZm9udC1zaXplPSIxMyIgbGVuZ3RoQWRqdXN0PSJzcGFjaW5nIiB0ZXh0TGVuZ3RoPSI4IiB4PSI0MzEuMTU4MyIgeT0iMzYwLjMwNTYiPjE8L3RleHQ+PC9nPjwhLS1TUkM9W3hMSlZRemZHNTd4dGhwWkQ3WklXaFQ0dDJPNG9NWFlxQ1poeERXWkhORWpib09yQlJhZmIzRVIzZUFtODFTVlNMYWpQc04wQ3JsTDF0RDMxX1hhSnd0LW5jdlo2UUJPWXg3Tlg5Zm54cF9VVDdyekVpZ1FZQVlPOElhZlBHb2NZdzJZajhnbDJHcUxKQjBreTByMGl1Qm4zM2FHSEtnTnFsVXRqSk5Sbjg0YzlqTzFWRHg2a2MwdHYyTWdhWmRXR0F1UGNjMEtKZ1A5T2JleDRaUjhhUmxYZFN1ZkR5NUNSSFQwNzlhQjQwb3kxWUs1Yk9ja1EzeEt6VzJxYlFiWDVlMkRRQ3JIaGpoNGVDZjUxNnRMYTlNUmpLRXlmMnNkVzBraW5JUExnczBBc18xQ0dVOHZfMWVhbTByUHZBRUMzSjJXMGd5Qk1ZSW4wT2J2MXRKSEtzSEU1WHFGNWhER0tDeUpiT1pZbDUxdWU5V3FsTlpBUmw4TmM4TGptLW9FdFVtNTJtUmJ3eG5hSGlhS0xheWVLd3B3UmxHMW1jYnR0dy1MdS1ENXpzdFAtbGQxdzlzdmRDRXRxZW9uNHJCem85Z0VzVXR1SHZuWDRPbUJfZVQxaU9WcFpyTUp1WXpOZFRoeTR6ZDlfYzVJRGtHeDk5OG83RlFWVDc4ekU5Z0ZNR2ZmM1BDZVFyWjVUcDc4cFUzY3pGOS0gLUV0TUUxb25iTzBXaVRva204cTRnOWI4ZWtrckhQUlJWdl90emxSc2pPYWFrRlRaVFViSlF0N3E4S1A5VExyU2NGTVN0TXo3SG9PTVphdWtESmt3RXFMYWVtTUJESHZzSnJ2X1R1LXpPWk82TXZjZzZTcXZSYXp2ck5GajhtOWRpVmEyc1BuLTFITU1sTFJfVnVseEVwaXRMMXhWdnBVcnlNWGdxYklMclppLVNxSjAtRm9sQnd2eHJ0SlZOT0cwY1RLcGhWQVhyRmdQcl9oX01fd0hyeUZpM0prMG82T2RCaGd5TkVHVzYtb3ZkRmQzY0ZBVU9xTDJMQ2VHR2tkeTNdLS0+PC9nPjwvc3ZnPg=='>
+
+]]></content>
+      <categories>
+        <category>java</category>
+      </categories>
+      <tags>
+        <tag>java</tag>
+        <tag>er</tag>
+        <tag>plantuml</tag>
       </tags>
   </entry>
   <entry>
@@ -1534,83 +1534,6 @@ SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
       </tags>
   </entry>
   <entry>
-    <title>自定义Github个人首页</title>
-    <url>/2020/10/17/github-profile-readme/</url>
-    <content><![CDATA[<p>筛校招简历时学到的新姿势。现在的年轻人真会玩。</p>
-<span id="more"></span>
-
-<p>在GitHub上接触一个新项目时，如果有一个详实有效的<strong>README</strong>，可以极大降低学习成本， 提升用户体验。<br>上篇文章中也介绍了介绍了如何通过badge等方式，让你的<strong>README</strong>更直观。</p>
-<p>但是另一个很重要的信息总是被忽略，那就是个人介绍。如果把个人也看成一个项目，如何让其他人快速了解你，并且与你合作？无论是获取、还是给予相关帮助。</p>
-<p>其实GitHub提供了一个自定义个人首页的方式，只不过隐藏在了隐秘的角落，不为众人所知。</p>
-<h2 id="Secret-Repository"><a href="#Secret-Repository" class="headerlink" title="Secret Repository"></a>Secret Repository</h2><blockquote>
-<p>嘘 <strong>This is a secret!</strong></p>
-</blockquote>
-<p>这可是官方告诉我的</p>
-<p><img src="https://img.yuheng.wang/mweb/16028819616164.jpg" alt="00-create-repository"></p>
-<p>整个过程十分简单，只需要新建一个和GitHub 用户名匹配的项目即可。需要满足2个条件</p>
-<ul>
-<li>项目必须是Public <img src="https://img.yuheng.wang/mweb/16029061891894.jpg" alt="01-public-repository"></li>
-<li>选择 Initialize this repository with a README <img src="https://img.yuheng.wang/mweb/16029061968726.jpg" alt="02-init-readme"></li>
-</ul>
-<p>新建后，即可在个人首页中看到多了一个个人首页窗口。</p>
-<p><img src="https://img.yuheng.wang/mweb/16029065277582.jpg" alt="03-profile"></p>
-<p>repository创建后，Github已经用模板预先填充了生成的README文件，按照官方推荐来介绍自己吧</p>
-<p><img src="https://img.yuheng.wang/mweb/16029063813381.jpg" alt="04-readme"></p>
-<p>高大上吗？这才刚刚开始</p>
-<h2 id="Style"><a href="#Style" class="headerlink" title="Style"></a>Style</h2><p>虽然这是一个<code>.md</code>文件，但是支持HTML解析。可玩性是不是瞬间提高了？<br>但是觉得直男审美，或者技能受限？没关系，我们还可以直接使用前端大佬们最喜欢造的轮子</p>
-<h3 id="github-readme-stats"><a href="#github-readme-stats" class="headerlink" title="github-readme-stats"></a>github-readme-stats</h3><blockquote>
-<p>github-readme-stats: 在你的 README 中获取动态生成的 GitHub 统计信息！</p>
-</blockquote>
-<p><img src="https://img.yuheng.wang/mweb/16029161749468.jpg" alt="05-stats"></p>
-<p>可以选择统计指标和自定义样式</p>
-<p><img src="https://img.yuheng.wang/mweb/16029162619690.jpg" alt="06-stats-theme"></p>
-<p>或者语言使用比例</p>
-<p><img src="https://img.yuheng.wang/mweb/16029163301690.jpg" alt="07-language"></p>
-<p>也可以把感兴趣或者参与的项目也贴进来</p>
-<p><img src="https://img.yuheng.wang/mweb/16029165402374.jpg" alt="08-arc"></p>
-<p>只需要一行引用即可</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[![Focus Repo](https:&#x2F;&#x2F;github-readme-stats.vercel.app&#x2F;api&#x2F;pin&#x2F;?username&#x3D;YituHealthcare&amp;repo&#x3D;Arc&amp;show_owner&#x3D;true)](https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc)</span><br></pre></td></tr></table></figure>
-
-<h3 id="github-profile-trophy"><a href="#github-profile-trophy" class="headerlink" title="github-profile-trophy"></a>github-profile-trophy</h3><blockquote>
-<p>Add dynamically generated GitHub Trophy on your readme</p>
-</blockquote>
-<p>不喜欢卡片，也可以给自己颁个奖杯</p>
-<p><img src="https://img.yuheng.wang/mweb/16029169489432.jpg" alt="09-trophy"></p>
-<h3 id="github-profile-views-counter"><a href="#github-profile-views-counter" class="headerlink" title="github-profile-views-counter"></a>github-profile-views-counter</h3><p>想统计有多少人访问过你的首页？又是一句话搞定</p>
-<p><img src="https://img.yuheng.wang/mweb/16029170509758.jpg" alt="10-views"></p>
-<h3 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h3><p>千言万语不如一个表情？ 来找找喜欢的Emoji吧</p>
-<p><img src="https://img.yuheng.wang/mweb/16029174388898.jpg" alt="11-emoji"></p>
-<h2 id="关闭个人首页"><a href="#关闭个人首页" class="headerlink" title="关闭个人首页"></a>关闭个人首页</h2><p>有一天自闭了，不想在首页向其他人介绍自己，有以下几种方式</p>
-<ul>
-<li>删除README.me文件。</li>
-<li>仓库设置为私有。</li>
-<li>仓库名称不再与Github用户名匹配。</li>
-</ul>
-<h2 id="那些眼前一亮的主页"><a href="#那些眼前一亮的主页" class="headerlink" title="那些眼前一亮的主页"></a>那些眼前一亮的主页</h2><p><img src="https://img.yuheng.wang/mweb/16029182616289.jpg" alt="12-readme-1"></p>
-<p><img src="https://img.yuheng.wang/mweb/16029182384273.jpg" alt="12-readme-2"></p>
-<p><img src="https://img.yuheng.wang/mweb/amchuz.gif" alt="12-readme-3"></p>
-<p><img src="https://img.yuheng.wang/mweb/16029181695183.jpg" alt="12-readme-4"></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>心动不如行动，期待看到你的炫酷主页</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
-<li><a href="https://github.com/coderjojo/creative-profile-readme">https://github.com/coderjojo/creative-profile-readme</a></li>
-<li><a href="https://github.com/anuraghazra/github-readme-stats">https://github.com/anuraghazra/github-readme-stats</a></li>
-<li><a href="https://github.com/TheDudeThatCode#shubhamdeep-jha">https://github.com/TheDudeThatCode#shubhamdeep-jha</a></li>
-<li><a href="https://github.com/Amchuz/Amchuz/blob/master/README.md">https://github.com/Amchuz/Amchuz/blob/master/README.md</a></li>
-<li><a href="https://github.com/RichardLitt/standard-readme#example-readmes">https://github.com/RichardLitt/standard-readme#example-readmes</a></li>
-<li><a href="https://gist.github.com/rxaviers/7360908">https://gist.github.com/rxaviers/7360908</a></li>
-<li><a href="https://github.com/ryo-ma/github-profile-trophy">https://github.com/ryo-ma/github-profile-trophy</a></li>
-<li><a href="https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme">https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme</a></li>
-<li><a href="https://github.com/antonkomarev/github-profile-views-counter">https://github.com/antonkomarev/github-profile-views-counter</a></li>
-</ul>
-]]></content>
-      <categories>
-        <category>github</category>
-      </categories>
-      <tags>
-        <tag>github</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>函数式编程</title>
     <url>/2023/08/06/fp/</url>
     <content><![CDATA[<h1 id="一、-什么是函数式编程"><a href="#一、-什么是函数式编程" class="headerlink" title="一、 什么是函数式编程"></a>一、 什么是函数式编程</h1><blockquote>
@@ -1796,6 +1719,83 @@ SHOW VARIABLES LIKE &#39;query_cache_type&#39;;
       <tags>
         <tag>code</tag>
         <tag>fp</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>自定义Github个人首页</title>
+    <url>/2020/10/17/github-profile-readme/</url>
+    <content><![CDATA[<p>筛校招简历时学到的新姿势。现在的年轻人真会玩。</p>
+<span id="more"></span>
+
+<p>在GitHub上接触一个新项目时，如果有一个详实有效的<strong>README</strong>，可以极大降低学习成本， 提升用户体验。<br>上篇文章中也介绍了介绍了如何通过badge等方式，让你的<strong>README</strong>更直观。</p>
+<p>但是另一个很重要的信息总是被忽略，那就是个人介绍。如果把个人也看成一个项目，如何让其他人快速了解你，并且与你合作？无论是获取、还是给予相关帮助。</p>
+<p>其实GitHub提供了一个自定义个人首页的方式，只不过隐藏在了隐秘的角落，不为众人所知。</p>
+<h2 id="Secret-Repository"><a href="#Secret-Repository" class="headerlink" title="Secret Repository"></a>Secret Repository</h2><blockquote>
+<p>嘘 <strong>This is a secret!</strong></p>
+</blockquote>
+<p>这可是官方告诉我的</p>
+<p><img src="https://img.yuheng.wang/mweb/16028819616164.jpg" alt="00-create-repository"></p>
+<p>整个过程十分简单，只需要新建一个和GitHub 用户名匹配的项目即可。需要满足2个条件</p>
+<ul>
+<li>项目必须是Public <img src="https://img.yuheng.wang/mweb/16029061891894.jpg" alt="01-public-repository"></li>
+<li>选择 Initialize this repository with a README <img src="https://img.yuheng.wang/mweb/16029061968726.jpg" alt="02-init-readme"></li>
+</ul>
+<p>新建后，即可在个人首页中看到多了一个个人首页窗口。</p>
+<p><img src="https://img.yuheng.wang/mweb/16029065277582.jpg" alt="03-profile"></p>
+<p>repository创建后，Github已经用模板预先填充了生成的README文件，按照官方推荐来介绍自己吧</p>
+<p><img src="https://img.yuheng.wang/mweb/16029063813381.jpg" alt="04-readme"></p>
+<p>高大上吗？这才刚刚开始</p>
+<h2 id="Style"><a href="#Style" class="headerlink" title="Style"></a>Style</h2><p>虽然这是一个<code>.md</code>文件，但是支持HTML解析。可玩性是不是瞬间提高了？<br>但是觉得直男审美，或者技能受限？没关系，我们还可以直接使用前端大佬们最喜欢造的轮子</p>
+<h3 id="github-readme-stats"><a href="#github-readme-stats" class="headerlink" title="github-readme-stats"></a>github-readme-stats</h3><blockquote>
+<p>github-readme-stats: 在你的 README 中获取动态生成的 GitHub 统计信息！</p>
+</blockquote>
+<p><img src="https://img.yuheng.wang/mweb/16029161749468.jpg" alt="05-stats"></p>
+<p>可以选择统计指标和自定义样式</p>
+<p><img src="https://img.yuheng.wang/mweb/16029162619690.jpg" alt="06-stats-theme"></p>
+<p>或者语言使用比例</p>
+<p><img src="https://img.yuheng.wang/mweb/16029163301690.jpg" alt="07-language"></p>
+<p>也可以把感兴趣或者参与的项目也贴进来</p>
+<p><img src="https://img.yuheng.wang/mweb/16029165402374.jpg" alt="08-arc"></p>
+<p>只需要一行引用即可</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">[![Focus Repo](https:&#x2F;&#x2F;github-readme-stats.vercel.app&#x2F;api&#x2F;pin&#x2F;?username&#x3D;YituHealthcare&amp;repo&#x3D;Arc&amp;show_owner&#x3D;true)](https:&#x2F;&#x2F;github.com&#x2F;YituHealthcare&#x2F;Arc)</span><br></pre></td></tr></table></figure>
+
+<h3 id="github-profile-trophy"><a href="#github-profile-trophy" class="headerlink" title="github-profile-trophy"></a>github-profile-trophy</h3><blockquote>
+<p>Add dynamically generated GitHub Trophy on your readme</p>
+</blockquote>
+<p>不喜欢卡片，也可以给自己颁个奖杯</p>
+<p><img src="https://img.yuheng.wang/mweb/16029169489432.jpg" alt="09-trophy"></p>
+<h3 id="github-profile-views-counter"><a href="#github-profile-views-counter" class="headerlink" title="github-profile-views-counter"></a>github-profile-views-counter</h3><p>想统计有多少人访问过你的首页？又是一句话搞定</p>
+<p><img src="https://img.yuheng.wang/mweb/16029170509758.jpg" alt="10-views"></p>
+<h3 id="emoji"><a href="#emoji" class="headerlink" title="emoji"></a>emoji</h3><p>千言万语不如一个表情？ 来找找喜欢的Emoji吧</p>
+<p><img src="https://img.yuheng.wang/mweb/16029174388898.jpg" alt="11-emoji"></p>
+<h2 id="关闭个人首页"><a href="#关闭个人首页" class="headerlink" title="关闭个人首页"></a>关闭个人首页</h2><p>有一天自闭了，不想在首页向其他人介绍自己，有以下几种方式</p>
+<ul>
+<li>删除README.me文件。</li>
+<li>仓库设置为私有。</li>
+<li>仓库名称不再与Github用户名匹配。</li>
+</ul>
+<h2 id="那些眼前一亮的主页"><a href="#那些眼前一亮的主页" class="headerlink" title="那些眼前一亮的主页"></a>那些眼前一亮的主页</h2><p><img src="https://img.yuheng.wang/mweb/16029182616289.jpg" alt="12-readme-1"></p>
+<p><img src="https://img.yuheng.wang/mweb/16029182384273.jpg" alt="12-readme-2"></p>
+<p><img src="https://img.yuheng.wang/mweb/amchuz.gif" alt="12-readme-3"></p>
+<p><img src="https://img.yuheng.wang/mweb/16029181695183.jpg" alt="12-readme-4"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>心动不如行动，期待看到你的炫酷主页</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><ul>
+<li><a href="https://github.com/coderjojo/creative-profile-readme">https://github.com/coderjojo/creative-profile-readme</a></li>
+<li><a href="https://github.com/anuraghazra/github-readme-stats">https://github.com/anuraghazra/github-readme-stats</a></li>
+<li><a href="https://github.com/TheDudeThatCode#shubhamdeep-jha">https://github.com/TheDudeThatCode#shubhamdeep-jha</a></li>
+<li><a href="https://github.com/Amchuz/Amchuz/blob/master/README.md">https://github.com/Amchuz/Amchuz/blob/master/README.md</a></li>
+<li><a href="https://github.com/RichardLitt/standard-readme#example-readmes">https://github.com/RichardLitt/standard-readme#example-readmes</a></li>
+<li><a href="https://gist.github.com/rxaviers/7360908">https://gist.github.com/rxaviers/7360908</a></li>
+<li><a href="https://github.com/ryo-ma/github-profile-trophy">https://github.com/ryo-ma/github-profile-trophy</a></li>
+<li><a href="https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme">https://docs.github.com/en/github/setting-up-and-managing-your-github-profile/managing-your-profile-readme</a></li>
+<li><a href="https://github.com/antonkomarev/github-profile-views-counter">https://github.com/antonkomarev/github-profile-views-counter</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>github</category>
+      </categories>
+      <tags>
+        <tag>github</tag>
       </tags>
   </entry>
   <entry>
@@ -2624,8 +2624,8 @@ public String[] split(String regex, int limit)
         <category>java</category>
       </categories>
       <tags>
-        <tag>bug</tag>
         <tag>java</tag>
+        <tag>bug</tag>
         <tag>split</tag>
       </tags>
   </entry>
