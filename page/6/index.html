@@ -1404,7 +1404,7 @@ Array.prototype.remove = function(val) &#123;
 &#125;)();
 </code></pre>
 <p>所有js独立代码都采用闭包形式，避免的参数污染。 拆分后的目录结构如下</p>
-<p><img src="http://image.crick.wang/painter-2-0.png" alt="painter-2-0"></p>
+<p><img src="http://img.yuheng.wang/painter-2-0.png" alt="painter-2-0"></p>
 <p>还是以矩形为例，Rect在构造函数中继承使用了DrawTool的init方法，并重写stop方法，暴露出去。</p>
 <pre><code>var Rect = function(parentEle) &#123;
     parent = parentEle;

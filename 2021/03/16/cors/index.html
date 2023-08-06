@@ -27,24 +27,24 @@
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="大部分开发人员在前后端分离的场景下，都遇到过浏览器跨域问题，然后在网上搜了几个配置就解决了。但是，你真的了解跨域这件事吗？而你找到的配置又做什么？ 看一下这几个问题，测试一下你对跨域的理解程度。  什么是跨域？和CORS是什么关系？ 如果通过curl直接请求接口，并在header中增加origin，是否有跨域限制？ 为什么有跨域限制？ 什么时候会触发预检(PreFlight by OPTIONS)">
 <meta property="og:locale">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_03.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_00.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_11.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_01.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_02.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_05.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_06.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_07.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_08.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_09.png">
-<meta property="og:image" content="https://image.crick.wang/mweb/cors_10.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_03.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_00.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_11.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_01.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_02.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_05.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_06.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_07.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_08.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_09.png">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/cors_10.png">
 <meta property="article:published_time" content="2021-03-15T16:29:00.000Z">
-<meta property="article:modified_time" content="2021-03-18T11:51:22.659Z">
+<meta property="article:modified_time" content="2023-08-06T01:38:38.055Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="知识点">
 <meta property="article:tag" content="跨域">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://image.crick.wang/mweb/cors_03.png">
+<meta name="twitter:image" content="https://img.yuheng.wang/mweb/cors_03.png">
 
 <link rel="canonical" href="https://blog.yuheng.wang/2021/03/16/cors/">
 
@@ -364,26 +364,26 @@
 
 <h2 id="1-什么是跨域？和CORS是什么关系？"><a href="#1-什么是跨域？和CORS是什么关系？" class="headerlink" title="1. 什么是跨域？和CORS是什么关系？"></a>1. 什么是跨域？和CORS是什么关系？</h2><p>CORS 是解决浏览器跨域限制的方案之一。</p>
 <p>跨域: 简单来说是指浏览器在domain-a.com的域名下，异步加载非当前访问域名(e.g: domain-b.com)下的资源。如果协议+域名+端口号均相同，则是同域，否则，则是跨域。</p>
-<p><img src="https://image.crick.wang/mweb/cors_03.png" alt="cors_00"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_03.png" alt="cors_00"></p>
 <blockquote>
 <p>CORS:Cross-origin resource sharing (跨源资源共享) （或通俗地译为跨域资源共享）是一种基于HTTP 头的机制，该机制通过允许服务器标示除了它自己以外的其它origin（域，协议和端口），这样浏览器可以访问加载这些资源。</p>
 </blockquote>
-<p><img src="https://image.crick.wang/mweb/cors_00.png" alt="cors_01"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_00.png" alt="cors_01"></p>
 <h2 id="2-如果通过curl直接请求接口，并在header中增加origin，是否有跨域限制？"><a href="#2-如果通过curl直接请求接口，并在header中增加origin，是否有跨域限制？" class="headerlink" title="2. 如果通过curl直接请求接口，并在header中增加origin，是否有跨域限制？"></a>2. 如果通过curl直接请求接口，并在header中增加origin，是否有跨域限制？</h2><p>不会。跨域限制是浏览器行为。</p>
 <p>服务端可以通过Request Header中的Origin判断是否跨域。如果服务端不做限制，浏览器的请求也会被执行，并返回结果。但是浏览器会解析Response中的header是否包含<code>Access-Control-Allow-Origin</code>且Value与当前同源，否则不会解析response body并抛出<code>CORS error</code></p>
-<p><img src="https://image.crick.wang/mweb/cors_11.png" alt="cors_02"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_11.png" alt="cors_02"></p>
 <p>Origin在CORS或POST请求中才存在。</p>
 <h2 id="3-为什么有跨域限制？"><a href="#3-为什么有跨域限制？" class="headerlink" title="3. 为什么有跨域限制？"></a>3. 为什么有跨域限制？</h2><p>如果允许跨域，用户可能会遭到CSRF攻击。</p>
 <blockquote>
 <p>跨站请求伪造（英语：Cross-site request forgery），也被称为 one-click attack 或者 session riding，通常缩写为 CSRF 或者 XSRF， 是一种挟制用户在当前已登录的Web应用程序上执行非本意的操作的攻击方法。跟跨网站脚本（XSS）相比，XSS 利用的是用户对指定网站的信任，CSRF 利用的是网站对用户网页浏览器的信任。</p>
 </blockquote>
-<p><img src="https://image.crick.wang/mweb/cors_01.png" alt="cors_03"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_01.png" alt="cors_03"></p>
 <p>一个典型场景是，如果你在通过web浏览器访问email邮箱，点开了某个奇怪的链接，而这个链接则是自动向你的email邮箱服务器提交某个规则变更请求。如果没有跨域限制，则服务器判断为是你本人在登陆状态下发送的变更请求，而这个变更可能导致你的邮件全部被转发到攻击者邮箱内。</p>
 <p>另一个经典场景则是iframe包裹真实网站，诱导用户进行敏感操作</p>
 <h2 id="4-什么时候会触发预检-PreFlight-by-OPTIONS-机制？"><a href="#4-什么时候会触发预检-PreFlight-by-OPTIONS-机制？" class="headerlink" title="4. 什么时候会触发预检(PreFlight by OPTIONS)机制？"></a>4. 什么时候会触发预检(PreFlight by OPTIONS)机制？</h2><p>预检请求先使用 OPTIONS 方法发起一个预检请求到服务器，以获知服务器是否允许该实际请求。”预检请求”的使用，可以避免跨域请求对服务器的用户数据产生未预期的影响。</p>
 <p>以Spring为例，如果预检请求不通过，则会直接返回<code>403</code>阻止后续继续发送实际请求。</p>
-<p><img src="https://image.crick.wang/mweb/cors_02.png" alt="cors_04"></p>
-<p><img src="https://image.crick.wang/mweb/cors_05.png" alt="cors_05"><br><img src="https://image.crick.wang/mweb/cors_06.png" alt="cors_06"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_02.png" alt="cors_04"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_05.png" alt="cors_05"><br><img src="https://img.yuheng.wang/mweb/cors_06.png" alt="cors_06"></p>
 <p>请求会区分简单请求和预检请求。非简单请求都会触发预检操作。</p>
 <p>简单请求包括但不局限</p>
 <ol>
@@ -402,11 +402,11 @@
 </ol>
 <h2 id="5-如何区分OPTIONS请求和预检-PreFlight"><a href="#5-如何区分OPTIONS请求和预检-PreFlight" class="headerlink" title="5. 如何区分OPTIONS请求和预检(PreFlight)"></a>5. 如何区分OPTIONS请求和预检(PreFlight)</h2><p>预检请求 会在header中增加<code>Access-Control-Request-Method</code></p>
 <p>比如跨域请求put请求，则会先发送一个 OPTIONS 请求，且header包括<code>Access-Control-Request-Method=PUT</code></p>
-<p><img src="https://image.crick.wang/mweb/cors_07.png" alt="cors_07"></p>
-<p><img src="https://image.crick.wang/mweb/cors_08.png" alt="cors_08"></p>
-<h2 id="6-跨域请求会携带cookie信息吗？"><a href="#6-跨域请求会携带cookie信息吗？" class="headerlink" title="6. 跨域请求会携带cookie信息吗？"></a>6. 跨域请求会携带cookie信息吗？</h2><p>默认不会发送，可以通过设置<code>withCredentials = true;</code>让客户端发送cookie信息。<br>如果客户端设置<code>withCredentials = true;</code>但是服务端response未返回<code>Access-Control-Allow-Credentials: true</code>，则会抛出<code>CORS error</code>。<br><img src="https://image.crick.wang/mweb/cors_09.png" alt="cors_09"><br>同时，为了避免误用导致的安全性问题，如果设置了<code>allowCredentials</code>，则不允许将<code>Access-Control-Allow-Origin</code>设置通配符<code>*</code>，只能设置具体的某个源。</p>
+<p><img src="https://img.yuheng.wang/mweb/cors_07.png" alt="cors_07"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_08.png" alt="cors_08"></p>
+<h2 id="6-跨域请求会携带cookie信息吗？"><a href="#6-跨域请求会携带cookie信息吗？" class="headerlink" title="6. 跨域请求会携带cookie信息吗？"></a>6. 跨域请求会携带cookie信息吗？</h2><p>默认不会发送，可以通过设置<code>withCredentials = true;</code>让客户端发送cookie信息。<br>如果客户端设置<code>withCredentials = true;</code>但是服务端response未返回<code>Access-Control-Allow-Credentials: true</code>，则会抛出<code>CORS error</code>。<br><img src="https://img.yuheng.wang/mweb/cors_09.png" alt="cors_09"><br>同时，为了避免误用导致的安全性问题，如果设置了<code>allowCredentials</code>，则不允许将<code>Access-Control-Allow-Origin</code>设置通配符<code>*</code>，只能设置具体的某个源。</p>
 <p>Spring5.3版本提供了相关限制</p>
-<p><img src="https://image.crick.wang/mweb/cors_10.png" alt="cors_10"></p>
+<p><img src="https://img.yuheng.wang/mweb/cors_10.png" alt="cors_10"></p>
 
     </div>
 

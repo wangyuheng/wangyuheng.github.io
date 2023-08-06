@@ -27,15 +27,15 @@
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="时间比较匆忙，可能记录有些乱。 先说明一下问题：我用Spring MVC 4.0+ 编写restful框架， 因为看到了提供有MappingJackson2JsonView类，就没有通过自己转换json， 返回字符串。 但是遇到一个灵异的问题：如果利用javaBean类接收参数，在返回值中，会自动把javaBean的键值对以json格式返回，效果等同于对javaBean参数使用了标签@ModelA">
 <meta property="og:locale">
-<meta property="og:image" content="http://image.crick.wang/MappingJackson2JsonView-0.png">
-<meta property="og:image" content="http://image.crick.wang/MappingJackson2JsonView-1.png">
+<meta property="og:image" content="http://img.yuheng.wang/MappingJackson2JsonView-0.png">
+<meta property="og:image" content="http://img.yuheng.wang/MappingJackson2JsonView-1.png">
 <meta property="article:published_time" content="2016-05-13T09:32:06.000Z">
-<meta property="article:modified_time" content="2018-06-29T02:55:08.000Z">
+<meta property="article:modified_time" content="2023-08-06T01:38:38.055Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="spring">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://image.crick.wang/MappingJackson2JsonView-0.png">
+<meta name="twitter:image" content="http://img.yuheng.wang/MappingJackson2JsonView-0.png">
 
 <link rel="canonical" href="https://blog.yuheng.wang/2016/05/13/MappingJackson2JsonView/">
 
@@ -343,9 +343,9 @@
         <p>时间比较匆忙，可能记录有些乱。</p>
 <p>先说明一下问题：我用Spring MVC 4.0+ 编写restful框架， 因为看到了提供有MappingJackson2JsonView类，就没有通过自己转换json， 返回字符串。</p>
 <p>但是遇到一个灵异的问题：如果利用javaBean类接收参数，在返回值中，会自动把javaBean的键值对以json格式返回，效果等同于对javaBean参数使用了标签@ModelAttribute</p>
-<p>如<br><img src="http://image.crick.wang/MappingJackson2JsonView-0.png" alt="MappingJackson2JsonView-0"></p>
+<p>如<br><img src="http://img.yuheng.wang/MappingJackson2JsonView-0.png" alt="MappingJackson2JsonView-0"></p>
 <p>会返回</p>
-<p><img src="http://image.crick.wang/MappingJackson2JsonView-1.png" alt="MappingJackson2JsonView-1"></p>
+<p><img src="http://img.yuheng.wang/MappingJackson2JsonView-1.png" alt="MappingJackson2JsonView-1"></p>
 <p>使用 View 是因为以后有需要的话，可能会重写一个JsonView。</p>
 <p>翻了一天的源码，看到了如下几个部分（以图片中的代码举例）：</p>
 <pre><code>org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter#getModelAndView(ModelAndViewContainer mavContainer, ModelFactory modelFactory, NativeWebRequest webRequest)

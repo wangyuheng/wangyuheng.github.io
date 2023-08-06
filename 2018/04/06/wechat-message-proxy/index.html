@@ -27,16 +27,16 @@
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="1. 项目背景朋友在一家日企，运维工具老旧，希望增加一款系统告警工具。我提议通过微信企业号（改版为企业微信）或者短信推送告警信息。提出两点要求：  可以群发给企业微信中的多个人 监测健康检测服务是否存活（绕嘴。。）  做了第一版demo，定位为通信渠道的http代理。贴出企业微信相关代码，如果有需要的同学可以拿去用，记得点个star就好。https:&#x2F;&#x2F;github.com&#x2F;wangyuheng&#x2F;">
 <meta property="og:locale">
-<meta property="og:image" content="http://image.crick.wang/wechat-message-proxy-00.png">
-<meta property="og:image" content="http://image.crick.wang/wechat-message-proxy-01.png">
-<meta property="og:image" content="http://image.crick.wang/wechat-message-proxy-02.png">
+<meta property="og:image" content="http://img.yuheng.wang/wechat-message-proxy-00.png">
+<meta property="og:image" content="http://img.yuheng.wang/wechat-message-proxy-01.png">
+<meta property="og:image" content="http://img.yuheng.wang/wechat-message-proxy-02.png">
 <meta property="article:published_time" content="2018-04-05T16:30:50.000Z">
-<meta property="article:modified_time" content="2018-06-27T04:45:49.000Z">
+<meta property="article:modified_time" content="2023-08-06T01:38:38.055Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="java">
 <meta property="article:tag" content="wechat">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://image.crick.wang/wechat-message-proxy-00.png">
+<meta name="twitter:image" content="http://img.yuheng.wang/wechat-message-proxy-00.png">
 
 <link rel="canonical" href="https://blog.yuheng.wang/2018/04/06/wechat-message-proxy/">
 
@@ -356,7 +356,7 @@
 <li>swagger 工具 <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/spring-boot-swagger-starter">https://github.com/wangyuheng/spring-boot-swagger-starter</a></li>
 </ol>
 <h2 id="2-项目code"><a href="#2-项目code" class="headerlink" title="2. 项目code"></a>2. 项目code</h2><p>代理入口为健康检测工具，出口为企业微信、短信等。同时需要保障和健康检测工具之间的网络通畅。</p>
-<p><img src="http://image.crick.wang/wechat-message-proxy-00.png" alt="wechat-message-proxy-00"></p>
+<p><img src="http://img.yuheng.wang/wechat-message-proxy-00.png" alt="wechat-message-proxy-00"></p>
 <p>最近在尝试画图</p>
 <h3 id="2-1-微信接口"><a href="#2-1-微信接口" class="headerlink" title="2.1 微信接口"></a>2.1 微信接口</h3><p>企业微信相关配置如下</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">wechat:</span><br><span class="line">  cp:</span><br><span class="line">    corpid:</span><br><span class="line">    agentid:</span><br><span class="line">    corp:</span><br><span class="line">      secret:</span><br></pre></td></tr></table></figure>
@@ -382,7 +382,7 @@
 <p>具体实现在service中，restful暴露了http请求接口及swagger接口。并且将首页指向了swagger页面</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">IndexController</span> </span>&#123;</span><br><span class="line">    <span class="meta">@GetMapping(&quot;/&quot;)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">index</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;redirect:swagger-ui.html&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-<p><img src="http://image.crick.wang/wechat-message-proxy-01.png" alt="wechat-message-proxy-01"></p>
+<p><img src="http://img.yuheng.wang/wechat-message-proxy-01.png" alt="wechat-message-proxy-01"></p>
 <h3 id="2-3-验权"><a href="#2-3-验权" class="headerlink" title="2.3 验权"></a>2.3 验权</h3><p>两种验权方式</p>
 <ol>
 <li>参数+secret通过SHA加密签名</li>
@@ -410,7 +410,7 @@
 <p>春城无处不飞花，寒食东风御柳斜。</p>
 </blockquote>
 <p>推荐大家吃 青团（艾团）， 简直发现了新大陆</p>
-<p><img src="http://image.crick.wang/wechat-message-proxy-02.png" alt="wechat-message-proxy-02"></p>
+<p><img src="http://img.yuheng.wang/wechat-message-proxy-02.png" alt="wechat-message-proxy-02"></p>
 
     </div>
 

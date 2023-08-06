@@ -27,24 +27,24 @@
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="首先你要有个女朋友">
 <meta property="og:locale">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004804290505.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004811548487.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004818492818.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004822147992.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004827954027.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004823921268.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004853041475.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004853756591.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004955502372.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004949316841.jpg">
-<meta property="og:image" content="https://image.crick.wang/mweb/16004949394397.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004804290505.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004811548487.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004818492818.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004822147992.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004827954027.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004823921268.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004853041475.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004853756591.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004955502372.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004949316841.jpg">
+<meta property="og:image" content="https://img.yuheng.wang/mweb/16004949394397.jpg">
 <meta property="article:published_time" content="2020-09-19T07:41:17.000Z">
-<meta property="article:modified_time" content="2020-09-19T08:22:21.611Z">
+<meta property="article:modified_time" content="2023-08-06T01:38:38.056Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="junit">
 <meta property="article:tag" content="kotlin">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://image.crick.wang/mweb/16004804290505.jpg">
+<meta name="twitter:image" content="https://img.yuheng.wang/mweb/16004804290505.jpg">
 
 <link rel="canonical" href="https://blog.yuheng.wang/2020/09/19/kotlin-test-case/">
 
@@ -366,17 +366,17 @@
 </blockquote>
 <h4 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h4><p>如果我希望对一个已有类增加一个方法，就可以直接给这个类增加扩展方法，同时所有的对象都可以调用这个扩展方法。</p>
 <p>举例说明</p>
-<p><img src="https://image.crick.wang/mweb/16004804290505.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004804290505.jpg"></p>
 <h4 id="扩展属性"><a href="#扩展属性" class="headerlink" title="扩展属性"></a>扩展属性</h4><p>扩展属性与成员变量不同，因为扩展不会真的在类中插入一个成员变量。因此扩展属性不能初始化，只能通过getter方法定义</p>
-<p><img src="https://image.crick.wang/mweb/16004811548487.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004811548487.jpg"></p>
 <h3 id="操作符重载"><a href="#操作符重载" class="headerlink" title="操作符重载"></a>操作符重载</h3><blockquote>
 <p>Kotlin允许我们为自己的类型提供预定义的一组操作符实现（这些操作符都对应的成员函数或扩展函数），他们是一一对应的</p>
 </blockquote>
 <h4 id="算术运算符operator"><a href="#算术运算符operator" class="headerlink" title="算术运算符operator"></a>算术运算符operator</h4><p>基本类型中，<code>Int + Int</code> 表示数字相加， <code>String + String</code> 则代表了字符串拼接，那么如果是 <code>ArrayList&lt;String&gt; + String</code> 呢？ </p>
 <p>kotlin中重载了Collection的算术运算符，其中 <code>plus</code> 对应了 <code>+</code>的操作函数。所以 <code>ArrayList&lt;String&gt; + String</code> 会把 <code>String</code> 添加到<code>ArrayList&lt;String&gt;</code>集合中</p>
-<p><img src="https://image.crick.wang/mweb/16004818492818.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004818492818.jpg"></p>
 <p>我们也可以自定义<code>+</code>的重载，比如将<code>String</code>拼接到<code>ArrayList&lt;String&gt;</code>每个元素的末尾</p>
-<p><img src="https://image.crick.wang/mweb/16004822147992.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004822147992.jpg"></p>
 <p>看起来和扩展函数有些类似，我们继续放飞</p>
 <h4 id="中缀表示法infix"><a href="#中缀表示法infix" class="headerlink" title="中缀表示法infix"></a>中缀表示法infix</h4><blockquote>
 <p>标有 infix 关键字的函数也可以使用中缀表示法（忽略该调用的点与圆括号）调用。中缀函数必须满足以下要求：</p>
@@ -387,9 +387,9 @@
 </ul>
 </blockquote>
 <p>通过这种表示方法，我们的代码逻辑可以变成陈述句</p>
-<p><img src="https://image.crick.wang/mweb/16004827954027.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004827954027.jpg"></p>
 <p>并且有IDE的高亮及语法提示支持</p>
-<p><img src="https://image.crick.wang/mweb/16004823921268.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004823921268.jpg"></p>
 <p>这条用例的代码元素还有2个，<code>JUnit</code> + <code>fun</code></p>
 <h4 id="调用操作符invoke"><a href="#调用操作符invoke" class="headerlink" title="调用操作符invoke"></a>调用操作符invoke</h4><p>调用操作符<br>圆括号转换为调用带有适当数量参数的 invoke。</p>
 <table>
@@ -417,12 +417,12 @@
 </tr>
 </tbody></table>
 <p>我们可以通过重载<code>invoke</code>的方法移除<code>fun</code>的概念，变成 <code>标题 &#123;内容&#125;</code>的格式进行触发函数。 而<code>JUnit</code>可以通过父类完成TestCase的注册</p>
-<p><img src="https://image.crick.wang/mweb/16004853041475.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004853041475.jpg"></p>
 <h3 id="kotest"><a href="#kotest" class="headerlink" title="kotest"></a>kotest</h3><blockquote>
 <p>Kotest is a flexible and comprehensive testing project for Kotlin with multiplatform support.</p>
 </blockquote>
 <p>TestCase的注册，以及如何在idea中运行某个测试方法比较复杂，我们可以直接使用<code>Kotest</code>及其插件完成。而<code>Kotest</code>的实现原理就是上文提到的<strong>扩展</strong>以及<strong>操作符重载</strong></p>
-<p><img src="https://image.crick.wang/mweb/16004853756591.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004853756591.jpg"></p>
 <h2 id="解答"><a href="#解答" class="headerlink" title="解答"></a>解答</h2><p>看一下是否能回答上述灵魂拷问</p>
 <h3 id="1-使用成本"><a href="#1-使用成本" class="headerlink" title="1. 使用成本"></a>1. 使用成本</h3><ol>
 <li>通过IDE约束及提示，简化编写成本</li>
@@ -433,13 +433,13 @@
 <li>可以直接调用开发代码方法及接口</li>
 <li>通过封装简化接口自动化成本</li>
 </ol>
-<p><img src="https://image.crick.wang/mweb/16004955502372.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004955502372.jpg"></p>
 <p>如果看不懂这个语法，可以看上一篇的DSL</p>
 <h3 id="3-能带来什么"><a href="#3-能带来什么" class="headerlink" title="3. 能带来什么"></a>3. 能带来什么</h3><ol>
 <li>配合CICD在潜移默化中完成自动化测试并输出测试报告</li>
 <li>借助代码管理工具(gitlab、github)，完成统计、review、操作留痕、版本等管理操作</li>
 </ol>
-<p><img src="https://image.crick.wang/mweb/16004949316841.jpg"><br><img src="https://image.crick.wang/mweb/16004949394397.jpg"></p>
+<p><img src="https://img.yuheng.wang/mweb/16004949316841.jpg"><br><img src="https://img.yuheng.wang/mweb/16004949394397.jpg"></p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><ol>
 <li>为什么标题说java，内容都是kotlin? 因为这篇是标题党</li>
 <li>使用扩展or重载时，一定要明确<strong>函数作用域</strong></li>

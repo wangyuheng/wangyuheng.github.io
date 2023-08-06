@@ -27,14 +27,14 @@
 <meta property="og:site_name" content="wangyuheng&#39;s Blog">
 <meta property="og:description" content="github地址： https:&#x2F;&#x2F;github.com&#x2F;wangyuheng&#x2F;painter DEMO地址： http:&#x2F;&#x2F;painter.crick.wang&#x2F; 针对上个版本的基础代码进行抽象和封装 将所有的图形绘制工具，都“继承”一个DrawTool工具类，在此工具类中绑定、解绑事件，代码如下 (function() &amp;#123;     var defaultListener &#x3D; &amp;#12">
 <meta property="og:locale">
-<meta property="og:image" content="http://image.crick.wang/painter-2-0.png">
+<meta property="og:image" content="http://img.yuheng.wang/painter-2-0.png">
 <meta property="article:published_time" content="2016-09-21T01:33:52.000Z">
-<meta property="article:modified_time" content="2018-06-29T03:11:38.000Z">
+<meta property="article:modified_time" content="2023-08-06T01:38:38.056Z">
 <meta property="article:author" content="wangyuheng">
 <meta property="article:tag" content="javascript">
 <meta property="article:tag" content="painter">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://image.crick.wang/painter-2-0.png">
+<meta name="twitter:image" content="http://img.yuheng.wang/painter-2-0.png">
 
 <link rel="canonical" href="https://blog.yuheng.wang/2016/09/21/painter-2/">
 
@@ -375,7 +375,7 @@
 &#125;)();
 </code></pre>
 <p>所有js独立代码都采用闭包形式，避免的参数污染。 拆分后的目录结构如下</p>
-<p><img src="http://image.crick.wang/painter-2-0.png" alt="painter-2-0"></p>
+<p><img src="http://img.yuheng.wang/painter-2-0.png" alt="painter-2-0"></p>
 <p>还是以矩形为例，Rect在构造函数中继承使用了DrawTool的init方法，并重写stop方法，暴露出去。</p>
 <pre><code>var Rect = function(parentEle) &#123;
     parent = parentEle;
