@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,407 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/26/painter-10/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/09/26/painter-10/" class="post-title-link" itemprop="url">绘画板 10——多选元素</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-09-26 10:57:16" itemprop="dateCreated datePublished" datetime="2016-09-26T10:57:16+08:00">2016-09-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2018-06-29 11:17:28" itemprop="dateModified" datetime="2018-06-29T11:17:28+08:00">2018-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="多选元素"><a href="#多选元素" class="headerlink" title="多选元素"></a>多选元素</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>在选择按钮状态下，可以绘制一个曲线矩形，遍历所有元素判断，如果当前元素在矩形的坐标范围内，则元素被选中。</p>
+<p>矩形四个点的坐标范围为x,x+width,y,y+height</p>
+<h4 id="变更element-click事件"><a href="#变更element-click事件" class="headerlink" title="变更element click事件"></a>变更element click事件</h4><p>选择元素时，需要触发元素选中事件。如果触发click，会增加额外判断，并延时。所以单独抽离pick事件，将click中的事件处理指向pick</p>
+<pre><code>_ele.on(&quot;click&quot;, function() &#123;
+    if (GlobalStatus.isPreFilled()) &#123;
+        if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+            _ele.fill(GlobalStatus.getFillColor());
+            _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+        &#125; else &#123;
+            _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+        &#125;
+
+    &#125; else if (GlobalStatus.isPicked()) &#123;
+        _ele.fire(&quot;pick&quot;);
+    &#125; else if (GlobalStatus.isRecycle()) &#123;
+        _ele.remove();
+    &#125;
+&#125;);
+_ele.on(&quot;pick&quot;, function() &#123;
+    if (_ele.attr(&quot;picked&quot;)) &#123;
+        _ele.attr(&quot;picked&quot;, null);
+        _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+        GlobalStatus.removePicked(_ele);
+    &#125; else &#123;
+        _ele.attr(&quot;picked&quot;, true);
+        _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+        _ele.handleBorder.showShade(_ele);
+        GlobalStatus.pushPicked(_ele);
+
+    &#125;
+&#125;);
+</code></pre>
+<h4 id="新增draw-tool-pick-js"><a href="#新增draw-tool-pick-js" class="headerlink" title="新增draw.tool.pick.js"></a>新增draw.tool.pick.js</h4><p>新增DrawTool.Pick，操作与Rect类似，唯一的区别在于mouseup时判断元素是否在绘制的虚线矩形范围内，并对应触发pick事件。</p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    function mousedown(event) &#123;
+        console.log(&#39;pick mousedown&#39;);
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&#123;
+            &quot;fill-opacity&quot;: GlobalStatus.getFillOpacity(),
+            &quot;stroke-dasharray&quot;: &quot;13 10&quot;
+        &#125;).stroke(&#123;
+            width: &quot;1&quot;,
+            color: &quot;grey&quot;
+        &#125;);
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;pick mousemove&#39;);
+        if (drawing) &#123;
+            var svgPoint = svgDoc.transformPoint(event);
+            var x = svgPoint.x;
+            var y = svgPoint.y;
+
+            var newWidth = x - startPoint.x;
+            var newHeight = y - startPoint.y;
+            var startX = startPoint.x;
+            var startY = startPoint.y;
+            if (newWidth &lt; 0) &#123;
+                startX += newWidth;
+            &#125;
+
+            if (newHeight &lt; 0) &#123;
+                startY += newHeight;
+            &#125;
+            newWidth = Math.abs(newWidth);
+            newHeight = Math.abs(newHeight);
+            element.x(startX).y(startY).width(newWidth).height(newHeight);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;pick mouseup &#39; + element);
+        drawing = false;
+        if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+            var sx = element.x();
+            var ex = element.x() + element.width();
+            var sy = element.y();
+            var ey = element.y() + element.height();
+            $(GlobalStatus.getAllElements()).each(function() &#123;
+                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
+                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
+                    if (!this.attr(&quot;picked&quot;)) &#123;
+                        this.fire(&quot;pick&quot;);
+                    &#125;
+                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
+                    this.fire(&quot;pick&quot;);
+                &#125;
+            &#125;)
+        &#125;
+        parent.removeElement(element);
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Pick = function(parentEle) &#123;
+        parent = parentEle;
+        console.log(parent);
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Pick = Pick;
+
+&#125;)();
+</code></pre>
+<h4 id="首页监听选择按钮"><a href="#首页监听选择按钮" class="headerlink" title="首页监听选择按钮"></a>首页监听选择按钮</h4><p>在首页监听选择按钮，被选中时，创建DrawTool.Pick对象</p>
+<pre><code>$(&quot;#tool_pick&quot;).on(&quot;click&quot;, function() &#123;
+    resetCurrentDrawTool();
+    currentDrawTool = new DrawTool.Pick(svgDoc);
+&#125;);
+</code></pre>
+<h3 id="弊端"><a href="#弊端" class="headerlink" title="弊端"></a>弊端</h3><p>有一个不足的地方，元素必须全在范围内，才能被选中。如果被选中部分，则无法选中。没想到好的解决方案。</p>
+<h3 id="bug修复"><a href="#bug修复" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="picked状态混乱"><a href="#picked状态混乱" class="headerlink" title="picked状态混乱"></a>picked状态混乱</h4><p>click和mouseup互相冲突，导致选中状态丢失。</p>
+<p>将pick拆分为pick和unPick两个事件，分别处理选中状态，而不进行判断。将判断交给上层调用方法</p>
+<pre><code> _ele.on(&quot;click&quot;, function() &#123;
+      console.log(&quot;click&quot;);
+      if (GlobalStatus.isPreFilled()) &#123;
+          if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
+              _ele.fill(GlobalStatus.getFillColor());
+              _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
+          &#125; else &#123;
+              _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
+          &#125;
+
+      &#125; else if (GlobalStatus.isPicked()) &#123;
+          if (_ele.attr(&quot;picked&quot;)) &#123;
+              _ele.fire(&quot;unPick&quot;);
+          &#125; else &#123;
+              _ele.fire(&quot;pick&quot;);
+          &#125;
+
+      &#125; else if (GlobalStatus.isRecycle()) &#123;
+          _ele.remove();
+      &#125;
+  &#125;);
+  _ele.on(&quot;pick&quot;, function() &#123;
+      console.log(&quot;pick&quot;);
+      _ele.attr(&quot;picked&quot;, true);
+      _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
+      _ele.handleBorder.showShade(_ele);
+      GlobalStatus.pushPicked(_ele);
+  &#125;);
+  _ele.on(&quot;unPick&quot;, function() &#123;
+      console.log(&quot;unPick&quot;);
+      _ele.attr(&quot;picked&quot;, null);
+      _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
+      GlobalStatus.removePicked(_ele);
+
+  &#125;);
+  
+</code></pre>
+<p>Pick中</p>
+<pre><code>function mouseup(event) &#123;
+    console.log(&#39;pick mouseup &#39; + element);
+    if (drawing) &#123;
+        drawing = false;
+        if (element &amp;&amp; element.attr(&quot;width&quot;) &gt; 20) &#123;
+            var sx = element.x();
+            var ex = element.x() + element.width();
+            var sy = element.y();
+            var ey = element.y() + element.height();
+            $(GlobalStatus.getAllElements()).each(function() &#123;
+                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
+                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
+                    if (!this.attr(&quot;picked&quot;)) &#123;
+                        this.fire(&quot;pick&quot;);
+                    &#125;
+                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
+                    this.fire(&quot;unPick&quot;);
+                &#125;
+            &#125;)
+        &#125;
+        element &amp;&amp; element.remove();
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<h4 id="Pick拥有背景色"><a href="#Pick拥有背景色" class="headerlink" title="Pick拥有背景色"></a>Pick拥有背景色</h4><p>修改Pick的mousedown方法，独立设置style，不关联颜色选择器</p>
+<pre><code>function mousedown(event) &#123;
+    console.log(&#39;pick mousedown&#39;);
+    if (!drawing) &#123;
+        drawing = true;
+        startPoint = svgDoc.transformPoint(event);
+        element = parent.rect(0, 0).style(&#123;
+            &quot;fill-opacity&quot;: &quot;0.0&quot;,
+            &quot;stroke-dasharray&quot;: &quot;10&quot;
+        &#125;).stroke(&#123;
+            width: &quot;1&quot;,
+            color: &quot;grey&quot;
+        &#125;);
+    &#125;
+    return false;
+&#125;
+</code></pre>
+<h4 id="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"><a href="#mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失" class="headerlink" title="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"></a>mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失</h4><p>再回到画板时，鼠标已经移开，但是并未执行mouseup方法，因为时间的监听范围为画板内。所以mouseover事件继续执行，导致多生成了一个element。为了避免此问题，在mouse事件中增加drawing状态判断，以Rect为例 </p>
+<pre><code>(function() &#123;
+
+    var parent = null;
+    var drawing = false;
+    var element = null;
+    var startPoint = null;
+
+    function mousedown(event) &#123;
+        console.log(&#39;rect mousedown&#39;);
+        if (!drawing) &#123;
+            drawing = true;
+            startPoint = svgDoc.transformPoint(event);
+            element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
+                width: GlobalStatus.getLineSize(),
+                color: GlobalStatus.getFontColor()
+            &#125;);
+        &#125;
+        return false;
+    &#125;
+
+    function mousemove(event) &#123;
+        console.log(&#39;rect mousemove&#39;);
+        if (drawing) &#123;
+            var svgPoint = svgDoc.transformPoint(event);
+            var x = svgPoint.x;
+            var y = svgPoint.y;
+
+            var newWidth = x - startPoint.x;
+            var newHeight = y - startPoint.y;
+            var startX = startPoint.x;
+            var startY = startPoint.y;
+            if (newWidth &lt; 0) &#123;
+                startX += newWidth;
+            &#125;
+
+            if (newHeight &lt; 0) &#123;
+                startY += newHeight;
+            &#125;
+            newWidth = Math.abs(newWidth);
+            newHeight = Math.abs(newHeight);
+            element.x(startX).y(startY).width(newWidth).height(newHeight);
+        &#125;
+        return false;
+    &#125;;
+
+    function mouseup(event) &#123;
+        console.log(&#39;rect mouseup &#39; + element);
+        if (drawing) &#123;
+            drawing = false;
+            if (element.attr(&quot;width&quot;) &gt; 0) &#123;
+                element.pickable();
+            &#125; else &#123;
+                parent.removeElement(element);
+            &#125;
+        &#125;
+        return false;
+    &#125;
+
+    var listener = &#123;
+        mousedown: mousedown,
+        mousemove: mousemove,
+        mouseup: mouseup,
+    &#125;;
+
+
+    var Rect = function(parentEle) &#123;
+        parent = parentEle;
+        console.log(parent);
+        svgDoc = parent.doc();
+        DrawTool.init(svgDoc, listener);
+        this.stop = function() &#123;
+            DrawTool.stop(svgDoc, listener);
+        &#125;;
+    &#125;;
+
+    this.DrawTool.Rect = Rect;
+
+&#125;)();
+</code></pre>
+<p>所有DrawTool类方法都要增加此</p>
+<h3 id="bug修复-1"><a href="#bug修复-1" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="选择其他DrawTool后，选中状态不丢失。"><a href="#选择其他DrawTool后，选中状态不丢失。" class="headerlink" title="选择其他DrawTool后，选中状态不丢失。"></a>选择其他DrawTool后，选中状态不丢失。</h4><p>在GlobalStatus增加清除所有选中状态的方法</p>
+<pre><code>unPickAll() &#123;
+    $(GlobalStatus.getPickeds()).each(function() &#123;
+        this.fire(&quot;unPick&quot;);
+    &#125;);
+    return this;
+&#125;
+</code></pre>
+<p>在index的resetCurrentDrawTool方法中调用执行</p>
+<pre><code>function resetCurrentDrawTool() &#123;
+    currentDrawTool &amp;&amp; currentDrawTool.stop();
+    GlobalStatus.unPickAll();
+    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
+&#125;
+</code></pre>
+<p>同时给右键的取消按钮增加此方法调用</p>
+<pre><code>label: &#39; 取消&#39;,
+action: function () &#123;
+    GlobalStatus.unPickAll();
+    return false;
+&#125;
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1791,101 +2192,6 @@ Tool.Rect = function (parentEle) &#123;
 &#125;;
 Tool.Rect(svgDraw);
 </code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/20/painter-0/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/09/20/painter-0/" class="post-title-link" itemprop="url">绘画板 00——为什么用 svg</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-09-20 10:38:38" itemprop="dateCreated datePublished" datetime="2016-09-20T10:38:38+08:00">2016-09-20</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2018-06-29 11:09:20" itemprop="dateModified" datetime="2018-06-29T11:09:20+08:00">2018-06-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>提到画图，现在的首选印象可能是canvas，但在技术选型上，为什么选择了svg而弃用Canvas？</p>
-<ol>
-<li> svg为矢量图，Canvas基于像素，依赖分辨率</li>
-<li> Canvas发生变化时，整个场景都会重新绘制</li>
-<li> svg以dom形式，方便进行数据传递与通信 （结构过度复杂可能会导致性能下降）</li>
-<li> svg支持事件处理器</li>
-</ol>
-<p>基于以上几点，选用svg作为绘图技术，采用开源的svgjs<a target="_blank" rel="noopener" href="https://github.com/wout/svg.js">https://github.com/wout/svg.js</a>进行绘画开发。</p>
-<p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
-<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
-<p>svg参考文档：<a target="_blank" rel="noopener" href="http://documentup.com/wout/SVG.js">http://documentup.com/wout/SVG.js</a></p>
 
       
     </div>

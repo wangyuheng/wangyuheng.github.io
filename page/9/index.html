@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,96 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/08/30/bug-sql-sum-null/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/30/bug-sql-sum-null/" class="post-title-link" itemprop="url">sql使用sum后 没有记录的数据 查出了一条空记录</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-30 20:26:28" itemprop="dateCreated datePublished" datetime="2016-08-30T20:26:28+08:00">2016-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>通过sum()函数 查询sql时，报空指针异常</p>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>sum对空结果，返回null，预期返回int。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>在sql中进行过滤</p>
+<pre><code>having column is not null
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1061,429 +1151,6 @@ void remove();
           <p>26了。<br>正在为了年初的TODO LIST努力， 虽然有些事已经没法努力了。<br>努力去做吧，为了表明奔三的决心，为了抡圆了活。</p>
 <p>首马达成，果然是在大连，虽然只是个半马。<br>觉得生活充满了阳光。<br>很匆忙的一天，设错了闹钟，急匆匆出门，搭上邻居的顺风车；进错了地铁，被lan方的大哥，带着我这个小兄弟一起，打不到车，又没零钱，大哥给我20元，去后面换零钱，车就开走了；去后面遇到了大姐，给了我1元硬币；下车之后，又遇到了大哥，把20元还给了他。<br>跑步时，一直跟着浦老师，速度很舒服，天气也很舒服，觉得这座城市真的很美好。一路上一直是我们几个，聚在一起，互相鼓励、加油。路上很多人，大声喊着加油；志愿者们提供着水和毛巾，一次次击掌真的给了我很大的能量。<br>觉得人很奇怪，对陌生人可能有更多的耐心和友好。<br>喜欢这种感觉，感恩这种生活。<br>在18公里之后，脱离队伍独自向前，但是连续的几个坡度，让我的双腿越来越沉，好在路人给了我极大的鼓舞，终于坚持到了终点。<br>2小时6分，遗憾的没有进入2小时，不过觉得很成功了。<br>路上有人昏倒，希望没事吧。<br>发了朋友圈，应该收到了最多的一次赞和评论。<br>喜欢这种阳光的生活，是第二次提到阳光这个词吧。<br>完赛后，漫步在这座好像很熟悉，其实又很陌生的城市，没有目的，慢慢的走着，感觉很美好。<br>追求生活的意义，现在又多了一点，要追求阳光。<br>提升一些自信和美好。<br>终于在今年快过去一半的时候，完成了一项计划，算不算厚积而薄发？<br>为了遇见更好的自己，努力！<br>Time For Change！</p>
 <p><img src="http://img.yuheng.wang/forward-30-0.png" alt="forward-30-0"></p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/23/mybatis-starter/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/05/23/mybatis-starter/" class="post-title-link" itemprop="url">java项目集成mybatis入门教程</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-05-23 14:16:40" itemprop="dateCreated datePublished" datetime="2016-05-23T14:16:40+08:00">2016-05-23</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-06 09:38:38" itemprop="dateModified" datetime="2023-08-06T09:38:38+08:00">2023-08-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>公司项目中一直用了myBatis，但是将dao层封装了，并不知道是如何使用的。学习的第一步是查看<a target="_blank" rel="noopener" href="http://www.mybatis.org/mybatis-3/zh/index.html">官方文档</a>，发现虽然有中文文档，但是并没有完整的示例，只介绍特性和一些用法，但是并不知道怎么让环境跑起来。于是按照官方blog的介绍，搭建了一个示例环境，留给有需要的人。</p>
-<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>项目采用maven构造方式，IDE为eclipse，依赖mybatis包及mysql驱动，具体版本及jdk版本见下文pom。</p>
-<h3 id="pom文件"><a href="#pom文件" class="headerlink" title="pom文件"></a>pom文件</h3><p>采用了jdk1.8版本，以及最新的mysql驱动，如果jdk版本较低，需要选用相应的低版本驱动。</p>
-<pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
-    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
-
-    &lt;groupId&gt;wang.crick&lt;/groupId&gt;
-    &lt;artifactId&gt;study.mybatis&lt;/artifactId&gt;
-    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
-    &lt;packaging&gt;jar&lt;/packaging&gt;
-
-    &lt;name&gt;study.mybatis&lt;/name&gt;
-
-    &lt;properties&gt;
-        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
-    &lt;/properties&gt;
-
-    &lt;dependencies&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;mysql&lt;/groupId&gt;
-            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
-            &lt;version&gt;6.0.2&lt;/version&gt;
-        &lt;/dependency&gt;
-        &lt;dependency&gt;
-            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
-            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
-            &lt;version&gt;3.4.0&lt;/version&gt;
-        &lt;/dependency&gt;
-    &lt;/dependencies&gt;
-
-    &lt;build&gt;
-        &lt;plugins&gt;
-            &lt;plugin&gt;
-                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
-                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
-                &lt;version&gt;3.1&lt;/version&gt;
-                &lt;configuration&gt;
-                    &lt;source&gt;1.8&lt;/source&gt;
-                    &lt;target&gt;1.8&lt;/target&gt;
-                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
-                &lt;/configuration&gt;
-            &lt;/plugin&gt;
-        &lt;/plugins&gt;
-    &lt;/build&gt;
-&lt;/project&gt;
-</code></pre>
-<h3 id="数据脚本"><a href="#数据脚本" class="headerlink" title="数据脚本"></a>数据脚本</h3><p>数据库安装及环境搭建，可参照其他博客，这里只提供创建表的数据脚本。</p>
-<pre><code>DROP DATABASE IF EXISTS `zero`;
-CREATE DATABASE IF NOT EXISTS `zero`;
-USE `zero`;
-
-DROP TABLE IF EXISTS `z_user`;
-CREATE TABLE `z_user` (
-    `id` INT(11) NOT NULL AUTO_INCREMENT,
-    `username` VARCHAR(50) NULL DEFAULT NULL,
-    `password` VARCHAR(50) NULL DEFAULT NULL,
-    `role_type` INT(11) NULL DEFAULT NULL,
-    `address` VARCHAR(200) NULL DEFAULT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `username` (`username`)
-)
-COLLATE=&#39;utf8_general_ci&#39;
-ENGINE=InnoDB
-AUTO_INCREMENT=13;
-
-INSERT INTO `z_user` (`id`, `username`, `password`, `role_type`, `address`) VALUES
-    (1, &#39;zhangsan&#39;, &#39;123131&#39;, 1, &#39;shanghai,pudong&#39;);
-</code></pre>
-<h3 id="XML配置文件"><a href="#XML配置文件" class="headerlink" title="XML配置文件"></a>XML配置文件</h3><p>根据使用习惯，推荐使用XML配置文件。因为是maven项目，所以在src/main/resources目录下新建一个配置文件mybatis-config.xml</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE configuration
-  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-
-&lt;configuration&gt;
-    &lt;!-- 数据库配置信息 --&gt;
-    &lt;environments default=&quot;development&quot;&gt;
-        &lt;environment id=&quot;development&quot;&gt;
-            &lt;transactionManager type=&quot;JDBC&quot; /&gt;
-            &lt;dataSource type=&quot;POOLED&quot;&gt;
-                &lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot; /&gt;
-                &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://172.16.99.121:3306/zero?useUnicode=true&amp;amp;characterEncoding=utf-8&quot; /&gt;
-                &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
-                &lt;property name=&quot;password&quot; value=&quot;mysqlPwd123456!&quot; /&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-    &lt;mappers&gt;
-        &lt;mapper resource=&quot;wang/crick/study/mybatis/UserMapper.xml&quot; /&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre>
-<p>配置文件配置了一个数据源，和jdbc的配置方法类似。这里需要注意，如果在url增加额外属性配置，连字符需要用转义后的&amp;代替&amp;。<br>在mappers标签内，指定了mybatis映射的 SQL 语句。</p>
-<h3 id="映射SQL语句"><a href="#映射SQL语句" class="headerlink" title="映射SQL语句"></a>映射SQL语句</h3><p>配置文件指定的UserMapper.xml文件内容如下</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;  
-&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;   
-&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;wang.crick.study.mybatis.UserMapper&quot;&gt;
-
-    &lt;select id=&quot;selectByName&quot; resultType=&quot;wang.crick.study.mybatis.User&quot;&gt;
-        select username , password , role_type AS role_type , address 
-        from z_user
-        where username = #&#123;username&#125;
-    &lt;/select&gt;
-    
-    &lt;insert id=&quot;add&quot; parameterType=&quot;wang.crick.study.mybatis.User&quot;&gt;
-        insert into z_user
-        (username , password , role_type , address)
-        values(#&#123;username&#125; , #&#123;password&#125; , #&#123;roleType&#125; , #&#123;address&#125; )
-    &lt;/insert&gt;
-
-&lt;/mapper&gt;  
-</code></pre>
-<p>namespace指定了唯一标识，为了保证其唯一性，通常以包名+文件名来命名，也可以自定义名称。<br>从标签名可以判断出两个方法的作用是select和insert。<br>wang.crick.study.mybatis.User指向了一个javeBean文件，通过#{}方式，可以映射javaBean的属性变量。</p>
-<pre><code>package wang.crick.study.mybatis;
-
-public class User &#123;
-
-    private int id;
-    private String password;
-    private String username;
-    private int roleType;
-    private String address;
-
-    public int getId() &#123;
-        return id;
-    &#125;
-
-    public void setId(int id) &#123;
-        this.id = id;
-    &#125;
-
-    public String getPassword() &#123;
-        return password;
-    &#125;
-
-    public void setPassword(String password) &#123;
-        this.password = password;
-    &#125;
-
-    public String getUsername() &#123;
-        return username;
-    &#125;
-
-    public void setUsername(String username) &#123;
-        this.username = username;
-    &#125;
-
-    public int getRoleType() &#123;
-        return roleType;
-    &#125;
-
-    public void setRoleType(int roleType) &#123;
-        this.roleType = roleType;
-    &#125;
-
-    public String getAddress() &#123;
-        return address;
-    &#125;
-
-    public void setAddress(String address) &#123;
-        this.address = address;
-    &#125;
-
-&#125;
-</code></pre>
-<h3 id="执行数据操作"><a href="#执行数据操作" class="headerlink" title="执行数据操作"></a>执行数据操作</h3><p>mybatis提供了一个SqlSessionFactory，用来根据配置文件，创建资源。SqlSessionFactory创建出来后，在程序运行期间，一直存在，并且不应该被修改或清除。在需要执行数据操作的时候，通过单例的SqlSessionFactory打开一个SqlSession，执行CRUD操作，在执行完毕后，关闭SqlSession。</p>
-<pre><code>package wang.crick.study.mybatis;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-public class Main &#123;
-    public static void main(String[] args) throws IOException &#123;
-        String resource = &quot;mybatis-config.xml&quot;;
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession session = sqlSessionFactory.openSession();
-        
-        User liUser = new User();
-        liUser.setUsername(&quot;lisi&quot;);
-        liUser.setPassword(&quot;123654&quot;);
-        liUser.setRoleType(2);
-        liUser.setAddress(&quot;辽宁省大连市&quot;);
-        int result = session.insert(&quot;wang.crick.study.mybatis.UserMapper.add&quot;, liUser);
-        System.out.println(result);
-        
-        User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
-        System.out.println(zhang.getUsername() + &quot;: from &quot; + zhang.getAddress());
-//        session.commit();
-    &#125;
-&#125;
-</code></pre>
-<p>程序通过SqlSessionFactoryBuilder读取xml配置文件的方式构建了一个SqlSessionFactory，并打开一个SqlSession，执行了insert和select操作，对应Mapper文件中的两个标签，具体的映射规则为，根据Mapper文件中的namespace+方法id。参数直接传入javaBean，或者用javaBean接收参数，通过属性名映射规则，将属性与数据库字段对应。<br>只有执行commit()方法后，操作才会提交至数据库。<br>因为只有一个main方法，所以没有关闭session的操作。正常程序，应该将session.close()放在finally中，保证一定会执行。</p>
-<p>至此，一个最基本的mybatis环境搭建完毕，但是这只是一个简单而丑陋的方式，还有很多方法，可以将项目精简与美化，让mybatis发挥出自身的优势。</p>
-<h2 id="项目优化"><a href="#项目优化" class="headerlink" title="项目优化"></a>项目优化</h2><h3 id="properties配置文件"><a href="#properties配置文件" class="headerlink" title="properties配置文件"></a>properties配置文件</h3><p>在src/main/resources/prop目录下新建一个配置文件config.properties</p>
-<pre><code>db.driver=com.mysql.cj.jdbc.Driver
-db.url=jdbc:mysql://172.16.99.121:3306/zero?useUnicode=true&amp;characterEncoding=utf-8
-db.username=root
-db.password=mysqlPwd123456!
-</code></pre>
-<p>注意，此时不需转义，不能用&amp;替换&amp;<br>将配置信息抽离到此文件中，在mybatis-config.xml中通过properties标签注入属性。</p>
-<pre><code>&lt;properties resource=&quot;prop/config.properties&quot;&gt;
-    &lt;!-- &lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot; /&gt; --&gt;
-&lt;/properties&gt;
-</code></pre>
-<p>此标签在<configuration>标签内部，property标签会替换properties中的内容。</p>
-<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>在Mapper文件中，指定了javaBean的位置，但是需要指定包名+类名。在这里，我们可以单独指定某个类的别名，可以在Mapper中用别名替换全路径名，或者指定基础包名，然后就可以在基础包上加上路径类名，简化操作。</p>
-<pre><code>&lt;typeAliases&gt;
-    &lt;!-- &lt;typeAlias alias=&quot;User&quot; type=&quot;wang.crick.study.mybatis.User&quot; /&gt; --&gt;
-    &lt;package name=&quot;wang.crick.study.mybatis&quot;/&gt;
-&lt;/typeAliases&gt;
-</code></pre>
-<p>此标签同样要在<configuration>标签内部。<br>此时UserMapper.xml就可以修改为</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;  
-&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;   
-&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
-
-&lt;mapper namespace=&quot;wang.crick.study.mybatis.UserMapper&quot;&gt;
-
-    &lt;select id=&quot;selectByName&quot; resultType=&quot;User&quot;&gt;
-        select username , password , role_type AS role_type , address 
-        from z_user
-        where username = #&#123;username&#125;
-    &lt;/select&gt;
-    
-    &lt;insert id=&quot;add&quot; parameterType=&quot;User&quot; &gt;
-        insert into z_user
-        (username , password , role_type , address)
-        values(#&#123;username&#125; , #&#123;password&#125; , #&#123;roleType&#125; , #&#123;address&#125; )
-    &lt;/insert&gt;
-
-&lt;/mapper&gt;
-</code></pre>
-<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>在main方法中，对于sql的调用语句如下：</p>
-<pre><code>User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
-</code></pre>
-<p>这有2个问题，一是通过字符串定位映射，容易出现误差，而是需要执行强制转型。<br>mybatis提供了更为清晰和类型安全的实现形式：利用接口。</p>
-<pre><code>UserMapper userMapper = session.getMapper(UserMapper.class);
-</code></pre>
-<p>然后可以用 </p>
-<pre><code>User zhang = userMapper.selectByName(&quot;lisi&quot;);
-</code></pre>
-<p>替换之前的 </p>
-<pre><code>User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
-</code></pre>
-<p>除此之外，接口还提供了另一种简便的方法，可以通过标签自定义sql语句，而不需要xml的映射文件。</p>
-<pre><code>package wang.crick.study.mybatis;
-
-import org.apache.ibatis.annotations.Select;
-
-public interface UserMapper &#123;
-
-    User selectByName(String username);
-    
-    int add(User user);
-    
-    @Select(&quot;select * from z_user where id = #&#123;id&#125;&quot;)
-    User selectById(int id);
-&#125;
-</code></pre>
-<p>调用方法为</p>
-<pre><code>package wang.crick.study.mybatis;
-
-import java.io.IOException;
-import java.io.InputStream;
-
-import org.apache.ibatis.io.Resources;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-
-public class Main &#123;
-    public static void main(String[] args) throws IOException &#123;
-        String resource = &quot;mybatis-config.xml&quot;;
-        InputStream inputStream = Resources.getResourceAsStream(resource);
-        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession session = sqlSessionFactory.openSession();
-        UserMapper userMapper = session.getMapper(UserMapper.class);
-        
-        User liUser = new User();
-        liUser.setUsername(&quot;lisi&quot;);
-        liUser.setPassword(&quot;123654&quot;);
-        liUser.setRoleType(2);
-        liUser.setAddress(&quot;辽宁省大连市&quot;);
-        int result = userMapper.add(liUser);
-        System.out.println(result);
-        
-        User zhang = userMapper.selectByName(&quot;lisi&quot;);
-        System.out.println(zhang.getUsername() + &quot;: from &quot; + zhang.getAddress());
-        
-        User firstUser = userMapper.selectById(1);
-        System.out.println(firstUser.getUsername() + &quot;: from &quot; + firstUser.getAddress());
-//        session.commit();
-    &#125;
-&#125;
-</code></pre>
-<p>注意，此时UserMapper.xml文件中的namespace必须指向接口文件UserMapper.java</p>
-<h3 id="mappers指向包"><a href="#mappers指向包" class="headerlink" title="mappers指向包"></a>mappers指向包</h3><p>可以将Mapper的接口和xml单独抽离到某个包下，然后在mybatis-config.xml中修改<mappers>标签的配置。<br>因为<mappers>是不支持通配符操作的，按之前的配置方式，没增加一个映射，就需要增加一个配置。<br>抽离之后，可以扫描整个包目录，增加映射后，不需要修改配置文件。<br>修改后的mybatis-config.xml文件为</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;!DOCTYPE configuration
-  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
-  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
-
-&lt;configuration&gt;
-    &lt;properties resource=&quot;prop/config.properties&quot;&gt;
-    &lt;/properties&gt;
-    &lt;typeAliases&gt;
-        &lt;package name=&quot;wang.crick.study.mybatis.domain&quot;/&gt;
-    &lt;/typeAliases&gt;
-    &lt;!-- 数据库配置信息 --&gt;
-    &lt;environments default=&quot;development&quot;&gt;
-        &lt;environment id=&quot;development&quot;&gt;
-            &lt;transactionManager type=&quot;JDBC&quot; /&gt;
-            &lt;dataSource type=&quot;POOLED&quot;&gt;
-                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;
-                &lt;property name=&quot;url&quot; value=&quot;$&#123;db.url&#125;&quot; /&gt;
-                &lt;property name=&quot;username&quot; value=&quot;$&#123;db.username&#125;&quot; /&gt;
-                &lt;property name=&quot;password&quot; value=&quot;$&#123;db.password&#125;&quot; /&gt;
-            &lt;/dataSource&gt;
-        &lt;/environment&gt;
-    &lt;/environments&gt;
-    &lt;mappers&gt;
-        &lt;package name=&quot;wang.crick.study.mybatis.mapper&quot;/&gt;
-    &lt;/mappers&gt;
-&lt;/configuration&gt;
-</code></pre>
-<p>目录结构为</p>
-<p><img src="https://img.yuheng.wang/mweb/mybatis-starter-00.png" alt="mybatis-starter-00"></p>
-<h3 id="Mapper-XML-文件"><a href="#Mapper-XML-文件" class="headerlink" title="Mapper XML 文件"></a>Mapper XML 文件</h3><p>xml中的映射sql文件，是mybatis最强大的功能，但不是本篇文章的重点。所以会在另一篇文章中详细介绍一些技巧、已经容易遇到的问题。</p>
-<p>至此，一个集成了mybatis的java项目已经搭建完成，可以在此基础上编写业务逻辑代码。</p>
 
       
     </div>

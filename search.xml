@@ -3307,50 +3307,6 @@ console.log(&quot;toString&quot; in obj); //true 属性存在
       </tags>
   </entry>
   <entry>
-    <title>还在全网找IDEA激活码？快去官网免费申请JetBrains全家桶License！</title>
-    <url>/2020/12/25/jetbrains-open-source-license/</url>
-    <content><![CDATA[<h2 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h2><blockquote>
-<p>IDEA 全称 IntelliJ IDEA，是java编程语言开发的集成环境。IntelliJ在业界被公认为最好的java开发工具，尤其在智能代码助手、代码自动提示、重构、JavaEE支持、各类版本工具(git、svn等)、JUnit、CVS整合、代码分析、 创新的GUI设计等方面的功能可以说是超常的。IDEA是JetBrains公司的产品，这家公司总部位于捷克共和国的首都布拉格，开发人员以严谨著称的东欧程序员为主。</p>
-</blockquote>
-<span id="more"></span>
-
-<p>从<strong>jrebel</strong>发布的Java IDE市场占有率报告来看，IDEA是最好的java开发工具已经是不争的事实。</p>
-<p><img src="https://img.yuheng.wang/mweb/jrebel-idea.png" alt="jrebel-idea"></p>
-<p>然后高昂的售价(1000RMB/年)虽说物有所值，但是对个人开发者而言也是一笔不小的支出。</p>
-<p><img src="https://img.yuheng.wang/mweb/16088074993621.jpg" alt="-w841"></p>
-<p>虽然也提供了免费的社区版本，但是相应的也阉割了很多功能。</p>
-<p><img src="https://img.yuheng.wang/mweb/idea-compare.jpg" alt="idea-compare"></p>
-<p>别急着说<strong>JetBrains</strong>奸商，做出好东西值得相应的回报。而且<strong>JetBrains</strong>提供了多种免费模式。</p>
-<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><p><strong>JetBrains</strong>为支持开源事业，如果你参与了一个开源项目，那么你就可以申请免费使用<strong>JetBrains</strong>全部企业版开发工具(IDEA、DataGrip、GoLand、PyCharm等)。有效期为1年，到期后还可以继续申请。</p>
-<h3 id="资格要求"><a href="#资格要求" class="headerlink" title="资格要求"></a>资格要求</h3><ol>
-<li>申请​项目必须是一个开源项目。可以在 <a href="https://opensource.org/docs/osd">https://opensource.org/docs/osd</a> 看对开源项目的定义，主要是不能收费或者基于商业盈利目的、不给贡献者发工资。。。</li>
-<li>申请​人必须是项目的发起人或活跃贡献者。活跃贡献者的定义为: 在过去3个月内经常提交代码，只提交issue不算。</li>
-</ol>
-<h3 id="可能会担心但是不作为要求"><a href="#可能会担心但是不作为要求" class="headerlink" title="可能会担心但是不作为要求"></a>可能会担心但是不作为要求</h3><ol>
-<li>不要求质量</li>
-<li>不要求star数量</li>
-<li>不要求已发布公共仓库(如: java发布maven中央仓库)</li>
-</ol>
-<h3 id="如何申请"><a href="#如何申请" class="headerlink" title="如何申请"></a>如何申请</h3><p>通过官网提交表单申请 <a href="https://www.jetbrains.com/shop/eform/opensource?product=ALL">https://www.jetbrains.com/shop/eform/opensource?product=ALL</a></p>
-<p><img src="https://img.yuheng.wang/mweb/jetbrains-apply.png" alt="jetbrains-apply"></p>
-<h3 id="审核"><a href="#审核" class="headerlink" title="审核"></a>审核</h3><p>提交表单后，会立即收到确认邮件。并在之后的1-2周内对你的开源项目的评估。<br>需要注意，表单中提交的email地址要和github中的email地址一致，并且要在github中公开你的email地址，以此证明你的身份。<br>评估结果同样会通过邮件的形式进行回复。如果未通过，会在邮件中说明原因，并鼓励你继续完善开源项目，已通过评估。如果通过评估，则会将<code>Licenses</code>通过邮件发送给你。此时可以通过邮件中的链接，在官网选择将<code>Licenses</code>授权给哪些<strong>JetBrains</strong>账号，或者直接使用激活码使用。</p>
-<p><img src="https://img.yuheng.wang/mweb/jetbrains-license.jpg" alt="jetbrains-license"></p>
-<h3 id="感谢支持"><a href="#感谢支持" class="headerlink" title="感谢支持"></a>感谢支持</h3><p>除了回复邮件表达感谢外，也可以按照邮件中的建议，下载对应的logo，并在你的开源项目readme中添加对应的链接指向官网。当然，这些都是自愿的。</p>
-<p><img src="https://img.yuheng.wang/mweb/jetbrains-support.jpg" alt="jetbrains-support"></p>
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
-<li>我是通过 <a href="https://github.com/YituHealthcare/Arc">https://github.com/YituHealthcare/Arc</a> 申请到的<code>Licenses</code> </li>
-<li>如果你拥有<strong>edu</strong>邮箱，或者是<strong>GitHub Student Developer Pack</strong> 可以发起教育用途申请。同样可以申请<strong>JetBrains</strong>全部企业版开发工具，并且可以直接申请多个学年的有效期。<a href="https://www.jetbrains.com/shop/eform/students">https://www.jetbrains.com/shop/eform/students</a> </li>
-</ol>
-]]></content>
-      <categories>
-        <category>工具</category>
-      </categories>
-      <tags>
-        <tag>工具</tag>
-        <tag>开源</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Ant Design上手的一些坑</title>
     <url>/2016/08/30/js-antdesign-starter/</url>
     <content><![CDATA[<p>转载请注明出处<a href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
@@ -7119,6 +7075,48 @@ getPickeds: function()&#123;
       </tags>
   </entry>
   <entry>
+    <title>绘画板 09——自定义右键菜单</title>
+    <url>/2016/09/26/painter-9/</url>
+    <content><![CDATA[<p>github地址： <a href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<h3 id="自定义右键菜单"><a href="#自定义右键菜单" class="headerlink" title="自定义右键菜单"></a>自定义右键菜单</h3><p>使用开源的jquery插件<a href="https://github.com/joewalnes/jquery-simple-context-menu">jquery-simple-context-menu.js-1.3.2</a> 实现自定义右键菜单的效果。<br>插件内容比较简单，方便进行二次开发和定制。</p>
+<p>插件的设计思路主要是基于jquery，监听contextmenu事件，并append自定义的div菜单列表。</p>
+<p>新增mouse_action.js，用于监听鼠标事件。给svg区域设置插件自定义的contextPopup事件。</p>
+<pre><code>(function()&#123;
+    $(&#39;#svgPanel&#39;).contextPopup(&#123;
+    items: [
+        &#123;
+            label: &#39; 取消&#39;,
+            action: function () &#123;
+            &#125;
+        &#125;,
+        &#123;
+            label: &#39; 选择&#39;,
+            action: function () &#123;
+                $(&quot;#tool_pick&quot;).click();
+            &#125;
+        &#125;,
+        &#123;
+            label: &#39; 清屏&#39;,
+            action: function () &#123;
+                $(&quot;#clear_all&quot;).click();
+            &#125;
+        &#125;
+    ]
+&#125;);
+&#125;)();
+</code></pre>
+<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>修改了js文件的命名规则，用’.’替换了’_’</p>
+]]></content>
+      <categories>
+        <category>painter</category>
+      </categories>
+      <tags>
+        <tag>javascript</tag>
+        <tag>painter</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>绘画板 08——删除与清屏</title>
     <url>/2016/09/25/painter-8/</url>
     <content><![CDATA[<p>github地址： <a href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
@@ -7231,48 +7229,6 @@ getAllElements: function()&#123;
         &#125;);
     &#125;);
 </code></pre>
-]]></content>
-      <categories>
-        <category>painter</category>
-      </categories>
-      <tags>
-        <tag>javascript</tag>
-        <tag>painter</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>绘画板 09——自定义右键菜单</title>
-    <url>/2016/09/26/painter-9/</url>
-    <content><![CDATA[<p>github地址： <a href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
-<p>DEMO地址： <a href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
-<h3 id="自定义右键菜单"><a href="#自定义右键菜单" class="headerlink" title="自定义右键菜单"></a>自定义右键菜单</h3><p>使用开源的jquery插件<a href="https://github.com/joewalnes/jquery-simple-context-menu">jquery-simple-context-menu.js-1.3.2</a> 实现自定义右键菜单的效果。<br>插件内容比较简单，方便进行二次开发和定制。</p>
-<p>插件的设计思路主要是基于jquery，监听contextmenu事件，并append自定义的div菜单列表。</p>
-<p>新增mouse_action.js，用于监听鼠标事件。给svg区域设置插件自定义的contextPopup事件。</p>
-<pre><code>(function()&#123;
-    $(&#39;#svgPanel&#39;).contextPopup(&#123;
-    items: [
-        &#123;
-            label: &#39; 取消&#39;,
-            action: function () &#123;
-            &#125;
-        &#125;,
-        &#123;
-            label: &#39; 选择&#39;,
-            action: function () &#123;
-                $(&quot;#tool_pick&quot;).click();
-            &#125;
-        &#125;,
-        &#123;
-            label: &#39; 清屏&#39;,
-            action: function () &#123;
-                $(&quot;#clear_all&quot;).click();
-            &#125;
-        &#125;
-    ]
-&#125;);
-&#125;)();
-</code></pre>
-<h3 id="附"><a href="#附" class="headerlink" title="附"></a>附</h3><p>修改了js文件的命名规则，用’.’替换了’_’</p>
 ]]></content>
       <categories>
         <category>painter</category>
@@ -8071,6 +8027,92 @@ getAllElements: function()&#123;
       </categories>
       <tags>
         <tag>规范</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Git常用命令</title>
+    <url>/2023/09/10/tool-git/</url>
+    <content><![CDATA[<h2 id="1-使用git-rebase合并多次commit"><a href="#1-使用git-rebase合并多次commit" class="headerlink" title="1. 使用git rebase合并多次commit"></a>1. 使用git rebase合并多次commit</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git rebase -i [startpoint] [endpoint]</span><br></pre></td></tr></table></figure>
+
+<p>其中-i的意思是–interactive，即弹出交互式的界面让用户编辑完成合并操作，[startpoint] [endpoint]则指定了一个编辑区间，如果不指定[endpoint]，则该区间的终点默认是当前分支HEAD所指向的commit(注：该区间指定的是一个前开后闭的区间)。<br>在查看到了log日志后，我们运行以下命令：</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git rebase -i 36224db</span><br></pre></td></tr></table></figure>
+<p>或者</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">git rebase -i HEAD~3 </span><br></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<p>每一个commit id 前面的pick表示指令类型，git 为我们提供了以下几个命令:</p>
+<ul>
+<li>pick：保留该commit（缩写:p）</li>
+<li>reword：保留该commit，但我需要修改该commit的注释（缩写:r）</li>
+<li>edit：保留该commit, 但我要停下来修改该提交(不仅仅修改注释)（缩写:e）</li>
+<li>squash：将该commit和前一个commit合并（缩写:s）</li>
+<li>fixup：将该commit和前一个commit合并，但我不要保留该提交的注释信息（缩写:f）</li>
+<li>exec：执行shell命令（缩写:x）</li>
+<li>drop：我要丢弃该commit（缩写:d）</li>
+</ul>
+<p>根据我们的需求，我们将commit内容编辑如下:</p>
+<ul>
+<li>pick d2cf1f9 fix: 第一次提交</li>
+<li>s 47971f6 fix: 第二次提交</li>
+<li>s fb28c8d fix: 第三次提交</li>
+</ul>
+<p>上面的意思就是把第二次、第三次提交都合并到第一次提交上<br>然后wq保存退出后是注释修改界面:</p>
+<blockquote>
+<p>可以在浏览态 按下两个dd可以删除一行</p>
+</blockquote>
+<p>编辑完保存即可完成commit的合并了：<br>最后查看log可以发下提交合并了</p>
+<h2 id="2-git远程删除分支后，本地git-branch-a-依然能看到的解决办法"><a href="#2-git远程删除分支后，本地git-branch-a-依然能看到的解决办法" class="headerlink" title="2. git远程删除分支后，本地git branch -a 依然能看到的解决办法"></a>2. git远程删除分支后，本地git branch -a 依然能看到的解决办法</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">git remote prune origin</span><br></pre></td></tr></table></figure>]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>git</tag>
+        <tag>tool</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>还在全网找IDEA激活码？快去官网免费申请JetBrains全家桶License！</title>
+    <url>/2020/12/25/tool-jetbrains-open-source-license/</url>
+    <content><![CDATA[<h2 id="IDEA"><a href="#IDEA" class="headerlink" title="IDEA"></a>IDEA</h2><blockquote>
+<p>IDEA 全称 IntelliJ IDEA，是java编程语言开发的集成环境。IntelliJ在业界被公认为最好的java开发工具，尤其在智能代码助手、代码自动提示、重构、JavaEE支持、各类版本工具(git、svn等)、JUnit、CVS整合、代码分析、 创新的GUI设计等方面的功能可以说是超常的。IDEA是JetBrains公司的产品，这家公司总部位于捷克共和国的首都布拉格，开发人员以严谨著称的东欧程序员为主。</p>
+</blockquote>
+<span id="more"></span>
+
+<p>从<strong>jrebel</strong>发布的Java IDE市场占有率报告来看，IDEA是最好的java开发工具已经是不争的事实。</p>
+<p><img src="https://img.yuheng.wang/mweb/jrebel-idea.png" alt="jrebel-idea"></p>
+<p>然后高昂的售价(1000RMB/年)虽说物有所值，但是对个人开发者而言也是一笔不小的支出。</p>
+<p><img src="https://img.yuheng.wang/mweb/16088074993621.jpg" alt="-w841"></p>
+<p>虽然也提供了免费的社区版本，但是相应的也阉割了很多功能。</p>
+<p><img src="https://img.yuheng.wang/mweb/idea-compare.jpg" alt="idea-compare"></p>
+<p>别急着说<strong>JetBrains</strong>奸商，做出好东西值得相应的回报。而且<strong>JetBrains</strong>提供了多种免费模式。</p>
+<h2 id="开源项目"><a href="#开源项目" class="headerlink" title="开源项目"></a>开源项目</h2><p><strong>JetBrains</strong>为支持开源事业，如果你参与了一个开源项目，那么你就可以申请免费使用<strong>JetBrains</strong>全部企业版开发工具(IDEA、DataGrip、GoLand、PyCharm等)。有效期为1年，到期后还可以继续申请。</p>
+<h3 id="资格要求"><a href="#资格要求" class="headerlink" title="资格要求"></a>资格要求</h3><ol>
+<li>申请​项目必须是一个开源项目。可以在 <a href="https://opensource.org/docs/osd">https://opensource.org/docs/osd</a> 看对开源项目的定义，主要是不能收费或者基于商业盈利目的、不给贡献者发工资。。。</li>
+<li>申请​人必须是项目的发起人或活跃贡献者。活跃贡献者的定义为: 在过去3个月内经常提交代码，只提交issue不算。</li>
+</ol>
+<h3 id="可能会担心但是不作为要求"><a href="#可能会担心但是不作为要求" class="headerlink" title="可能会担心但是不作为要求"></a>可能会担心但是不作为要求</h3><ol>
+<li>不要求质量</li>
+<li>不要求star数量</li>
+<li>不要求已发布公共仓库(如: java发布maven中央仓库)</li>
+</ol>
+<h3 id="如何申请"><a href="#如何申请" class="headerlink" title="如何申请"></a>如何申请</h3><p>通过官网提交表单申请 <a href="https://www.jetbrains.com/shop/eform/opensource?product=ALL">https://www.jetbrains.com/shop/eform/opensource?product=ALL</a></p>
+<p><img src="https://img.yuheng.wang/mweb/jetbrains-apply.png" alt="jetbrains-apply"></p>
+<h3 id="审核"><a href="#审核" class="headerlink" title="审核"></a>审核</h3><p>提交表单后，会立即收到确认邮件。并在之后的1-2周内对你的开源项目的评估。<br>需要注意，表单中提交的email地址要和github中的email地址一致，并且要在github中公开你的email地址，以此证明你的身份。<br>评估结果同样会通过邮件的形式进行回复。如果未通过，会在邮件中说明原因，并鼓励你继续完善开源项目，已通过评估。如果通过评估，则会将<code>Licenses</code>通过邮件发送给你。此时可以通过邮件中的链接，在官网选择将<code>Licenses</code>授权给哪些<strong>JetBrains</strong>账号，或者直接使用激活码使用。</p>
+<p><img src="https://img.yuheng.wang/mweb/jetbrains-license.jpg" alt="jetbrains-license"></p>
+<h3 id="感谢支持"><a href="#感谢支持" class="headerlink" title="感谢支持"></a>感谢支持</h3><p>除了回复邮件表达感谢外，也可以按照邮件中的建议，下载对应的logo，并在你的开源项目readme中添加对应的链接指向官网。当然，这些都是自愿的。</p>
+<p><img src="https://img.yuheng.wang/mweb/jetbrains-support.jpg" alt="jetbrains-support"></p>
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><ol>
+<li>我是通过 <a href="https://github.com/YituHealthcare/Arc">https://github.com/YituHealthcare/Arc</a> 申请到的<code>Licenses</code> </li>
+<li>如果你拥有<strong>edu</strong>邮箱，或者是<strong>GitHub Student Developer Pack</strong> 可以发起教育用途申请。同样可以申请<strong>JetBrains</strong>全部企业版开发工具，并且可以直接申请多个学年的有效期。<a href="https://www.jetbrains.com/shop/eform/students">https://www.jetbrains.com/shop/eform/students</a> </li>
+</ol>
+]]></content>
+      <categories>
+        <category>tool</category>
+      </categories>
+      <tags>
+        <tag>tool</tag>
+        <tag>开源</tag>
       </tags>
   </entry>
   <entry>

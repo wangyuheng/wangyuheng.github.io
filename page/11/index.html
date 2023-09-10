@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,368 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/22/java-xml-by-dom/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2015/12/22/java-xml-by-dom/" class="post-title-link" itemprop="url">java通过DOM操作xml</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2015-12-22 11:10:57" itemprop="dateCreated datePublished" datetime="2015-12-22T11:10:57+08:00">2015-12-22</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h1 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h1><p>XML (eXtensible Markup Language), 可扩展标记语言,发明之初是为了取代HTML，但在使用过程中，开发者发现这种规范的语言格式，在数据传输方面有着明显的优势。<br><em>这里只将XML作为一种数据交换格式。</em><br>比如说java语言本身的javaBean数据，在程序内使用没有问题，但是如果涉及到与其他语言进行交互，则会出现很多问题。所以通过XML进行数据传输通信，可以拥有更好的跨平台性和可移植性，并且让底层数据预备了可读性。<br>本篇文章的重点在于介绍如果通过java DOM对XML文件进行解析与操作。</p>
+<h1 id="dom"><a href="#dom" class="headerlink" title="dom"></a>dom</h1><p>DOM是W3C处理XML的标准API，多种语言都实现了该标准，java对dom的实现在org.w3c.dom包内。很多工具类都是在此基础上进行了封装和扩充，如jdom、dom4j等，这里使用原生实现来完成对xml文档的基本操作。<br>DOM的实现原理是将XML作为树结构全部读入内存，再进行操作。好处是简单快捷，可以修改结构和数据，而造成的隐患则是是在读取大型XML文件时，可能会造成过多的内存占用。</p>
+<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="读取解析xml文件"><a href="#读取解析xml文件" class="headerlink" title="读取解析xml文件"></a>读取解析xml文件</h2><p>需要读取的xml文件如下，传递了商品订单信息，包括商品名、价格、购买数量。通过程序读取数据，并计算出订单总价格。<br>因为本次重点在于xml的解析操作，所以价格直接用float类型处理。如果是生产环境，一定要使用BigDecimal操作，避免float的精度问题！！</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;shopping&gt;
+    &lt;goods&gt;
+        &lt;name&gt;品名1&lt;/name&gt;
+        &lt;price&gt;3&lt;/price&gt;
+        &lt;number&gt;4&lt;/number&gt;
+    &lt;/goods&gt;
+    &lt;goods&gt;
+        &lt;name&gt;品名2&lt;/name&gt;
+        &lt;price&gt;1.2&lt;/price&gt;
+        &lt;number&gt;3&lt;/number&gt;
+    &lt;/goods&gt;
+&lt;/shopping&gt;
+</code></pre>
+<p>java 读取XML代码 </p>
+<pre><code>import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+public class XmlParser &#123;
+    
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    
+    public Document parseDoc(String filePath) &#123;
+        Document document = null;
+        try &#123;
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            document = builder.parse(new File(filePath));
+        &#125; catch (ParserConfigurationException e) &#123;
+            e.printStackTrace();
+        &#125; catch (SAXException e) &#123;
+            e.printStackTrace();
+        &#125; catch (IOException e) &#123;
+            e.printStackTrace();
+        &#125;
+        return document;
+    &#125;
+    
+    public static void main(String[] args) &#123;
+        XmlParser parser = new XmlParser();
+        Document document = parser.parseDoc(&quot;D://shopping.xml&quot;);
+        Element rootElement = document.getDocumentElement();
+        List&lt;Goods&gt; goodsList = new ArrayList&lt;Goods&gt;();
+        NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
+        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
+            Element child = (Element) goodsNodeList.item(i);
+            Goods goods = new Goods(child);
+            goodsList.add(goods);
+        &#125;
+        
+//        NodeList goodsNodeList = rootElement.getChildNodes();
+//        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
+//            Node node = goodsNodeList.item(i);
+//            if (node.getNodeType() == Node.ELEMENT_NODE) &#123;
+//                Element child = (Element) node;
+//                Goods goods = new Goods(child);
+//                goodsList.add(goods);
+//            &#125;
+//        &#125;
+        float total = 0;
+        int sum = 0;
+        for (Goods goods : goodsList) &#123;
+            total += goods.getTotal();
+            sum += goods.getNumber();
+        &#125;
+        System.out.println(total);
+        System.out.println(sum);
+    &#125;
+    
+    static class Goods &#123;
+        private float price;
+        private int number;
+        public Goods(Element element) &#123;
+            this.price = Float.parseFloat(element.getElementsByTagName(&quot;price&quot;).item(0).getTextContent());
+            this.number = Integer.parseInt(element.getElementsByTagName(&quot;number&quot;).item(0).getTextContent());
+        &#125;
+        public float getTotal()&#123;
+            return this.price * this.number;
+        &#125;
+        public int getNumber()&#123;
+            return number;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="node和element的关系"><a href="#node和element的关系" class="headerlink" title="node和element的关系"></a>node和element的关系</h3><p>element一定是node但是node不一定是element，node可能是元素节点、属性节点、文本节点，而element表示包含开始标签和结束标签的完整元素。<br>所以上面的代码中 用</p>
+<pre><code>NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
+</code></pre>
+<p>获取了NodeList，可以直接转型为Element： Element child = (Element) node;<br>如果获取的是node节点</p>
+<pre><code>NodeList goodsNodeList = rootElement.getChildNodes();
+</code></pre>
+<p>则必须在循环中增加判断if (node.getNodeType() == Node.ELEMENT_NODE) {} 判断当前节点是否为Element元素。</p>
+<h2 id="生成xml文件"><a href="#生成xml文件" class="headerlink" title="生成xml文件"></a>生成xml文件</h2><p>将统计后的订单信息以xml格式输出，生成文件格式如下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+&lt;order&gt;
+    &lt;total&gt;15.6&lt;/total&gt;
+    &lt;sums&gt;7&lt;/sums&gt;
+&lt;/order&gt;
+</code></pre>
+<p>生成xml的操作和读取的顺序类似，先创建rootElement，然后添加childElement，再将rootElement放到document中，最后通过io输出xml文件到指定路径。<br>代码如下：</p>
+<pre><code>import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+public class XmlParser &#123;
+    
+    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
+    TransformerFactory transformerFactory = TransformerFactory.newInstance();
+    
+    public Document parseDoc(String filePath) &#123;
+        Document document = null;
+        try &#123;
+            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+            document = builder.parse(new File(filePath));
+        &#125; catch (ParserConfigurationException e) &#123;
+            e.printStackTrace();
+        &#125; catch (SAXException e) &#123;
+            e.printStackTrace();
+        &#125; catch (IOException e) &#123;
+            e.printStackTrace();
+        &#125;
+        return document;
+    &#125;
+    
+    public void generateXml(String filePath, Document document)&#123;
+        DOMSource source = new DOMSource(document);
+        Transformer transformer = createtransformer();
+        PrintWriter pw = null;
+        try &#123;
+            pw = new PrintWriter(new FileOutputStream(filePath));
+            StreamResult result = new StreamResult(pw);
+            transformer.transform(source, result);
+        &#125; catch (FileNotFoundException e) &#123;
+            e.printStackTrace();
+        &#125; catch (TransformerConfigurationException e1) &#123;
+            e1.printStackTrace();
+        &#125; catch (TransformerException e) &#123;
+            e.printStackTrace();
+        &#125; finally &#123;
+            pw.close();
+        &#125;
+    &#125;
+    
+    public Document createDoc() &#123;
+        Document document = null;
+        try &#123;
+            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
+            document = builder.newDocument();
+            document.setXmlStandalone(true);
+        &#125; catch (ParserConfigurationException e) &#123;
+            e.printStackTrace();
+        &#125;
+        return document;
+    &#125;
+    
+    public Transformer createtransformer()&#123;
+        Transformer transformer = null;
+        try &#123;
+            transformer = transformerFactory.newTransformer();
+            //default former
+//            transformer.setOutputProperty(OutputKeys.STANDALONE, &quot;yes&quot;);
+            transformer.setOutputProperty(OutputKeys.ENCODING, &quot;utf-8&quot;);
+            transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);
+        &#125; catch (TransformerConfigurationException e) &#123;
+            e.printStackTrace();
+        &#125;
+        return transformer;
+    &#125;
+    
+    public static void main(String[] args) &#123;
+        XmlParser parser = new XmlParser();
+        Document document = parser.parseDoc(&quot;D://shopping.xml&quot;);
+        Element rootElement = document.getDocumentElement();
+        List&lt;Goods&gt; goodsList = new ArrayList&lt;Goods&gt;();
+        NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
+        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
+            Element child = (Element) goodsNodeList.item(i);
+            Goods goods = new Goods(child);
+            goodsList.add(goods);
+        &#125;
+        float total = 0;
+        int sum = 0;
+        for (Goods goods : goodsList) &#123;
+            total += goods.getTotal();
+            sum += goods.getNumber();
+        &#125;
+        Document orderDocument = parser.createDoc();
+        Order order = new Order(total, sum);
+        Element orderElement = order.getElement(orderDocument);
+        orderDocument.appendChild(orderElement);
+        
+        parser.generateXml(&quot;D://order.xml&quot;, orderDocument);
+
+    &#125;
+    
+    static class Order &#123;
+        private float total = 0;
+        private int   sum   = 0;
+        
+        public Order(float total, int sum) &#123;
+            this.total = total;
+            this.sum = sum;
+        &#125;
+        
+        public Element getElement(Document document) &#123;
+            Element rootElement = document.createElement(&quot;order&quot;);
+            
+            Element totalElement = document.createElement(&quot;total&quot;);
+            totalElement.setTextContent(String.valueOf(this.total));
+            rootElement.appendChild(totalElement);
+            
+            Element sumElement = document.createElement(&quot;sum&quot;);
+            sumElement.setTextContent(String.valueOf(this.sum));
+            rootElement.appendChild(sumElement);
+            
+            return rootElement;
+        &#125;
+        
+    &#125;
+    
+    static class Goods &#123;
+        private float price;
+        private int   number;
+        
+        public Goods(Element element) &#123;
+            this.price = Float.parseFloat(element.getElementsByTagName(&quot;price&quot;).item(0).getTextContent());
+            this.number = Integer.parseInt(element.getElementsByTagName(&quot;number&quot;).item(0).getTextContent());
+        &#125;
+        
+        public float getTotal() &#123;
+            return this.price * this.number;
+        &#125;
+        
+        public int getNumber() &#123;
+            return number;
+        &#125;
+    &#125;
+&#125;
+</code></pre>
+<h3 id="standalone"><a href="#standalone" class="headerlink" title="standalone"></a>standalone</h3><p>这里有一个小坑 就是生成的xml中有一个属性为standalone=”no”<br>standalone表示是否为独立文件，也就是说是否依赖于其他外部文件，如果为yes，则表示为不依赖其他外部文件的独立文件，默认为yes。<br>但是生成之后的standalone=”no”，不符合预期，并且</p>
+<pre><code>transformer.setOutputProperty(OutputKeys.STANDALONE, &quot;yes&quot;);
+</code></pre>
+<p>设置格式之后standalone=”no”仍然为no。这时需要设置document中的setXmlStandalone属性，</p>
+<pre><code>document.setXmlStandalone(true);
+</code></pre>
+<p>再次输出，可以去掉standalone属性。</p>
+<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>理解xml的结构之后，和dom的树形结构后，无论是使用原生支持还是通过第三方类库去操作xml文件，都可以很容易的上手。<br>and <strong>我喜欢用json</strong></p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 

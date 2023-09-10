@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,429 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/23/mybatis-starter/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/05/23/mybatis-starter/" class="post-title-link" itemprop="url">java项目集成mybatis入门教程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-05-23 14:16:40" itemprop="dateCreated datePublished" datetime="2016-05-23T14:16:40+08:00">2016-05-23</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2023-08-06 09:38:38" itemprop="dateModified" datetime="2023-08-06T09:38:38+08:00">2023-08-06</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h2 id="起因"><a href="#起因" class="headerlink" title="起因"></a>起因</h2><p>公司项目中一直用了myBatis，但是将dao层封装了，并不知道是如何使用的。学习的第一步是查看<a target="_blank" rel="noopener" href="http://www.mybatis.org/mybatis-3/zh/index.html">官方文档</a>，发现虽然有中文文档，但是并没有完整的示例，只介绍特性和一些用法，但是并不知道怎么让环境跑起来。于是按照官方blog的介绍，搭建了一个示例环境，留给有需要的人。</p>
+<h2 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h2><p>项目采用maven构造方式，IDE为eclipse，依赖mybatis包及mysql驱动，具体版本及jdk版本见下文pom。</p>
+<h3 id="pom文件"><a href="#pom文件" class="headerlink" title="pom文件"></a>pom文件</h3><p>采用了jdk1.8版本，以及最新的mysql驱动，如果jdk版本较低，需要选用相应的低版本驱动。</p>
+<pre><code>&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot; xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;groupId&gt;wang.crick&lt;/groupId&gt;
+    &lt;artifactId&gt;study.mybatis&lt;/artifactId&gt;
+    &lt;version&gt;0.0.1-SNAPSHOT&lt;/version&gt;
+    &lt;packaging&gt;jar&lt;/packaging&gt;
+
+    &lt;name&gt;study.mybatis&lt;/name&gt;
+
+    &lt;properties&gt;
+        &lt;project.build.sourceEncoding&gt;UTF-8&lt;/project.build.sourceEncoding&gt;
+    &lt;/properties&gt;
+
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;6.0.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.4.0&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+    &lt;build&gt;
+        &lt;plugins&gt;
+            &lt;plugin&gt;
+                &lt;groupId&gt;org.apache.maven.plugins&lt;/groupId&gt;
+                &lt;artifactId&gt;maven-compiler-plugin&lt;/artifactId&gt;
+                &lt;version&gt;3.1&lt;/version&gt;
+                &lt;configuration&gt;
+                    &lt;source&gt;1.8&lt;/source&gt;
+                    &lt;target&gt;1.8&lt;/target&gt;
+                    &lt;encoding&gt;UTF-8&lt;/encoding&gt;
+                &lt;/configuration&gt;
+            &lt;/plugin&gt;
+        &lt;/plugins&gt;
+    &lt;/build&gt;
+&lt;/project&gt;
+</code></pre>
+<h3 id="数据脚本"><a href="#数据脚本" class="headerlink" title="数据脚本"></a>数据脚本</h3><p>数据库安装及环境搭建，可参照其他博客，这里只提供创建表的数据脚本。</p>
+<pre><code>DROP DATABASE IF EXISTS `zero`;
+CREATE DATABASE IF NOT EXISTS `zero`;
+USE `zero`;
+
+DROP TABLE IF EXISTS `z_user`;
+CREATE TABLE `z_user` (
+    `id` INT(11) NOT NULL AUTO_INCREMENT,
+    `username` VARCHAR(50) NULL DEFAULT NULL,
+    `password` VARCHAR(50) NULL DEFAULT NULL,
+    `role_type` INT(11) NULL DEFAULT NULL,
+    `address` VARCHAR(200) NULL DEFAULT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `username` (`username`)
+)
+COLLATE=&#39;utf8_general_ci&#39;
+ENGINE=InnoDB
+AUTO_INCREMENT=13;
+
+INSERT INTO `z_user` (`id`, `username`, `password`, `role_type`, `address`) VALUES
+    (1, &#39;zhangsan&#39;, &#39;123131&#39;, 1, &#39;shanghai,pudong&#39;);
+</code></pre>
+<h3 id="XML配置文件"><a href="#XML配置文件" class="headerlink" title="XML配置文件"></a>XML配置文件</h3><p>根据使用习惯，推荐使用XML配置文件。因为是maven项目，所以在src/main/resources目录下新建一个配置文件mybatis-config.xml</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+
+&lt;configuration&gt;
+    &lt;!-- 数据库配置信息 --&gt;
+    &lt;environments default=&quot;development&quot;&gt;
+        &lt;environment id=&quot;development&quot;&gt;
+            &lt;transactionManager type=&quot;JDBC&quot; /&gt;
+            &lt;dataSource type=&quot;POOLED&quot;&gt;
+                &lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot; /&gt;
+                &lt;property name=&quot;url&quot; value=&quot;jdbc:mysql://172.16.99.121:3306/zero?useUnicode=true&amp;amp;characterEncoding=utf-8&quot; /&gt;
+                &lt;property name=&quot;username&quot; value=&quot;root&quot; /&gt;
+                &lt;property name=&quot;password&quot; value=&quot;mysqlPwd123456!&quot; /&gt;
+            &lt;/dataSource&gt;
+        &lt;/environment&gt;
+    &lt;/environments&gt;
+    &lt;mappers&gt;
+        &lt;mapper resource=&quot;wang/crick/study/mybatis/UserMapper.xml&quot; /&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>配置文件配置了一个数据源，和jdbc的配置方法类似。这里需要注意，如果在url增加额外属性配置，连字符需要用转义后的&amp;代替&amp;。<br>在mappers标签内，指定了mybatis映射的 SQL 语句。</p>
+<h3 id="映射SQL语句"><a href="#映射SQL语句" class="headerlink" title="映射SQL语句"></a>映射SQL语句</h3><p>配置文件指定的UserMapper.xml文件内容如下</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;  
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;   
+&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper namespace=&quot;wang.crick.study.mybatis.UserMapper&quot;&gt;
+
+    &lt;select id=&quot;selectByName&quot; resultType=&quot;wang.crick.study.mybatis.User&quot;&gt;
+        select username , password , role_type AS role_type , address 
+        from z_user
+        where username = #&#123;username&#125;
+    &lt;/select&gt;
+    
+    &lt;insert id=&quot;add&quot; parameterType=&quot;wang.crick.study.mybatis.User&quot;&gt;
+        insert into z_user
+        (username , password , role_type , address)
+        values(#&#123;username&#125; , #&#123;password&#125; , #&#123;roleType&#125; , #&#123;address&#125; )
+    &lt;/insert&gt;
+
+&lt;/mapper&gt;  
+</code></pre>
+<p>namespace指定了唯一标识，为了保证其唯一性，通常以包名+文件名来命名，也可以自定义名称。<br>从标签名可以判断出两个方法的作用是select和insert。<br>wang.crick.study.mybatis.User指向了一个javeBean文件，通过#{}方式，可以映射javaBean的属性变量。</p>
+<pre><code>package wang.crick.study.mybatis;
+
+public class User &#123;
+
+    private int id;
+    private String password;
+    private String username;
+    private int roleType;
+    private String address;
+
+    public int getId() &#123;
+        return id;
+    &#125;
+
+    public void setId(int id) &#123;
+        this.id = id;
+    &#125;
+
+    public String getPassword() &#123;
+        return password;
+    &#125;
+
+    public void setPassword(String password) &#123;
+        this.password = password;
+    &#125;
+
+    public String getUsername() &#123;
+        return username;
+    &#125;
+
+    public void setUsername(String username) &#123;
+        this.username = username;
+    &#125;
+
+    public int getRoleType() &#123;
+        return roleType;
+    &#125;
+
+    public void setRoleType(int roleType) &#123;
+        this.roleType = roleType;
+    &#125;
+
+    public String getAddress() &#123;
+        return address;
+    &#125;
+
+    public void setAddress(String address) &#123;
+        this.address = address;
+    &#125;
+
+&#125;
+</code></pre>
+<h3 id="执行数据操作"><a href="#执行数据操作" class="headerlink" title="执行数据操作"></a>执行数据操作</h3><p>mybatis提供了一个SqlSessionFactory，用来根据配置文件，创建资源。SqlSessionFactory创建出来后，在程序运行期间，一直存在，并且不应该被修改或清除。在需要执行数据操作的时候，通过单例的SqlSessionFactory打开一个SqlSession，执行CRUD操作，在执行完毕后，关闭SqlSession。</p>
+<pre><code>package wang.crick.study.mybatis;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+public class Main &#123;
+    public static void main(String[] args) throws IOException &#123;
+        String resource = &quot;mybatis-config.xml&quot;;
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession session = sqlSessionFactory.openSession();
+        
+        User liUser = new User();
+        liUser.setUsername(&quot;lisi&quot;);
+        liUser.setPassword(&quot;123654&quot;);
+        liUser.setRoleType(2);
+        liUser.setAddress(&quot;辽宁省大连市&quot;);
+        int result = session.insert(&quot;wang.crick.study.mybatis.UserMapper.add&quot;, liUser);
+        System.out.println(result);
+        
+        User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
+        System.out.println(zhang.getUsername() + &quot;: from &quot; + zhang.getAddress());
+//        session.commit();
+    &#125;
+&#125;
+</code></pre>
+<p>程序通过SqlSessionFactoryBuilder读取xml配置文件的方式构建了一个SqlSessionFactory，并打开一个SqlSession，执行了insert和select操作，对应Mapper文件中的两个标签，具体的映射规则为，根据Mapper文件中的namespace+方法id。参数直接传入javaBean，或者用javaBean接收参数，通过属性名映射规则，将属性与数据库字段对应。<br>只有执行commit()方法后，操作才会提交至数据库。<br>因为只有一个main方法，所以没有关闭session的操作。正常程序，应该将session.close()放在finally中，保证一定会执行。</p>
+<p>至此，一个最基本的mybatis环境搭建完毕，但是这只是一个简单而丑陋的方式，还有很多方法，可以将项目精简与美化，让mybatis发挥出自身的优势。</p>
+<h2 id="项目优化"><a href="#项目优化" class="headerlink" title="项目优化"></a>项目优化</h2><h3 id="properties配置文件"><a href="#properties配置文件" class="headerlink" title="properties配置文件"></a>properties配置文件</h3><p>在src/main/resources/prop目录下新建一个配置文件config.properties</p>
+<pre><code>db.driver=com.mysql.cj.jdbc.Driver
+db.url=jdbc:mysql://172.16.99.121:3306/zero?useUnicode=true&amp;characterEncoding=utf-8
+db.username=root
+db.password=mysqlPwd123456!
+</code></pre>
+<p>注意，此时不需转义，不能用&amp;替换&amp;<br>将配置信息抽离到此文件中，在mybatis-config.xml中通过properties标签注入属性。</p>
+<pre><code>&lt;properties resource=&quot;prop/config.properties&quot;&gt;
+    &lt;!-- &lt;property name=&quot;driver&quot; value=&quot;com.mysql.cj.jdbc.Driver&quot; /&gt; --&gt;
+&lt;/properties&gt;
+</code></pre>
+<p>此标签在<configuration>标签内部，property标签会替换properties中的内容。</p>
+<h3 id="别名"><a href="#别名" class="headerlink" title="别名"></a>别名</h3><p>在Mapper文件中，指定了javaBean的位置，但是需要指定包名+类名。在这里，我们可以单独指定某个类的别名，可以在Mapper中用别名替换全路径名，或者指定基础包名，然后就可以在基础包上加上路径类名，简化操作。</p>
+<pre><code>&lt;typeAliases&gt;
+    &lt;!-- &lt;typeAlias alias=&quot;User&quot; type=&quot;wang.crick.study.mybatis.User&quot; /&gt; --&gt;
+    &lt;package name=&quot;wang.crick.study.mybatis&quot;/&gt;
+&lt;/typeAliases&gt;
+</code></pre>
+<p>此标签同样要在<configuration>标签内部。<br>此时UserMapper.xml就可以修改为</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;  
+&lt;!DOCTYPE mapper PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;   
+&quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+
+&lt;mapper namespace=&quot;wang.crick.study.mybatis.UserMapper&quot;&gt;
+
+    &lt;select id=&quot;selectByName&quot; resultType=&quot;User&quot;&gt;
+        select username , password , role_type AS role_type , address 
+        from z_user
+        where username = #&#123;username&#125;
+    &lt;/select&gt;
+    
+    &lt;insert id=&quot;add&quot; parameterType=&quot;User&quot; &gt;
+        insert into z_user
+        (username , password , role_type , address)
+        values(#&#123;username&#125; , #&#123;password&#125; , #&#123;roleType&#125; , #&#123;address&#125; )
+    &lt;/insert&gt;
+
+&lt;/mapper&gt;
+</code></pre>
+<h3 id="接口"><a href="#接口" class="headerlink" title="接口"></a>接口</h3><p>在main方法中，对于sql的调用语句如下：</p>
+<pre><code>User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
+</code></pre>
+<p>这有2个问题，一是通过字符串定位映射，容易出现误差，而是需要执行强制转型。<br>mybatis提供了更为清晰和类型安全的实现形式：利用接口。</p>
+<pre><code>UserMapper userMapper = session.getMapper(UserMapper.class);
+</code></pre>
+<p>然后可以用 </p>
+<pre><code>User zhang = userMapper.selectByName(&quot;lisi&quot;);
+</code></pre>
+<p>替换之前的 </p>
+<pre><code>User zhang = (User)session.selectOne(&quot;wang.crick.study.mybatis.UserMapper.selectByName&quot;, &quot;lisi&quot;);
+</code></pre>
+<p>除此之外，接口还提供了另一种简便的方法，可以通过标签自定义sql语句，而不需要xml的映射文件。</p>
+<pre><code>package wang.crick.study.mybatis;
+
+import org.apache.ibatis.annotations.Select;
+
+public interface UserMapper &#123;
+
+    User selectByName(String username);
+    
+    int add(User user);
+    
+    @Select(&quot;select * from z_user where id = #&#123;id&#125;&quot;)
+    User selectById(int id);
+&#125;
+</code></pre>
+<p>调用方法为</p>
+<pre><code>package wang.crick.study.mybatis;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+public class Main &#123;
+    public static void main(String[] args) throws IOException &#123;
+        String resource = &quot;mybatis-config.xml&quot;;
+        InputStream inputStream = Resources.getResourceAsStream(resource);
+        SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession session = sqlSessionFactory.openSession();
+        UserMapper userMapper = session.getMapper(UserMapper.class);
+        
+        User liUser = new User();
+        liUser.setUsername(&quot;lisi&quot;);
+        liUser.setPassword(&quot;123654&quot;);
+        liUser.setRoleType(2);
+        liUser.setAddress(&quot;辽宁省大连市&quot;);
+        int result = userMapper.add(liUser);
+        System.out.println(result);
+        
+        User zhang = userMapper.selectByName(&quot;lisi&quot;);
+        System.out.println(zhang.getUsername() + &quot;: from &quot; + zhang.getAddress());
+        
+        User firstUser = userMapper.selectById(1);
+        System.out.println(firstUser.getUsername() + &quot;: from &quot; + firstUser.getAddress());
+//        session.commit();
+    &#125;
+&#125;
+</code></pre>
+<p>注意，此时UserMapper.xml文件中的namespace必须指向接口文件UserMapper.java</p>
+<h3 id="mappers指向包"><a href="#mappers指向包" class="headerlink" title="mappers指向包"></a>mappers指向包</h3><p>可以将Mapper的接口和xml单独抽离到某个包下，然后在mybatis-config.xml中修改<mappers>标签的配置。<br>因为<mappers>是不支持通配符操作的，按之前的配置方式，没增加一个映射，就需要增加一个配置。<br>抽离之后，可以扫描整个包目录，增加映射后，不需要修改配置文件。<br>修改后的mybatis-config.xml文件为</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE configuration
+  PUBLIC &quot;-//mybatis.org//DTD Config 3.0//EN&quot;
+  &quot;http://mybatis.org/dtd/mybatis-3-config.dtd&quot;&gt;
+
+&lt;configuration&gt;
+    &lt;properties resource=&quot;prop/config.properties&quot;&gt;
+    &lt;/properties&gt;
+    &lt;typeAliases&gt;
+        &lt;package name=&quot;wang.crick.study.mybatis.domain&quot;/&gt;
+    &lt;/typeAliases&gt;
+    &lt;!-- 数据库配置信息 --&gt;
+    &lt;environments default=&quot;development&quot;&gt;
+        &lt;environment id=&quot;development&quot;&gt;
+            &lt;transactionManager type=&quot;JDBC&quot; /&gt;
+            &lt;dataSource type=&quot;POOLED&quot;&gt;
+                &lt;property name=&quot;driver&quot; value=&quot;$&#123;driver&#125;&quot; /&gt;
+                &lt;property name=&quot;url&quot; value=&quot;$&#123;db.url&#125;&quot; /&gt;
+                &lt;property name=&quot;username&quot; value=&quot;$&#123;db.username&#125;&quot; /&gt;
+                &lt;property name=&quot;password&quot; value=&quot;$&#123;db.password&#125;&quot; /&gt;
+            &lt;/dataSource&gt;
+        &lt;/environment&gt;
+    &lt;/environments&gt;
+    &lt;mappers&gt;
+        &lt;package name=&quot;wang.crick.study.mybatis.mapper&quot;/&gt;
+    &lt;/mappers&gt;
+&lt;/configuration&gt;
+</code></pre>
+<p>目录结构为</p>
+<p><img src="https://img.yuheng.wang/mweb/mybatis-starter-00.png" alt="mybatis-starter-00"></p>
+<h3 id="Mapper-XML-文件"><a href="#Mapper-XML-文件" class="headerlink" title="Mapper XML 文件"></a>Mapper XML 文件</h3><p>xml中的映射sql文件，是mybatis最强大的功能，但不是本篇文章的重点。所以会在另一篇文章中详细介绍一些技巧、已经容易遇到的问题。</p>
+<p>至此，一个集成了mybatis的java项目已经搭建完成，可以在此基础上编写业务逻辑代码。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1234,368 +1657,6 @@ console.log(&quot;toString&quot; in obj); //true 属性存在
 <li>in 自身存在的属性，继承的属性</li>
 </ul>
 <p>根据具体业务场景，自由选择或组合对应的方法，可以实现对属性的检测。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2015/12/22/java-xml-by-dom/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2015/12/22/java-xml-by-dom/" class="post-title-link" itemprop="url">java通过DOM操作xml</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2015-12-22 11:10:57" itemprop="dateCreated datePublished" datetime="2015-12-22T11:10:57+08:00">2015-12-22</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/java/" itemprop="url" rel="index"><span itemprop="name">java</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h1 id="XML"><a href="#XML" class="headerlink" title="XML"></a>XML</h1><p>XML (eXtensible Markup Language), 可扩展标记语言,发明之初是为了取代HTML，但在使用过程中，开发者发现这种规范的语言格式，在数据传输方面有着明显的优势。<br><em>这里只将XML作为一种数据交换格式。</em><br>比如说java语言本身的javaBean数据，在程序内使用没有问题，但是如果涉及到与其他语言进行交互，则会出现很多问题。所以通过XML进行数据传输通信，可以拥有更好的跨平台性和可移植性，并且让底层数据预备了可读性。<br>本篇文章的重点在于介绍如果通过java DOM对XML文件进行解析与操作。</p>
-<h1 id="dom"><a href="#dom" class="headerlink" title="dom"></a>dom</h1><p>DOM是W3C处理XML的标准API，多种语言都实现了该标准，java对dom的实现在org.w3c.dom包内。很多工具类都是在此基础上进行了封装和扩充，如jdom、dom4j等，这里使用原生实现来完成对xml文档的基本操作。<br>DOM的实现原理是将XML作为树结构全部读入内存，再进行操作。好处是简单快捷，可以修改结构和数据，而造成的隐患则是是在读取大型XML文件时，可能会造成过多的内存占用。</p>
-<h1 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h1><h2 id="读取解析xml文件"><a href="#读取解析xml文件" class="headerlink" title="读取解析xml文件"></a>读取解析xml文件</h2><p>需要读取的xml文件如下，传递了商品订单信息，包括商品名、价格、购买数量。通过程序读取数据，并计算出订单总价格。<br>因为本次重点在于xml的解析操作，所以价格直接用float类型处理。如果是生产环境，一定要使用BigDecimal操作，避免float的精度问题！！</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
-&lt;shopping&gt;
-    &lt;goods&gt;
-        &lt;name&gt;品名1&lt;/name&gt;
-        &lt;price&gt;3&lt;/price&gt;
-        &lt;number&gt;4&lt;/number&gt;
-    &lt;/goods&gt;
-    &lt;goods&gt;
-        &lt;name&gt;品名2&lt;/name&gt;
-        &lt;price&gt;1.2&lt;/price&gt;
-        &lt;number&gt;3&lt;/number&gt;
-    &lt;/goods&gt;
-&lt;/shopping&gt;
-</code></pre>
-<p>java 读取XML代码 </p>
-<pre><code>import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-public class XmlParser &#123;
-    
-    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-    
-    public Document parseDoc(String filePath) &#123;
-        Document document = null;
-        try &#123;
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            document = builder.parse(new File(filePath));
-        &#125; catch (ParserConfigurationException e) &#123;
-            e.printStackTrace();
-        &#125; catch (SAXException e) &#123;
-            e.printStackTrace();
-        &#125; catch (IOException e) &#123;
-            e.printStackTrace();
-        &#125;
-        return document;
-    &#125;
-    
-    public static void main(String[] args) &#123;
-        XmlParser parser = new XmlParser();
-        Document document = parser.parseDoc(&quot;D://shopping.xml&quot;);
-        Element rootElement = document.getDocumentElement();
-        List&lt;Goods&gt; goodsList = new ArrayList&lt;Goods&gt;();
-        NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
-        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
-            Element child = (Element) goodsNodeList.item(i);
-            Goods goods = new Goods(child);
-            goodsList.add(goods);
-        &#125;
-        
-//        NodeList goodsNodeList = rootElement.getChildNodes();
-//        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
-//            Node node = goodsNodeList.item(i);
-//            if (node.getNodeType() == Node.ELEMENT_NODE) &#123;
-//                Element child = (Element) node;
-//                Goods goods = new Goods(child);
-//                goodsList.add(goods);
-//            &#125;
-//        &#125;
-        float total = 0;
-        int sum = 0;
-        for (Goods goods : goodsList) &#123;
-            total += goods.getTotal();
-            sum += goods.getNumber();
-        &#125;
-        System.out.println(total);
-        System.out.println(sum);
-    &#125;
-    
-    static class Goods &#123;
-        private float price;
-        private int number;
-        public Goods(Element element) &#123;
-            this.price = Float.parseFloat(element.getElementsByTagName(&quot;price&quot;).item(0).getTextContent());
-            this.number = Integer.parseInt(element.getElementsByTagName(&quot;number&quot;).item(0).getTextContent());
-        &#125;
-        public float getTotal()&#123;
-            return this.price * this.number;
-        &#125;
-        public int getNumber()&#123;
-            return number;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="node和element的关系"><a href="#node和element的关系" class="headerlink" title="node和element的关系"></a>node和element的关系</h3><p>element一定是node但是node不一定是element，node可能是元素节点、属性节点、文本节点，而element表示包含开始标签和结束标签的完整元素。<br>所以上面的代码中 用</p>
-<pre><code>NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
-</code></pre>
-<p>获取了NodeList，可以直接转型为Element： Element child = (Element) node;<br>如果获取的是node节点</p>
-<pre><code>NodeList goodsNodeList = rootElement.getChildNodes();
-</code></pre>
-<p>则必须在循环中增加判断if (node.getNodeType() == Node.ELEMENT_NODE) {} 判断当前节点是否为Element元素。</p>
-<h2 id="生成xml文件"><a href="#生成xml文件" class="headerlink" title="生成xml文件"></a>生成xml文件</h2><p>将统计后的订单信息以xml格式输出，生成文件格式如下</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-&lt;order&gt;
-    &lt;total&gt;15.6&lt;/total&gt;
-    &lt;sums&gt;7&lt;/sums&gt;
-&lt;/order&gt;
-</code></pre>
-<p>生成xml的操作和读取的顺序类似，先创建rootElement，然后添加childElement，再将rootElement放到document中，最后通过io输出xml文件到指定路径。<br>代码如下：</p>
-<pre><code>import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
-
-public class XmlParser &#123;
-    
-    DocumentBuilderFactory documentBuilderFactory = DocumentBuilderFactory.newInstance();
-    TransformerFactory transformerFactory = TransformerFactory.newInstance();
-    
-    public Document parseDoc(String filePath) &#123;
-        Document document = null;
-        try &#123;
-            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
-            document = builder.parse(new File(filePath));
-        &#125; catch (ParserConfigurationException e) &#123;
-            e.printStackTrace();
-        &#125; catch (SAXException e) &#123;
-            e.printStackTrace();
-        &#125; catch (IOException e) &#123;
-            e.printStackTrace();
-        &#125;
-        return document;
-    &#125;
-    
-    public void generateXml(String filePath, Document document)&#123;
-        DOMSource source = new DOMSource(document);
-        Transformer transformer = createtransformer();
-        PrintWriter pw = null;
-        try &#123;
-            pw = new PrintWriter(new FileOutputStream(filePath));
-            StreamResult result = new StreamResult(pw);
-            transformer.transform(source, result);
-        &#125; catch (FileNotFoundException e) &#123;
-            e.printStackTrace();
-        &#125; catch (TransformerConfigurationException e1) &#123;
-            e1.printStackTrace();
-        &#125; catch (TransformerException e) &#123;
-            e.printStackTrace();
-        &#125; finally &#123;
-            pw.close();
-        &#125;
-    &#125;
-    
-    public Document createDoc() &#123;
-        Document document = null;
-        try &#123;
-            DocumentBuilder builder = documentBuilderFactory.newDocumentBuilder();
-            document = builder.newDocument();
-            document.setXmlStandalone(true);
-        &#125; catch (ParserConfigurationException e) &#123;
-            e.printStackTrace();
-        &#125;
-        return document;
-    &#125;
-    
-    public Transformer createtransformer()&#123;
-        Transformer transformer = null;
-        try &#123;
-            transformer = transformerFactory.newTransformer();
-            //default former
-//            transformer.setOutputProperty(OutputKeys.STANDALONE, &quot;yes&quot;);
-            transformer.setOutputProperty(OutputKeys.ENCODING, &quot;utf-8&quot;);
-            transformer.setOutputProperty(OutputKeys.INDENT, &quot;yes&quot;);
-        &#125; catch (TransformerConfigurationException e) &#123;
-            e.printStackTrace();
-        &#125;
-        return transformer;
-    &#125;
-    
-    public static void main(String[] args) &#123;
-        XmlParser parser = new XmlParser();
-        Document document = parser.parseDoc(&quot;D://shopping.xml&quot;);
-        Element rootElement = document.getDocumentElement();
-        List&lt;Goods&gt; goodsList = new ArrayList&lt;Goods&gt;();
-        NodeList goodsNodeList = rootElement.getElementsByTagName(&quot;goods&quot;);
-        for (int i = 0; i &lt; goodsNodeList.getLength(); i++) &#123;
-            Element child = (Element) goodsNodeList.item(i);
-            Goods goods = new Goods(child);
-            goodsList.add(goods);
-        &#125;
-        float total = 0;
-        int sum = 0;
-        for (Goods goods : goodsList) &#123;
-            total += goods.getTotal();
-            sum += goods.getNumber();
-        &#125;
-        Document orderDocument = parser.createDoc();
-        Order order = new Order(total, sum);
-        Element orderElement = order.getElement(orderDocument);
-        orderDocument.appendChild(orderElement);
-        
-        parser.generateXml(&quot;D://order.xml&quot;, orderDocument);
-
-    &#125;
-    
-    static class Order &#123;
-        private float total = 0;
-        private int   sum   = 0;
-        
-        public Order(float total, int sum) &#123;
-            this.total = total;
-            this.sum = sum;
-        &#125;
-        
-        public Element getElement(Document document) &#123;
-            Element rootElement = document.createElement(&quot;order&quot;);
-            
-            Element totalElement = document.createElement(&quot;total&quot;);
-            totalElement.setTextContent(String.valueOf(this.total));
-            rootElement.appendChild(totalElement);
-            
-            Element sumElement = document.createElement(&quot;sum&quot;);
-            sumElement.setTextContent(String.valueOf(this.sum));
-            rootElement.appendChild(sumElement);
-            
-            return rootElement;
-        &#125;
-        
-    &#125;
-    
-    static class Goods &#123;
-        private float price;
-        private int   number;
-        
-        public Goods(Element element) &#123;
-            this.price = Float.parseFloat(element.getElementsByTagName(&quot;price&quot;).item(0).getTextContent());
-            this.number = Integer.parseInt(element.getElementsByTagName(&quot;number&quot;).item(0).getTextContent());
-        &#125;
-        
-        public float getTotal() &#123;
-            return this.price * this.number;
-        &#125;
-        
-        public int getNumber() &#123;
-            return number;
-        &#125;
-    &#125;
-&#125;
-</code></pre>
-<h3 id="standalone"><a href="#standalone" class="headerlink" title="standalone"></a>standalone</h3><p>这里有一个小坑 就是生成的xml中有一个属性为standalone=”no”<br>standalone表示是否为独立文件，也就是说是否依赖于其他外部文件，如果为yes，则表示为不依赖其他外部文件的独立文件，默认为yes。<br>但是生成之后的standalone=”no”，不符合预期，并且</p>
-<pre><code>transformer.setOutputProperty(OutputKeys.STANDALONE, &quot;yes&quot;);
-</code></pre>
-<p>设置格式之后standalone=”no”仍然为no。这时需要设置document中的setXmlStandalone属性，</p>
-<pre><code>document.setXmlStandalone(true);
-</code></pre>
-<p>再次输出，可以去掉standalone属性。</p>
-<h1 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h1><p>理解xml的结构之后，和dom的树形结构后，无论是使用原生支持还是通过第三方类库去操作xml文件，都可以很容易的上手。<br>and <strong>我喜欢用json</strong></p>
 
       
     </div>

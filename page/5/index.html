@@ -128,7 +128,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">108</span>
+          <span class="site-state-item-count">109</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -164,6 +164,139 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2017/11/26/springboot-endpoint/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2017/11/26/springboot-endpoint/" class="post-title-link" itemprop="url">spring-boot 自定义 endpoint，让运行时的 java 应用不再是黑盒</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2017-11-26 11:40:36 / Modified: 21:33:54" itemprop="dateCreated datePublished" datetime="2017-11-26T11:40:36+08:00">2017-11-26</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/springboot/" itemprop="url" rel="index"><span itemprop="name">springboot</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>本文项目已发布到github，后续学习项目也会添加到此工程下，欢迎fork点赞。<br><a target="_blank" rel="noopener" href="https://github.com/wangyuheng/spring-boot-sample">https://github.com/wangyuheng/spring-boot-sample</a></p>
+<p>你的java应用在运行时对你来说是黑盒吗？你可以查看到springboot运行时的各种信息吗？</p>
+<h3 id="Spring-Boot-Actuator"><a href="#Spring-Boot-Actuator" class="headerlink" title="Spring Boot Actuator"></a>Spring Boot Actuator</h3><p>springboot提供了用于健康检测的endpoint，提供了查看系统信息、内存、环境等。</p>
+<h4 id="1-添加依赖"><a href="#1-添加依赖" class="headerlink" title="1. 添加依赖"></a>1. 添加依赖</h4><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>org.springframework.boot<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>spring-boot-starter-actuator<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-访问链接"><a href="#2-访问链接" class="headerlink" title="2. 访问链接"></a>2. 访问链接</h4><p>应用启动后访问 <a target="_blank" rel="noopener" href="http://localhost:8080/health">http://localhost:8080/health</a> 查看应用启动状态。<br>端口号可以通过配置文件<code>management.port=9527</code>变更</p>
+<p>常用endpoint</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="http://localhost:8080/env">http://localhost:8080/env</a> 环境变量</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8080/info">http://localhost:8080/info</a> 应用信息</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8080/metrics">http://localhost:8080/metrics</a> 内存等应用基本指标</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8080/dump">http://localhost:8080/dump</a> 线程栈</li>
+<li><a target="_blank" rel="noopener" href="http://localhost:8080/configprops">http://localhost:8080/configprops</a> 配置项</li>
+</ol>
+<h4 id="3-开启全部endpoint-amp-关闭验权"><a href="#3-开启全部endpoint-amp-关闭验权" class="headerlink" title="3. 开启全部endpoint &amp; 关闭验权"></a>3. 开启全部endpoint &amp; 关闭验权</h4><p>部分请求会返回<strong>401</strong>， 这是因为endpoint未开启，或者开启了登录验权，可以通过配置文件进行配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">management.security.enabled&#x3D;false</span><br><span class="line">endpoints.enabled&#x3D;true</span><br></pre></td></tr></table></figure>
+
+<h3 id="自定义endpoint"><a href="#自定义endpoint" class="headerlink" title="自定义endpoint"></a>自定义endpoint</h3><h4 id="一、实现Endpoint接口"><a href="#一、实现Endpoint接口" class="headerlink" title="一、实现Endpoint接口"></a>一、实现Endpoint接口</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Endpoint</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">	<span class="function">String <span class="title">getId</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">boolean</span> <span class="title">isSensitive</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">	<span class="function">T <span class="title">invoke</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol>
+<li>getId()， 指定了endpoint访问url</li>
+<li>isEnabled()， 表示是否启用</li>
+<li>isSensitive()， 表示是否验权</li>
+<li>invoke()， 页面返回值</li>
+</ol>
+<p>实现类通过@Bean的形式注入后，再次启动应用，即可通过url访问，并返回invoke返回值。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomEndpoint</span> <span class="keyword">implements</span> <span class="title">Endpoint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;custom&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSensitive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;hello endpoint&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EndpointApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EndpointApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CustomEndpoint <span class="title">customEndpoint</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CustomEndpoint();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>访问<a target="_blank" rel="noopener" href="http://localhost:8080/custom">http://localhost:8080/custom</a> 可以看到invoke返回的内容。</p>
+<p>但是这样，每个endpoint都需要单独注入，且没有层级、通配符，不方便管理，为满足需求，尝试做了如下改造</p>
+<h4 id="二、继承EndpointMvcAdapter"><a href="#二、继承EndpointMvcAdapter" class="headerlink" title="二、继承EndpointMvcAdapter"></a>二、继承EndpointMvcAdapter</h4><h5 id="2-1-自定义-EndpointAction-接口"><a href="#2-1-自定义-EndpointAction-接口" class="headerlink" title="2.1 自定义 EndpointAction 接口"></a>2.1 自定义 EndpointAction 接口</h5><p>用于定制endpoint处理行为，可以理解为invoke方法的具体实施者，名称用来管理访问路径</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EndpointAction</span> <span class="keyword">extends</span> <span class="title">Serializable</span> </span>&#123;</span><br><span class="line">    <span class="function">Object <span class="title">execute</span><span class="params">()</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">String <span class="title">getName</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-2-EndpointAction的多种实现"><a href="#2-2-EndpointAction的多种实现" class="headerlink" title="2.2 EndpointAction的多种实现"></a>2.2 EndpointAction的多种实现</h5><p>需要实现的功能，如：读取配置文件、查看内存信息</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesAction</span> <span class="keyword">implements</span> <span class="title">EndpointAction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> PropertiesLoaderUtils.loadAllProperties(<span class="string">&quot;application.properties&quot;</span>);</span><br><span class="line">        &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&quot;read application fail! error: &quot;</span> + e.getMessage();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;properties&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">VMAction</span> <span class="keyword">implements</span> <span class="title">EndpointAction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> VMAction INSTANCE = <span class="keyword">new</span> VMAction();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> String version;</span><br><span class="line">    <span class="keyword">private</span> String startTime;</span><br><span class="line">    <span class="keyword">private</span> String initHeap;</span><br><span class="line">    <span class="keyword">private</span> String maxHeap;</span><br><span class="line">    <span class="keyword">private</span> Set&lt;String&gt; arguments;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        INSTANCE.version = System.getProperty(<span class="string">&quot;java.runtime.version&quot;</span>);</span><br><span class="line">        INSTANCE.startTime = <span class="keyword">new</span> SimpleDateFormat(<span class="string">&quot;yyyy-MM-dd HH:mm:ss&quot;</span>).format(ManagementFactory.getRuntimeMXBean().getStartTime());</span><br><span class="line">        INSTANCE.initHeap = String.valueOf(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getInit() / <span class="number">1024</span> / <span class="number">1024</span>).concat(<span class="string">&quot;MB&quot;</span>);</span><br><span class="line">        INSTANCE.maxHeap = String.valueOf(ManagementFactory.getMemoryMXBean().getHeapMemoryUsage().getMax() / <span class="number">1024</span> / <span class="number">1024</span>).concat(<span class="string">&quot;MB&quot;</span>);</span><br><span class="line">        INSTANCE.arguments = <span class="keyword">new</span> HashSet&lt;&gt;(ManagementFactory.getRuntimeMXBean().getInputArguments());</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;vm&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getVersion</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> version;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getStartTime</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> startTime;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getInitHeap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> initHeap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getMaxHeap</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> maxHeap;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Set&lt;String&gt; <span class="title">getArguments</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> arguments;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Component</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DefaultAction</span> <span class="keyword">implements</span> <span class="title">EndpointAction</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> DefaultAction INSTANCE = <span class="keyword">new</span> DefaultAction();</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> DefaultAction <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> INSTANCE;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">execute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;try /help for action list&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;default&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-3-继承EndpointMvcAdapter"><a href="#2-3-继承EndpointMvcAdapter" class="headerlink" title="2.3 继承EndpointMvcAdapter"></a>2.3 继承EndpointMvcAdapter</h5><ol>
+<li>注入action map，根据name获取bean实现</li>
+<li>通过url mapping匹配action</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomEndpointAdapter</span> <span class="keyword">extends</span> <span class="title">EndpointMvcAdapter</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> Map&lt;String, EndpointAction&gt; endpointActionMap = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Autowired</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setEndpointActionMap</span><span class="params">(List&lt;EndpointAction&gt; endpointActionList)</span> </span>&#123;</span><br><span class="line">        endpointActionList.forEach(endpointAction -&gt; endpointActionMap.put(endpointAction.getName(), endpointAction));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">CustomEndpointAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>(<span class="keyword">new</span> CustomEndpoint());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@RequestMapping(value = &quot;/&#123;name:.*&#125;&quot;,</span></span><br><span class="line"><span class="meta">            method = RequestMethod.GET, produces = &#123;</span></span><br><span class="line"><span class="meta">            ActuatorMediaTypes.APPLICATION_ACTUATOR_V1_JSON_VALUE,</span></span><br><span class="line"><span class="meta">            MediaType.APPLICATION_JSON_VALUE&#125;</span></span><br><span class="line"><span class="meta">    )</span></span><br><span class="line">    <span class="meta">@ResponseBody</span></span><br><span class="line">    <span class="meta">@HypermediaDisabled</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">dispatcher</span><span class="params">(<span class="meta">@PathVariable</span> String name)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (<span class="string">&quot;help&quot;</span>.equalsIgnoreCase(name)) &#123;</span><br><span class="line">            <span class="keyword">return</span> endpointActionMap.keySet().stream().map(key -&gt; getName() + <span class="string">&quot;/&quot;</span> + key).collect(toSet());</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> endpointActionMap.getOrDefault(name, DefaultAction.getInstance()).execute();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-4-定制endpoint作为入口"><a href="#2-4-定制endpoint作为入口" class="headerlink" title="2.4 定制endpoint作为入口"></a>2.4 定制endpoint作为入口</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomEndpoint</span> <span class="keyword">implements</span> <span class="title">Endpoint</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getId</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;custom&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isEnabled</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSensitive</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> DefaultAction.getInstance().execute();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="2-5-启动时注入"><a href="#2-5-启动时注入" class="headerlink" title="2.5 启动时注入"></a>2.5 启动时注入</h5><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@SpringBootApplication</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">EndpointApplication</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        SpringApplication.run(EndpointApplication.class, args);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="meta">@ConditionalOnClass(CustomEndpoint.class)</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> CustomEndpointAdapter <span class="title">customEndpointAdapter</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> CustomEndpointAdapter();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h3><p>揪心的测试环节，启动webEnvironment环境，通过<strong>TestRestTemplate</strong>访问endpoint的mapping，比对返回值即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@RunWith(SpringRunner.class)</span></span><br><span class="line"><span class="meta">@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PropertiesActionTest</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> TestRestTemplate restTemplate;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Value(&quot;$&#123;management.port&#125;&quot;)</span></span><br><span class="line">    <span class="keyword">private</span> String managementPort;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setupMockMvc</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        restTemplate = <span class="keyword">new</span> TestRestTemplate();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_properties_action</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String path = <span class="string">&quot;http://localhost:&quot;</span> + managementPort + <span class="string">&quot;/custom/properties&quot;</span>;</span><br><span class="line">        Map&lt;String, String&gt; result = restTemplate.getForObject(path, HashMap.class);</span><br><span class="line">        assertEquals(result.get(<span class="string">&quot;management.port&quot;</span>), managementPort);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_help</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String path = <span class="string">&quot;http://localhost:&quot;</span> + managementPort + <span class="string">&quot;/custom/help&quot;</span>;</span><br><span class="line">        Set&lt;String&gt; result = restTemplate.getForObject(path, Set.class);</span><br><span class="line">        assertTrue(result.contains(<span class="string">&quot;custom/properties&quot;</span>));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Test</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">test_rand</span><span class="params">()</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">        String path = <span class="string">&quot;http://localhost:&quot;</span> + managementPort + <span class="string">&quot;/custom/&quot;</span> + <span class="keyword">new</span> Random().nextInt();</span><br><span class="line">        String result = restTemplate.getForObject(path, String.class);</span><br><span class="line">        assertEquals(<span class="string">&quot;try /help for action list&quot;</span>, result);</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1665,407 +1798,6 @@ _ele.on(&quot;dragend&quot;, function(event) &#123;
         _ele.fire(&quot;unPick&quot;);
     &#125;
 &#125;);
-</code></pre>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/26/painter-10/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/09/26/painter-10/" class="post-title-link" itemprop="url">绘画板 10——多选元素</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-09-26 10:57:16" itemprop="dateCreated datePublished" datetime="2016-09-26T10:57:16+08:00">2016-09-26</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2018-06-29 11:17:28" itemprop="dateModified" datetime="2018-06-29T11:17:28+08:00">2018-06-29</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
-<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
-<h3 id="多选元素"><a href="#多选元素" class="headerlink" title="多选元素"></a>多选元素</h3><h4 id="原理"><a href="#原理" class="headerlink" title="原理"></a>原理</h4><p>在选择按钮状态下，可以绘制一个曲线矩形，遍历所有元素判断，如果当前元素在矩形的坐标范围内，则元素被选中。</p>
-<p>矩形四个点的坐标范围为x,x+width,y,y+height</p>
-<h4 id="变更element-click事件"><a href="#变更element-click事件" class="headerlink" title="变更element click事件"></a>变更element click事件</h4><p>选择元素时，需要触发元素选中事件。如果触发click，会增加额外判断，并延时。所以单独抽离pick事件，将click中的事件处理指向pick</p>
-<pre><code>_ele.on(&quot;click&quot;, function() &#123;
-    if (GlobalStatus.isPreFilled()) &#123;
-        if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
-            _ele.fill(GlobalStatus.getFillColor());
-            _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
-        &#125; else &#123;
-            _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
-        &#125;
-
-    &#125; else if (GlobalStatus.isPicked()) &#123;
-        _ele.fire(&quot;pick&quot;);
-    &#125; else if (GlobalStatus.isRecycle()) &#123;
-        _ele.remove();
-    &#125;
-&#125;);
-_ele.on(&quot;pick&quot;, function() &#123;
-    if (_ele.attr(&quot;picked&quot;)) &#123;
-        _ele.attr(&quot;picked&quot;, null);
-        _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
-        GlobalStatus.removePicked(_ele);
-    &#125; else &#123;
-        _ele.attr(&quot;picked&quot;, true);
-        _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
-        _ele.handleBorder.showShade(_ele);
-        GlobalStatus.pushPicked(_ele);
-
-    &#125;
-&#125;);
-</code></pre>
-<h4 id="新增draw-tool-pick-js"><a href="#新增draw-tool-pick-js" class="headerlink" title="新增draw.tool.pick.js"></a>新增draw.tool.pick.js</h4><p>新增DrawTool.Pick，操作与Rect类似，唯一的区别在于mouseup时判断元素是否在绘制的虚线矩形范围内，并对应触发pick事件。</p>
-<pre><code>(function() &#123;
-
-    var parent = null;
-    var drawing = false;
-    var element = null;
-    var startPoint = null;
-
-    function mousedown(event) &#123;
-        console.log(&#39;pick mousedown&#39;);
-        drawing = true;
-        startPoint = svgDoc.transformPoint(event);
-        element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&#123;
-            &quot;fill-opacity&quot;: GlobalStatus.getFillOpacity(),
-            &quot;stroke-dasharray&quot;: &quot;13 10&quot;
-        &#125;).stroke(&#123;
-            width: &quot;1&quot;,
-            color: &quot;grey&quot;
-        &#125;);
-        return false;
-    &#125;
-
-    function mousemove(event) &#123;
-        console.log(&#39;pick mousemove&#39;);
-        if (drawing) &#123;
-            var svgPoint = svgDoc.transformPoint(event);
-            var x = svgPoint.x;
-            var y = svgPoint.y;
-
-            var newWidth = x - startPoint.x;
-            var newHeight = y - startPoint.y;
-            var startX = startPoint.x;
-            var startY = startPoint.y;
-            if (newWidth &lt; 0) &#123;
-                startX += newWidth;
-            &#125;
-
-            if (newHeight &lt; 0) &#123;
-                startY += newHeight;
-            &#125;
-            newWidth = Math.abs(newWidth);
-            newHeight = Math.abs(newHeight);
-            element.x(startX).y(startY).width(newWidth).height(newHeight);
-        &#125;
-        return false;
-    &#125;;
-
-    function mouseup(event) &#123;
-        console.log(&#39;pick mouseup &#39; + element);
-        drawing = false;
-        if (element.attr(&quot;width&quot;) &gt; 0) &#123;
-            var sx = element.x();
-            var ex = element.x() + element.width();
-            var sy = element.y();
-            var ey = element.y() + element.height();
-            $(GlobalStatus.getAllElements()).each(function() &#123;
-                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
-                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
-                    if (!this.attr(&quot;picked&quot;)) &#123;
-                        this.fire(&quot;pick&quot;);
-                    &#125;
-                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
-                    this.fire(&quot;pick&quot;);
-                &#125;
-            &#125;)
-        &#125;
-        parent.removeElement(element);
-        return false;
-    &#125;
-
-    var listener = &#123;
-        mousedown: mousedown,
-        mousemove: mousemove,
-        mouseup: mouseup,
-    &#125;;
-
-
-    var Pick = function(parentEle) &#123;
-        parent = parentEle;
-        console.log(parent);
-        svgDoc = parent.doc();
-        DrawTool.init(svgDoc, listener);
-        this.stop = function() &#123;
-            DrawTool.stop(svgDoc, listener);
-        &#125;;
-    &#125;;
-
-    this.DrawTool.Pick = Pick;
-
-&#125;)();
-</code></pre>
-<h4 id="首页监听选择按钮"><a href="#首页监听选择按钮" class="headerlink" title="首页监听选择按钮"></a>首页监听选择按钮</h4><p>在首页监听选择按钮，被选中时，创建DrawTool.Pick对象</p>
-<pre><code>$(&quot;#tool_pick&quot;).on(&quot;click&quot;, function() &#123;
-    resetCurrentDrawTool();
-    currentDrawTool = new DrawTool.Pick(svgDoc);
-&#125;);
-</code></pre>
-<h3 id="弊端"><a href="#弊端" class="headerlink" title="弊端"></a>弊端</h3><p>有一个不足的地方，元素必须全在范围内，才能被选中。如果被选中部分，则无法选中。没想到好的解决方案。</p>
-<h3 id="bug修复"><a href="#bug修复" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="picked状态混乱"><a href="#picked状态混乱" class="headerlink" title="picked状态混乱"></a>picked状态混乱</h4><p>click和mouseup互相冲突，导致选中状态丢失。</p>
-<p>将pick拆分为pick和unPick两个事件，分别处理选中状态，而不进行判断。将判断交给上层调用方法</p>
-<pre><code> _ele.on(&quot;click&quot;, function() &#123;
-      console.log(&quot;click&quot;);
-      if (GlobalStatus.isPreFilled()) &#123;
-          if ($(&quot;#fill_color&quot;).hasClass(&quot;active&quot;)) &#123;
-              _ele.fill(GlobalStatus.getFillColor());
-              _ele.style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity());
-          &#125; else &#123;
-              _ele.style(&quot;stroke&quot;, GlobalStatus.getFontColor());
-          &#125;
-
-      &#125; else if (GlobalStatus.isPicked()) &#123;
-          if (_ele.attr(&quot;picked&quot;)) &#123;
-              _ele.fire(&quot;unPick&quot;);
-          &#125; else &#123;
-              _ele.fire(&quot;pick&quot;);
-          &#125;
-
-      &#125; else if (GlobalStatus.isRecycle()) &#123;
-          _ele.remove();
-      &#125;
-  &#125;);
-  _ele.on(&quot;pick&quot;, function() &#123;
-      console.log(&quot;pick&quot;);
-      _ele.attr(&quot;picked&quot;, true);
-      _ele.handleBorder = _ele.handleBorder || new HandleBorder(svgDoc);
-      _ele.handleBorder.showShade(_ele);
-      GlobalStatus.pushPicked(_ele);
-  &#125;);
-  _ele.on(&quot;unPick&quot;, function() &#123;
-      console.log(&quot;unPick&quot;);
-      _ele.attr(&quot;picked&quot;, null);
-      _ele.handleBorder &amp;&amp; _ele.handleBorder.hideShade(_ele);
-      GlobalStatus.removePicked(_ele);
-
-  &#125;);
-  
-</code></pre>
-<p>Pick中</p>
-<pre><code>function mouseup(event) &#123;
-    console.log(&#39;pick mouseup &#39; + element);
-    if (drawing) &#123;
-        drawing = false;
-        if (element &amp;&amp; element.attr(&quot;width&quot;) &gt; 20) &#123;
-            var sx = element.x();
-            var ex = element.x() + element.width();
-            var sy = element.y();
-            var ey = element.y() + element.height();
-            $(GlobalStatus.getAllElements()).each(function() &#123;
-                console.log(this.x(), this.y(), sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey);
-                if (sx &lt; this.x() &amp;&amp; this.x() &lt; ex &amp;&amp; sy &lt; this.y() &amp;&amp; this.y() &lt; ey) &#123;
-                    if (!this.attr(&quot;picked&quot;)) &#123;
-                        this.fire(&quot;pick&quot;);
-                    &#125;
-                &#125; else if (this.attr(&quot;picked&quot;)) &#123;
-                    this.fire(&quot;unPick&quot;);
-                &#125;
-            &#125;)
-        &#125;
-        element &amp;&amp; element.remove();
-    &#125;
-    return false;
-&#125;
-</code></pre>
-<h4 id="Pick拥有背景色"><a href="#Pick拥有背景色" class="headerlink" title="Pick拥有背景色"></a>Pick拥有背景色</h4><p>修改Pick的mousedown方法，独立设置style，不关联颜色选择器</p>
-<pre><code>function mousedown(event) &#123;
-    console.log(&#39;pick mousedown&#39;);
-    if (!drawing) &#123;
-        drawing = true;
-        startPoint = svgDoc.transformPoint(event);
-        element = parent.rect(0, 0).style(&#123;
-            &quot;fill-opacity&quot;: &quot;0.0&quot;,
-            &quot;stroke-dasharray&quot;: &quot;10&quot;
-        &#125;).stroke(&#123;
-            width: &quot;1&quot;,
-            color: &quot;grey&quot;
-        &#125;);
-    &#125;
-    return false;
-&#125;
-</code></pre>
-<h4 id="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"><a href="#mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失" class="headerlink" title="mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失"></a>mousedown状态鼠标移出画板范围，松开鼠标，再次回到画板范围内，导致状态丢失</h4><p>再回到画板时，鼠标已经移开，但是并未执行mouseup方法，因为时间的监听范围为画板内。所以mouseover事件继续执行，导致多生成了一个element。为了避免此问题，在mouse事件中增加drawing状态判断，以Rect为例 </p>
-<pre><code>(function() &#123;
-
-    var parent = null;
-    var drawing = false;
-    var element = null;
-    var startPoint = null;
-
-    function mousedown(event) &#123;
-        console.log(&#39;rect mousedown&#39;);
-        if (!drawing) &#123;
-            drawing = true;
-            startPoint = svgDoc.transformPoint(event);
-            element = parent.rect(0, 0).fill(GlobalStatus.getFillColor()).style(&quot;fill-opacity&quot;, GlobalStatus.getFillOpacity()).stroke(&#123;
-                width: GlobalStatus.getLineSize(),
-                color: GlobalStatus.getFontColor()
-            &#125;);
-        &#125;
-        return false;
-    &#125;
-
-    function mousemove(event) &#123;
-        console.log(&#39;rect mousemove&#39;);
-        if (drawing) &#123;
-            var svgPoint = svgDoc.transformPoint(event);
-            var x = svgPoint.x;
-            var y = svgPoint.y;
-
-            var newWidth = x - startPoint.x;
-            var newHeight = y - startPoint.y;
-            var startX = startPoint.x;
-            var startY = startPoint.y;
-            if (newWidth &lt; 0) &#123;
-                startX += newWidth;
-            &#125;
-
-            if (newHeight &lt; 0) &#123;
-                startY += newHeight;
-            &#125;
-            newWidth = Math.abs(newWidth);
-            newHeight = Math.abs(newHeight);
-            element.x(startX).y(startY).width(newWidth).height(newHeight);
-        &#125;
-        return false;
-    &#125;;
-
-    function mouseup(event) &#123;
-        console.log(&#39;rect mouseup &#39; + element);
-        if (drawing) &#123;
-            drawing = false;
-            if (element.attr(&quot;width&quot;) &gt; 0) &#123;
-                element.pickable();
-            &#125; else &#123;
-                parent.removeElement(element);
-            &#125;
-        &#125;
-        return false;
-    &#125;
-
-    var listener = &#123;
-        mousedown: mousedown,
-        mousemove: mousemove,
-        mouseup: mouseup,
-    &#125;;
-
-
-    var Rect = function(parentEle) &#123;
-        parent = parentEle;
-        console.log(parent);
-        svgDoc = parent.doc();
-        DrawTool.init(svgDoc, listener);
-        this.stop = function() &#123;
-            DrawTool.stop(svgDoc, listener);
-        &#125;;
-    &#125;;
-
-    this.DrawTool.Rect = Rect;
-
-&#125;)();
-</code></pre>
-<p>所有DrawTool类方法都要增加此</p>
-<h3 id="bug修复-1"><a href="#bug修复-1" class="headerlink" title="bug修复"></a>bug修复</h3><h4 id="选择其他DrawTool后，选中状态不丢失。"><a href="#选择其他DrawTool后，选中状态不丢失。" class="headerlink" title="选择其他DrawTool后，选中状态不丢失。"></a>选择其他DrawTool后，选中状态不丢失。</h4><p>在GlobalStatus增加清除所有选中状态的方法</p>
-<pre><code>unPickAll() &#123;
-    $(GlobalStatus.getPickeds()).each(function() &#123;
-        this.fire(&quot;unPick&quot;);
-    &#125;);
-    return this;
-&#125;
-</code></pre>
-<p>在index的resetCurrentDrawTool方法中调用执行</p>
-<pre><code>function resetCurrentDrawTool() &#123;
-    currentDrawTool &amp;&amp; currentDrawTool.stop();
-    GlobalStatus.unPickAll();
-    $(&quot;#svgPanel&quot;).css(&quot;cursor&quot;, &quot;default&quot;);
-&#125;
-</code></pre>
-<p>同时给右键的取消按钮增加此方法调用</p>
-<pre><code>label: &#39; 取消&#39;,
-action: function () &#123;
-    GlobalStatus.unPickAll();
-    return false;
-&#125;
 </code></pre>
 
       
