@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 5.4.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"blog.yuheng.wang","root":"/","images":"/images","scheme":"Gemini","darkmode":true,"version":"8.18.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"default"},"fold":{"enable":false,"height":500},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="WhatCypress是一款基于javascript的开源端到端测试框架。与大家比较熟悉的jmeter等基于网络请求自动化测试框架不同，cypress可以运行在各种浏览器上，包括chrome，firfox等，通过控制浏览器行为，对网页UI元素进行自动化测试。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cypress入门">
+<meta property="og:url" content="https://blog.yuheng.wang/2023/09/10/test-cypress/index.html">
+<meta property="og:site_name" content="wangyuheng&#39;s Blog">
+<meta property="og:description" content="WhatCypress是一款基于javascript的开源端到端测试框架。与大家比较熟悉的jmeter等基于网络请求自动化测试框架不同，cypress可以运行在各种浏览器上，包括chrome，firfox等，通过控制浏览器行为，对网页UI元素进行自动化测试。">
+<meta property="og:locale">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-00.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-01.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-02.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-03.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-04.gif">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-05.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-06.png">
+<meta property="og:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-07.png">
+<meta property="article:published_time" content="2023-09-10T06:34:14.000Z">
+<meta property="article:modified_time" content="2023-09-10T07:24:57.481Z">
+<meta property="article:author" content="wangyuheng">
+<meta property="article:tag" content="test">
+<meta property="article:tag" content="cypress">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.yuheng.wang/uploads/test-cypress/test-cypress-00.png">
+
+
+<link rel="canonical" href="https://blog.yuheng.wang/2023/09/10/test-cypress/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"https://blog.yuheng.wang/2023/09/10/test-cypress/","path":"2023/09/10/test-cypress/","title":"Cypress入门"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Cypress入门 | wangyuheng's Blog</title>
+  
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?f087e6d26eb7b46af4a441f8fd1b42b8"></script>
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">wangyuheng's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">time for change</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="Search" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="home fa-fw"></i>Home</a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="user fa-fw"></i>About</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="tags fa-fw"></i>Tags</a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="th fa-fw"></i>Categories</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="archive fa-fw"></i>Archives</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#What"><span class="nav-number">1.</span> <span class="nav-text">What</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85"><span class="nav-number">2.</span> <span class="nav-text">安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%AE%89%E8%A3%85nodejs"><span class="nav-number">2.1.</span> <span class="nav-text">1. 安装nodejs</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-%E9%80%9A%E8%BF%87npm%E5%AE%89%E8%A3%85cypress"><span class="nav-number">2.2.</span> <span class="nav-text">2. 通过npm安装cypress</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-%E6%89%93%E5%BC%80cypress"><span class="nav-number">2.3.</span> <span class="nav-text">3. 打开cypress</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8"><span class="nav-number">3.</span> <span class="nav-text">使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E5%86%99%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">编写测试用例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BD%95%E5%88%B6%E7%94%9F%E6%88%90%E7%94%A8%E4%BE%8B"><span class="nav-number">3.2.</span> <span class="nav-text">录制生成用例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%9B%86%E6%88%90CI"><span class="nav-number">3.3.</span> <span class="nav-text">集成CI</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="wangyuheng"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">wangyuheng</p>
+  <div class="site-description" itemprop="description">天行健 男儿当立志！</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">110</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">103</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/wangyuheng" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;wangyuheng" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:wangyuheng@outlook.com" title="E-Mail → mailto:wangyuheng@outlook.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2023/09/10/test-cypress/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Cypress入门 | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Cypress入门
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2023-09-10 14:34:14 / Modified: 15:24:57" itemprop="dateCreated datePublished" datetime="2023-09-10T14:34:14+08:00">2023-09-10</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/test/" itemprop="url" rel="index"><span itemprop="name">test</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="What"><a href="#What" class="headerlink" title="What"></a>What</h2><p><strong>Cypress</strong>是一款基于javascript的开源端到端测试框架。与大家比较熟悉的jmeter等基于网络请求自动化测试框架不同，cypress可以运行在各种浏览器上，包括chrome，firfox等，通过控制浏览器行为，对网页UI元素进行自动化测试。</p>
+<span id="more"></span>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><blockquote>
+<p>推荐使用npm方式进行安装。虽然cypress提供了安装包，但是测试case是基于nodejs进行运行编写，所以相关环境是逃不掉的。</p>
+</blockquote>
+<h3 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1. 安装nodejs"></a>1. 安装nodejs</h3><p>通过官网根据系统选择下载对应版本，LTS为长期支持版本(Long Term Support)，Current为最新开发版本，推荐使用LTS版本。<br>下载后一路next即可</p>
+<p><a target="_blank" rel="noopener" href="https://nodejs.org/en/">https://nodejs.org/en/</a></p>
+<p>安装完成后通过命令行查看安装是否成功。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+
+<p>nodejs安装完成后会自带npm，及node的包管理工具。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-通过npm安装cypress"><a href="#2-通过npm安装cypress" class="headerlink" title="2. 通过npm安装cypress"></a>2. 通过npm安装cypress</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install cypress --save-dev</span><br></pre></td></tr></table></figure>
+
+<p><code>--save-dev</code> 表示下载至当前项目目录，而非全局。并且仅在dev模式下使用，生产环境不需要</p>
+<p><img src="/uploads/test-cypress/test-cypress-00.png" alt="test-cypress-00"></p>
+<p><strong>TIPS:</strong> 如果下载速度较慢，可以改动taobao提供的NPM镜像进行下载。</p>
+<p><a target="_blank" rel="noopener" href="https://npmmirror.com/">https://npmmirror.com/</a></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm --registry=https://registry.npmmirror.com</span><br></pre></td></tr></table></figure>
+
+<p>之后使用 <code>cnpm</code> 替换 <code>npm</code> 执行下载动作</p>
+<h3 id="3-打开cypress"><a href="#3-打开cypress" class="headerlink" title="3. 打开cypress"></a>3. 打开cypress</h3><p>安装命令执行后，多了一个<strong>node_modules</strong>目录，相关的镜像依赖都在这个目录下，可以到对应的cypress目录下执行相关命令，如 open 可以打开cypress UI控制面，运行一个默认的TODO页面测试case</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/cypress/bin/cypress open</span><br></pre></td></tr></table></figure>
+
+<p><img src="/uploads/test-cypress/test-cypress-01.png" alt="test-cypress-01"></p>
+<p> 运行case会打开一个Chrome浏览器，对比case与实际浏览器展示效果。</p>
+<p> <img src="/uploads/test-cypress/test-cypress-02.png" alt="test-cypress-02"></p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p>以baidu网站登陆功能为例，测试用例为</p>
+<ol>
+<li><strong>访问</strong> <a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a></li>
+<li>页面包含<strong>登录</strong>按钮并<strong>单击</strong></li>
+<li>弹窗中<strong>不包含</strong>“请您输入手机号/用户名/邮箱”</li>
+<li><strong>单击</strong>弹窗中登录按钮<ol>
+<li>提示“请您输入手机号/用户名/邮箱”</li>
+</ol>
+</li>
+<li>在username表单输入框中<strong>输入</strong>abc</li>
+<li><strong>单击</strong>弹窗中登录按钮<ol>
+<li>提示“请您输入密码”</li>
+</ol>
+</li>
+<li>在passport表单输入框中<strong>输入</strong>123</li>
+<li><strong>单击</strong>弹窗中登录按钮<ol>
+<li>错误内容<strong>包含</strong>“用户名或密码有误，请重新输入或”</li>
+</ol>
+</li>
+</ol>
+<h3 id="编写测试用例"><a href="#编写测试用例" class="headerlink" title="编写测试用例"></a>编写测试用例</h3><p>在 <strong>cypress/integration</strong> 目录新建<strong>baidu.js</strong>文件用于编写行为代码及预期</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;百度&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">    beforeEach(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        cy.visit(<span class="string">&#x27;https://www.baidu.com&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it(<span class="string">&#x27;首页登录&#x27;</span>, <span class="function">() =&gt;</span> &#123;</span><br><span class="line">        cy.get(<span class="string">&#x27;#s-top-loginbtn&#x27;</span>)</span><br><span class="line">            .should(<span class="string">&#x27;have.text&#x27;</span>, <span class="string">&#x27;登录&#x27;</span>)</span><br><span class="line">            .click()</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#passport-login-pop-api .pass-text-input.pass-text-input-userName&#x27;</span>)</span><br><span class="line">            .should(<span class="string">&#x27;not.have.value&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__submit&#x27;</span>)</span><br><span class="line">            .click(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">        cy.contains(<span class="string">&#x27;请您输入手机号/用户名/邮箱&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#passport-login-pop-api .pass-text-input.pass-text-input-userName&#x27;</span>)</span><br><span class="line">            .type(<span class="string">&#x27;abc&#x27;</span>)</span><br><span class="line">            .should(<span class="string">&#x27;have.value&#x27;</span>, <span class="string">&#x27;abc&#x27;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#passport-login-pop-api .pass-button.pass-button-submit&#x27;</span>)</span><br><span class="line">            .click(&#123; <span class="attr">multiple</span>: <span class="literal">true</span>,  <span class="attr">force</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">        cy.contains(<span class="string">&#x27;请您输入密码&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__password&#x27;</span>)</span><br><span class="line">            .type(<span class="string">&#x27;123&#x27;</span>)</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__submit&#x27;</span>)</span><br><span class="line">            .click(&#123; <span class="attr">force</span>: <span class="literal">true</span> &#125;)</span><br><span class="line"></span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__error&#x27;</span>)</span><br><span class="line">            .contains(<span class="string">&#x27;用户名或密码有误，请重新输入或&#x27;</span>)</span><br><span class="line">            .should(<span class="string">&#x27;have.css&#x27;</span>, <span class="string">&#x27;display&#x27;</span>)</span><br><span class="line">            </span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>可以通过 open 打开可视化页面，单击baidu.js用例运行测试用例</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/cypress/bin/cypress open</span><br></pre></td></tr></table></figure>
+
+<p>也可以直接在命令行运行</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">./node_modules/cypress/bin/cypress run</span><br></pre></td></tr></table></figure>
+
+<p>如果运行失败，则会在screenshots目录保存失败截图，及videos目录保存运行视频。</p>
+<p> <img src="/uploads/test-cypress/test-cypress-03.png" alt="test-cypress-03"></p>
+<p> <img src="/uploads/test-cypress/test-cypress-04.gif" alt="test-cypress-04"></p>
+<h3 id="录制生成用例"><a href="#录制生成用例" class="headerlink" title="录制生成用例"></a>录制生成用例</h3><p>可以通过录制方式快速生成行为代码。</p>
+<ol>
+<li>在cypress.json文件中开启experimentalStudio功能</li>
+</ol>
+<figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="attr">&quot;projectId&quot;</span>: <span class="string">&quot;3y3u55&quot;</span>,</span><br><span class="line">  <span class="attr">&quot;experimentalStudio&quot;</span>: <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在cypress中可以确认experimentalStudio变为true</p>
+<p> <img src="/uploads/test-cypress/test-cypress-05.png" alt="test-cypress-05"></p>
+<p>在cypress/integration/中新建baidu-auto.js文件。输入下列内容，只需声明开启时访问<a target="_blank" rel="noopener" href="https://www.baidu.com/">https://www.baidu.com</a> 并创建Login用例</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;baidu&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    beforeEach(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        cy.visit(<span class="string">&#x27;https://www.baidu.com&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it(<span class="string">&quot;Login&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>通过open启动cypress并运行baidu-auto.js用例，在开启的chrome浏览器中Login用例开启 <strong>Add Commands toTest</strong></p>
+<p> <img src="/uploads/test-cypress/test-cypress-06.png" alt="test-cypress-06"></p>
+<p>在右侧浏览器中进行操作，左侧用例会实时生成对应的行为命令，单击 Save Commands 按钮，命令将保存在juenjin.js文件中</p>
+<p> <img src="/uploads/test-cypress/test-cypress-07.png" alt="test-cypress-07"></p>
+<p>查看baidu-auto.js文件，可以看到行为代码已生成，可以在此基础上编写预期代码</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">describe(<span class="string">&#x27;baidu&#x27;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    beforeEach(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        cy.visit(<span class="string">&#x27;https://www.baidu.com&#x27;</span>)</span><br><span class="line">    &#125;)</span><br><span class="line">    it(<span class="string">&quot;Login&quot;</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">        <span class="comment">/* ==== Generated with Cypress Studio ==== */</span></span><br><span class="line">        cy.get(<span class="string">&#x27;#s-top-loginbtn&#x27;</span>).click();</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__submit&#x27;</span>).click();</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__userName&#x27;</span>).clear();</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__userName&#x27;</span>).type(<span class="string">&#x27;abc&#x27;</span>);</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__submit&#x27;</span>).click();</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__password&#x27;</span>).clear();</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__password&#x27;</span>).type(<span class="string">&#x27;123&#x27;</span>);</span><br><span class="line">        cy.get(<span class="string">&#x27;#TANGRAM__PSP_11__submit&#x27;</span>).click();</span><br><span class="line">        <span class="comment">/* ==== End Cypress Studio ==== */</span></span><br><span class="line">    &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<h3 id="集成CI"><a href="#集成CI" class="headerlink" title="集成CI"></a>集成CI</h3><p>实际使用过程中，需要和各种CICD工具进行集成。<br>Jenkins</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">pipeline &#123;</span><br><span class="line">  agent &#123;</span><br><span class="line">    &#x2F;&#x2F; this image provides everything needed to run Cypress</span><br><span class="line">    docker &#123;</span><br><span class="line">      image &#39;cypress&#x2F;base:10&#39;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  stages &#123;</span><br><span class="line">    stage(&#39;build and test&#39;) &#123;</span><br><span class="line">      environment &#123;</span><br><span class="line">        &#x2F;&#x2F; we will be recording test results and video on Cypress dashboard</span><br><span class="line">        &#x2F;&#x2F; to record we need to set an environment variable</span><br><span class="line">        &#x2F;&#x2F; we can load the record key variable from credentials store</span><br><span class="line">        &#x2F;&#x2F; see https:&#x2F;&#x2F;jenkins.io&#x2F;doc&#x2F;book&#x2F;using&#x2F;using-credentials&#x2F;</span><br><span class="line">        CYPRESS_RECORD_KEY &#x3D; credentials(&#39;cypress-example-kitchensink-record-key&#39;)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      steps &#123;</span><br><span class="line">        sh &#39;npm ci&#39;</span><br><span class="line">        sh &quot;npm run test:ci:record&quot;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Gitlab CI</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">stages:</span></span><br><span class="line">  <span class="bullet">-</span> <span class="string">test</span></span><br><span class="line"></span><br><span class="line"><span class="attr">cache:</span></span><br><span class="line">  <span class="attr">key:</span> <span class="string">$&#123;CI_COMMIT_REF_SLUG&#125;</span></span><br><span class="line">  <span class="attr">paths:</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">node_modules/</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">.npm/</span></span><br><span class="line"></span><br><span class="line"><span class="attr">test:</span></span><br><span class="line">  <span class="attr">image:</span> <span class="string">cypress/browsers:node12.14.1-chrome85-ff81</span></span><br><span class="line">  <span class="attr">stage:</span> <span class="string">test</span></span><br><span class="line">  <span class="attr">script:</span></span><br><span class="line">    <span class="comment"># install dependencies</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">ci</span></span><br><span class="line">    <span class="comment"># start the server in the background</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npm</span> <span class="string">run</span> <span class="string">start:ci</span> <span class="string">&amp;</span></span><br><span class="line">    <span class="comment"># run Cypress tests</span></span><br><span class="line">    <span class="bullet">-</span> <span class="string">npx</span> <span class="string">cypress</span> <span class="string">run</span> <span class="string">--browser</span> <span class="string">firefox</span></span><br><span class="line">  <span class="attr">artifacts:</span></span><br><span class="line">    <span class="attr">when:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">paths:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cypress/videos/**/*.mp4</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">cypress/screenshots/**/*.png</span></span><br><span class="line">    <span class="attr">expire_in:</span> <span class="number">1</span> <span class="string">day</span></span><br></pre></td></tr></table></figure>
+<p>1</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="followme">
+  <span>Welcome to my other publishing channels</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+          <span class="social-link">
+            <span class="icon">
+              <i class="fab fa-weixin"></i>
+            </span>
+
+            <span class="label">WeChat</span>
+          </span>
+
+          <img class="social-item-img" src="/images/wechat_qrcode.jpg">
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tagcloud/test/" rel="tag"># test</a>
+              <a href="/tagcloud/cypress/" rel="tag"># cypress</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2023/09/10/tool-git/" rel="prev" title="Git常用命令">
+                  <i class="fa fa-angle-left"></i> Git常用命令
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="beian"><a href="https://beian.miit.gov.cn/" rel="noopener" target="_blank">辽ICP备16008709号-1 </a>
+      <img src="http://www.beian.gov.cn/portal/download" alt="">
+  </div>
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2023</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">wangyuheng</span>
+  </div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

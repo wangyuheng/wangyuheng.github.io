@@ -128,18 +128,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -164,6 +164,177 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/20/painter-1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/09/20/painter-1/" class="post-title-link" itemprop="url">绘画板 01——实现绘制矩形功能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-09-20 13:47:49" itemprop="dateCreated datePublished" datetime="2016-09-20T13:47:49+08:00">2016-09-20</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2018-06-29 11:10:20" itemprop="dateModified" datetime="2018-06-29T11:10:20+08:00">2018-06-29</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/painter/" itemprop="url" rel="index"><span itemprop="name">painter</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>svgjs 本身提供了绘制图形的函数。</p>
+<p>为了实现鼠标点击、绘制的功能，需要监听鼠标事件</p>
+<ol>
+<li>mousedown 修改绘画状态位，开始画图 </li>
+<li>mousemove 修改图形大小，绘制图形</li>
+<li>mouseup 修改绘画状态位，结束画图</li>
+</ol>
+<p>拓展了一个函数，获取鼠标点击时相对画布左上角的相对坐标</p>
+<p>根据svgjs提供的函数，将图形的透明度设置为0.0全透明，可以修改边框和高度，后期可以根据上面的按钮关联修改。</p>
+<p>现在默认绘制矩形，需要向上封装，实现按钮与图形绘制的绑定。</p>
+<p>github地址： <a target="_blank" rel="noopener" href="https://github.com/wangyuheng/painter">https://github.com/wangyuheng/painter</a></p>
+<p>DEMO地址： <a target="_blank" rel="noopener" href="http://painter.crick.wang/">http://painter.crick.wang/</a></p>
+<p>扩展Doc，获取相对坐标</p>
+<pre><code>(function() &#123;
+    SVG.extend(SVG.Doc, &#123;
+            transformPoint : function( event )&#123;
+                event = event || window.event;
+                var touches = event.changedTouches &amp;&amp; event.changedTouches[0] || event;
+                var node = this.node;
+                var point = node.createSVGPoint();
+                point.x = touches.pageX-window.scrollX;
+                point.y = touches.pageY-window.scrollY;
+                var matrix = node.getScreenCTM().inverse();
+                return point.matrixTransform( matrix );
+            &#125;
+        &#125;);
+&#125;)();
+</code></pre>
+<p>通过事件监听，绘制矩形</p>
+<pre><code>if (!SVG.supported) &#123;
+    alert(&#39;SVG not supported&#39;);
+&#125;
+var svgDraw = SVG( &quot;svgPanel&quot; ).size(&#39;100%&#39;, 600);
+var svgDoc = svgDraw.doc();
+var drawing = false;
+var element = null;
+var startPoint = null;
+var parent = null;
+function mousemove(event) &#123;
+    console.log(&#39;rect mousemove&#39;);
+    if (drawing) &#123;
+        var svgPoint = svgDoc.transformPoint(event);
+        var x = svgPoint.x;
+        var y = svgPoint.y;
+        var newWidth = x - startPoint.x;
+        var newHeight = y - startPoint.y;
+        var startX = startPoint.x;
+        var startY = startPoint.y;
+        if (newWidth &lt; 0) &#123;
+            startX += newWidth;
+        &#125;
+        if (newHeight &lt; 0) &#123;
+            startY += newHeight;
+        &#125;
+        newWidth = Math.abs(newWidth);
+        newHeight = Math.abs(newHeight);
+        element.x(startX).y(startY).width(newWidth).height(newHeight);
+    &#125;
+&#125;;
+function mousedown(event) &#123;
+    console.log(&#39;rect mousedown&#39;);
+    drawing = true;
+    startPoint = svgDoc.transformPoint(event);
+    element = parent.rect(0, 0).style(&quot;fill-opacity&quot;, &#39;0.0&#39;).stroke(&#123;
+        width: &#39;2&#39;,
+        color: &#39;#000000&#39;
+    &#125;);
+&#125;
+function mouseup(event) &#123;
+    console.log(&#39;rect mouseup &#39; + element);
+    drawing = false;
+&#125;
+var listener = &#123;
+    mousedown: mousedown,
+    mousemove: mousemove,
+    mouseup: mouseup,
+&#125;;
+var Tool = &#123;&#125;;
+Tool.Rect = function (parentEle) &#123;
+    parent = parentEle;
+    var l =listener;
+    svgDoc.on( &#39;mousedown&#39;, l.mousedown );
+    svgDoc.on( &#39;mousemove&#39;, l.mousemove );
+    svgDoc.on( &#39;mouseup&#39;,   l.mouseup );
+&#125;;
+Tool.Rect(svgDraw);
+</code></pre>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1034,96 +1205,6 @@
 <h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>调用toString()时死循环</p>
 <h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>在toString()方法中使用了this关键字和+<br>String 后面的+后调用自动类型转换， 将this转换为String，而转换方法就是toString()，导致递归</p>
 <h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>toString()禁用this关键字</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/09/04/bug-javascript-Maximum-call-stack-size-exceeded/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/09/04/bug-javascript-Maximum-call-stack-size-exceeded/" class="post-title-link" itemprop="url">JS Uncaught RangeError： Maximum call stack size exceeded</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-09-04 09:48:03" itemprop="dateCreated datePublished" datetime="2016-09-04T09:48:03+08:00">2016-09-04</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
-<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>使用第三方js库时报错</p>
-<pre><code>JS Uncaught RangeError: Maximum call stack size exceeded
-</code></pre>
-<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>第三方方法名重复，常为同一类库的不同版本被引用多次。</p>
-<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>注意引用类库版本及引用次数。自己编写的方法注意使用闭包，避免污染全局环境</p>
 
       
     </div>

@@ -128,18 +128,18 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">109</span>
+          <span class="site-state-item-count">110</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
           <a href="/categories/">
-        <span class="site-state-item-count">37</span>
+        <span class="site-state-item-count">38</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">101</span>
+        <span class="site-state-item-count">103</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
@@ -164,6 +164,105 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/08/30/bug-eclipse-resource-is-out-of-sync-with-the-file-system/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="wangyuheng">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="wangyuheng's Blog">
+      <meta itemprop="description" content="天行健 男儿当立志！">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="undefined | wangyuheng's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2016/08/30/bug-eclipse-resource-is-out-of-sync-with-the-file-system/" class="post-title-link" itemprop="url">eclipse报错Resource is out of sync with the file system</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2016-08-30 20:28:01" itemprop="dateCreated datePublished" datetime="2016-08-30T20:28:01+08:00">2016-08-30</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">Edited on</span>
+      <time title="Modified: 2016-12-09 20:19:12" itemprop="dateModified" datetime="2016-12-09T20:19:12+08:00">2016-12-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/bug/" itemprop="url" rel="index"><span itemprop="name">bug</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载请注明出处<a target="_blank" rel="noopener" href="http://blog.crick.wang/">WangYuheng’s Blog</a></p>
+<h3 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h3><p>在eclipse中搜索时，搜索完之后有时候会弹出错误对话框，错误摘录如下</p>
+<pre><code>Resource is out of sync with the file system......
+</code></pre>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><p>由于eclipse中文件不同步引起的。</p>
+<p>在eclipse中，工程文件是由eclipse自动扫描添加的，如果在外部修改了工程目录中的文件但又关闭了自动刷新功能，则会引起文件不同步，从而搜索时出现Resource is out of sync with the file system问题（其它功能可能也会如此）。此外，在外部没有修改eclipse工程中的文件也有可能引起该问题。</p>
+<h3 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h3><p>有两种解决方法</p>
+<ol>
+<li>手动刷新。即在eclipse的工程目录中，右键refresh（或者按下F5）。</li>
+<li>配置eclipse的选项<ul>
+<li>eclipse启动时，刷新workspace，即勾选         window—&gt;preferences—&gt;general—&gt;startup and shutdown—&gt;refresh workspace on startup</li>
+<li>window—&gt;preferences—&gt;general—&gt;workspace中：勾选选项：refresh using native hooks or polling和refresh on access；</li>
+</ul>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1064,93 +1163,6 @@ void remove();
 &lt;/dependencies&gt;
 </code></pre>
 <h3 id="代码配置"><a href="#代码配置" class="headerlink" title="代码配置"></a>代码配置</h3><p>个人习惯，在学习一个东西之前，能让我用最少的代码运行一遍，并看到效果。</p>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://blog.yuheng.wang/2016/05/27/forward-30/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="wangyuheng">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="wangyuheng's Blog">
-      <meta itemprop="description" content="天行健 男儿当立志！">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="undefined | wangyuheng's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2016/05/27/forward-30/" class="post-title-link" itemprop="url">奔三路上的决心 Time For Change</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2016-05-27 14:51:57" itemprop="dateCreated datePublished" datetime="2016-05-27T14:51:57+08:00">2016-05-27</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar-check"></i>
-      </span>
-      <span class="post-meta-item-text">Edited on</span>
-      <time title="Modified: 2023-08-06 09:38:38" itemprop="dateModified" datetime="2023-08-06T09:38:38+08:00">2023-08-06</time>
-    </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/diary/" itemprop="url" rel="index"><span itemprop="name">diary</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>26了。<br>正在为了年初的TODO LIST努力， 虽然有些事已经没法努力了。<br>努力去做吧，为了表明奔三的决心，为了抡圆了活。</p>
-<p>首马达成，果然是在大连，虽然只是个半马。<br>觉得生活充满了阳光。<br>很匆忙的一天，设错了闹钟，急匆匆出门，搭上邻居的顺风车；进错了地铁，被lan方的大哥，带着我这个小兄弟一起，打不到车，又没零钱，大哥给我20元，去后面换零钱，车就开走了；去后面遇到了大姐，给了我1元硬币；下车之后，又遇到了大哥，把20元还给了他。<br>跑步时，一直跟着浦老师，速度很舒服，天气也很舒服，觉得这座城市真的很美好。一路上一直是我们几个，聚在一起，互相鼓励、加油。路上很多人，大声喊着加油；志愿者们提供着水和毛巾，一次次击掌真的给了我很大的能量。<br>觉得人很奇怪，对陌生人可能有更多的耐心和友好。<br>喜欢这种感觉，感恩这种生活。<br>在18公里之后，脱离队伍独自向前，但是连续的几个坡度，让我的双腿越来越沉，好在路人给了我极大的鼓舞，终于坚持到了终点。<br>2小时6分，遗憾的没有进入2小时，不过觉得很成功了。<br>路上有人昏倒，希望没事吧。<br>发了朋友圈，应该收到了最多的一次赞和评论。<br>喜欢这种阳光的生活，是第二次提到阳光这个词吧。<br>完赛后，漫步在这座好像很熟悉，其实又很陌生的城市，没有目的，慢慢的走着，感觉很美好。<br>追求生活的意义，现在又多了一点，要追求阳光。<br>提升一些自信和美好。<br>终于在今年快过去一半的时候，完成了一项计划，算不算厚积而薄发？<br>为了遇见更好的自己，努力！<br>Time For Change！</p>
-<p><img src="http://img.yuheng.wang/forward-30-0.png" alt="forward-30-0"></p>
 
       
     </div>
